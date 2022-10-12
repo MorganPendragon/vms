@@ -2,11 +2,11 @@
 class vaccination
 {
     private $servername = 'localhost';
-	private $username = 'root';
-	private $password = '';
-	private $dbname = 'Vaccin';
+	private $username = 'j';
+	private $password = 'password';
+	private $dbname = 'Vaccine';
 	private $conn;
-    
+
     function __construct()
     {
         $this->conn = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
