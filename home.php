@@ -62,10 +62,53 @@
                                     <input class="form-check-input" type="checkbox" value="" aria-label="Checkbox for following text input">
                                 </td>
                                 <!--edit-->
-                                <td><?php echo '<a href="home.php?editID=' .$info['id'] .'">'?><i class="bi bi-pencil-fill"></i></a></td>
+                                <td>
+                                    <?php echo '<a href="home.php?editID=' .$info['id'] .'" type ="button" data-bs-toggle = "modal" data-bs-target="#editModal">'?>
+                                        <i class="bi bi-pencil-fill"></i>
+                                    </a>
+                                    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="Edit" id="editModalLabel">Edit</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <!--put content here-->
+                                                <div class="modal-body">
+                                                    ...
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
                                 <!--delete-->
-                                <td><?php echo '<a href="home.php?delID=' .$info['id'] .'">'?><i class="bi bi-trash-fill"></i></td></a>
-                            
+                                <td>
+                                    <?php echo '<a href="home.php?delID=' .$info['id'] .'" type ="button" data-bs-toggle = "modal" data-bs-target="#delModal">'?>
+                                        <i class="bi bi-trash-fill"></i>
+                                    </a>
+                                    <div class="modal fade" id="delModal" tabindex="-1" aria-labelledby="delModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="Edit" id="delModalLabel">Confirmation</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <!--put content here-->
+                                                <div class="modal-body">
+                                                    ...
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
                             </tr>
                         <?php
                         }
