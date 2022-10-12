@@ -16,9 +16,6 @@
             <form>
                 <div class="d-flex gap-2 col-6 mx-auto">
                     <a href="#" class="btn btn-outline-success" role="button">Create</a>
-                    <a href="#link" class="btn btn-outline-primary" role="button">Read</a>
-                    <a href="#link" class="btn btn-outline-success" role="button">Update</a>
-                    <a href="#link" class="btn btn-outline-danger" role="button">Delete</a>
                 </div>
 
             </form>
