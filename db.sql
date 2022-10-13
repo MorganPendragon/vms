@@ -24,17 +24,14 @@ DROP TABLE IF EXISTS `info`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `info` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT 'Primary Key',
-  `firstName` varchar(255) NOT NULL,
-  `lastName` varchar(255) NOT NULL,
-  `middleName` varchar(255) NOT NULL,
-  `suffix` varchar(3) DEFAULT NULL,
-  `age` int NOT NULL,
+  `name` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `gender` varchar(50) DEFAULT NULL,
   `birthday` date DEFAULT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  `address` text,
+  `email` mediumtext,
+  `address` mediumtext,
   `tel` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,8 +40,32 @@ CREATE TABLE `info` (
 
 LOCK TABLES `info` WRITE;
 /*!40000 ALTER TABLE `info` DISABLE KEYS */;
-INSERT INTO `info` VALUES (1,'test','test','test',NULL,40,'2002-10-07','test','test','111'),(2,'test2','test2','test2',NULL,21,'2000-12-12','test','test','222'),(3,'test3','test3','test3',NULL,20,'2002-04-22','test','test','333');
+INSERT INTO `info` VALUES (1,'test1 test1 test1','Male','2001-01-01','test@gmail.com','111','111'),(2,'test2 test2 test2','Male','2001-01-01','test@gmail.com','test','test'),(3,'test3 test3 test3','Female','2001-01-01','.exclamationtrueisequaltofalse@gmail.com','reee','124'),(4,'test4 test4 test4','Male','2022-10-19','randomizedgg9@gmail.com','fck','reee'),(5,'test5 test5 test5','Female','2000-10-04','randomizedgg9@gmail.com','555','555'),(6,'test6 tset6 test6','Female','2022-10-12','randomizedgg9@gmail.com','111','666'),(7,'test7 test7 test7','Male','2022-10-19','randomizedgg9@gmail.com','777','777'),(8,'test8 test8 test8','Male','2022-10-12','randomizedgg9@gmail.com','222','111'),(9,'test9 test9 test9','Female','2022-10-10','randomizedgg9@gmail.com','999','999');
 /*!40000 ALTER TABLE `info` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `vacBrand`
+--
+
+DROP TABLE IF EXISTS `vacBrand`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `vacBrand` (
+  `id` int NOT NULL AUTO_INCREMENT COMMENT 'Primary Key',
+  `brand` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `vacBrand`
+--
+
+LOCK TABLES `vacBrand` WRITE;
+/*!40000 ALTER TABLE `vacBrand` DISABLE KEYS */;
+INSERT INTO `vacBrand` VALUES (1,'dummy'),(4,'thicc'),(6,'dummy');
+/*!40000 ALTER TABLE `vacBrand` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -56,4 +77,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-10-13 16:45:01
+-- Dump completed on 2022-10-14  5:39:55
