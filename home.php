@@ -44,9 +44,14 @@
             $vac = new vaccination();
             $data = $vac->displayInfo();
             $i = 1;
+            $modalID;
+            if(isset($_GET['editID']))
+            {
+                echo 'updated ID:' .$_GET['editID'];
+            }
             if(isset($_GET['delID']))
             {
-                header('location:home.php', true, 5);
+                echo 'Deleted ID:'.$_GET['delID'];
             }
             foreach ($data as $info) 
             {
@@ -66,12 +71,14 @@
                     </td>
                     <!--edit-->
                     <td>
-                        <button type ="button" data-bs-toggle = "modal" data-bs-target="#editModal">
+                        <?php $modalID = '"#editModal'.$i .'"'?>
+                        <button type ="button" data-bs-toggle = "modal" data-bs-target= <?php echo $modalID?>>
                             <i class="bi bi-pencil-fill"></i>
                         </button>
 
                         <!--Edit Modal-->
-                        <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+                        <?php $modalID = '"editModal'.$i .'"'?>
+                        <div class="modal fade" id= <?php echo $modalID?> tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -84,7 +91,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <?php echo'<a type="button" class="btn btn-primary" href ="home.php?updateID=' . $info['id'].'">Save changes</a>'; ?>
+                                        <a type="button" class="btn btn-primary" href = <?php echo'"home.php?editID=' .$info['id'] .'"'?>>Save changes</a>
                                     </div>
                                 </div>
                             </div>
@@ -92,11 +99,13 @@
                     </td>
                     <!--delete-->
                     <td>
-                        <button type ="button" data-bs-toggle = "modal" data-bs-target="#delModal">
+                        <?php $modalID = '"#delModal' .$i .'"'?>
+                        <button type ="button" data-bs-toggle = "modal" data-bs-target=<?php echo $modalID?>>
                             <i class="bi bi-trash-fill"></i>
                         </button>
                         <!--Delete Modal-->
-                        <div class="modal fade" id="delModal" tabindex="-1" aria-labelledby="delModalLabel" aria-hidden="true">
+                        <?php $modalID = '"delModal' .$i .'"'?>
+                        <div class="modal fade" id=<?php echo $modalID?> tabindex="-1" aria-labelledby="delModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -105,11 +114,11 @@
                                     </div>
                                     <!--put content here-->
                                     <div class="modal-body">
-                                        ...
+                                        Are you sure about the deletion?
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <?php echo '<a type="button" class="btn btn-primary" href ="home.php?delID=' . $info['id'] . '">Save changes</a>' ?>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                                        <a type="button" class="btn btn-primary" href = <?php echo '"home.php?delID=' .$info["id"].'"'?>>Yes</a>
                                     </div>
                                 </div>
                             </div>

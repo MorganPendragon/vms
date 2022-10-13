@@ -1,4 +1,7 @@
 <?php
+include('sqlcommands.php');
+
+
 class vaccination
 {
     private $servername = 'localhost';
@@ -22,7 +25,7 @@ class vaccination
 
 	public function displayInfo()
 	{
-		$sql = 'SELECT * FROM info';
+		$sql = showTable('info');
 		$result = $this->conn->query($sql);
 		if($result->num_rows > 0)
 		{
@@ -34,9 +37,14 @@ class vaccination
 		}
 	}
 
+	public function updateInfo($id)
+	{
+
+	}
+
 	public function deleteInfo($id)
 	{
-		$sql = "DELETE FROM info WHERE id = '$id'";
+		$sql = "DELETE FROM info WHERE id = $id";
 		$result = $this->conn->query($sql);
 		if($result)
 		{
@@ -48,4 +56,3 @@ class vaccination
 		}
 	}
 }
-?>
