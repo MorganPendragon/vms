@@ -1,5 +1,19 @@
 <?php
-include('sqlcommands.php');
+
+function showTable($table)
+{
+	return "SELECT * FROM $table";
+}
+
+function deleteRow($table, $col, $id)
+{
+	return "DELETE FROM $table WHERE $col = $id";
+}
+
+function showInfoByID($table, $col, $id)
+{
+	return "SELECT * FROM $table WHERE $col = $id";
+}
 
 class vaccination
 {
