@@ -43,20 +43,16 @@
             $data = $vac->displayTable('info');
             $i = 1;
 
-            if (isset($_POST['submit'])) 
-            {
+            if (isset($_POST['submit'])) {
                 $vac->insertInfo($_POST);
             }
-            if (isset($_GET['editID'])) 
-            {
-                
+            if (isset($_GET['editID'])) {
+                echo $_GET['editID'];
             }
-            if (isset($_GET['delID'])) 
-            {
+            if (isset($_GET['delID'])) {
                 $vac->deleteInfo('info', 'id', $_GET['delID']);
             }
-            foreach ($data as $info) 
-            {
+            foreach ($data as $info) {
             ?>
                 <tr>
                     <th scope="row"> <?php echo $i++ ?> </th>
@@ -68,13 +64,13 @@
 
                     <!--edit-->
                     <td>
-                        <a type="button" data-bs-toggle="modal" href="adminview.php?editID=<?php echo $info['id']?>" data-bs-target="#editModal<?php echo $i ?>">
+                        <a type="button" data-bs-toggle="modal" href="adminview.php?editID=<?php echo $info['id'] ?>" data-bs-target="#editModal<?php echo $i ?>">
                             <i class="bi bi-pencil-fill"></i>
                         </a>
 
                         <!--Edit Modal-->
                         <div class="modal fade" id="editModal<?php echo $i ?>" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-dialog modal-dialog-centered modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="Edit" id="editModalLabel">Edit</h5>
@@ -82,41 +78,41 @@
                                     </div>
                                     <!--put content here-->
                                     <?php
-                                        $name = explode(' ', $info['name']);
+                                    $name = explode(' ', $info['name']);
                                     ?>
-                                    <form action="adminview.php" method="POST">
+                                    <form action="adminview.php?editID=<?php echo $info['id']; ?>" method="POST">
                                         <div class="modal-body">
                                             <div class="row mb-2">
                                                 <div class="col">
-                                                    <input type="text" name="upFirstName" class="form-control" placeholder="First name" value="<?php echo $name[0]?>">
+                                                    <input type="text" name="upFirstName" class="form-control" placeholder="First name" value="<?php echo $name[0] ?>">
                                                 </div>
                                                 <div class="col">
-                                                    <input type="text" name="upMiddleName" class="form-control" placeholder="Middle name" value="<?php echo $name[1]?>">
+                                                    <input type="text" name="upMiddleName" class="form-control" placeholder="Middle name" value="<?php echo $name[1] ?>">
                                                 </div>
                                                 <div class="col">
-                                                    <input type="text" name="upLastName" class="form-control" placeholder="Last name" value="<?php echo $name[2]?>">
-                                                </div>
-                                            </div>
-                                            <div class="row mb-2">
-                                                <div class="col">
-                                                    <input type="email" name="upEmail"  class="form-control" id="emailFormControl" placeholder="Email" value="<?php echo $info['email'];?>">
-                                                </div>
-                                                <div class="col">
-                                                    <input type="text" name="upTel" class="form-control" placeholder="Telephone No." value="<?php echo $info['tel'];?>">
+                                                    <input type="text" name="upLastName" class="form-control" placeholder="Last name" value="<?php echo $name[2] ?>">
                                                 </div>
                                             </div>
                                             <div class="row mb-2">
                                                 <div class="col">
-                                                    <input type="date" name="upDate" class="form-control" name="date-field" value="<?php echo $info['birthday'];?>"/>
+                                                    <input type="email" name="email" class="form-control" id="emailFormControl" placeholder="Email" value="<?php echo $info['email']; ?>" required>
                                                 </div>
                                                 <div class="col">
-                                                    <input type="text" name="upAddress" class="form-control" placeholder="Address" value="<?php echo $info['address'];?>">
+                                                    <input type="text" name="upTel" class="form-control" placeholder="Telephone No." value="<?php echo $info['tel']; ?>">
+                                                </div>
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col">
+                                                    <input type="date" name="upDate" class="form-control" name="date-field" value="<?php echo $info['birthday']; ?>" />
+                                                </div>
+                                                <div class="col">
+                                                    <input type="text" name="upAddress" class="form-control" placeholder="Address" value="<?php echo $info['address']; ?>">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <a type="submit" href="adminview.php?editID=<?php echo $info['id'];?>" class="btn btn-primary">Save Changes</a>
+                                            <button type="submit" class="btn btn-primary">Save Changes</button>
                                         </div>
                                     </form>
                                 </div>
@@ -157,7 +153,7 @@
 
     <!--Create Modal-->
     <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="createModalLabel">Create</h5>
@@ -167,29 +163,29 @@
                     <div class="modal-body">
                         <div class="row mb-2">
                             <div class="col">
-                                <input type="text" name="firstName" class="form-control" placeholder="First name">
+                                <input type="text" name="firstName" class="form-control" placeholder="First name" required>
                             </div>
                             <div class="col">
-                                <input type="text" name="middleName" class="form-control" placeholder="Middle name">
+                                <input type="text" name="middleName" class="form-control" placeholder="Middle name" required>
                             </div>
                             <div class="col">
-                                <input type="text" name="lastName" class="form-control" placeholder="Last name">
-                            </div>
-                        </div>
-                        <div class="row mb-2">
-                            <div class="col">
-                                <input name="email" type="email" class="form-control" id="emailFormControl" placeholder="Email">
-                            </div>
-                            <div class="col">
-                                <input type="text" name="tel" class="form-control" placeholder="Telephone No.">
+                                <input type="text" name="lastName" class="form-control" placeholder="Last name" required>
                             </div>
                         </div>
                         <div class="row mb-2">
                             <div class="col">
-                                <input type="date" name="date" class="form-control" name="date-field" />
+                                <input type="email" name="email" class="form-control" id="emailFormControl" placeholder="Email" required>
                             </div>
                             <div class="col">
-                                <input type="text" name="address" class="form-control" placeholder="Address">
+                                <input type="text" name="tel" class="form-control" placeholder="Telephone No." required>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col">
+                                <input type="date" name="date" class="form-control" name="date-field" required>
+                            </div>
+                            <div class="col">
+                                <input type="text" name="address" class="form-control" placeholder="Address" required>
                             </div>
                         </div>
                     </div>
