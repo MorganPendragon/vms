@@ -19,10 +19,6 @@
             <div class="d-flex gap-2 col-6 mx-auto">
                 <button class="btn btn-outline-success" role="button" data-bs-toggle="modal" data-bs-target="#createModal">Create</button>
             </div>
-            <form class="search d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
 
             <!-- Modal -->
             <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
@@ -57,13 +53,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col">
-                                        <div class="input-group date" id="datepicker">
-                                            <input type="text" class="form-control" placeholder="Birthday">
-                                            <span class="input-group-append">
-                                            </span>
-                                        </div>
-                                    </div>
+                                    <!--calendar picker here-->
                                 </div>
                         </form>
                         <div class="modal-footer">
@@ -74,6 +64,10 @@
                 </div>
             </div>
 
+            <form class="search d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
         </div>
     </nav>
     <table class="table table-strip">
@@ -81,11 +75,10 @@
             <tr>
                 <th scope="col">No.</th>
                 <th scope="col">Name</th>
+                <th scope="col">Birthdate</th>
+                <th scope="col">Address</th>
                 <th scope="col">Contact No.</th>
                 <th scope="col">Email</th>
-                <th scope="col">Birthdate</th>
-                <th scope="col">1st dose</th>
-                <th scope="col">2nd dose</th>
             </tr>
         </thead>
 
@@ -112,15 +105,11 @@
                 <tr>
                     <th scope="row"> <?php echo $i++ ?> </th>
                     <td> <?php echo $name ?> </td>
+                    <td> <?php echo $info['birthday'] ?> </td>
+                    <td><?php echo $info['address'] ?></td>
                     <td> <?php echo $info['tel']; ?></td>
                     <td> <?php echo $info['email'] ?> </td>
-                    <td> <?php echo $info['birthday'] ?> </td>
-                    <td>
-                        <input class="form-check-input" type="checkbox" value="" aria-label="Checkbox for following text input">
-                    </td>
-                    <td>
-                        <input class="form-check-input" type="checkbox" value="" aria-label="Checkbox for following text input">
-                    </td>
+
                     <!--edit-->
                     <td>
                         <?php $modalID = '"#editModal' . $i . '"' ?>
@@ -139,6 +128,7 @@
                                     </div>
                                     <!--put content here-->
                                     <div class="modal-body">
+
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -181,13 +171,6 @@
             ?>
         </tbody>
     </table>
-    <script type="text/javascript">
-        $(function() {
-            $('#datepicker').datepicker({
-                dateFormat: 'yy-mm-dd'
-            });
-        });
-    </script>
 </body>
 
 </html>

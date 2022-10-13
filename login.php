@@ -40,7 +40,7 @@
 							<div class="mb-3">
 								<label for="validationdefaultemail" class="form-label">Email Address</label>
 								<input type="email" class="form-control" name="email" id="email"
-									aria-describedby="emailHelp" placeholder="juandelacruz123@email.com" required>
+									aria-describedby="emailHelp" placeholder="example@email.com" required>
 								<div id="email-validation" class="invalid-feedback">PLEASE INPUT A VALID EMAIL</div>
 							</div>
 							<div class="mb-3">
@@ -64,14 +64,14 @@
 		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
 		crossorigin="anonymous"></script>
 	<script>
-		// Example starter JavaScript for disabling form submissions if there are invalid fields
+		//Example starter JavaScript for disabling form submissions if there are invalid fields
 		(function () {
 			'use strict'
 
-			// Fetch all the forms we want to apply custom Bootstrap validation styles to
+			//Fetch all the forms we want to apply custom Bootstrap validation styles to
 			var forms = document.querySelectorAll('.needs-validation')
 
-			// Loop over them and prevent submission
+			//Loop over them and prevent submission
 			Array.prototype.slice.call(forms)
 				.forEach(function (form) {
 					form.addEventListener('submit', function (event) {
@@ -102,5 +102,4 @@
 		</li>
 	</ul>
 </footer>
-
 </html>
