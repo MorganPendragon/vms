@@ -43,16 +43,20 @@
             $data = $vac->displayTable('info');
             $i = 1;
 
-            if (isset($_POST['submit'])) {
+            if (isset($_POST['submit'])) 
+            {
                 $vac->insertInfo($_POST);
             }
-            if (isset($_GET['editID'])) {
-                echo $_GET['editID'];
+            if (isset($_GET['editID'])) 
+            {
+                $vac->updateInfo($_POST, $_GET['editID']);
             }
-            if (isset($_GET['delID'])) {
+            if (isset($_GET['delID'])) 
+            {
                 $vac->deleteInfo('info', 'id', $_GET['delID']);
             }
-            foreach ($data as $info) {
+            foreach ($data as $info) 
+            {
             ?>
                 <tr>
                     <th scope="row"> <?php echo $i++ ?> </th>
@@ -95,7 +99,7 @@
                                             </div>
                                             <div class="row mb-2">
                                                 <div class="col">
-                                                    <input type="email" name="email" class="form-control" id="emailFormControl" placeholder="Email" value="<?php echo $info['email']; ?>" required>
+                                                    <input type="email" name="upEmail" class="form-control" id="emailFormControl" placeholder="Email" value="<?php echo $info['email']; ?>" required>
                                                 </div>
                                                 <div class="col">
                                                     <input type="text" name="upTel" class="form-control" placeholder="Telephone No." value="<?php echo $info['tel']; ?>">

@@ -64,9 +64,23 @@ class vaccination
 		}
 	}
 
-	public function updateInfo($id)
+	public function updateInfo($post ,$id)
 	{
-
+		$name = $post['upFirstName'] .' ' .$post['upMiddleName'] .' ' .$post['upLastName'];
+		$birthday = $post['upDate'];
+		$email = $post['upEmail'];
+		$address = $post['upAddress'];
+		$tel = $post['upTel'];
+		$sql = "UPDATE info SET name='$name', birthday='$birthday', email='$email', address='$address', tel='$tel' WHERE id=$id";
+		
+		if($this->conn->query($sql))
+		{
+			header('location:adminview.php');
+		}
+		else
+		{
+			echo "Error" .$sql ."<br>" .$this->conn->error;
+		}
 	}
 
 
