@@ -15,9 +15,6 @@
     <!---->
     <nav class="navbar" style="background-color: #e3f2fd;">
         <div class="container-fluid">
-            <div class="d-flex gap-2 col-6 mx-auto">
-                <button class="btn btn-outline-success" role="button" data-bs-toggle="modal" data-bs-target="#createModal">Create</button>
-            </div>
             <form class="search d-flex" role="search">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success" type="submit">Search</button>
@@ -43,20 +40,17 @@
             $data = $vac->displayTable('info');
             $i = 1;
 
-            if (isset($_POST['submit'])) 
-            {
+            if (isset($_POST['submit'])) {
                 $vac->insertInfo($_POST);
             }
-            if (isset($_GET['editID'])) 
-            {
+            if (isset($_GET['editID'])) {
                 $vac->updateInfo($_POST, $_GET['editID']);
             }
-            if (isset($_GET['delID'])) 
-            {
+            if (isset($_GET['delID'])) {
                 $vac->deleteInfo('info', 'id', $_GET['delID']);
             }
-            foreach ($data as $info) 
-            {
+
+            foreach ($data as $info) {
             ?>
                 <tr>
                     <th scope="row"> <?php echo $i++ ?> </th>
@@ -154,7 +148,9 @@
             ?>
         </tbody>
     </table>
-
+    <div class="d-flex justify-content-center">
+        <button class="btn btn-outline-success" role="button" data-bs-toggle="modal" data-bs-target="#createModal">+</button>
+    </div>
     <!--Create Modal-->
     <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
