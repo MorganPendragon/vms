@@ -42,16 +42,14 @@
             $vac = new vaccination();
             $data = $vac->displayTable('info');
             $i = 1;
-            /*
-            Dont connect yet or i connect you to GOD 
-            */
+
             if (isset($_POST['submit'])) 
             {
                 $vac->insertInfo($_POST);
             }
             if (isset($_GET['editID'])) 
             {
-                echo 'updated ID:' . $_GET['editID'];
+                
             }
             if (isset($_GET['delID'])) 
             {
@@ -70,9 +68,9 @@
 
                     <!--edit-->
                     <td>
-                        <button type="button" data-bs-toggle="modal" data-bs-target="#editModal<?php echo $i ?>">
+                        <a type="button" data-bs-toggle="modal" href="adminview.php?editID=<?php echo $info['id']?>" data-bs-target="#editModal<?php echo $i ?>">
                             <i class="bi bi-pencil-fill"></i>
-                        </button>
+                        </a>
 
                         <!--Edit Modal-->
                         <div class="modal fade" id="editModal<?php echo $i ?>" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
@@ -83,22 +81,53 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <!--put content here-->
-                                    <div class="modal-body">
-
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <a type="button" class="btn btn-primary" href="adminview.php?editID=<?php echo $info['id'] ?>" ?>Save changes</a>
-                                    </div>
+                                    <?php
+                                        $name = explode(' ', $info['name']);
+                                    ?>
+                                    <form action="adminview.php" method="POST">
+                                        <div class="modal-body">
+                                            <div class="row mb-2">
+                                                <div class="col">
+                                                    <input type="text" name="upFirstName" class="form-control" placeholder="First name" value="<?php echo $name[0]?>">
+                                                </div>
+                                                <div class="col">
+                                                    <input type="text" name="upMiddleName" class="form-control" placeholder="Middle name" value="<?php echo $name[1]?>">
+                                                </div>
+                                                <div class="col">
+                                                    <input type="text" name="upLastName" class="form-control" placeholder="Last name" value="<?php echo $name[2]?>">
+                                                </div>
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col">
+                                                    <input type="email" name="upEmail"  class="form-control" id="emailFormControl" placeholder="Email" value="<?php echo $info['email'];?>">
+                                                </div>
+                                                <div class="col">
+                                                    <input type="text" name="upTel" class="form-control" placeholder="Telephone No." value="<?php echo $info['tel'];?>">
+                                                </div>
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col">
+                                                    <input type="date" name="upDate" class="form-control" name="date-field" value="<?php echo $info['birthday'];?>"/>
+                                                </div>
+                                                <div class="col">
+                                                    <input type="text" name="upAddress" class="form-control" placeholder="Address" value="<?php echo $info['address'];?>">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <a type="submit" href="adminview.php?editID=<?php echo $info['id'];?>" class="btn btn-primary">Save Changes</a>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
                     </td>
                     <!--delete-->
                     <td>
-                        <button type="button" data-bs-toggle="modal" data-bs-target="#deleteModal<?php echo $i ?>">
+                        <a type="button" data-bs-toggle="modal" data-bs-target="#deleteModal<?php echo $i ?>">
                             <i class="bi bi-trash-fill"></i>
-                        </button>
+                        </a>
                         <!--Delete Modal-->
                         <div class="modal fade" id="deleteModal<?php echo $i ?>" tabindex="-1" aria-labelledby="delModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
@@ -149,7 +178,7 @@
                         </div>
                         <div class="row mb-2">
                             <div class="col">
-                                <input name="email" name="email" type="email" class="form-control" id="emailFormControl" placeholder="Email">
+                                <input name="email" type="email" class="form-control" id="emailFormControl" placeholder="Email">
                             </div>
                             <div class="col">
                                 <input type="text" name="tel" class="form-control" placeholder="Telephone No.">
