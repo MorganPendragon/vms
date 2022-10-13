@@ -7,6 +7,9 @@
     <title>Home</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 </head>
 
@@ -16,6 +19,10 @@
             <div class="d-flex gap-2 col-6 mx-auto">
                 <button class="btn btn-outline-success" role="button" data-bs-toggle="modal" data-bs-target="#createModal">Create</button>
             </div>
+            <form class="search d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
 
             <!-- Modal -->
             <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
@@ -50,7 +57,13 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <!--calendar picker here-->
+                                    <div class="col">
+                                        <div class="input-group date" id="datepicker">
+                                            <input type="text" class="form-control" placeholder="Birthday">
+                                            <span class="input-group-append">
+                                            </span>
+                                        </div>
+                                    </div>
                                 </div>
                         </form>
                         <div class="modal-footer">
@@ -61,10 +74,6 @@
                 </div>
             </div>
 
-            <form class="search d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
         </div>
     </nav>
     <table class="table table-strip">
@@ -172,6 +181,13 @@
             ?>
         </tbody>
     </table>
+    <script type="text/javascript">
+        $(function() {
+            $('#datepicker').datepicker({
+                dateFormat: 'yy-mm-dd'
+            });
+        });
+    </script>
 </body>
 
 </html>
