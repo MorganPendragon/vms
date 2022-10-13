@@ -1,8 +1,8 @@
 <?php
 
-    function insertInto($table)
+    function insertInto($table, $values)
     {
-        
+        return "INSERT INTO $table VALUES($values)";
     }
 
     function showTable($table)

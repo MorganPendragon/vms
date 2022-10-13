@@ -1,7 +1,6 @@
 <?php
 include('sqlcommands.php');
 
-
 class vaccination
 {
     private $servername = 'localhost';
@@ -44,7 +43,7 @@ class vaccination
 
 	public function deleteInfo($id)
 	{
-		$sql = "DELETE FROM info WHERE id = $id";
+		$sql = deleteRow('info', 'id', $id);
 		$result = $this->conn->query($sql);
 		if($result)
 		{
