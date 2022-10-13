@@ -40,13 +40,15 @@
             <?php
             include('conn.php');
             $vac = new vaccination();
-            $data = $vac->displayInfo();
+            $data = $vac->displayTable('info');
             $i = 1;
-            $modalID;
-
             /*
             Dont connect yet or i connect you to GOD 
             */
+            if (isset($_POST['submit'])) 
+            {
+
+            }
             if (isset($_GET['editID'])) 
             {
                 echo 'updated ID:' . $_GET['editID'];
@@ -55,8 +57,7 @@
             {
                 echo 'Deleted ID:' . $_GET['delID'];
             }
-            foreach ($data as $info) 
-            {
+            foreach ($data as $info) {
                 $name = $info['firstName'] . $info['middleName'] . $info['lastName'];
             ?>
                 <tr>
@@ -69,7 +70,7 @@
 
                     <!--edit-->
                     <td>
-                        <button type="button" data-bs-toggle="modal" data-bs-target="#editModal<?php echo $i?>">
+                        <button type="button" data-bs-toggle="modal" data-bs-target="#editModal<?php echo $i ?>">
                             <i class="bi bi-pencil-fill"></i>
                         </button>
 
@@ -87,7 +88,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <a type="button" class="btn btn-primary" href="adminview.php?editID=<?php echo $info['id']?>"?>Save changes</a>
+                                        <a type="button" class="btn btn-primary" href="adminview.php?editID=<?php echo $info['id'] ?>" ?>Save changes</a>
                                     </div>
                                 </div>
                             </div>
@@ -112,7 +113,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                                        <a type="button" class="btn btn-primary" href="adminview.php?delID=<?php echo $info['id']?>" ?>Yes</a>
+                                        <a type="button" class="btn btn-primary" href="adminview.php?delID=<?php echo $info['id'] ?>" ?>Yes</a>
                                     </div>
                                 </div>
                             </div>
@@ -133,41 +134,41 @@
                     <h5 class="modal-title" id="createModalLabel">Create</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form>
+                <form action="adminview.php" method="POST">
                     <div class="modal-body">
                         <div class="row mb-2">
                             <div class="col">
-                                <input type="text" class="form-control" placeholder="First name">
+                                <input type="text" name="firstName" class="form-control" placeholder="First name">
                             </div>
                             <div class="col">
-                                <input type="text" class="form-control" placeholder="Middle name">
+                                <input type="text" name="middleName" class="form-control" placeholder="Middle name">
                             </div>
                             <div class="col">
-                                <input type="text" class="form-control" placeholder="Last name">
-                            </div>
-                        </div>
-                        <div class="row mb-2">
-                            <div class="col">
-                                <input name="email" type="email" class="form-control" id="emailFormControl" placeholder="Email">
-                            </div>
-                            <div class="col">
-                                <input type="text" class="form-control" placeholder="Telephone No.">
+                                <input type="text" name="lastName" class="form-control" placeholder="Last name">
                             </div>
                         </div>
                         <div class="row mb-2">
                             <div class="col">
-                                <input type="date" class="form-control" name="date-field"/>
+                                <input name="email" name="email" type="email" class="form-control" id="emailFormControl" placeholder="Email">
                             </div>
                             <div class="col">
-                                <input type="text" class="form-control" placeholder="Address">
+                                <input type="text" name="tel" class="form-control" placeholder="Telephone No.">
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col">
+                                <input type="date" name="date" class="form-control" name="date-field" />
+                            </div>
+                            <div class="col">
+                                <input type="text" name="address" class="form-control" placeholder="Address">
                             </div>
                         </div>
                     </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" name="submit" class="btn btn-primary">Save</button>
+                    </div>
                 </form>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save</button>
-                </div>
             </div>
         </div>
     </div>

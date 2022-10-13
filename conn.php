@@ -1,16 +1,5 @@
 <?php
 
-//sql functions to return the command cause im lazy
-function showTable($table)
-{
-	return "SELECT * FROM $table";
-}
-
-function deleteRow($table, $col, $id)
-{
-	return "DELETE FROM $table WHERE $col = $id";
-}
-
 function showInfoByID($table, $col, $id)
 {
 	return "SELECT * FROM $table WHERE $col = $id";
@@ -37,9 +26,9 @@ class vaccination
 		}
     }
 
-	public function displayInfo()
+	public function displayTable($table)
 	{
-		$sql = showTable('info');
+		$sql = "SELECT * FROM $table";
 		$result = $this->conn->query($sql);
 		if($result->num_rows > 0)
 		{
@@ -51,14 +40,26 @@ class vaccination
 		}
 	}
 
+	public function displayIDinfo($table, $col, $id)
+	{
+		$sql = "SELECT * FROM $table WHERE $col = $id";
+		$result = $this->conn->query($sql);
+		if ($result->num_rows == 1) 
+		{
+			$row = $result->fetch_assoc();
+			return $row;
+		}
+	}
+
 	public function updateInfo($id)
 	{
 
 	}
 
-	public function deleteInfo($id)
+
+	public function deleteInfo($table, $col, $id)
 	{
-		$sql = deleteRow('info', 'id', $id);
+		$sql = "DELETE FROM $table WHERE $col = $id";
 		$result = $this->conn->query($sql);
 		if($result)
 		{
