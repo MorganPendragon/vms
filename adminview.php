@@ -17,51 +17,6 @@
             <div class="d-flex gap-2 col-6 mx-auto">
                 <button class="btn btn-outline-success" role="button" data-bs-toggle="modal" data-bs-target="#createModal">Create</button>
             </div>
-
-            <!-- Modal -->
-            <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="createModalLabel">Create</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <form>
-                            <div class="modal-body">
-                                <div class="row">
-                                    <div class="col">
-                                        <input type="text" class="form-control" placeholder="First name">
-                                    </div>
-                                    <div class="col">
-                                        <input type="text" class="form-control" placeholder="Middle name">
-                                    </div>
-                                    <div class="col">
-                                        <input type="text" class="form-control" placeholder="Last name">
-                                    </div>
-                                    <div class="col">
-                                        <input type="text" class="form-control" placeholder="Suffix">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        <input name="email" type="email" class="form-control" id="emailFormControl" placeholder="Email">
-                                    </div>
-                                    <div class="col">
-                                        <input type="text" class="form-control" placeholder="Telephone No.">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <!--calendar picker here-->
-                                </div>
-                        </form>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <form class="search d-flex" role="search">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success" type="submit">Search</button>
