@@ -47,7 +47,7 @@
             */
             if (isset($_POST['submit'])) 
             {
-
+                $vac->insertInfo($_POST);
             }
             if (isset($_GET['editID'])) 
             {
@@ -55,14 +55,14 @@
             }
             if (isset($_GET['delID'])) 
             {
-                echo 'Deleted ID:' . $_GET['delID'];
+                $vac->deleteInfo('info', 'id', $_GET['delID']);
             }
-            foreach ($data as $info) {
-                $name = $info['firstName'] . $info['middleName'] . $info['lastName'];
+            foreach ($data as $info) 
+            {
             ?>
                 <tr>
                     <th scope="row"> <?php echo $i++ ?> </th>
-                    <td> <?php echo $name ?> </td>
+                    <td> <?php echo $info['name'] ?> </td>
                     <td> <?php echo $info['birthday'] ?> </td>
                     <td><?php echo $info['address'] ?></td>
                     <td> <?php echo $info['tel']; ?></td>

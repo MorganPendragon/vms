@@ -1,10 +1,5 @@
 <?php
 
-function showInfoByID($table, $col, $id)
-{
-	return "SELECT * FROM $table WHERE $col = $id";
-}
-
 class vaccination
 {
     private $servername = 'localhost';
@@ -48,6 +43,25 @@ class vaccination
 		{
 			$row = $result->fetch_assoc();
 			return $row;
+		}
+	}
+
+	public function insertInfo($post)
+	{
+		$name = $post['firstName'] .' ' .$post['middleName'] .' ' .$post['lastName'];
+		$birthday = $post['date'];
+		$email = $post['email'];
+		$address = $post['address'];
+		$tel = $post['tel'];
+		$sql = "INSERT INTO info(name, birthday, email, address, tel) VALUES('$name', STR_TO_DATE('$birthday', '%m/%d/%Y'), '$email', '$address', '$tel')";
+		$result = $this->conn->query($sql);
+		if($result)
+		{
+			header('location:adminview.php?msg=1');
+		}
+		else
+		{
+			echo "Error" .$sql ."<br>" .$this->conn->error;
 		}
 	}
 
