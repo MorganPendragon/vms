@@ -123,7 +123,7 @@
             ?>
         </tbody>
     </table>
-    
+
     <!--Create Modal-->
     <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
@@ -154,13 +154,14 @@
                             </div>
                         </div>
                         <div class="row mb-2">
-                            <!--calendar picker here-->
-                        </div>
-                        <div class="row mb-2">
+                            <div class="col">
+                                <input type="date" class="form-control" name="date-field" />
+                            </div>
                             <div class="col">
                                 <input type="text" class="form-control" placeholder="Address">
                             </div>
                         </div>
+                    </div>
                 </form>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

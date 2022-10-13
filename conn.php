@@ -1,5 +1,6 @@
 <?php
 
+//sql functions to return the command cause im lazy
 function showTable($table)
 {
 	return "SELECT * FROM $table";
