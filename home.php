@@ -44,7 +44,12 @@
             $vac = new vaccination();
             $data = $vac->displayInfo();
             $i = 1;
-            foreach ($data as $info) {
+            if(isset($_GET['delID']))
+            {
+                header('location:home.php', true, 5);
+            }
+            foreach ($data as $info) 
+            {
                 $name = $info['firstName'] . $info['middleName'] . $info['lastName'];
             ?>
                 <tr>
@@ -61,16 +66,35 @@
                     </td>
                     <!--edit-->
                     <td>
-                        <?php echo '<a href="home.php?editID=' . $info['id'] . '" type ="button" data-bs-toggle = "modal" data-bs-target="#editModal">' ?>
-                        <i class="bi bi-pencil-fill"></i>
-                        </a>
+                        <button type ="button" data-bs-toggle = "modal" data-bs-target="#editModal">
+                            <i class="bi bi-pencil-fill"></i>
+                        </button>
 
+                        <!--Edit Modal-->
+                        <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="Edit" id="editModalLabel">Edit</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <!--put content here-->
+                                    <div class="modal-body">
+                                        ...
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                         <?php echo'<a type="button" class="btn btn-primary" href ="home.php?updateID=' . $info['id'].'">Save changes</button>'; ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </td>
                     <!--delete-->
                     <td>
-                        <?php echo '<a href="home.php?delID=' . $info['id'] . '" type ="button" data-bs-toggle = "modal" data-bs-target="#delModal">' ?>
+                        <button type ="button" data-bs-toggle = "modal" data-bs-target="#delModal">
                             <i class="bi bi-trash-fill"></i>
-                        </a>
+                        </button>
                         <!--Delete Modal-->
                         <div class="modal fade" id="delModal" tabindex="-1" aria-labelledby="delModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
@@ -85,7 +109,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <?php echo'<a type="button" class="btn btn-primary" href ="home.php?delID=' . $info['id'] .'">Save changes</a>' ?>
+                                        <?php echo '<a type="button" class="btn btn-primary" href ="home.php?delID=' . $info['id'] . '">Save changes</a>' ?>
                                     </div>
                                 </div>
                             </div>
@@ -97,27 +121,6 @@
             ?>
         </tbody>
     </table>
-
-    <!--Edit Modal-->
-    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="Edit" id="editModalLabel">Edit</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <!--put content here-->
-                <div class="modal-body">
-                    ...
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
 </body>
 
 </html>
