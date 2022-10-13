@@ -84,7 +84,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                         <?php echo'<a type="button" class="btn btn-primary" href ="home.php?updateID=' . $info['id'].'">Save changes</button>'; ?>
+                                        <?php echo'<a type="button" class="btn btn-primary" href ="home.php?updateID=' . $info['id'].'">Save changes</a>'; ?>
                                     </div>
                                 </div>
                             </div>
