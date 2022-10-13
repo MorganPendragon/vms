@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Home</title>
+    <title>AdminView</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    <!---->
+    <!--navbar-->
     <nav class="navbar" style="background-color: #e3f2fd;">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
@@ -23,6 +23,7 @@
             </li>
         </ul>
     </nav>
+    <!--content div-->
     <div class="tab-content" id="myTabContent">
         <!--Info Tab-->
         <div class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="info-tab">
