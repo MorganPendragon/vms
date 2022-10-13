@@ -12,6 +12,7 @@
 </head>
 
 <body>
+    <!---->
     <nav class="navbar" style="background-color: #e3f2fd;">
         <div class="container-fluid">
             <div class="d-flex gap-2 col-6 mx-auto">
