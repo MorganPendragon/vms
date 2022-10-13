@@ -47,13 +47,16 @@
             /*
             Dont connect yet or i connect you to GOD 
             */
-            if (isset($_GET['editID'])) {
+            if (isset($_GET['editID'])) 
+            {
                 echo 'updated ID:' . $_GET['editID'];
             }
-            if (isset($_GET['delID'])) {
+            if (isset($_GET['delID'])) 
+            {
                 echo 'Deleted ID:' . $_GET['delID'];
             }
-            foreach ($data as $info) {
+            foreach ($data as $info) 
+            {
                 $name = $info['firstName'] . $info['middleName'] . $info['lastName'];
             ?>
                 <tr>
@@ -66,14 +69,12 @@
 
                     <!--edit-->
                     <td>
-                        <?php $modalID = '"#editModal' . $i . '"' ?>
-                        <button type="button" data-bs-toggle="modal" data-bs-target=<?php echo $modalID ?>>
+                        <button type="button" data-bs-toggle="modal" data-bs-target="#editModal<?php echo $i?>">
                             <i class="bi bi-pencil-fill"></i>
                         </button>
 
                         <!--Edit Modal-->
-                        <?php $modalID = '"editModal' . $i . '"' ?>
-                        <div class="modal fade" id=<?php echo $modalID ?> tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="editModal<?php echo $i ?>" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -86,7 +87,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <a type="button" class="btn btn-primary" href=<?php echo '"adminview.php?editID=' . $info['id'] . '"' ?>>Save changes</a>
+                                        <a type="button" class="btn btn-primary" href="adminview.php?editID=<?php echo $info['id']?>"?>Save changes</a>
                                     </div>
                                 </div>
                             </div>
@@ -94,13 +95,11 @@
                     </td>
                     <!--delete-->
                     <td>
-                        <?php $modalID = '"#delModal' . $i . '"' ?>
-                        <button type="button" data-bs-toggle="modal" data-bs-target=<?php echo $modalID ?>>
+                        <button type="button" data-bs-toggle="modal" data-bs-target="#deleteModal<?php echo $i ?>">
                             <i class="bi bi-trash-fill"></i>
                         </button>
                         <!--Delete Modal-->
-                        <?php $modalID = '"delModal' . $i . '"' ?>
-                        <div class="modal fade" id=<?php echo $modalID ?> tabindex="-1" aria-labelledby="delModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="deleteModal<?php echo $i ?>" tabindex="-1" aria-labelledby="delModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -113,7 +112,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                                        <a type="button" class="btn btn-primary" href=<?php echo '"adminview.php?delID=' . $info["id"] . '"' ?>>Yes</a>
+                                        <a type="button" class="btn btn-primary" href="adminview.php?delID=<?php echo $info['id']?>" ?>Yes</a>
                                     </div>
                                 </div>
                             </div>
@@ -157,7 +156,7 @@
                         </div>
                         <div class="row mb-2">
                             <div class="col">
-                                <input type="date" class="form-control" name="date-field" />
+                                <input type="date" class="form-control" name="date-field"/>
                             </div>
                             <div class="col">
                                 <input type="text" class="form-control" placeholder="Address">
