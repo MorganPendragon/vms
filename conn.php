@@ -34,13 +34,13 @@ class vaccination
 		}
 	}
 
-	public function deletInfo($id)
+	public function deleteInfo($id)
 	{
 		$sql = "DELETE FROM info WHERE id = '$id'";
 		$result = $this->conn->query($sql);
 		if($result)
 		{
-			header('location:home.php?msq=3');
+			header('location:home.php');
 		}
 		else
 		{
