@@ -13,12 +13,54 @@
 <body>
     <nav class="navbar" style="background-color: #e3f2fd;">
         <div class="container-fluid">
-            <form>
-                <div class="d-flex gap-2 col-6 mx-auto">
-                    <a href="#" class="btn btn-outline-success" role="button">Create</a>
-                </div>
+            <div class="d-flex gap-2 col-6 mx-auto">
+                <button class="btn btn-outline-success" role="button" data-bs-toggle="modal" data-bs-target="#createModal">Create</button>
+            </div>
 
-            </form>
+            <!-- Modal -->
+            <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="createModalLabel">Create</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <input type="text" class="form-control" placeholder="First name">
+                                    </div>
+                                    <div class="col">
+                                        <input type="text" class="form-control" placeholder="Middle name">
+                                    </div>
+                                    <div class="col">
+                                        <input type="text" class="form-control" placeholder="Last name">
+                                    </div>
+                                    <div class="col">
+                                        <input type="text" class="form-control" placeholder="Suffix">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <input name="email" type="email" class="form-control" id="emailFormControl" placeholder="Email">
+                                    </div>
+                                    <div class="col">
+                                        <input type="text" class="form-control" placeholder="Telephone No.">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <!--calendar picker here-->
+                                </div>
+                        </form>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <form class="search d-flex" role="search">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success" type="submit">Search</button>
@@ -45,16 +87,17 @@
             $data = $vac->displayInfo();
             $i = 1;
             $modalID;
-            if(isset($_GET['editID']))
-            {
-                echo 'updated ID:' .$_GET['editID'];
+
+            /*
+            Dont connect yet or i connect you to GOD 
+            */
+            if (isset($_GET['editID'])) {
+                echo 'updated ID:' . $_GET['editID'];
             }
-            if(isset($_GET['delID']))
-            {
-                echo 'Deleted ID:'.$_GET['delID'];
+            if (isset($_GET['delID'])) {
+                echo 'Deleted ID:' . $_GET['delID'];
             }
-            foreach ($data as $info) 
-            {
+            foreach ($data as $info) {
                 $name = $info['firstName'] . $info['middleName'] . $info['lastName'];
             ?>
                 <tr>
@@ -71,14 +114,14 @@
                     </td>
                     <!--edit-->
                     <td>
-                        <?php $modalID = '"#editModal'.$i .'"'?>
-                        <button type ="button" data-bs-toggle = "modal" data-bs-target= <?php echo $modalID?>>
+                        <?php $modalID = '"#editModal' . $i . '"' ?>
+                        <button type="button" data-bs-toggle="modal" data-bs-target=<?php echo $modalID ?>>
                             <i class="bi bi-pencil-fill"></i>
                         </button>
 
                         <!--Edit Modal-->
-                        <?php $modalID = '"editModal'.$i .'"'?>
-                        <div class="modal fade" id= <?php echo $modalID?> tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+                        <?php $modalID = '"editModal' . $i . '"' ?>
+                        <div class="modal fade" id=<?php echo $modalID ?> tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -87,11 +130,10 @@
                                     </div>
                                     <!--put content here-->
                                     <div class="modal-body">
-                                        ...
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <a type="button" class="btn btn-primary" href = <?php echo'"home.php?editID=' .$info['id'] .'"'?>>Save changes</a>
+                                        <a type="button" class="btn btn-primary" href=<?php echo '"adminview.php?editID=' . $info['id'] . '"' ?>>Save changes</a>
                                     </div>
                                 </div>
                             </div>
@@ -99,13 +141,13 @@
                     </td>
                     <!--delete-->
                     <td>
-                        <?php $modalID = '"#delModal' .$i .'"'?>
-                        <button type ="button" data-bs-toggle = "modal" data-bs-target=<?php echo $modalID?>>
+                        <?php $modalID = '"#delModal' . $i . '"' ?>
+                        <button type="button" data-bs-toggle="modal" data-bs-target=<?php echo $modalID ?>>
                             <i class="bi bi-trash-fill"></i>
                         </button>
                         <!--Delete Modal-->
-                        <?php $modalID = '"delModal' .$i .'"'?>
-                        <div class="modal fade" id=<?php echo $modalID?> tabindex="-1" aria-labelledby="delModalLabel" aria-hidden="true">
+                        <?php $modalID = '"delModal' . $i . '"' ?>
+                        <div class="modal fade" id=<?php echo $modalID ?> tabindex="-1" aria-labelledby="delModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -118,7 +160,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                                        <a type="button" class="btn btn-primary" href = <?php echo '"home.php?delID=' .$info["id"].'"'?>>Yes</a>
+                                        <a type="button" class="btn btn-primary" href=<?php echo '"adminview.php?delID=' . $info["id"] . '"' ?>>Yes</a>
                                     </div>
                                 </div>
                             </div>
