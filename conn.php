@@ -35,7 +35,7 @@ class vaccination
 		}
 	}
 
-	public function displayIDinfo($table, $col, $id)
+	public function displayRowByID($table, $col, $id)
 	{
 		$sql = "SELECT * FROM $table WHERE $col = $id";
 		$result = $this->conn->query($sql);
@@ -65,6 +65,20 @@ class vaccination
 		}
 	}
 
+	public function insertVac($post)
+	{
+		$name = $post['brandName'];
+		$sql="INSERT INTO vacBrand(brand) VALUES('$name')";
+		if($this->conn->query($sql))
+		{
+			header('location:adminview.php');
+		}
+		else
+		{
+			echo "Error" .$sql ."<br>" .$this->conn->error;
+		}
+	}
+
 	public function updateInfo($post ,$id)
 	{
 		$name = $post['upFirstName'] .' ' .$post['upMiddleName'] .' ' .$post['upLastName'];
@@ -75,6 +89,21 @@ class vaccination
 		$tel = $post['upTel'];
 		$sql = "UPDATE info SET name='$name', gender='$gender',birthday='$birthday', email='$email', address='$address', tel='$tel' WHERE id=$id";
 		
+		if($this->conn->query($sql))
+		{
+			header('location:adminview.php');
+		}
+		else
+		{
+			echo "Error" .$sql ."<br>" .$this->conn->error;
+		}
+	}
+
+	public function updateVac($post, $id)
+	{
+		$name=$post['brandName'];
+		$sql = "UPDATE vacBrand SET brand='$name' WHERE id=$id";
+
 		if($this->conn->query($sql))
 		{
 			header('location:adminview.php');
