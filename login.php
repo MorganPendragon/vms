@@ -29,7 +29,7 @@
 		<div class="row justify-content-end align-items-center window-height">
 			<div class="col-sm-8">
 				<div class="image-fluid mb-5" style="width: 60vh; ">
-					<img src="doctor.jpg" class="card-img-top rounded-circle" alt="...">
+					<img src="img\doctor.jpg" class="card-img-top rounded-circle" alt="...">
 					<p class="fs-4 text-center">We Care for your better Future</p>
 				</div>
 			</div>
