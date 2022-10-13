@@ -26,7 +26,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            ...
+                            
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -109,7 +109,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <a type="button" class="btn btn-primary" href=<?php echo '"home.php?editID=' . $info['id'] . '"' ?>>Save changes</a>
+                                        <a type="button" class="btn btn-primary" href=<?php echo '"adminview.php?editID=' . $info['id'] . '"' ?>>Save changes</a>
                                     </div>
                                 </div>
                             </div>
@@ -136,7 +136,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                                        <a type="button" class="btn btn-primary" href=<?php echo '"home.php?delID=' . $info["id"] . '"' ?>>Yes</a>
+                                        <a type="button" class="btn btn-primary" href=<?php echo '"adminview.php?delID=' . $info["id"] . '"' ?>>Yes</a>
                                     </div>
                                 </div>
                             </div>

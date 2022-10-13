@@ -47,7 +47,7 @@ class vaccination
 		$result = $this->conn->query($sql);
 		if($result)
 		{
-			header('location:home.php');
+			header('location:adminview.php');
 		}
 		else
 		{
