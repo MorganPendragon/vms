@@ -21,15 +21,16 @@
             </form>
         </div>
     </nav>
-    <table class="table table-strip">
+    <table class="table table-strip table-borderless">
         <thead>
             <tr>
-                <th scope="col">No.</th>
-                <th scope="col">Name</th>
-                <th scope="col">Birthdate</th>
-                <th scope="col">Address</th>
-                <th scope="col">Contact No.</th>
-                <th scope="col">Email</th>
+                <th class="border" scope="col">No.</th>
+                <th class="border" scope="col">Name</th>
+                <th class="border" scope="col">Gender</th>
+                <th class="border" scope="col">Birthdate</th>
+                <th class="border" scope="col">Address</th>
+                <th class="border" scope="col">Contact No.</th>
+                <th class="border" scope="col">Email</th>
             </tr>
         </thead>
 
@@ -53,16 +54,18 @@
             foreach ($data as $info) {
             ?>
                 <tr>
-                    <th scope="row"> <?php echo $i++ ?> </th>
-                    <td> <?php echo $info['name'] ?> </td>
-                    <td> <?php echo $info['birthday'] ?> </td>
-                    <td><?php echo $info['address'] ?></td>
-                    <td> <?php echo $info['tel']; ?></td>
-                    <td> <?php echo $info['email'] ?> </td>
+                    <th class="border" scope="row"> <?php echo $i++ ?> </th>
+                    <td class="border"> <?php echo $info['name'] ?> </td>
+                    <td class="border"> <?php echo $info['gender'] ?> </td>
+                    <td class="border"> <?php echo $info['birthday'] ?> </td>
+                    <td class="border"><?php echo $info['address'] ?></td>
+                    <td class="border"> <?php echo $info['tel']; ?></td>
+                    <td class="border"> <?php echo $info['email'] ?> </td>
 
                     <!--edit-->
                     <td>
-                        <a type="button" data-bs-toggle="modal" href="adminview.php?editID=<?php echo $info['id'] ?>" data-bs-target="#editModal<?php echo $i ?>">
+                        <!--resize-->
+                        <a cla type="button" data-bs-toggle="modal" href="adminview.php?editID=<?php echo $info['id'] ?>" data-bs-target="#editModal<?php echo $i ?>">
                             <i class="bi bi-pencil-fill"></i>
                         </a>
 
@@ -95,8 +98,17 @@
                                                 <div class="col">
                                                     <input type="email" name="upEmail" class="form-control" id="emailFormControl" placeholder="Email" value="<?php echo $info['email']; ?>" required>
                                                 </div>
+                                            </div>
+                                            <div class="row mb-2">
                                                 <div class="col">
                                                     <input type="text" name="upTel" class="form-control" placeholder="Telephone No." value="<?php echo $info['tel']; ?>">
+                                                </div>
+                                                <div class="col input-group">
+                                                    <select class="form-select" name="upGender" required>
+                                                        <option></option>
+                                                        <option value="Male">Male</option>
+                                                        <option value="Female">Female</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="row mb-2">
@@ -119,6 +131,7 @@
                     </td>
                     <!--delete-->
                     <td>
+                        <!--resize-->
                         <a type="button" data-bs-toggle="modal" data-bs-target="#deleteModal<?php echo $i ?>">
                             <i class="bi bi-trash-fill"></i>
                         </a>
@@ -153,7 +166,7 @@
     </div>
     <!--Create Modal-->
     <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-dialog modal-dialog-centered modal-lg overflow-auto">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="createModalLabel">Create</h5>
@@ -161,7 +174,7 @@
                 </div>
                 <form action="adminview.php" method="POST">
                     <div class="modal-body">
-                        <div class="row mb-2">
+                        <div class="row mb-3">
                             <div class="col">
                                 <input type="text" name="firstName" class="form-control" placeholder="First name" required>
                             </div>
@@ -172,15 +185,24 @@
                                 <input type="text" name="lastName" class="form-control" placeholder="Last name" required>
                             </div>
                         </div>
-                        <div class="row mb-2">
+                        <div class="row mb-3">
                             <div class="col">
                                 <input type="email" name="email" class="form-control" id="emailFormControl" placeholder="Email" required>
                             </div>
+                        </div>
+                        <div class="row mb-3">
                             <div class="col">
                                 <input type="text" name="tel" class="form-control" placeholder="Telephone No." required>
                             </div>
+                            <div class="col input-group">
+                                <select class="form-select" name="gender" required>
+                                    <option></option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                            </div>
                         </div>
-                        <div class="row mb-2">
+                        <div class="row mb-3">
                             <div class="col">
                                 <input type="date" name="date" class="form-control" name="date-field" required>
                             </div>
@@ -196,6 +218,7 @@
                 </form>
             </div>
         </div>
+    </div>
     </div>
 </body>
 

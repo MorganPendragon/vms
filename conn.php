@@ -49,11 +49,12 @@ class vaccination
 	public function insertInfo($post)
 	{
 		$name = $post['firstName'] .' ' .$post['middleName'] .' ' .$post['lastName'];
+		$gender = $post['gender'];
 		$birthday = $post['date'];
 		$email = $post['email'];
 		$address = $post['address'];
 		$tel = $post['tel'];
-		$sql = "INSERT INTO info(name, birthday, email, address, tel) VALUES('$name', '$birthday', '$email', '$address', '$tel')";
+		$sql = "INSERT INTO info(name, gender, birthday, email, address, tel) VALUES('$name', '$gender','$birthday', '$email', '$address', '$tel')";
 		if($this->conn->query($sql))
 		{
 			header('location:adminview.php');
@@ -67,11 +68,12 @@ class vaccination
 	public function updateInfo($post ,$id)
 	{
 		$name = $post['upFirstName'] .' ' .$post['upMiddleName'] .' ' .$post['upLastName'];
+		$gender = $post['upGender'];
 		$birthday = $post['upDate'];
 		$email = $post['upEmail'];
 		$address = $post['upAddress'];
 		$tel = $post['upTel'];
-		$sql = "UPDATE info SET name='$name', birthday='$birthday', email='$email', address='$address', tel='$tel' WHERE id=$id";
+		$sql = "UPDATE info SET name='$name', gender='$gender',birthday='$birthday', email='$email', address='$address', tel='$tel' WHERE id=$id";
 		
 		if($this->conn->query($sql))
 		{
