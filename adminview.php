@@ -16,7 +16,10 @@
     <nav class="navbar" style="background-color: #e3f2fd;">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="info-tab" data-bs-toggle="tab" data-bs-target="#info" type="button" role="tab" aria-controls="home" aria-selected="true">Info</button>
+                <button class="nav-link active" id="student-tab" data-bs-toggle="tab" data-bs-target="#student" type="button" role="tab" aria-controls="student" aria-selected="true">Student</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="faculty-tab" data-bs-toggle="tab" data-bs-target="#faculty" type="button" role="tab" aria-controls="faculty" aria-selected="false">Faculty</button>
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link" id="vaccine-tab" data-bs-toggle="tab" data-bs-target="#vaccine" type="button" role="tab" aria-controls="vaccine" aria-selected="false">Vaccine</button>
@@ -26,15 +29,54 @@
             </li>
         </ul>
     </nav>
+    <?php
+    include('conn.php');
+    $vac = new vaccination();
+    $data = $vac->displayTable('student');
+    $i = 1;
+
+    if(isset($_GET['submit']))
+    {
+        switch($_GET['submit'])
+        {
+            case 1:
+                $vac->insertInfo($_POST);
+                break;
+        }
+    }
+
+    //Student CUD
+    if (isset($_GET['editID'])) {
+        $vac->updateInfo($_POST, $_GET['editID']);
+    }
+    if (isset($_GET['delID'])) {
+        $vac->deleteInfo('info', 'id', $_GET['delID']);
+    }
+    if (isset($_GET['report'])) {
+        $vac->studentReport();
+    }
+
+    //Vac CUD
+    if (isset($_POST['submitVac'])) {
+        $vac->insertVac($_POST);
+    }
+    if (isset($_GET['editVac'])) {
+        $vac->updateVac($_POST, $_GET['editVac']);
+    }
+    if (isset($_GET['delVacID'])) {
+        $vac->deleteInfo('vacBrand', 'id', $_GET['delVacID']);
+    }
+    ?>
     <!--content div-->
     <div class="tab-content" id="myTabContent">
-        <!--Info Tab-->
-        <div class="tab-pane fade show active" id="info" role="tabpanel" aria-labelledby="info-tab">
+        <!--Student Tab-->
+        <div class="tab-pane fade show active" id="student" role="tabpanel" aria-labelledby="student-tab">
             <table class="table table-strip table-borderless">
                 <thead>
                     <tr>
                         <th class="border" scope="col">No.</th>
                         <th class="border" scope="col">Name</th>
+                        <th class="border" scope="col">Section</th>
                         <th class="border" scope="col">Gender</th>
                         <th class="border" scope="col">Birthdate</th>
                         <th class="border" scope="col">Address</th>
@@ -45,41 +87,12 @@
 
                 <tbody>
                     <?php
-                    include('conn.php');
-                    $vac = new vaccination();
-                    $data = $vac->displayTable('info');
-                    $i = 1;
-
-                    //Info CUD
-                    if (isset($_POST['submitInfo'])) {
-                        $vac->insertInfo($_POST);
-                    }
-                    if (isset($_GET['editID'])) {
-                        $vac->updateInfo($_POST, $_GET['editID']);
-                    }
-                    if (isset($_GET['delID'])) {
-                        $vac->deleteInfo('info', 'id', $_GET['delID']);
-                    }
-
-                    //Vac CUD
-                    if (isset($_POST['submitVac'])) 
-                    {
-                        $vac->insertVac($_POST);
-                    }
-                    if(isset($_GET['editVac']))
-                    {
-                        $vac->updateVac($_POST, $_GET['editVac']);
-                    }
-                    if (isset($_GET['delVacID'])) 
-                    {
-                        $vac->deleteInfo('vacBrand', 'id', $_GET['delVacID']);
-                    }
-
                     foreach ($data as $info) {
                     ?>
                         <tr>
                             <th class="border" scope="row"> <?php echo $i++ ?> </th>
                             <td class="border"> <?php echo $info['name'] ?> </td>
+                            <td class="border"> <?php echo $info['section'] ?> </td>
                             <td class="border"> <?php echo $info['gender'] ?> </td>
                             <td class="border"> <?php echo $info['birthday'] ?> </td>
                             <td class="border"><?php echo $info['address'] ?></td>
@@ -186,19 +199,29 @@
                     ?>
                 </tbody>
             </table>
+
             <div class="d-flex justify-content-center">
-                <button class="btn btn-outline-success" role="button" data-bs-toggle="modal" data-bs-target="#createInfoModal">+</button>
+                <button class="btn btn-outline-success me-2" role="button" data-bs-toggle="modal" data-bs-target="#createStudentModal">+</button>
+                <a href="adminview.php?report=1">Generate Report</a>
             </div>
             <!--Create Modal-->
-            <div class="modal fade" id="createInfoModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
+            <div class="modal fade" id="createStudentModal" tabindex="-1" aria-labelledby="createStudentLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-lg overflow-auto">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="createModalLabel">Create</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <form action="adminview.php" method="POST">
+                        <form action="adminview.php?submit=1" method="POST">
                             <div class="modal-body">
+                                <div class="row mb-3">
+                                    <div class="col">
+                                        <input type="text" name="idNo" class="form-control" placeholder="ID No." required>
+                                    </div>
+                                    <div class="col">
+                                        <input type="text" name="Section" class="form-control" placeholder="Section" required>
+                                    </div>
+                                </div>
                                 <div class="row mb-3">
                                     <div class="col">
                                         <input type="text" name="firstName" class="form-control" placeholder="First name" required>
@@ -238,7 +261,75 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" name="submitInfo" class="btn btn-primary">Save</button>
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Faculty-->
+        <div class="tab-pane fade" id="faculty" role="tabpanel" aria-labelledby="faculty-tab">
+            <table>
+
+            </table>
+            <div class="d-flex justify-content-center">
+                <button class="btn btn-outline-success" role="button" data-bs-toggle="modal" data-bs-target="#createFacultyModal">+</button>
+            </div>
+            <div class="modal fade" id="createFacultyModal" tabindex="-1" aria-labelledby="createFacultyLabel">
+                <div class="modal-dialog modal-dialog-centered modal-lg overflow-auto">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="createModalLabel">Create</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form action="" method="post">
+                            <div class="modal-body">
+                                <div class="row mb-3">
+                                    <div class="col">
+                                        <input type="text" name="idNo" class="form-control" placeholder="ID No." required>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col">
+                                        <input type="text" name="firstName" class="form-control" placeholder="First name" required>
+                                    </div>
+                                    <div class="col">
+                                        <input type="text" name="middleName" class="form-control" placeholder="Middle name" required>
+                                    </div>
+                                    <div class="col">
+                                        <input type="text" name="lastName" class="form-control" placeholder="Last name" required>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col">
+                                        <input type="email" name="email" class="form-control" id="emailFormControl" placeholder="Email" required>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col">
+                                        <input type="text" name="tel" class="form-control" placeholder="Telephone No." required>
+                                    </div>
+                                    <div class="col input-group">
+                                        <select class="form-select" name="gender" required>
+                                            <option></option>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col">
+                                        <input type="date" name="date" class="form-control" name="date-field" required>
+                                    </div>
+                                    <div class="col">
+                                        <input type="text" name="address" class="form-control" placeholder="Address" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" name="submitStudent" class="btn btn-primary">Save</button>
                             </div>
                         </form>
                     </div>
@@ -271,18 +362,18 @@
                                     <i class="bi bi-pencil-fill"></i>
                                 </a>
                                 <!--update vac-->
-                                <div class="modal fade" id="upVacModal<?php echo $i?>" tabindex="-1" aria-labelledby="upVacModal">
+                                <div class="modal fade" id="upVacModal<?php echo $i ?>" tabindex="-1" aria-labelledby="upVacModal">
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="upVacLabel">Edit</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
-                                            <form action="adminview.php?editVac=<?php echo $info['id']?>" method="POST">
+                                            <form action="adminview.php?editVac=<?php echo $info['id'] ?>" method="POST">
                                                 <div class="modal-body">
                                                     <div class="row mb-2">
                                                         <div class="col">
-                                                            <input type="text" name="brandName" class="form-control" placeholder="Brand Name" value="<?php echo $info['brand'];?>">
+                                                            <input type="text" name="brandName" class="form-control" placeholder="Brand Name" value="<?php echo $info['brand']; ?>">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -339,7 +430,7 @@
                             <h5 class="modal-title" id="createModalLabel">Create</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <form action="adminview.php" method="POST">
+                        <form data-bs-toggle="tab" data-bs-target="#vaccine" method="POST">
                             <div class="modal-body">
                                 <div class="row mb-2">
                                     <div class="col">
@@ -360,11 +451,6 @@
         <div class="tab-pane fade" id="dosage" role="tabpanel" aria-labelledby="dosage-tab">
         </div>
     </div>
-    <footer>
-        <button>
-            Generate Reports
-        </button>
-    </footer>
 </body>
 
 </html>
