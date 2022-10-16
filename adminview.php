@@ -21,6 +21,9 @@
             <li class="nav-item" role="presentation">
                 <button class="nav-link" id="vaccine-tab" data-bs-toggle="tab" data-bs-target="#vaccine" type="button" role="tab" aria-controls="vaccine" aria-selected="false">Vaccine</button>
             </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="dosage-tab" data-bs-toggle="tab" data-bs-target="#dosage" type="button" role="tab" aria-controls="dosage" aria-selected="false">Dosage</button>
+            </li>
         </ul>
     </nav>
     <!--content div-->
@@ -353,7 +356,15 @@
                 </div>
             </div>
         </div>
+        <!--Dosage Tab-->
+        <div class="tab-pane fade" id="dosage" role="tabpanel" aria-labelledby="dosage-tab">
+        </div>
     </div>
+    <footer>
+        <button>
+            Generate Reports
+        </button>
+    </footer>
 </body>
 
 </html>
