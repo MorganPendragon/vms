@@ -64,7 +64,7 @@ class vaccination
 		return $colName;
 	}
 
-	public function insertInfo($post, $table)
+	public function insertInfowithUniqueID($post, $table)
 	{
 		$colName = $this->getColumnName($table);
 		$ctr = 1;
@@ -86,7 +86,7 @@ class vaccination
 		$ctr = 1;
 		foreach($keys as $key)
 		{
-			$value = $post["$key"];
+			$value = $post["$key"][0];
 			if($key == 'firstName' || $key == 'middleName')
 			{
 				$sql .= "$value ";

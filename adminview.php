@@ -32,15 +32,18 @@
     <?php
     include('conn.php');
     $vac = new vaccination();
-    $data = $vac->displayTable('student');
     $i = 1;
 
-    if(isset($_GET['submit']))
-    {
-        switch($_GET['submit'])
-        {
+    if (isset($_GET['submit'])) {
+        switch ($_GET['submit']) {
             case 1:
-                $vac->insertInfo($_POST);
+                echo $vac->insertInfowithUniqueID($_POST, 'student');
+                break;
+            case 2:
+                echo $vac->insertInfowithUniqueID($_POST,'faculty');
+                break;
+            case 3:
+                echo $vac->insertInfowithUniqueID($_POST, 'vacBrand');
                 break;
         }
     }
@@ -87,6 +90,8 @@
 
                 <tbody>
                     <?php
+                    $data = $vac->displayTable('student');
+                    $colName = $vac->getColumnName('student');
                     foreach ($data as $info) {
                     ?>
                         <tr>
@@ -216,34 +221,36 @@
                             <div class="modal-body">
                                 <div class="row mb-3">
                                     <div class="col">
-                                        <input type="text" name="idNo" class="form-control" placeholder="ID No." required>
-                                    </div>
-                                    <div class="col">
-                                        <input type="text" name="Section" class="form-control" placeholder="Section" required>
+                                        <input type="text" name="<?php echo $colName[0] ?>[0]" class="form-control" placeholder="ID No." required>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col">
-                                        <input type="text" name="firstName" class="form-control" placeholder="First name" required>
+                                        <input type="text" name="firstName[0]" class="form-control" placeholder="First name" required>
                                     </div>
                                     <div class="col">
-                                        <input type="text" name="middleName" class="form-control" placeholder="Middle name" required>
+                                        <input type="text" name="middleName[0]" class="form-control" placeholder="Middle name" required>
                                     </div>
                                     <div class="col">
-                                        <input type="text" name="lastName" class="form-control" placeholder="Last name" required>
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col">
-                                        <input type="email" name="email" class="form-control" id="emailFormControl" placeholder="Email" required>
+                                        <input type="text" name="lastName[0]" class="form-control" placeholder="Last name" required>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col">
-                                        <input type="text" name="tel" class="form-control" placeholder="Telephone No." required>
+                                        <input type="text" name="<?php echo $colName[2] ?>[0]" class="form-control" placeholder="Section" required>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col">
+                                        <input type="email" name="<?php echo $colName[3] ?>[0]" class="form-control" id="emailFormControl" placeholder="Email" required>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col">
+                                        <input type="text" name="<?php echo $colName[5] ?>[0]" class="form-control" placeholder="Telephone No." required>
                                     </div>
                                     <div class="col input-group">
-                                        <select class="form-select" name="gender" required>
+                                        <select class="form-select" name="<?php echo $colName[6] ?>[0]" required>
                                             <option></option>
                                             <option value="Male">Male</option>
                                             <option value="Female">Female</option>
@@ -252,10 +259,10 @@
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col">
-                                        <input type="date" name="date" class="form-control" name="date-field" required>
+                                        <input type="date" name="<?php echo $colName[7] ?>[0]" class="form-control" name="date-field" required>
                                     </div>
                                     <div class="col">
-                                        <input type="text" name="address" class="form-control" placeholder="Address" required>
+                                        <input type="text" name="<?php echo $colName[8] ?>[0]" class="form-control" placeholder="Address" required>
                                     </div>
                                 </div>
                             </div>
@@ -271,11 +278,25 @@
         <!--Faculty-->
         <div class="tab-pane fade" id="faculty" role="tabpanel" aria-labelledby="faculty-tab">
             <table>
+                <thead>
 
+                </thead>
+                <?php
+                $data = $vac->displayTable('faculty');
+                $colName = $vac->getColumnName('faculty');
+                foreach ($data as $info) {
+                ?>
+                    <tbody>
+
+                    </tbody>
+                <?php
+                }
+                ?>
             </table>
             <div class="d-flex justify-content-center">
                 <button class="btn btn-outline-success" role="button" data-bs-toggle="modal" data-bs-target="#createFacultyModal">+</button>
             </div>
+            <!--Faculty Insert Modal-->
             <div class="modal fade" id="createFacultyModal" tabindex="-1" aria-labelledby="createFacultyLabel">
                 <div class="modal-dialog modal-dialog-centered modal-lg overflow-auto">
                     <div class="modal-content">
@@ -283,53 +304,55 @@
                             <h5 class="modal-title" id="createModalLabel">Create</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <form action="" method="post">
+                        <form action="adminview.php?submit=2" method="post">
                             <div class="modal-body">
                                 <div class="row mb-3">
                                     <div class="col">
-                                        <input type="text" name="idNo" class="form-control" placeholder="ID No." required>
+                                        <input type="text" name="<?php echo $colName[0] ?>[]" class="form-control" placeholder="ID No." required>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col">
-                                        <input type="text" name="firstName" class="form-control" placeholder="First name" required>
+                                        <input type="text" name="firstName[]" class="form-control" placeholder="First name" required>
                                     </div>
                                     <div class="col">
-                                        <input type="text" name="middleName" class="form-control" placeholder="Middle name" required>
+                                        <input type="text" name="middleName[]" class="form-control" placeholder="Middle name" required>
                                     </div>
                                     <div class="col">
-                                        <input type="text" name="lastName" class="form-control" placeholder="Last name" required>
+                                        <input type="text" name="lastName[]" class="form-control" placeholder="Last name" required>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                    <div class="col">
-                                        <input type="email" name="email" class="form-control" id="emailFormControl" placeholder="Email" required>
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col">
-                                        <input type="text" name="tel" class="form-control" placeholder="Telephone No." required>
-                                    </div>
                                     <div class="col input-group">
-                                        <select class="form-select" name="gender" required>
+                                        <select class="form-select" name="<?php echo $colName[2] ?>[]" required>
                                             <option></option>
                                             <option value="Male">Male</option>
                                             <option value="Female">Female</option>
                                         </select>
                                     </div>
+                                    <div class="col">
+                                        <input type="date" name="<?php echo $colName[3] ?>[]" class="form-control" name="date-field" required>
+                                    </div>
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col">
-                                        <input type="date" name="date" class="form-control" name="date-field" required>
+                                        <input type="email" name="<?php echo $colName[4] ?>[]" class="form-control" id="emailFormControl" placeholder="Email" required>
                                     </div>
+                                </div>
+                                <div class="row mb-3">
                                     <div class="col">
-                                        <input type="text" name="address" class="form-control" placeholder="Address" required>
+                                        <input type="text" name="<?php echo $colName[5] ?>[]" class="form-control" placeholder="Address" required>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col">
+                                        <input type="text" name="<?php echo $colName[6] ?>[]" class="form-control" placeholder="Telephone No." required>
                                     </div>
                                 </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" name="submitStudent" class="btn btn-primary">Save</button>
+                                <button type="submit" class="btn btn-primary">Save</button>
                             </div>
                         </form>
                     </div>
@@ -430,7 +453,7 @@
                             <h5 class="modal-title" id="createModalLabel">Create</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <form data-bs-toggle="tab" data-bs-target="#vaccine" method="POST">
+                        <form action="adminview.php?submit=3" method="POST">
                             <div class="modal-body">
                                 <div class="row mb-2">
                                     <div class="col">
@@ -440,7 +463,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                                <button type="submit" name="submitVac" class="btn btn-primary">Save Changes</button>
+                                <button type="submit" class="btn btn-primary">Save Changes</button>
                             </div>
                         </form>
                     </div>
