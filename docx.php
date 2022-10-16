@@ -1,8 +1,6 @@
 <?php
-require_once 'bootstrap.php';
 
-use \PhpOffice\PhpWord\PhpWord;
-use \PhpOffice\PhpWord\IOFactory;
+require __DIR__.'/vendor/autoload.php';
 
 // Creating the new document...
 $phpWord = new \PhpOffice\PhpWord\PhpWord();
