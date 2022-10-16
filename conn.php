@@ -1,4 +1,10 @@
 <?php
+//TODO:Refactor docx generation and redirect the file path to somewhere else
+
+//autoloader cause lazy
+require __DIR__.'/vendor/autoload.php';
+//calls the lib
+$phpWord = new \PhpOffice\PhpWord\PhpWord();
 
 class vaccination
 {
@@ -7,7 +13,7 @@ class vaccination
 	private $password = 'password';
 	private $dbname = 'Vaccine';
 	private $conn;
-
+	
     function __construct()
     {
         $this->conn = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
@@ -46,23 +52,63 @@ class vaccination
 		}
 	}
 
-	public function insertInfo($post)
+	public function getColumnName($table)
 	{
-		$name = $post['firstName'] .' ' .$post['middleName'] .' ' .$post['lastName'];
-		$gender = $post['gender'];
-		$birthday = $post['date'];
-		$email = $post['email'];
-		$address = $post['address'];
-		$tel = $post['tel'];
-		$sql = "INSERT INTO info(name, gender, birthday, email, address, tel) VALUES('$name', '$gender','$birthday', '$email', '$address', '$tel')";
-		if($this->conn->query($sql))
+		$sql = "DESCRIBE `$table`";
+		$result = $this->conn->query($sql);
+		$colName = array();
+		while($row = $result->fetch_assoc())
 		{
-			header('location:adminview.php');
+			$colName[] = $row['Field'];
 		}
-		else
+		return $colName;
+	}
+
+	public function insertInfo($post, $table)
+	{
+		$colName = $this->getColumnName($table);
+		$ctr = 1;
+		$keys = array_keys($post);
+		$sql = "INSERT INTO $table(";
+		foreach($colName as $col)
 		{
-			echo "Error" .$sql ."<br>" .$this->conn->error;
+			if($ctr < count($colName))
+			{
+				$sql .= "$col, ";
+			}
+			else
+			{
+				$sql .="$col)";
+			}
+			$ctr++;
 		}
+		$sql .= " VALUES(";
+		$ctr = 1;
+		foreach($keys as $key)
+		{
+			$value = $post["$key"];
+			if($key == 'firstName' || $key == 'middleName')
+			{
+				$sql .= "$value ";
+			}
+			elseif($key == 'lastName')
+			{
+				$sql .= "$value, ";
+			}
+			elseif($ctr < count($keys))
+			{
+				$sql .="$value, ";
+			}
+			else
+			{
+				$sql .="$value)";
+			}
+			$ctr++;
+		}
+		print_r($keys); 
+		echo '</br>';
+		return $sql;
+
 	}
 
 	public function insertVac($post)
@@ -78,7 +124,7 @@ class vaccination
 			echo "Error" .$sql ."<br>" .$this->conn->error;
 		}
 	}
-
+	//TODO:Redo this Update Function
 	public function updateInfo($post ,$id)
 	{
 		$name = $post['upFirstName'] .' ' .$post['upMiddleName'] .' ' .$post['upLastName'];
@@ -127,5 +173,21 @@ class vaccination
 		{
 			echo "ERROR" .$sql ."<br>". $this->conn->server;
 		}
+	}
+
+	public function studentReport()
+	{
+		$section = $GLOBALS['phpWord']->addSection();
+		// Adding Text element to the Section having font styled by default...
+		$section->addText(
+			'"Learn from yesterday, live for today, hope for tomorrow. '
+			. 'The important thing is not to stop questioning." '
+			. '(Albert Einstein)'
+		);
+
+		// Saving the document as OOXML file...
+		$objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($GLOBALS['phpWord'], 'Word2007');
+		$objWriter->save('StudentReport.docx');
+		header('location:adminview.php');
 	}
 }
