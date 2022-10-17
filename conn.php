@@ -6,7 +6,7 @@ require __DIR__.'/vendor/autoload.php';
 //calls the lib
 $phpWord = new \PhpOffice\PhpWord\PhpWord();
 
-class vaccination
+class connection
 {
     private $servername = 'localhost';
 	private $username = 'j';
@@ -74,6 +74,8 @@ class vaccination
 		{
 			$ctr = 1;
 		}
+
+		//gets the column name and concats into sql query
 		for(;$ctr < count($colName);$ctr++)
 		{
 			if($ctr < count($colName)-1)
@@ -87,16 +89,16 @@ class vaccination
 		}
 		$sql .= " VALUES(";
 		$ctr = 1;
+
+		//assigns the column name to their respective values
 		foreach($keys as $key)
 		{
+			$value = $post[$key];
 			if(isset($formArr))
 			{
 				$value = $post[$key][$formArr];
 			}
-			else
-			{
-				$value = $post[$key];
-			}
+
 			if($key == 'firstName')
 			{
 				$sql .= "'$value ";
@@ -119,54 +121,6 @@ class vaccination
 			}
 			$ctr++;
 		}
-		echo $sql;
-		print_r($keys); 
-		echo '</br>';
-	}
-
-	public function insertWithoutID($post, $table)
-	{
-		$colName = $this->getColumnName($table);
-		$keys = array_keys($post);
-		$sql = "INSERT INTO $table(";
-		for($i = 1; $i < count($colName); $i++)
-		{
-			if($i < count($colName))
-			{
-				$sql .= "$colName[$i], ";
-			}
-			else
-			{
-				$sql .="$colName[$i])";
-			}
-		}
-
-		echo $sql;
-	}
-
-	//TODO:Redo this Update Function
-	public function updateInfo($post, $table, $update, $id)
-	{
-		$keys = array_keys($post);
-		$colName = $this->getColumnName($table);
-		$sql = "UPDATE info SET ";
-		$value=0;
-		for($i = 0; $i < count($colName);)
-		{
-			$key = $keys[$i];
-			$value = $post[$key][0];
-			$sql .= "$colName[$i]= ";
-		}
-		echo $sql;
-		print_r(array_keys($post));
-		echo '</br>'. $sql;
-	}
-
-	public function updateVac($post, $id)
-	{
-		$name=$post['brandName'];
-		$sql = "UPDATE vacBrand SET brand='$name' WHERE id=$id";
-
 		if($this->conn->query($sql))
 		{
 			header('location:adminview.php');
@@ -177,6 +131,64 @@ class vaccination
 		}
 	}
 
+	//TODO:Redo this Update Function
+	public function updateInfo($post, $table, $condition, $primaryKey,$id=true, $formArr = 0)
+	{
+		$keys = array_keys($post);
+		$colName = $this->getColumnName($table);
+		$sql = "UPDATE $table SET ";
+		$value=0;
+		$j = 0;
+
+		if(!$id)
+		{
+			$j = 1;
+		}
+		//assigns the column name to their respective values
+		for($i = 0;$i < count($keys);$i++)
+		{
+			$value = $post[$keys[$i]];
+			if(isset($formArr))
+			{
+				$value = $post[$keys[$i]][$formArr];
+			}
+
+			if($keys[$i] == 'upFirstName')
+			{
+				$sql .= "$colName[$j] = '$value ";
+				$j++;
+			}
+			elseif($keys[$i] == 'upMiddleName')
+			{
+				$sql .= "$value ";
+			}
+			elseif($keys[$i] == 'upLastName')
+			{
+				$sql .= "$value', ";
+			}
+			elseif($i < count($keys) -1)
+			{
+				$sql .= "$colName[$j] = '$value', ";
+				$j++;
+			}
+			else
+			{
+				$sql .= "$colName[$j] = '$value' ";
+				$j++;
+			}
+		}
+
+		$sql .= "WHERE $condition = '$primaryKey'";
+		
+		if($this->conn->query($sql))
+		{
+			header('location:adminview.php');
+		}
+		else
+		{
+			echo "Error" .$sql ."<br>" .$this->conn->error;
+		}
+	}
 
 	public function deleteInfo($table, $col, $id)
 	{
