@@ -34,26 +34,44 @@
     $vac = new vaccination();
     $i = 1;
 
-    if (isset($_GET['submit'])) {
-        switch ($_GET['submit']) {
+    //insert
+    if (isset($_GET['submit'])) 
+    {
+        switch ($_GET['submit']) 
+        {
             case 1:
                 echo $vac->insertInfowithUniqueID($_POST, 'student');
                 break;
             case 2:
-                echo $vac->insertInfowithUniqueID($_POST,'faculty');
+                echo $vac->insertInfowithUniqueID($_POST, 'faculty');
                 break;
             case 3:
-                echo $vac->insertInfowithUniqueID($_POST, 'vacBrand');
+                echo $vac->insertVac('vac');
                 break;
         }
     }
 
-    //Student CUD
-    if (isset($_GET['editID'])) {
-        $vac->updateInfo($_POST, $_GET['editID']);
+    //delete
+    if(isset($_GET['delete']))
+    {
+        switch($_GET['delete'])
+        {
+            case 1:
+                $vac->deleteInfo('student', 'id', $_GET['delStudentID']);
+                break;
+            case 2:
+                $vac->deleteInfo('faculty', 'id', $_GET['delFacultyID']);
+                break;
+            case 3: 
+                $vac->deleteInfo('vacBrand', 'id', $_GET['delVacID']);
+                break;
+        }
     }
-    if (isset($_GET['delID'])) {
-        $vac->deleteInfo('info', 'id', $_GET['delID']);
+    
+    //Student CUD
+    if (isset($_GET['editID'])) 
+    {
+        $vac->updateInfo($_POST, 'student', $id, $_GET['editID']);
     }
     if (isset($_GET['report'])) {
         $vac->studentReport();
@@ -66,9 +84,6 @@
     if (isset($_GET['editVac'])) {
         $vac->updateVac($_POST, $_GET['editVac']);
     }
-    if (isset($_GET['delVacID'])) {
-        $vac->deleteInfo('vacBrand', 'id', $_GET['delVacID']);
-    }
     ?>
     <!--content div-->
     <div class="tab-content" id="myTabContent">
@@ -78,6 +93,7 @@
                 <thead>
                     <tr>
                         <th class="border" scope="col">No.</th>
+                        <th class="border" scope="col">ID</th>
                         <th class="border" scope="col">Name</th>
                         <th class="border" scope="col">Section</th>
                         <th class="border" scope="col">Gender</th>
@@ -96,6 +112,7 @@
                     ?>
                         <tr>
                             <th class="border" scope="row"> <?php echo $i++ ?> </th>
+                            <td class="border"> <?php echo $info['id'] ?> </td>
                             <td class="border"> <?php echo $info['name'] ?> </td>
                             <td class="border"> <?php echo $info['section'] ?> </td>
                             <td class="border"> <?php echo $info['gender'] ?> </td>
@@ -192,7 +209,7 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                                                <a type="button" class="btn btn-primary" href="adminview.php?delID=<?php echo $info['id'] ?>">Yes</a>
+                                                <a type="button" class="btn btn-primary" href="adminview.php?delete=1&delStudentID=<?php echo $info['id'] ?>">Yes</a>
                                             </div>
                                         </div>
                                     </div>
@@ -221,36 +238,36 @@
                             <div class="modal-body">
                                 <div class="row mb-3">
                                     <div class="col">
-                                        <input type="text" name="<?php echo $colName[0] ?>[0]" class="form-control" placeholder="ID No." required>
+                                        <input type="text" name="<?php echo $colName[0] ?>[]" class="form-control" placeholder="ID No." required>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col">
-                                        <input type="text" name="firstName[0]" class="form-control" placeholder="First name" required>
+                                        <input type="text" name="firstName[]" class="form-control" placeholder="First name" required>
                                     </div>
                                     <div class="col">
-                                        <input type="text" name="middleName[0]" class="form-control" placeholder="Middle name" required>
+                                        <input type="text" name="middleName[]" class="form-control" placeholder="Middle name" required>
                                     </div>
                                     <div class="col">
-                                        <input type="text" name="lastName[0]" class="form-control" placeholder="Last name" required>
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col">
-                                        <input type="text" name="<?php echo $colName[2] ?>[0]" class="form-control" placeholder="Section" required>
+                                        <input type="text" name="lastName[]" class="form-control" placeholder="Last name" required>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col">
-                                        <input type="email" name="<?php echo $colName[3] ?>[0]" class="form-control" id="emailFormControl" placeholder="Email" required>
+                                        <input type="text" name="<?php echo $colName[2] ?>[]" class="form-control" placeholder="Section" required>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col">
-                                        <input type="text" name="<?php echo $colName[5] ?>[0]" class="form-control" placeholder="Telephone No." required>
+                                        <input type="email" name="<?php echo $colName[3] ?>[]" class="form-control" id="emailFormControl" placeholder="Email" required>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col">
+                                        <input type="text" name="<?php echo $colName[4] ?>[]" class="form-control" placeholder="Telephone No." required>
                                     </div>
                                     <div class="col input-group">
-                                        <select class="form-select" name="<?php echo $colName[6] ?>[0]" required>
+                                        <select class="form-select" name="<?php echo $colName[5] ?>[]" required>
                                             <option></option>
                                             <option value="Male">Male</option>
                                             <option value="Female">Female</option>
@@ -259,10 +276,10 @@
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col">
-                                        <input type="date" name="<?php echo $colName[7] ?>[0]" class="form-control" name="date-field" required>
+                                        <input type="date" name="<?php echo $colName[6] ?>[]" class="form-control" name="date-field" required>
                                     </div>
                                     <div class="col">
-                                        <input type="text" name="<?php echo $colName[8] ?>[0]" class="form-control" placeholder="Address" required>
+                                        <input type="text" name="<?php echo $colName[7] ?>[]" class="form-control" placeholder="Address" required>
                                     </div>
                                 </div>
                             </div>
@@ -277,17 +294,32 @@
         </div>
         <!--Faculty-->
         <div class="tab-pane fade" id="faculty" role="tabpanel" aria-labelledby="faculty-tab">
-            <table>
+            <table class="table table-strip table-borderless">
                 <thead>
-
+                    <th class="border" scope="col">No.</th>
+                    <th class="border" scope="col">ID</th>
+                    <th class="border" scope="col">Name</th>
+                    <th class="border" scope="col">Gender</th>
+                    <th class="border" scope="col">Birthday</th>
+                    <th class="border" scope="col">Email</th>
+                    <th class="border" scope="col">Address</th>
+                    <th class="border" scope="col">Telephone</th>
                 </thead>
                 <?php
+                $i = 1;
                 $data = $vac->displayTable('faculty');
                 $colName = $vac->getColumnName('faculty');
                 foreach ($data as $info) {
                 ?>
                     <tbody>
-
+                        <th class="border" scope="row"> <?php echo $i++ ?> </th>
+                        <td class="border"> <?php echo $info['id'] ?> </td>
+                        <td class="border"> <?php echo $info['name'] ?> </td>
+                        <td class="border"> <?php echo $info['gender'] ?> </td>
+                        <td class="border"> <?php echo $info['birthday'] ?> </td>
+                        <td class="border"><?php echo $info['address'] ?></td>
+                        <td class="border"> <?php echo $info['tel']; ?></td>
+                        <td class="border"> <?php echo $info['email'] ?> </td>
                     </tbody>
                 <?php
                 }
@@ -430,7 +462,7 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                                                <a type="button" class="btn btn-primary" href="adminview.php?delVacID=<?php echo $info['id'] ?>">Yes</a>
+                                                <a type="button" class="btn btn-primary" href="adminview.php?delete=3&delVacID=<?php echo $info['id'] ?>">Yes</a>
                                             </div>
                                         </div>
                                     </div>
@@ -457,7 +489,7 @@
                             <div class="modal-body">
                                 <div class="row mb-2">
                                     <div class="col">
-                                        <input type="text" name="brandName" class="form-control" placeholder="Brand Name" required>
+                                        <input type="text" name="brandName[]" class="form-control" placeholder="Brand Name" required>
                                     </div>
                                 </div>
                             </div>

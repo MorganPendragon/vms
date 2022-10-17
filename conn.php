@@ -86,29 +86,39 @@ class vaccination
 		$ctr = 1;
 		foreach($keys as $key)
 		{
-			$value = $post["$key"][0];
-			if($key == 'firstName' || $key == 'middleName')
+			$value = $post[$key][0];
+			if($key == 'firstName')
+			{
+				$sql .= "'$value ";
+			}
+			elseif($key == 'middleName')
 			{
 				$sql .= "$value ";
 			}
 			elseif($key == 'lastName')
 			{
-				$sql .= "$value, ";
+				$sql .= "$value', ";
 			}
 			elseif($ctr < count($keys))
 			{
-				$sql .="$value, ";
+				$sql .="'$value', ";
 			}
 			else
 			{
-				$sql .="$value)";
+				$sql .="'$value')";
 			}
 			$ctr++;
 		}
 		print_r($keys); 
 		echo '</br>';
-		return $sql;
-
+		if($this->conn->query($sql))
+		{
+			header('location:adminview.php');
+		}
+		else
+		{
+			echo "Error" .$sql ."<br>" .$this->conn->error;
+		}
 	}
 
 	public function insertVac($post)
@@ -124,25 +134,23 @@ class vaccination
 			echo "Error" .$sql ."<br>" .$this->conn->error;
 		}
 	}
+
 	//TODO:Redo this Update Function
-	public function updateInfo($post ,$id)
+	public function updateInfo($post, $table, $update, $id)
 	{
-		$name = $post['upFirstName'] .' ' .$post['upMiddleName'] .' ' .$post['upLastName'];
-		$gender = $post['upGender'];
-		$birthday = $post['upDate'];
-		$email = $post['upEmail'];
-		$address = $post['upAddress'];
-		$tel = $post['upTel'];
-		$sql = "UPDATE info SET name='$name', gender='$gender',birthday='$birthday', email='$email', address='$address', tel='$tel' WHERE id=$id";
-		
-		if($this->conn->query($sql))
+		$keys = array_keys($post);
+		$colName = $this->getColumnName($table);
+		$sql = "UPDATE info SET ";
+		$value=0;
+				for($i = 0; $i < count($colName);)
 		{
-			header('location:adminview.php');
+			$key = $keys[$i];
+			$value = $post[$key][0];
+			$sql .= "$colName= ";
 		}
-		else
-		{
-			echo "Error" .$sql ."<br>" .$this->conn->error;
-		}
+		echo $sql;
+		print_r(array_keys($post));
+		echo '</br>'. $sql;
 	}
 
 	public function updateVac($post, $id)
@@ -163,7 +171,7 @@ class vaccination
 
 	public function deleteInfo($table, $col, $id)
 	{
-		$sql = "DELETE FROM $table WHERE $col = $id";
+		$sql = "DELETE FROM $table WHERE $col = '$id'";
 		$result = $this->conn->query($sql);
 		if($result)
 		{
