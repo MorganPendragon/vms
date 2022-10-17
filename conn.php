@@ -64,29 +64,39 @@ class vaccination
 		return $colName;
 	}
 
-	public function insertInfowithUniqueID($post, $table)
+	public function insertInfo($post, $table, $id=true, $formArr=0)
 	{
 		$colName = $this->getColumnName($table);
-		$ctr = 1;
 		$keys = array_keys($post);
 		$sql = "INSERT INTO $table(";
-		foreach($colName as $col)
+		$ctr = 0;
+		if(!$id)
 		{
-			if($ctr < count($colName))
+			$ctr = 1;
+		}
+		for(;$ctr < count($colName);$ctr++)
+		{
+			if($ctr < count($colName)-1)
 			{
-				$sql .= "$col, ";
+				$sql .= "$colName[$ctr], ";
 			}
 			else
 			{
-				$sql .="$col)";
+				$sql .="$colName[$ctr])";
 			}
-			$ctr++;
 		}
 		$sql .= " VALUES(";
 		$ctr = 1;
 		foreach($keys as $key)
 		{
-			$value = $post[$key][0];
+			if(isset($formArr))
+			{
+				$value = $post[$key][$formArr];
+			}
+			else
+			{
+				$value = $post[$key];
+			}
 			if($key == 'firstName')
 			{
 				$sql .= "'$value ";
@@ -109,30 +119,29 @@ class vaccination
 			}
 			$ctr++;
 		}
+		echo $sql;
 		print_r($keys); 
 		echo '</br>';
-		if($this->conn->query($sql))
-		{
-			header('location:adminview.php');
-		}
-		else
-		{
-			echo "Error" .$sql ."<br>" .$this->conn->error;
-		}
 	}
 
-	public function insertVac($post)
+	public function insertWithoutID($post, $table)
 	{
-		$name = $post['brandName'];
-		$sql="INSERT INTO vacBrand(brand) VALUES('$name')";
-		if($this->conn->query($sql))
+		$colName = $this->getColumnName($table);
+		$keys = array_keys($post);
+		$sql = "INSERT INTO $table(";
+		for($i = 1; $i < count($colName); $i++)
 		{
-			header('location:adminview.php');
+			if($i < count($colName))
+			{
+				$sql .= "$colName[$i], ";
+			}
+			else
+			{
+				$sql .="$colName[$i])";
+			}
 		}
-		else
-		{
-			echo "Error" .$sql ."<br>" .$this->conn->error;
-		}
+
+		echo $sql;
 	}
 
 	//TODO:Redo this Update Function
@@ -142,11 +151,11 @@ class vaccination
 		$colName = $this->getColumnName($table);
 		$sql = "UPDATE info SET ";
 		$value=0;
-				for($i = 0; $i < count($colName);)
+		for($i = 0; $i < count($colName);)
 		{
 			$key = $keys[$i];
 			$value = $post[$key][0];
-			$sql .= "$colName= ";
+			$sql .= "$colName[$i]= ";
 		}
 		echo $sql;
 		print_r(array_keys($post));

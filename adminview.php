@@ -35,42 +35,62 @@
     $i = 1;
 
     //insert
-    if (isset($_GET['submit'])) 
+    switch ($_GET['submit']) 
     {
-        switch ($_GET['submit']) 
-        {
-            case 1:
-                echo $vac->insertInfowithUniqueID($_POST, 'student');
-                break;
-            case 2:
-                echo $vac->insertInfowithUniqueID($_POST, 'faculty');
-                break;
-            case 3:
-                echo $vac->insertVac('vac');
-                break;
-        }
+        case 1:
+            echo $vac->insertInfo($_POST, 'student');
+            break;
+        case 2:
+            echo $vac->insertInfo($_POST, 'faculty', true, 1);
+            break;
+        case 3:
+            echo $vac->insertInfo($_POST,'vacBrand',false);
+            break;
+        default:
+            break;
     }
 
     //delete
-    if(isset($_GET['delete']))
+    switch ($_GET['delete']) 
     {
-        switch($_GET['delete'])
-        {
-            case 1:
-                $vac->deleteInfo('student', 'id', $_GET['delStudentID']);
-                break;
-            case 2:
-                $vac->deleteInfo('faculty', 'id', $_GET['delFacultyID']);
-                break;
-            case 3: 
-                $vac->deleteInfo('vacBrand', 'id', $_GET['delVacID']);
-                break;
-        }
+        case 1:
+            $vac->deleteInfo('student', 'id', $_GET['delStudentID']);
+            break;
+        case 2:
+            $vac->deleteInfo('faculty', 'id', $_GET['delFacultyID']);
+            break;
+        case 3:
+            $vac->deleteInfo('vacBrand', 'id', $_GET['delVacID']);
+            break;
+        default:
+            break;
     }
-    
-    //Student CUD
-    if (isset($_GET['editID'])) 
+
+    switch($_GET['edit'])
     {
+        case 1:
+            break;
+        case 2:
+            break;
+        case 3:
+            break;
+        default:
+            break;
+    }
+
+    switch($_GET['report'])
+    {
+        case 1:
+            break;
+        case 2:
+            break;
+        case 3:
+            break;
+        default:
+            break;
+    }
+    //Student CUD
+    if (isset($_GET['editID'])) {
         $vac->updateInfo($_POST, 'student', $id, $_GET['editID']);
     }
     if (isset($_GET['report'])) {
@@ -78,9 +98,6 @@
     }
 
     //Vac CUD
-    if (isset($_POST['submitVac'])) {
-        $vac->insertVac($_POST);
-    }
     if (isset($_GET['editVac'])) {
         $vac->updateVac($_POST, $_GET['editVac']);
     }
@@ -127,95 +144,94 @@
                                 <a cla type="button" data-bs-toggle="modal" href="adminview.php?editID=<?php echo $info['id'] ?>" data-bs-target="#editInfoModal<?php echo $i ?>">
                                     <i class="bi bi-pencil-fill"></i>
                                 </a>
-
-                                <!--Edit Modal-->
-                                <div class="modal fade" id="editInfoModal<?php echo $i ?>" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered modal-lg">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="Edit" id="editModalLabel">Edit</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <!--put content here-->
-                                            <?php
-                                            $name = explode(' ', $info['name']);
-                                            ?>
-                                            <form action="adminview.php?editID=<?php echo $info['id']; ?>" method="POST">
-                                                <div class="modal-body">
-                                                    <div class="row mb-2">
-                                                        <div class="col">
-                                                            <input type="text" name="upFirstName" class="form-control" placeholder="First name" value="<?php echo $name[0] ?>">
-                                                        </div>
-                                                        <div class="col">
-                                                            <input type="text" name="upMiddleName" class="form-control" placeholder="Middle name" value="<?php echo $name[1] ?>">
-                                                        </div>
-                                                        <div class="col">
-                                                            <input type="text" name="upLastName" class="form-control" placeholder="Last name" value="<?php echo $name[2] ?>">
-                                                        </div>
-                                                    </div>
-                                                    <div class="row mb-2">
-                                                        <div class="col">
-                                                            <input type="email" name="upEmail" class="form-control" id="emailFormControl" placeholder="Email" value="<?php echo $info['email']; ?>" required>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row mb-2">
-                                                        <div class="col">
-                                                            <input type="text" name="upTel" class="form-control" placeholder="Telephone No." value="<?php echo $info['tel']; ?>">
-                                                        </div>
-                                                        <div class="col input-group">
-                                                            <select class="form-select" name="upGender" required>
-                                                                <option></option>
-                                                                <option value="Male">Male</option>
-                                                                <option value="Female">Female</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row mb-2">
-                                                        <div class="col">
-                                                            <input type="date" name="upDate" class="form-control" name="date-field" value="<?php echo $info['birthday']; ?>" />
-                                                        </div>
-                                                        <div class="col">
-                                                            <input type="text" name="upAddress" class="form-control" placeholder="Address" value="<?php echo $info['address']; ?>">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-primary">Save Changes</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
                             </td>
-
                             <!--delete info-->
                             <td>
                                 <!--resize-->
                                 <a type="button" data-bs-toggle="modal" data-bs-target="#deleteInfoModal<?php echo $i ?>">
                                     <i class="bi bi-trash-fill"></i>
                                 </a>
-                                <!--Delete Modal-->
-                                <div class="modal fade" id="deleteInfoModal<?php echo $i ?>" tabindex="-1" aria-labelledby="delModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="Edit" id="delModalLabel">Confirmation</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <!--put content here-->
-                                            <div class="modal-body">
-                                                Are you sure about the deletion?
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                                                <a type="button" class="btn btn-primary" href="adminview.php?delete=1&delStudentID=<?php echo $info['id'] ?>">Yes</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+
                             </td>
                         </tr>
+                        <!--Edit Modal-->
+                        <div class="modal fade" id="editInfoModal<?php echo $i ?>" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="Edit" id="editModalLabel">Edit</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <!--put content here-->
+                                    <?php
+                                    $name = explode(' ', $info['name']);
+                                    ?>
+                                    <form action="adminview.php?editID=<?php echo $info['id']; ?>" method="POST">
+                                        <div class="modal-body">
+                                            <div class="row mb-2">
+                                                <div class="col">
+                                                    <input type="text" name="upFirstName" class="form-control" placeholder="First name" value="<?php echo $name[0] ?>">
+                                                </div>
+                                                <div class="col">
+                                                    <input type="text" name="upMiddleName" class="form-control" placeholder="Middle name" value="<?php echo $name[1] ?>">
+                                                </div>
+                                                <div class="col">
+                                                    <input type="text" name="upLastName" class="form-control" placeholder="Last name" value="<?php echo $name[2] ?>">
+                                                </div>
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col">
+                                                    <input type="email" name="upEmail" class="form-control" id="emailFormControl" placeholder="Email" value="<?php echo $info['email']; ?>" required>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col">
+                                                    <input type="text" name="upTel" class="form-control" placeholder="Telephone No." value="<?php echo $info['tel']; ?>">
+                                                </div>
+                                                <div class="col input-group">
+                                                    <select class="form-select" name="upGender" required>
+                                                        <option></option>
+                                                        <option value="Male">Male</option>
+                                                        <option value="Female">Female</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col">
+                                                    <input type="date" name="upDate" class="form-control" name="date-field" value="<?php echo $info['birthday']; ?>" />
+                                                </div>
+                                                <div class="col">
+                                                    <input type="text" name="upAddress" class="form-control" placeholder="Address" value="<?php echo $info['address']; ?>">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Delete Modal-->
+                        <div class="modal fade" id="deleteInfoModal<?php echo $i ?>" tabindex="-1" aria-labelledby="delModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="Edit" id="delModalLabel">Confirmation</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <!--put content here-->
+                                    <div class="modal-body">
+                                        Are you sure about the deletion?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                                        <a type="button" class="btn btn-primary" href="adminview.php?delete=1&delStudentID=<?php echo $info['id'] ?>">Yes</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     <?php
                     }
                     ?>
@@ -238,36 +254,36 @@
                             <div class="modal-body">
                                 <div class="row mb-3">
                                     <div class="col">
-                                        <input type="text" name="<?php echo $colName[0] ?>[]" class="form-control" placeholder="ID No." required>
+                                        <input type="text" name="<?php echo $colName[0] ?>[0]" class="form-control" placeholder="ID No." required>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col">
-                                        <input type="text" name="firstName[]" class="form-control" placeholder="First name" required>
+                                        <input type="text" name="firstName[0]" class="form-control" placeholder="First name" required>
                                     </div>
                                     <div class="col">
-                                        <input type="text" name="middleName[]" class="form-control" placeholder="Middle name" required>
+                                        <input type="text" name="middleName[0]" class="form-control" placeholder="Middle name" required>
                                     </div>
                                     <div class="col">
-                                        <input type="text" name="lastName[]" class="form-control" placeholder="Last name" required>
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col">
-                                        <input type="text" name="<?php echo $colName[2] ?>[]" class="form-control" placeholder="Section" required>
+                                        <input type="text" name="lastName[0]" class="form-control" placeholder="Last name" required>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col">
-                                        <input type="email" name="<?php echo $colName[3] ?>[]" class="form-control" id="emailFormControl" placeholder="Email" required>
+                                        <input type="text" name="<?php echo $colName[2] ?>[0]" class="form-control" placeholder="Section" required>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col">
-                                        <input type="text" name="<?php echo $colName[4] ?>[]" class="form-control" placeholder="Telephone No." required>
+                                        <input type="email" name="<?php echo $colName[3] ?>[0]" class="form-control" id="emailFormControl" placeholder="Email" required>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col">
+                                        <input type="text" name="<?php echo $colName[4] ?>[0]" class="form-control" placeholder="Telephone No." required>
                                     </div>
                                     <div class="col input-group">
-                                        <select class="form-select" name="<?php echo $colName[5] ?>[]" required>
+                                        <select class="form-select" name="<?php echo $colName[5] ?>[0]" required>
                                             <option></option>
                                             <option value="Male">Male</option>
                                             <option value="Female">Female</option>
@@ -276,10 +292,10 @@
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col">
-                                        <input type="date" name="<?php echo $colName[6] ?>[]" class="form-control" name="date-field" required>
+                                        <input type="date" name="<?php echo $colName[6] ?>[0]" class="form-control" name="date-field" required>
                                     </div>
                                     <div class="col">
-                                        <input type="text" name="<?php echo $colName[7] ?>[]" class="form-control" placeholder="Address" required>
+                                        <input type="text" name="<?php echo $colName[7] ?>[0]" class="form-control" placeholder="Address" required>
                                     </div>
                                 </div>
                             </div>
@@ -320,6 +336,9 @@
                         <td class="border"><?php echo $info['address'] ?></td>
                         <td class="border"> <?php echo $info['tel']; ?></td>
                         <td class="border"> <?php echo $info['email'] ?> </td>
+                        <td>
+
+                        </td>
                     </tbody>
                 <?php
                 }
@@ -340,45 +359,45 @@
                             <div class="modal-body">
                                 <div class="row mb-3">
                                     <div class="col">
-                                        <input type="text" name="<?php echo $colName[0] ?>[]" class="form-control" placeholder="ID No." required>
+                                        <input type="text" name="<?php echo $colName[0] ?>[1]" class="form-control" placeholder="ID No." required>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col">
-                                        <input type="text" name="firstName[]" class="form-control" placeholder="First name" required>
+                                        <input type="text" name="firstName[1]" class="form-control" placeholder="First name" required>
                                     </div>
                                     <div class="col">
-                                        <input type="text" name="middleName[]" class="form-control" placeholder="Middle name" required>
+                                        <input type="text" name="middleName[1]" class="form-control" placeholder="Middle name" required>
                                     </div>
                                     <div class="col">
-                                        <input type="text" name="lastName[]" class="form-control" placeholder="Last name" required>
+                                        <input type="text" name="lastName[1]" class="form-control" placeholder="Last name" required>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col input-group">
-                                        <select class="form-select" name="<?php echo $colName[2] ?>[]" required>
+                                        <select class="form-select" name="<?php echo $colName[2] ?>[1]" required>
                                             <option></option>
                                             <option value="Male">Male</option>
                                             <option value="Female">Female</option>
                                         </select>
                                     </div>
                                     <div class="col">
-                                        <input type="date" name="<?php echo $colName[3] ?>[]" class="form-control" name="date-field" required>
+                                        <input type="date" name="<?php echo $colName[3] ?>[1]" class="form-control" name="date-field" required>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col">
-                                        <input type="email" name="<?php echo $colName[4] ?>[]" class="form-control" id="emailFormControl" placeholder="Email" required>
+                                        <input type="email" name="<?php echo $colName[4] ?>[1]" class="form-control" id="emailFormControl" placeholder="Email" required>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col">
-                                        <input type="text" name="<?php echo $colName[5] ?>[]" class="form-control" placeholder="Address" required>
+                                        <input type="text" name="<?php echo $colName[5] ?>[1]" class="form-control" placeholder="Address" required>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col">
-                                        <input type="text" name="<?php echo $colName[6] ?>[]" class="form-control" placeholder="Telephone No." required>
+                                        <input type="text" name="<?php echo $colName[6] ?>[1]" class="form-control" placeholder="Telephone No." required>
                                     </div>
                                 </div>
                             </div>
@@ -416,30 +435,6 @@
                                 <a cla type="button" data-bs-toggle="modal" href="adminview.php?editID=<?php echo $info['id'] ?>" data-bs-target="#upVacModal<?php echo $i ?>">
                                     <i class="bi bi-pencil-fill"></i>
                                 </a>
-                                <!--update vac-->
-                                <div class="modal fade" id="upVacModal<?php echo $i ?>" tabindex="-1" aria-labelledby="upVacModal">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="upVacLabel">Edit</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <form action="adminview.php?editVac=<?php echo $info['id'] ?>" method="POST">
-                                                <div class="modal-body">
-                                                    <div class="row mb-2">
-                                                        <div class="col">
-                                                            <input type="text" name="brandName" class="form-control" placeholder="Brand Name" value="<?php echo $info['brand']; ?>">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                                                    <button type="submit" class="btn btn-primary">Save Changes</submit>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
                             </td>
 
                             <!--delete vac-->
@@ -448,27 +443,51 @@
                                 <a type="button" data-bs-toggle="modal" data-bs-target="#deleteVacModal<?php echo $i ?>">
                                     <i class="bi bi-trash-fill"></i>
                                 </a>
-                                <!--Delete Modal-->
-                                <div class="modal fade" id="deleteVacModal<?php echo $i ?>" tabindex="-1" aria-labelledby="delVacLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="Edit" id="delVacLabel">Confirmation</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <!--put content here-->
-                                            <div class="modal-body">
-                                                Are you sure about the deletion?
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                                                <a type="button" class="btn btn-primary" href="adminview.php?delete=3&delVacID=<?php echo $info['id'] ?>">Yes</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                             </td>
                         </tr>
+                        <!--update vac-->
+                        <div class="modal fade" id="upVacModal<?php echo $i ?>" tabindex="-1" aria-labelledby="upVacModal">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="upVacLabel">Edit</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <form action="adminview.php?editVac=<?php echo $info['id'] ?>" method="POST">
+                                        <div class="modal-body">
+                                            <div class="row mb-2">
+                                                <div class="col">
+                                                    <input type="text" name="brandName" class="form-control" placeholder="Brand Name" value="<?php echo $info['brand']; ?>">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                                            <button type="submit" class="btn btn-primary">Save Changes</submit>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Delete Modal-->
+                        <div class="modal fade" id="deleteVacModal<?php echo $i ?>" tabindex="-1" aria-labelledby="delVacLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="Edit" id="delVacLabel">Confirmation</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <!--put content here-->
+                                    <div class="modal-body">
+                                        Are you sure about the deletion?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                                        <a type="button" class="btn btn-primary" href="adminview.php?delete=3&delVacID=<?php echo $info['id'] ?>">Yes</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     <?php
                     }
                     ?>
@@ -489,7 +508,7 @@
                             <div class="modal-body">
                                 <div class="row mb-2">
                                     <div class="col">
-                                        <input type="text" name="brandName[]" class="form-control" placeholder="Brand Name" required>
+                                        <input type="text" name="brand[0]" class="form-control" placeholder="Brand Name" required>
                                     </div>
                                 </div>
                             </div>
