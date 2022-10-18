@@ -8,7 +8,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
+    </script>
 </head>
 
 <body>
@@ -24,9 +25,6 @@
             <li class="nav-item" role="presentation">
                 <button class="nav-link" id="vaccine-tab" data-bs-toggle="tab" data-bs-target="#vaccine" type="button" role="tab" aria-controls="vaccine" aria-selected="false">Vaccine</button>
             </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="dosage-tab" data-bs-toggle="tab" data-bs-target="#dosage" type="button" role="tab" aria-controls="dosage" aria-selected="false">Dosage</button>
-            </li>
         </ul>
     </nav>
     <?php
@@ -35,8 +33,7 @@
     $i = 1;
 
     //insert
-    switch ($_GET['submit']) 
-    {
+    switch ($_GET['submit']) {
         case 1:
             echo $vac->insertInfo($_POST, 'student');
             break;
@@ -51,8 +48,7 @@
     }
 
     //delete
-    switch ($_GET['delete']) 
-    {
+    switch ($_GET['delete']) {
         case 1:
             $vac->deleteInfo('student', 'id', $_GET['delStudentID']);
             break;
@@ -66,15 +62,15 @@
             break;
     }
 
-    switch ($_GET['edit']) 
-    {
+    switch ($_GET['edit']) {
         case 1:
-            $vac->updateInfo($_POST, 'student', 'id',$_GET['editID'],);
+            $vac->updateInfo($_POST, 'student', 'id', $_GET['editStudent']);
             break;
         case 2:
+            $vac->updateInfo($_POST, 'faculty', 'id', $_GET['editFaculty'], true, 1);
             break;
         case 3:
-            $vac->updateInfo($_POST, 'vacBrand', 'id',$_GET['editVac'], false);
+            $vac->updateInfo($_POST, 'vacBrand', 'id', $_GET['editVac'], false);
             break;
         default:
             break;
@@ -94,9 +90,6 @@
         $vac->studentReport();
     }
 
-    //Vac CUD
-    if (isset($_GET['editVac'])) {
-    }
     ?>
     <!--content div-->
     <div class="tab-content" id="myTabContent">
@@ -108,12 +101,13 @@
                         <th class="border" scope="col">No.</th>
                         <th class="border" scope="col">ID</th>
                         <th class="border" scope="col">Name</th>
-                        <th class="border" scope="col">Section</th>
                         <th class="border" scope="col">Gender</th>
                         <th class="border" scope="col">Birthdate</th>
                         <th class="border" scope="col">Address</th>
                         <th class="border" scope="col">Contact No.</th>
                         <th class="border" scope="col">Email</th>
+                        <th class="border" scope="col">1st Dose</th>
+                        <th class="border" scope="col">2nd Dose</th>
                     </tr>
                 </thead>
 
@@ -127,13 +121,37 @@
                             <th class="border" scope="row"> <?php echo $i++ ?> </th>
                             <td class="border"> <?php echo $info['id'] ?> </td>
                             <td class="border"> <?php echo $info['name'] ?> </td>
-                            <td class="border"> <?php echo $info['section'] ?> </td>
                             <td class="border"> <?php echo $info['gender'] ?> </td>
                             <td class="border"> <?php echo $info['birthday'] ?> </td>
-                            <td class="border"><?php echo $info['address'] ?></td>
-                            <td class="border"> <?php echo $info['tel']; ?></td>
+                            <td class="border"> <?php echo $info['address'] ?> </td>
+                            <td class="border"> <?php echo $info['tel']; ?> </td>
                             <td class="border"> <?php echo $info['email'] ?> </td>
-
+                            <td class="border">
+                                <?php
+                                if (isset($info['firstdose'])) {
+                                ?>
+                                    <i class="bi bi-check"></i>
+                                <?php
+                                } else {
+                                ?>
+                                    <i class="bi bi-x"></i>
+                                <?php
+                                }
+                                ?>
+                            </td>
+                            <td class="border">
+                                <?php
+                                if (isset($info['seconddose'])) {
+                                ?>
+                                    <i class="bi bi-check"></i>
+                                <?php
+                                } else {
+                                ?>
+                                    <i class="bi bi-x"></i>
+                                <?php
+                                }
+                                ?>
+                            </td>
                             <!--edit-->
                             <td>
                                 <!--resize-->
@@ -149,7 +167,7 @@
                                 </a>
                             </td>
                         </tr>
-                        <!--Edit Modal-->
+                        <!--Edit Student Modal-->
                         <div class="modal fade" id="editInfoModal<?php echo $i ?>" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered modal-lg">
                                 <div class="modal-content">
@@ -161,7 +179,7 @@
                                     <?php
                                     $name = explode(' ', $info['name']);
                                     ?>
-                                    <form action="adminview.php?editID=<?php echo $info['id']; ?>&edit=1" method="POST">
+                                    <form action="adminview.php?editStudent=<?php echo $info['id']; ?>&edit=1" method="POST">
                                         <div class="modal-body">
                                             <div class="row mb-2">
                                                 <div class="col">
@@ -181,9 +199,6 @@
                                             </div>
                                             <div class="row mb-2">
                                                 <div class="col">
-                                                    <input type="text" name="upSection[0]" class="form-control" placeholder="Section" value="<?php echo $info['section'] ?>">
-                                                </div>
-                                                <div class="col">
                                                     <input type="email" name="upEmail[0]" class="form-control" id="emailFormControl" placeholder="Email" value="<?php echo $info['email']; ?>" required>
                                                 </div>
                                             </div>
@@ -201,10 +216,24 @@
                                             </div>
                                             <div class="row mb-2">
                                                 <div class="col">
-                                                    <input type="date" name="upDate[0]" class="form-control" name="date-field" value="<?php echo $info['birthday']; ?>" />
+                                                    <input type="date" name="upDate[0]" class="form-control" name="date-field" value="<?php echo $info['birthday']; ?>">
                                                 </div>
                                                 <div class="col">
                                                     <input type="text" name="upAddress[0]" class="form-control" placeholder="Address" value="<?php echo $info['address']; ?>">
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col text-center">
+                                                    <label class="form-check-label" for="firstDose">
+                                                        1st Dose
+                                                    </label>
+                                                    <input type="date" id="firstDose" name="upFirstDose[0]" class="form-control" name="date-field" value="<?php echo $info['firstdose']; ?>">
+                                                </div>
+                                                <div class="col text-center">
+                                                    <label class="form-check-label" for="secondDose">
+                                                        2nd Dose
+                                                    </label>
+                                                    <input type="date" id="secondDose" name="upSecondDose[0]" class="form-control" name="date-field" value="<?php echo $info['seconddose']; ?>">
                                                 </div>
                                             </div>
                                         </div>
@@ -216,7 +245,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!--Delete Modal-->
+                        <!--Delete Student Modal-->
                         <div class="modal fade" id="deleteInfoModal<?php echo $i ?>" tabindex="-1" aria-labelledby="delModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
@@ -243,7 +272,6 @@
 
             <div class="d-flex justify-content-center">
                 <button class="btn btn-outline-success me-2" role="button" data-bs-toggle="modal" data-bs-target="#createStudentModal">+</button>
-                <a href="adminview.php?report=1">Generate Report</a>
             </div>
             <!--Create Modal-->
             <div class="modal fade" id="createStudentModal" tabindex="-1" aria-labelledby="createStudentLabel" aria-hidden="true">
@@ -273,11 +301,6 @@
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col">
-                                        <input type="text" name="section[0]" class="form-control" placeholder="Section" required>
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col">
                                         <input type="email" name="email[0]" class="form-control" id="emailFormControl" placeholder="Email" required>
                                     </div>
                                 </div>
@@ -299,6 +322,20 @@
                                     </div>
                                     <div class="col">
                                         <input type="text" name="address[0]" class="form-control" placeholder="Address" required>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col text-center">
+                                        <label class="form-check-label" for="firstDose">
+                                            1st Dose
+                                        </label>
+                                        <input type="date" id="firstDose" name="firstdose[0]" class="form-control" name="date-field">
+                                    </div>
+                                    <div class="col text-center">
+                                        <label class="form-check-label" for="secondDose">
+                                            2nd Dose
+                                        </label>
+                                        <input type="date" id="secondDose" name="seconddose[0]" class="form-control" name="date-field">
                                     </div>
                                 </div>
                             </div>
@@ -323,6 +360,8 @@
                     <th class="border" scope="col">Email</th>
                     <th class="border" scope="col">Address</th>
                     <th class="border" scope="col">Telephone</th>
+                    <th class="border" scope="col">First Dose</th>
+                    <th class="border" scope="col">Second Dose</th>
                 </thead>
                 <?php
                 $i = 1;
@@ -338,6 +377,33 @@
                         <td class="border"><?php echo $info['address'] ?></td>
                         <td class="border"> <?php echo $info['tel']; ?></td>
                         <td class="border"> <?php echo $info['email'] ?> </td>
+
+                        <td class="border">
+                            <?php
+                            if (isset($info['firstdose'])) {
+                            ?>
+                                <i class="bi bi-check"></i>
+                            <?php
+                            } else {
+                            ?>
+                                <i class="bi bi-x"></i>
+                            <?php
+                            }
+                            ?>
+                        </td>
+                        <td class="border">
+                            <?php
+                            if (isset($info['seconddose'])) {
+                            ?>
+                                <i class="bi bi-check"></i>
+                            <?php
+                            } else {
+                            ?>
+                                <i class="bi bi-x"></i>
+                            <?php
+                            }
+                            ?>
+                        </td>
                         <!--edit-->
                         <td>
                             <!--resize-->
@@ -346,13 +412,92 @@
                             </a>
                         </td>
                         <td>
+                            <!--Delete Button-->
                             <!--resize-->
                             <a type="button" data-bs-toggle="modal" data-bs-target="#deleteFacultyInfoModal<?php echo $i ?>">
                                 <i class="bi bi-trash-fill"></i>
                             </a>
                         </td>
                     </tbody>
-
+                    <!--Faculty Update Modal-->
+                    <div class="modal fade" id="editFacultyInfoModal<?php echo $i ?>" tabindex="-1" aria-labelledby="editFacultyInfoModalLabel<?php echo $i ?>">
+                        <div class="modal-dialog modal-dialog-centered modal-lg overflow-auto">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="editFacultyInfoModalLabel<?php echo $i ?>">Create</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <?php
+                                    $name = explode(' ', $info['name']);
+                                ?>
+                                <form action="adminview.php?editFaculty=<?php echo $info['id']; ?>&edit=2" method="post">
+                                    <div class="modal-body">
+                                        <div class="row mb-3">
+                                            <div class="col">
+                                                <input type="text" name="upId[1]" class="form-control" placeholder="ID No." value="<?php echo $info['id'] ?>" required>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col">
+                                                <input type="text" name="upFirstName[1]" class="form-control" placeholder="First name" value="<?php echo $name[0] ?>" required>
+                                            </div>
+                                            <div class="col">
+                                                <input type="text" name="upMiddleName[1]" class="form-control" placeholder="Middle name" value="<?php echo $name[1] ?>" required>
+                                            </div>
+                                            <div class="col">
+                                                <input type="text" name="upLastName[1]" class="form-control" placeholder="Last name" value="<?php echo $name[2] ?>" required>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col input-group">
+                                                <select class="form-select" name="upGender[1]" required>
+                                                    <option></option>
+                                                    <option value="Male">Male</option>
+                                                    <option value="Female">Female</option>
+                                                </select>
+                                            </div>
+                                            <div class="col">
+                                                <input type="date" name="upBirthday[1]" class="form-control" name="date-field" value="<?php echo $info['birthday'] ?>" required>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col">
+                                                <input type="email" name="upEmail[1]" class="form-control" id="emailFormControl" placeholder="Email" value="<?php echo $info['email'] ?>" required>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col">
+                                                <input type="text" name="upAddress[1]" class="form-control" placeholder="Address" value="<?php echo $info['address'] ?>" required>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col">
+                                                <input type="text" name="upTelephone[1]" class="form-control" placeholder="Telephone No." value="<?php echo $info['tel'] ?>" required>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col text-center">
+                                                <label class="form-check-label" for="firstDose">
+                                                    1st Dose
+                                                </label>
+                                                <input type="date" id="firstDose" name="upFirstdose[1]" class="form-control" name="date-field" value="<?php echo $info['firstdose'] ?>">
+                                            </div>
+                                            <div class="col text-center">
+                                                <label class="form-check-label" for="secondDose">
+                                                    2nd Dose
+                                                </label>
+                                                <input type="date" id="secondDose" name="upSecondDose[1]" class="form-control" name="date-field" value="<?php echo $info['seconddose'] ?>">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Save</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 <?php
                 }
                 ?>
@@ -411,6 +556,20 @@
                                 <div class="row mb-3">
                                     <div class="col">
                                         <input type="text" name="telephone[1]" class="form-control" placeholder="Telephone No." required>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col text-center">
+                                        <label class="form-check-label" for="firstDose">
+                                            1st Dose
+                                        </label>
+                                        <input type="date" id="firstDose" name="firstdose[1]" class="form-control" name="date-field">
+                                    </div>
+                                    <div class="col text-center">
+                                        <label class="form-check-label" for="secondDose">
+                                            2nd Dose
+                                        </label>
+                                        <input type="date" id="secondDose" name="seconddose[1]" class="form-control" name="date-field">
                                     </div>
                                 </div>
                             </div>
@@ -534,9 +693,9 @@
                 </div>
             </div>
         </div>
-        <!--Dosage Tab-->
-        <div class="tab-pane fade" id="dosage" role="tabpanel" aria-labelledby="dosage-tab">
-        </div>
+    </div>
+    <div class="d-flex justify-content-center">
+        <a href="adminview.php?report=1">Generate Report</a>
     </div>
 </body>
 

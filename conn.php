@@ -113,11 +113,25 @@ class connection
 			}
 			elseif($ctr < count($keys))
 			{
-				$sql .="'$value', ";
+				if($value == '')
+				{
+					$sql .="NULL, ";
+				}
+				else
+				{
+					$sql .="'$value', ";
+				}
 			}
 			else
 			{
-				$sql .="'$value')";
+				if($value == '')
+				{
+					$sql .="NULL)";
+				}
+				else
+				{
+					$sql .="'$value')";
+				}
 			}
 			$ctr++;
 		}
@@ -125,13 +139,8 @@ class connection
 		{
 			header('location:adminview.php');
 		}
-		else
-		{
-			echo "Error" .$sql ."<br>" .$this->conn->error;
-		}
 	}
 
-	//TODO:Redo this Update Function
 	public function updateInfo($post, $table, $condition, $primaryKey,$id=true, $formArr = 0)
 	{
 		$keys = array_keys($post);
@@ -168,13 +177,29 @@ class connection
 			}
 			elseif($i < count($keys) -1)
 			{
-				$sql .= "$colName[$j] = '$value', ";
-				$j++;
+				if($value == '')
+				{
+					$sql .= "$colName[$j] = NULL, ";
+					$j++;
+				}
+				else
+				{
+					$sql .= "$colName[$j] = '$value', ";
+					$j++;
+				}
 			}
 			else
 			{
-				$sql .= "$colName[$j] = '$value' ";
-				$j++;
+				if($value == '')
+				{
+					$sql .= "$colName[$j] = NULL ";
+					$j++;
+				}
+				else
+				{
+					$sql .= "$colName[$j] = '$value' ";
+					$j++;
+				}
 			}
 		}
 
@@ -183,10 +208,6 @@ class connection
 		if($this->conn->query($sql))
 		{
 			header('location:adminview.php');
-		}
-		else
-		{
-			echo "Error" .$sql ."<br>" .$this->conn->error;
 		}
 	}
 
