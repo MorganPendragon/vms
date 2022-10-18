@@ -41,7 +41,7 @@
             echo $vac->insertInfo($_POST, 'faculty', true, 1);
             break;
         case 3:
-            echo $vac->insertInfo($_POST, 'vacBrand', false);
+            echo $vac->insertInfo($_POST, 'vacBrand');
             break;
         default:
             break;
@@ -56,7 +56,7 @@
             $vac->deleteInfo('faculty', 'id', $_GET['delFacultyID']);
             break;
         case 3:
-            $vac->deleteInfo('vacBrand', 'id', $_GET['delVacID']);
+            $vac->deleteInfo('vacBrand', 'brand', $_GET['delVacID']);
             break;
         default:
             break;
@@ -70,24 +70,15 @@
             $vac->updateInfo($_POST, 'faculty', 'id', $_GET['editFaculty'], true, 1);
             break;
         case 3:
-            $vac->updateInfo($_POST, 'vacBrand', 'id', $_GET['editVac'], false);
+            $vac->updateInfo($_POST, 'vacBrand', 'brand', $_GET['editVac']);
             break;
         default:
             break;
     }
 
-    switch ($_GET['report']) {
-        case 1:
-            break;
-        case 2:
-            break;
-        case 3:
-            break;
-        default:
-            break;
-    }
-    if (isset($_GET['report'])) {
-        $vac->studentReport();
+    if (isset($_GET['report'])) 
+    {
+        $vac->report();
     }
 
     ?>
@@ -108,6 +99,7 @@
                         <th class="border" scope="col">Email</th>
                         <th class="border" scope="col">1st Dose</th>
                         <th class="border" scope="col">2nd Dose</th>
+                        <th class="border" scope="col">Brand</th>
                     </tr>
                 </thead>
 
@@ -152,23 +144,24 @@
                                 }
                                 ?>
                             </td>
+                            <td class="border"><?php echo $info['brand'] ?></td>
                             <!--edit-->
                             <td>
                                 <!--resize-->
-                                <a cla type="button" data-bs-toggle="modal" href="adminview.php?editID=<?php echo $info['id'] ?>" data-bs-target="#editInfoModal<?php echo $i ?>">
+                                <a cla type="button" data-bs-toggle="modal" href="adminview.php?editID=<?php echo $info['id'] ?>" data-bs-target="#editStudentModal<?php echo $i ?>">
                                     <i class="bi bi-pencil-fill"></i>
                                 </a>
                             </td>
                             <!--delete info-->
                             <td>
                                 <!--resize-->
-                                <a type="button" data-bs-toggle="modal" data-bs-target="#deleteInfoModal<?php echo $i ?>">
+                                <a type="button" data-bs-toggle="modal" data-bs-target="#deleteStudentModal<?php echo $i ?>">
                                     <i class="bi bi-trash-fill"></i>
                                 </a>
                             </td>
                         </tr>
                         <!--Edit Student Modal-->
-                        <div class="modal fade" id="editInfoModal<?php echo $i ?>" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="editStudentModal<?php echo $i ?>" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -235,6 +228,22 @@
                                                     </label>
                                                     <input type="date" id="secondDose" name="upSecondDose[0]" class="form-control" name="date-field" value="<?php echo $info['seconddose']; ?>">
                                                 </div>
+                                                <div class="col text-center">
+                                                    <label for="brand">
+                                                        Brand
+                                                    </label>
+                                                    <select id="brand" class="form-select" name="brand[0]" required>
+                                                        <option></option>
+                                                        <?php
+                                                        $brand = $vac->getData('vacBrand', 'brand');
+                                                        foreach ($brand as $data) {
+                                                        ?>
+                                                            <option value="<?php echo $data['brand']; ?>"><?php echo $data['brand']; ?></option>
+                                                        <?php
+                                                        }
+                                                        ?>
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="modal-footer">
@@ -246,7 +255,7 @@
                             </div>
                         </div>
                         <!--Delete Student Modal-->
-                        <div class="modal fade" id="deleteInfoModal<?php echo $i ?>" tabindex="-1" aria-labelledby="delModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="deleteStudentModal<?php echo $i ?>" tabindex="-1" aria-labelledby="delModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -326,16 +335,32 @@
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col text-center">
-                                        <label class="form-check-label" for="firstDose">
+                                        <label for="firstDose">
                                             1st Dose
                                         </label>
                                         <input type="date" id="firstDose" name="firstdose[0]" class="form-control" name="date-field">
                                     </div>
                                     <div class="col text-center">
-                                        <label class="form-check-label" for="secondDose">
+                                        <label for="secondDose">
                                             2nd Dose
                                         </label>
                                         <input type="date" id="secondDose" name="seconddose[0]" class="form-control" name="date-field">
+                                    </div>
+                                    <div class="col text-center">
+                                        <label for="brand">
+                                            Brand
+                                        </label>
+                                        <select id="brand" class="form-select" name="brand[0]" required>
+                                            <option></option>
+                                            <?php
+                                            $brand = $vac->getData('vacBrand', 'brand');
+                                            foreach ($brand as $data) {
+                                            ?>
+                                                <option value="<?php echo $data['brand']; ?>"><?php echo $data['brand']; ?></option>
+                                            <?php
+                                            }
+                                            ?>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -406,11 +431,13 @@
                         </td>
                         <!--edit-->
                         <td>
+                            <!--Edit Button-->
                             <!--resize-->
                             <a cla type="button" data-bs-toggle="modal" href="adminview.php?editID=<?php echo $info['id'] ?>" data-bs-target="#editFacultyInfoModal<?php echo $i ?>">
                                 <i class="bi bi-pencil-fill"></i>
                             </a>
                         </td>
+                        <!--delete-->
                         <td>
                             <!--Delete Button-->
                             <!--resize-->
@@ -428,7 +455,7 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <?php
-                                    $name = explode(' ', $info['name']);
+                                $name = explode(' ', $info['name']);
                                 ?>
                                 <form action="adminview.php?editFaculty=<?php echo $info['id']; ?>&edit=2" method="post">
                                     <div class="modal-body">
@@ -495,6 +522,26 @@
                                         <button type="submit" class="btn btn-primary">Save</button>
                                     </div>
                                 </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Faculty Delete Modal-->
+                    <div class="modal fade" id="deleteFacultyInfoModal<?php echo $i ?>" tabindex="-1" aria-labelledby="delFacultyLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="Edit" id="delFacultyLabel">Confirmation</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <!--put content here-->
+                                <div class="modal-body">
+                                    Are you sure about the deletion?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                                    <a type="button" class="btn btn-primary" href="adminview.php?delete=2&delFacultyID=<?php echo $info['id'] ?>">Yes</a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -625,7 +672,7 @@
                                         <h5 class="modal-title" id="upVacLabel">Edit</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
-                                    <form action="adminview.php?edit=3&editVac=<?php echo $info['id'] ?>" method="POST">
+                                    <form action="adminview.php?edit=3&editVac=<?php echo $info['brand'] ?>" method="POST">
                                         <div class="modal-body">
                                             <div class="row mb-2">
                                                 <div class="col">
@@ -655,7 +702,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                                        <a type="button" class="btn btn-primary" href="adminview.php?delete=3&delVacID=<?php echo $info['id'] ?>">Yes</a>
+                                        <a type="button" class="btn btn-primary" href="adminview.php?delete=3&delVacID=<?php echo $info['brand'] ?>">Yes</a>
                                     </div>
                                 </div>
                             </div>

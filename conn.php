@@ -4,8 +4,7 @@
 //autoloader cause lazy
 require __DIR__.'/vendor/autoload.php';
 //calls the lib
-$phpWord = new \PhpOffice\PhpWord\PhpWord();
-
+use PhpOffice\PhpWord\Shared\Converter;
 class connection
 {
     private $servername = 'localhost';
@@ -37,7 +36,7 @@ class connection
 			{
 				$data[] = $row;
 			}
-			return $data;
+			return $data;	
 		}
 	}
 
@@ -64,6 +63,18 @@ class connection
 		return $colName;
 	}
 
+	public function getData($table, $column)
+	{
+		$sql = "SELECT $column FROM $table";
+		$result = $this->conn->query($sql);
+		while($row = $result->fetch_assoc())
+		{
+			$data[] = $row;
+		}
+		return $data;
+	}
+
+	//insert
 	public function insertInfo($post, $table, $id=true, $formArr=0)
 	{
 		$colName = $this->getColumnName($table);
@@ -113,6 +124,7 @@ class connection
 			}
 			elseif($ctr < count($keys))
 			{
+				//for those empty value
 				if($value == '')
 				{
 					$sql .="NULL, ";
@@ -124,6 +136,7 @@ class connection
 			}
 			else
 			{
+				//for those empty value
 				if($value == '')
 				{
 					$sql .="NULL)";
@@ -141,6 +154,7 @@ class connection
 		}
 	}
 
+	//update
 	public function updateInfo($post, $table, $condition, $primaryKey,$id=true, $formArr = 0)
 	{
 		$keys = array_keys($post);
@@ -177,6 +191,7 @@ class connection
 			}
 			elseif($i < count($keys) -1)
 			{
+				//for those empty value
 				if($value == '')
 				{
 					$sql .= "$colName[$j] = NULL, ";
@@ -190,6 +205,7 @@ class connection
 			}
 			else
 			{
+				//for those empty value
 				if($value == '')
 				{
 					$sql .= "$colName[$j] = NULL ";
@@ -211,6 +227,7 @@ class connection
 		}
 	}
 
+	//delete
 	public function deleteInfo($table, $col, $id)
 	{
 		$sql = "DELETE FROM $table WHERE $col = '$id'";
@@ -225,17 +242,36 @@ class connection
 		}
 	}
 
-	public function studentReport()
+	public function find($table, $condition)
 	{
-		$section = $GLOBALS['phpWord']->addSection();
-		// Adding Text element to the Section having font styled by default...
-		$section->addText(
-			'"Learn from yesterday, live for today, hope for tomorrow. '
-			. 'The important thing is not to stop questioning." '
-			. '(Albert Einstein)'
-		);
+		$sql = "SELECT * FROM $table WHERE $condition";
+		$result = $this->conn->query($sql);
+		return $result->num_rows;
+	}
+	//report generation using PHPOffice
+	public function report()
+	{
+		$phpWord = new \PhpOffice\PhpWord\PhpWord();
 
-		// Saving the document as OOXML file...
+		$GLOBALS['phpWord']->addTitleStyle(2, ['size' => 14, 'bold' => true], ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER, 'spaceAfter' => 100]);
+
+		$section = $GLOBALS['phpWord']->addSection(['colsNum' => 1], ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER, 'spaceAfter' => 100]);
+		//chart legends
+		$categories = array('First Dose only', 'First and Second');
+		$series = array();
+
+		//chart data
+		$series[] = $this->find('student', 'firstdose IS NOT NULL and seconddose IS NULL');
+		$series[] = $this->find('student', 'firstdose IS NOT NULL and seconddose IS NOT NULL');
+
+		//chart creation
+		$section->addTitle(ucfirst('Student'), 2);
+		$chart = $section->addChart('pie', $categories, $series);
+		$chart->getStyle()->setShowLegend(true);
+		$chart->getStyle()->setLegendPosition('b');
+		$chart->getStyle()->setWidth(Converter::inchToEmu(5))->setHeight(Converter::inchToEmu(5));
+
+		// Saving the document as DOCX file...
 		$objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($GLOBALS['phpWord'], 'Word2007');
 		$objWriter->save('StudentReport.docx');
 		header('location:adminview.php');
