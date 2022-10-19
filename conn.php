@@ -5,6 +5,7 @@
 require __DIR__.'/vendor/autoload.php';
 //calls the lib
 use PhpOffice\PhpWord\Shared\Converter;
+
 class connection
 {
     private $servername = 'localhost';
@@ -148,10 +149,7 @@ class connection
 			}
 			$ctr++;
 		}
-		if($this->conn->query($sql))
-		{
-			header('location:adminview.php');
-		}
+		$this->conn->query($sql) or die('Insert Unsucessful');
 	}
 
 	//update
@@ -248,32 +246,78 @@ class connection
 		$result = $this->conn->query($sql);
 		return $result->num_rows;
 	}
+
+	
+
 	//report generation using PHPOffice
 	public function report()
 	{
 		$phpWord = new \PhpOffice\PhpWord\PhpWord();
 
-		$GLOBALS['phpWord']->addTitleStyle(2, ['size' => 14, 'bold' => true], ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER, 'spaceAfter' => 100]);
-
-		$section = $GLOBALS['phpWord']->addSection(['colsNum' => 1], ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER, 'spaceAfter' => 100]);
+		//font style for texts
+		$fStyle = [
+			'bold'=>true
+		];
+		$section = $phpWord->addSection();
+		$section->addText('No. of Vaccinated', $fStyle, ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+		$table = ['student', 'faculty'];		
+		$header = $section->addHeader();
+		
+		//header content
+		$header->addText(date('m/d/Y'),$fStyle, ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::END]);
 		//chart legends
 		$categories = array('First Dose only', 'First and Second');
 		$series = array();
+		$i = 0;
+		foreach($table as $tableName)
+		{
+			//chart data
+			$series[] = $this->find($tableName, 'firstdose IS NOT NULL and seconddose IS NULL');
+			$series[] = $this->find($tableName, 'firstdose IS NOT NULL and seconddose IS NOT NULL');
 
-		//chart data
-		$series[] = $this->find('student', 'firstdose IS NOT NULL and seconddose IS NULL');
-		$series[] = $this->find('student', 'firstdose IS NOT NULL and seconddose IS NOT NULL');
+			//chart style specification
+			$style = [
+				'width' => Converter::inchToEmu(3),
+				'height' => Converter::inchToEmu(3),
+				'title' => (ucfirst($tableName)),
+				'showLegend' => true,
+				'legendPosition' => 'b',
+			];
+			//chart creation
+			$chart = $section->addChart('pie', $categories, $series, $style);
+			$i++;
+			unset($series);
+			$section->addTextBreak();
+		}
 
-		//chart creation
-		$section->addTitle(ucfirst('Student'), 2);
-		$chart = $section->addChart('pie', $categories, $series);
-		$chart->getStyle()->setShowLegend(true);
-		$chart->getStyle()->setLegendPosition('b');
-		$chart->getStyle()->setWidth(Converter::inchToEmu(5))->setHeight(Converter::inchToEmu(5));
+		$brand = $this->getData('vacBrand', 'brand');
+		$i = 0;
+		unset($categories);
+		foreach($table as $tableName)
+		{
+			foreach($brand as $brandName)
+			{
+				$categories[] = $brandName['brand'];
+				$temp = $brandName['brand'];
+				$series[]= $this->find($tableName, "brand = '$temp'");
+			}
+			$style = [
+				'width' => Converter::inchToEmu(3),
+				'height' => Converter::inchToEmu(3),
+				'title' => (ucfirst($tableName)),
+				'showLegend' => true,
+				'legendPosition' => 'b',
+			];
+			$chart = $section->addChart('pie', $categories, $series, $style);
+			$i++;
+			unset($categories);
+			unset($series);
+			$section->addTextBreak();
+		}
 
 		// Saving the document as DOCX file...
-		$objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($GLOBALS['phpWord'], 'Word2007');
-		$objWriter->save('StudentReport.docx');
+		$objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
+		$objWriter->save('Report.docx');
 		header('location:adminview.php');
 	}
 }
