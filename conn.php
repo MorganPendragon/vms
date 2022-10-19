@@ -149,7 +149,10 @@ class connection
 			}
 			$ctr++;
 		}
-		$this->conn->query($sql) or die('Insert Unsucessful');
+		if($this->conn->query($sql))
+			header('location:adminview.php');
+		else 
+			die('Insert Unsucessful');
 	}
 
 	//update

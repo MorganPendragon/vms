@@ -9,26 +9,52 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
     <!--bootstrap js lib-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" 
-        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" 
-        crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+        //caches selected tab before the page reload and shows the tab on reload
+        $(document).ready(function() {
+            $('a[data-bs-toggle="tab"]').on('show.bs.tab', function(e) {
+                localStorage.setItem('activeTab', $(e.target).attr('href'));
+            });
+            var activeTab = localStorage.getItem('activeTab');
+            if (activeTab) {
+                $('#myTab a[href="' + activeTab + '"]').tab('show');
+            }
+        });
+        //search on student table
+        $(document).ready(function() {
+            $("#searchStudent").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#studentContent tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+        //search on faculty
+        $(document).ready(function() {
+            $("#searchFaculty").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#facultyContent tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
     </script>
-    <!--ajax lib-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js" type="text/javascript"></script>
 </head>
 
 <body>
     <!--navbar-->
     <nav class="nav" style="background-color: #e3f2fd;">
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="student-tab" data-bs-toggle="tab" data-bs-target="#student" type="button" role="tab" aria-controls="student" aria-selected="true">Student</button>
+        <ul class="nav nav-tabs" id="myTab">
+            <li class="nav-item">
+                <a href="#student" class="nav-link" data-bs-toggle="tab">Student</a>
             </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="faculty-tab" data-bs-toggle="tab" data-bs-target="#faculty" type="button" role="tab" aria-controls="faculty" aria-selected="false">Faculty</button>
+            <li class="nav-item">
+                <a href="#faculty" class="nav-link" data-bs-toggle="tab">Faculty</a>
             </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="vaccine-tab" data-bs-toggle="tab" data-bs-target="#vaccine" type="button" role="tab" aria-controls="vaccine" aria-selected="false">Vaccine</button>
+            <li class="nav-item">
+                <a href="#vaccine" class="nav-link" data-bs-toggle="tab">Vaccine</a>
             </li>
         </ul>
     </nav>
@@ -38,8 +64,7 @@
     $i = 1;
 
     //insert
-    switch ($_GET['submit']) 
-    {
+    switch ($_GET['submit']) {
         case 1:
             $vac->insertInfo($_POST, 'student');
             break;
@@ -90,12 +115,20 @@
     <!--content div-->
     <div class="tab-content" id="myTabContent">
         <!--Student Tab-->
-        <div class="tab-pane fade active" id="student" role="tabpanel" aria-labelledby="student-tab">
+        <div class="tab-pane fade" id="student">
+            <!--search and insert-->
             <div class="d-flex">
                 <div>
                     <button class="btn btn-outline-success me-2" role="button" data-bs-toggle="modal" data-bs-target="#createStudentModal">+</button>
                 </div>
+                <div class="input-group rounded">
+                    <input type="text" id="searchStudent" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                    <span class="input-group-text border-0" id="search-addon">
+                        <i class="fas fa-search"></i>
+                    </span>
+                </div>
             </div>
+            <!--table div-->
             <div class="d-flex justify-content-center">
                 <table class="table table-strip table-borderless mx-auto w-75" id="studentTable">
                     <thead>
@@ -113,7 +146,7 @@
                         </tr>
                     </thead>
 
-                    <tbody>
+                    <tbody id="studentContent">
                         <?php
                         $data = $vac->displayTable('student');
                         $colName = $vac->getColumnName('student');
@@ -381,10 +414,16 @@
             </div>
         </div>
         <!--Faculty-->
-        <div class="tab-pane fade" id="faculty" role="tabpanel" aria-labelledby="faculty-tab">
+        <div class="tab-pane fade" id="faculty">
             <div class="d-flex">
                 <div>
                     <button class="btn btn-outline-success" role="button" data-bs-toggle="modal" data-bs-target="#createFacultyModal">+</button>
+                </div>
+                <div class="input-group rounded">
+                    <input type="text" id="searchFaculty" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                    <span class="input-group-text border-0" id="search-addon">
+                        <i class="fas fa-search"></i>
+                    </span>
                 </div>
             </div>
             <div class="d-flex justify-content-center">
@@ -406,7 +445,7 @@
                     $data = $vac->displayTable('faculty');
                     foreach ($data as $info) {
                     ?>
-                        <tbody>
+                        <tbody id="facultyContent">
                             <td class="border"> <?php echo $info['id'] ?> </td>
                             <td class="border"> <?php echo $info['name'] ?> </td>
                             <td class="border"> <?php echo $info['gender'] ?> </td>
@@ -656,90 +695,94 @@
             </div>
         </div>
         <!--Vaccine Tab-->
-        <div class="tab-pane fade" id="vaccine" role="tabpanel" aria-labelledby="vaccine-tab">
-            <table class="table table-strip table-borderless">
-                <thead>
-                    <tr>
-                        <th class="border" scope="col">No.</th>
-                        <th class="border" scope="col">Vaccine Brand</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    $data = $vac->displayTable('vacBrand');
-                    $i = 1;
-                    foreach ($data as $info) {
-                    ?>
+        <div class="tab-pane fade" id="vaccine">
+            <div class="d-flex">
+                <div class="d-flex justify-content-center">
+                    <button class="btn btn-outline-success" role="button" data-bs-toggle="modal" data-bs-target="#createVacModal">+</button>
+                </div>
+            </div>
+            <div class="d-flex justify-content-center">
+                <table class="table table-strip table-borderless">
+                    <thead>
                         <tr>
-                            <th class="border" scope="row"> <?php echo $i++ ?> </th>
-                            <td class="border"> <?php echo $info['brand'] ?> </td>
-
-                            <!--edit vac-->
-                            <td>
-                                <!--resize-->
-                                <a cla type="button" data-bs-toggle="modal" href="adminview.php?editID=<?php echo $info['id'] ?>" data-bs-target="#upVacModal<?php echo $i ?>">
-                                    <i class="bi bi-pencil-fill"></i>
-                                </a>
-                            </td>
-
-                            <!--delete vac-->
-                            <td>
-                                <!--resize-->
-                                <a type="button" data-bs-toggle="modal" data-bs-target="#deleteVacModal<?php echo $i ?>">
-                                    <i class="bi bi-trash-fill"></i>
-                                </a>
-                            </td>
+                            <th class="border" scope="col">No.</th>
+                            <th class="border" scope="col">Vaccine Brand</th>
                         </tr>
-                        <!--update vac-->
-                        <div class="modal fade" id="upVacModal<?php echo $i ?>" tabindex="-1" aria-labelledby="upVacModal">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="upVacLabel">Edit</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <form action="adminview.php?edit=3&editVac=<?php echo $info['brand'] ?>" method="POST">
-                                        <div class="modal-body">
-                                            <div class="row mb-2">
-                                                <div class="col">
-                                                    <input type="text" name="brandName[0]" class="form-control" placeholder="Brand Name" value="<?php echo $info['brand']; ?>">
+                    </thead>
+                    <tbody>
+                        <?php
+                        $data = $vac->displayTable('vacBrand');
+                        $i = 1;
+                        foreach ($data as $info) {
+                        ?>
+                            <tr>
+                                <th class="border" scope="row"> <?php echo $i++ ?> </th>
+                                <td class="border"> <?php echo $info['brand'] ?> </td>
+
+                                <!--edit vac-->
+                                <td>
+                                    <!--resize-->
+                                    <a cla type="button" data-bs-toggle="modal" href="adminview.php?editID=<?php echo $info['id'] ?>" data-bs-target="#upVacModal<?php echo $i ?>">
+                                        <i class="bi bi-pencil-fill"></i>
+                                    </a>
+                                </td>
+
+                                <!--delete vac-->
+                                <td>
+                                    <!--resize-->
+                                    <a type="button" data-bs-toggle="modal" data-bs-target="#deleteVacModal<?php echo $i ?>">
+                                        <i class="bi bi-trash-fill"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            <!--update vac-->
+                            <div class="modal fade" id="upVacModal<?php echo $i ?>" tabindex="-1" aria-labelledby="upVacModal">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="upVacLabel">Edit</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <form action="adminview.php?edit=3&editVac=<?php echo $info['brand'] ?>" method="POST">
+                                            <div class="modal-body">
+                                                <div class="row mb-2">
+                                                    <div class="col">
+                                                        <input type="text" name="brandName[0]" class="form-control" placeholder="Brand Name" value="<?php echo $info['brand']; ?>">
+                                                    </div>
                                                 </div>
                                             </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                                                <button type="submit" class="btn btn-primary">Save Changes</submit>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--Delete Modal-->
+                            <div class="modal fade" id="deleteVacModal<?php echo $i ?>" tabindex="-1" aria-labelledby="delVacLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="Edit" id="delVacLabel">Confirmation</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <!--put content here-->
+                                        <div class="modal-body">
+                                            Are you sure about the deletion?
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                                            <button type="submit" class="btn btn-primary">Save Changes</submit>
+                                            <a type="button" class="btn btn-primary" href="adminview.php?delete=3&delVacID=<?php echo $info['brand'] ?>">Yes</a>
                                         </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                        <!--Delete Modal-->
-                        <div class="modal fade" id="deleteVacModal<?php echo $i ?>" tabindex="-1" aria-labelledby="delVacLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="Edit" id="delVacLabel">Confirmation</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <!--put content here-->
-                                    <div class="modal-body">
-                                        Are you sure about the deletion?
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                                        <a type="button" class="btn btn-primary" href="adminview.php?delete=3&delVacID=<?php echo $info['brand'] ?>">Yes</a>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    <?php
-                    }
-                    ?>
-                </tbody>
-            </table>
-            <div class="d-flex justify-content-center">
-                <button class="btn btn-outline-success" role="button" data-bs-toggle="modal" data-bs-target="#createVacModal">+</button>
+                        <?php
+                        }
+                        ?>
+                    </tbody>
+                </table>
             </div>
             <!--Create Vac brand modal-->
             <div class="modal fade" id="createVacModal" tabindex="-1" aria-labelledby="createVacModal">
@@ -822,13 +865,6 @@
                 }
             }
         }
-        $(document).ready (function () 
-        {
-            var updater = setTimeout (function () 
-            {
-                $('#studentTable&#facultyTable').load ('adminview.php');
-            }, 1000);
-        });
     </script>
 </body>
 
