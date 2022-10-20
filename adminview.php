@@ -43,11 +43,12 @@
     </script>
 </head>
 
+
 <body>
     <!--navbar-->
     <nav class="nav" style="background-color: #e3f2fd;">
         <div class="container">
-            <ul class="list-group-flush nav nav-tabs" id="myTab">
+            <ul class="list-group-flush nav nav-tabs" id="tableTab">
                 <li class="nav-item active">
                     <a href="#student" class="nav-link" data-bs-toggle="tab">Student</a>
                 </li>
@@ -127,21 +128,50 @@
 
     ?>
     <!--content div-->
-    <div class="tab-content" id="myTabContent">
+    <div class="tab-content" id="tableTabContent">
         <!--Student Tab-->
         <div class="tab-pane fade" id="student">
             <!--search and insert-->
-            <div class="d-flex justify-content-end mx-5 my-3">
-                <div class="d-flex">
-                    <form class="d-flex" role="search">
+            <nav class="navbar navbar-expand-lg bg-light justify-content-around my-2">
+                <!--dropdown-->
+                <div class="dropdown">
+                    <button class="btn dropdown-toggle btn-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Year Level
+                    </button>
+                    <ul class="dropdown-menu" id="yearLevelTab" role="tablist">
+                        <li class="nav-item active">
+                            <a class="nav-link" data-bs-toggle="tab" id="grade7Tab" data-bs-target="#grade7" type="button" role="tab" aria-controls="grade7" aria-selected="true" href="#">Grade 7</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" id="grade8Tab" data-bs-target="#grade8" type="button" role="tab" aria-controls="grade8" href="#">Grade 8</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#">Grade 9</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#">Grade 10</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#">Grade 11</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#">Grade 12</a>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="d-flex">
                         <input class="search " id="searchStudent" type="search" placeholder="Search" aria-label="Search">
                         <span class="input-group-text border-0" id="search-addon">
                             <i class="bi bi-search"></i>
+                        </span>
+                    </div>
                 </div>
-            </div>
+            </nav>
+
             <!--table div-->
             <div class="d-flex justify-content-center">
-                <table class="table table-stripe table-borderless shadow-lg  p-3 mb-5 bg-body rounded mx-auto w-75" id="studentTable">
+                <table class="table table-stripe table-borderless w-75" id="studentTable">
                     <thead>
                         <tr>
                             <th class="border" scope="col" onclick="sortTable(0, 'studentTable')" role="button">ID</th>
@@ -158,177 +188,188 @@
                     </thead>
 
                     <tbody id="studentContent">
-                        <?php
-                        $data = $vac->displayTable('student');
-                        $colName = $vac->getColumnName('student');
-                        foreach ($data as $info) {
-                        ?>
-                            <tr>
-                                <td class="border"> <?php echo $info['id'] ?> </td>
-                                <td class="border"> <?php echo $info['name'] ?> </td>
-                                <td class="border"> <?php echo $info['gender'] ?> </td>
-                                <td class="border"> <?php echo $info['birthday'] ?> </td>
-                                <td class="border"> <?php echo $info['address'] ?> </td>
-                                <td class="border"> <?php echo $info['tel']; ?> </td>
-                                <td class="border"> <?php echo $info['email'] ?> </td>
-                                <td class="border">
-                                    <?php
-                                    if (isset($info['firstdose'])) {
-                                    ?>
-                                        <i class="bi bi-check"></i>
-                                    <?php
-                                    } else {
-                                    ?>
-                                        <i class="bi bi-x"></i>
-                                    <?php
-                                    }
-                                    ?>
-                                </td>
-                                <td class="border">
-                                    <?php
-                                    if (isset($info['seconddose'])) {
-                                    ?>
-                                        <i class="bi bi-check"></i>
-                                    <?php
-                                    } else {
-                                    ?>
-                                        <i class="bi bi-x"></i>
-                                    <?php
-                                    }
-                                    ?>
-                                </td>
-                                <td class="border"><?php echo $info['brand'] ?></td>
-                                <!--edit-->
-                                <td>
-                                    <!--resize-->
-                                    <a cla type="button" data-bs-toggle="modal" href="adminview.php?editID=<?php echo $info['id'] ?>" data-bs-target="#editStudentModal<?php echo $i ?>">
-                                        <i class="bi bi-pencil-fill"></i>
-                                    </a>
-                                </td>
-                                <!--delete info-->
-                                <td>
-                                    <!--resize-->
-                                    <a type="button" data-bs-toggle="modal" data-bs-target="#deleteStudentModal<?php echo $i ?>">
-                                        <i class="bi bi-trash-fill"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            <!--Edit Student Modal-->
-                            <div class="modal fade" id="editStudentModal<?php echo $i ?>" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered modal-lg">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="Edit" id="editModalLabel">Edit</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <!--put content here-->
-                                        <?php
-                                        $name = explode(' ', $info['name']);
-                                        ?>
-                                        <form action="adminview.php?editStudent=<?php echo $info['id']; ?>&edit=1" method="POST">
-                                            <div class="modal-body">
-                                                <div class="row mb-2">
-                                                    <div class="col">
-                                                        <input type="text" name="upID[0]" class="form-control" placeholder="First name" value="<?php echo $info['id'] ?>">
-                                                    </div>
+                        <!--yearLevelContent-->
+                        <!--grade7-->
+                        <div class="tab-content" id="yearContent" role="tablist">
+                            <div class="tab-pane fade show active" id="grade7" aria-labelledby="grade7Tab" role="tabpanel" tabindex="0">
+                                <?php
+                                $data = $vac->displayTable('student');
+                                $colName = $vac->getColumnName('student');
+                                foreach ($data as $info) {
+                                ?>
+                                    <tr>
+                                        <td class="border"> <?php echo $info['id'] ?> </td>
+                                        <td class="border"> <?php echo $info['name'] ?> </td>
+                                        <td class="border"> <?php echo $info['gender'] ?> </td>
+                                        <td class="border"> <?php echo $info['birthday'] ?> </td>
+                                        <td class="border"> <?php echo $info['address'] ?> </td>
+                                        <td class="border"> <?php echo $info['tel']; ?> </td>
+                                        <td class="border"> <?php echo $info['email'] ?> </td>
+                                        <td class="border">
+                                            <?php
+                                            if (isset($info['firstdose'])) {
+                                            ?>
+                                                <i class="bi bi-check"></i>
+                                            <?php
+                                            } else {
+                                            ?>
+                                                <i class="bi bi-x"></i>
+                                            <?php
+                                            }
+                                            ?>
+                                        </td>
+                                        <td class="border">
+                                            <?php
+                                            if (isset($info['seconddose'])) {
+                                            ?>
+                                                <i class="bi bi-check"></i>
+                                            <?php
+                                            } else {
+                                            ?>
+                                                <i class="bi bi-x"></i>
+                                            <?php
+                                            }
+                                            ?>
+                                        </td>
+                                        <td class="border"><?php echo $info['brand'] ?></td>
+                                        <!--edit-->
+                                        <td>
+                                            <!--resize-->
+                                            <a cla type="button" data-bs-toggle="modal" href="adminview.php?editID=<?php echo $info['id'] ?>" data-bs-target="#editStudentModal<?php echo $i ?>">
+                                                <i class="bi bi-pencil-fill"></i>
+                                            </a>
+                                        </td>
+                                        <!--delete info-->
+                                        <td>
+                                            <!--resize-->
+                                            <a type="button" data-bs-toggle="modal" data-bs-target="#deleteStudentModal<?php echo $i ?>">
+                                                <i class="bi bi-trash-fill"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <!--Edit Student Modal-->
+                                    <div class="modal fade" id="editStudentModal<?php echo $i ?>" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="Edit" id="editModalLabel">Edit</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
-                                                <div class="row mb-2">
-                                                    <div class="col">
-                                                        <input type="text" name="upFirstName[0]" class="form-control" placeholder="First name" value="<?php echo $name[0] ?>">
+                                                <!--put content here-->
+                                                <?php
+                                                $name = explode(' ', $info['name']);
+                                                ?>
+                                                <form action="adminview.php?editStudent=<?php echo $info['id']; ?>&edit=1" method="POST">
+                                                    <div class="modal-body">
+                                                        <div class="row mb-2">
+                                                            <div class="col">
+                                                                <input type="text" name="upID[0]" class="form-control" placeholder="First name" value="<?php echo $info['id'] ?>">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mb-2">
+                                                            <div class="col">
+                                                                <input type="text" name="upFirstName[0]" class="form-control" placeholder="First name" value="<?php echo $name[0] ?>">
+                                                            </div>
+                                                            <div class="col">
+                                                                <input type="text" name="upMiddleName[0]" class="form-control" placeholder="Middle name" value="<?php echo $name[1] ?>">
+                                                            </div>
+                                                            <div class="col">
+                                                                <input type="text" name="upLastName[0]" class="form-control" placeholder="Last name" value="<?php echo $name[2] ?>">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mb-2">
+                                                            <div class="col">
+                                                                <input type="email" name="upEmail[0]" class="form-control" id="emailFormControl" placeholder="Email" value="<?php echo $info['email']; ?>" required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mb-2">
+                                                            <div class="col">
+                                                                <input type="text" name="upTel[0]" class="form-control" placeholder="Telephone No." value="<?php echo $info['tel']; ?>">
+                                                            </div>
+                                                            <div class="col input-group">
+                                                                <select class="form-select" name="upGender[0]" required>
+                                                                    <option></option>
+                                                                    <option value="Male">Male</option>
+                                                                    <option value="Female">Female</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mb-2">
+                                                            <div class="col">
+                                                                <input type="date" name="upDate[0]" class="form-control" name="date-field" value="<?php echo $info['birthday']; ?>">
+                                                            </div>
+                                                            <div class="col">
+                                                                <input type="text" name="upAddress[0]" class="form-control" placeholder="Address" value="<?php echo $info['address']; ?>">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mb-3">
+                                                            <div class="col text-center">
+                                                                <label class="form-check-label" for="firstDose">
+                                                                    1st Dose
+                                                                </label>
+                                                                <input type="date" id="firstDose" name="upFirstDose[0]" class="form-control" name="date-field" value="<?php echo $info['firstdose']; ?>">
+                                                            </div>
+                                                            <div class="col text-center">
+                                                                <label class="form-check-label" for="secondDose">
+                                                                    2nd Dose
+                                                                </label>
+                                                                <input type="date" id="secondDose" name="upSecondDose[0]" class="form-control" name="date-field" value="<?php echo $info['seconddose']; ?>">
+                                                            </div>
+                                                            <div class="col text-center">
+                                                                <label for="brand">
+                                                                    Brand
+                                                                </label>
+                                                                <select id="brand" class="form-select" name="brand[0]" required>
+                                                                    <option></option>
+                                                                    <?php
+                                                                    $brand = $vac->getData('vacBrand', 'brand');
+                                                                    foreach ($brand as $data) {
+                                                                    ?>
+                                                                        <option value="<?php echo $data['brand']; ?>"><?php echo $data['brand']; ?></option>
+                                                                    <?php
+                                                                    }
+                                                                    ?>
+                                                                </select>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <div class="col">
-                                                        <input type="text" name="upMiddleName[0]" class="form-control" placeholder="Middle name" value="<?php echo $name[1] ?>">
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-primary">Save Changes</button>
                                                     </div>
-                                                    <div class="col">
-                                                        <input type="text" name="upLastName[0]" class="form-control" placeholder="Last name" value="<?php echo $name[2] ?>">
-                                                    </div>
-                                                </div>
-                                                <div class="row mb-2">
-                                                    <div class="col">
-                                                        <input type="email" name="upEmail[0]" class="form-control" id="emailFormControl" placeholder="Email" value="<?php echo $info['email']; ?>" required>
-                                                    </div>
-                                                </div>
-                                                <div class="row mb-2">
-                                                    <div class="col">
-                                                        <input type="text" name="upTel[0]" class="form-control" placeholder="Telephone No." value="<?php echo $info['tel']; ?>">
-                                                    </div>
-                                                    <div class="col input-group">
-                                                        <select class="form-select" name="upGender[0]" required>
-                                                            <option></option>
-                                                            <option value="Male">Male</option>
-                                                            <option value="Female">Female</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="row mb-2">
-                                                    <div class="col">
-                                                        <input type="date" name="upDate[0]" class="form-control" name="date-field" value="<?php echo $info['birthday']; ?>">
-                                                    </div>
-                                                    <div class="col">
-                                                        <input type="text" name="upAddress[0]" class="form-control" placeholder="Address" value="<?php echo $info['address']; ?>">
-                                                    </div>
-                                                </div>
-                                                <div class="row mb-3">
-                                                    <div class="col text-center">
-                                                        <label class="form-check-label" for="firstDose">
-                                                            1st Dose
-                                                        </label>
-                                                        <input type="date" id="firstDose" name="upFirstDose[0]" class="form-control" name="date-field" value="<?php echo $info['firstdose']; ?>">
-                                                    </div>
-                                                    <div class="col text-center">
-                                                        <label class="form-check-label" for="secondDose">
-                                                            2nd Dose
-                                                        </label>
-                                                        <input type="date" id="secondDose" name="upSecondDose[0]" class="form-control" name="date-field" value="<?php echo $info['seconddose']; ?>">
-                                                    </div>
-                                                    <div class="col text-center">
-                                                        <label for="brand">
-                                                            Brand
-                                                        </label>
-                                                        <select id="brand" class="form-select" name="brand[0]" required>
-                                                            <option></option>
-                                                            <?php
-                                                            $brand = $vac->getData('vacBrand', 'brand');
-                                                            foreach ($brand as $data) {
-                                                            ?>
-                                                                <option value="<?php echo $data['brand']; ?>"><?php echo $data['brand']; ?></option>
-                                                            <?php
-                                                            }
-                                                            ?>
-                                                        </select>
-                                                    </div>
-                                                </div>
+                                                </form>
                                             </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn btn-primary">Save Changes</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--Delete Student Modal-->
-                            <div class="modal fade" id="deleteStudentModal<?php echo $i ?>" tabindex="-1" aria-labelledby="delModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="Edit" id="delModalLabel">Confirmation</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <!--put content here-->
-                                        <div class="modal-body">
-                                            Are you sure about the deletion?
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                                            <a type="button" class="btn btn-primary" href="adminview.php?delete=1&delStudentID=<?php echo $info['id'] ?>">Yes</a>
                                         </div>
                                     </div>
-                                </div>
+                                    <!--Delete Student Modal-->
+                                    <div class="modal fade" id="deleteStudentModal<?php echo $i ?>" tabindex="-1" aria-labelledby="delModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="Edit" id="delModalLabel">Confirmation</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <!--put content here-->
+                                                <div class="modal-body">
+                                                    Are you sure about the deletion?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                                                    <a type="button" class="btn btn-primary" href="adminview.php?delete=1&delStudentID=<?php echo $info['id'] ?>">Yes</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php
+                                }
+                                ?>
                             </div>
-                        <?php
-                        }
-                        ?>
+                            <!--grade8-->
+                            <div class="tab-pane fade" id="grade8" aria-labelledby="grade8Tab" role="tabpanel" tabindex="0">
+                            </div>
+
+                        </div>
+
                     </tbody>
                 </table>
             </div>
@@ -460,7 +501,7 @@
                 </div>
             </div>
             <div class="d-flex justify-content-center">
-                <table id="facultyTable" class="table table-stripe table-borderless shadow-lg p-3 mb-5 bg-body rounded mx-auto w-75">
+                <table id="facultyTable" class="table table-stripe table-borderless w-75">
                     <thead>
                         <th class="border" scope="col" onclick="sortTable(0, 'facultyTable')" role="button">ID</th>
                         <th class="border" scope="col" onclick="sortTable(1, 'facultyTable')" role="button">Name</th>
@@ -762,21 +803,18 @@
                 </div>
             </div>
             <div class="d-flex justify-content-center">
-                <table class="table table-stripe table-borderless shadow-lg p-3 mb-5 bg-body rounded mx-auto w-75">
+                <table class="table table-stripe table-borderless rounded mx-auto w-25">
                     <thead>
                         <tr>
-                            <th class="border" scope="col">No.</th>
                             <th class="border" scope="col">Vaccine Brand</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
                         $data = $vac->displayTable('vacBrand');
-                        $i = 1;
                         foreach ($data as $info) {
                         ?>
                             <tr>
-                                <th class="border" scope="row"> <?php echo $i++ ?> </th>
                                 <td class="border"> <?php echo $info['brand'] ?> </td>
 
                                 <!--edit vac-->
