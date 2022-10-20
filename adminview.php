@@ -46,22 +46,36 @@
 <body>
     <!--navbar-->
     <nav class="nav" style="background-color: #e3f2fd;">
-        <ul class="nav nav-tabs" id="myTab">
-            <li class="nav-item">
-                <a href="#student" class="nav-link" data-bs-toggle="tab">Student</a>
+        <div class="container">
+            <ul class="list-group-flush nav nav-tabs" id="myTab">
+                <li class="nav-item active">
+                    <a href="#student" class="nav-link" data-bs-toggle="tab">Student</a>
+                </li>
+                <li class="nav-item active">
+                    <a href="#faculty" class="nav-link" data-bs-toggle="tab">Faculty</a>
+                </li>
+                <li class="nav-item active">
+                    <a href="#vaccine" class="nav-link" data-bs-toggle="tab">Vaccine</a>
+                </li>
+            </ul>
+        </div>
+        <div class="d-flex justify-content-end mx-5">
+            <li class="nav-item active">
+                <a class="btn" type="button" href="adminview.php?report=1">
+                    <i class="bi bi-clipboard-data">
+                    </i>
+                </a>
             </li>
-            <li class="nav-item">
-                <a href="#faculty" class="nav-link" data-bs-toggle="tab">Faculty</a>
-            </li>
-            <li class="nav-item">
-                <a href="#vaccine" class="nav-link" data-bs-toggle="tab">Vaccine</a>
-            </li>
-        </ul>
+        </div>
     </nav>
     <?php
     include('conn.php');
     $vac = new connection();
     $i = 1;
+    $_GET['submit'] = 0;
+    $_GET['delete'] = 0;
+    $_GET['edit'] = 0;
+
 
     //insert
     switch ($_GET['submit']) {
@@ -117,20 +131,17 @@
         <!--Student Tab-->
         <div class="tab-pane fade" id="student">
             <!--search and insert-->
-            <div class="d-flex justify-content-sm-evenly">
-                <div>
-                    <button class="btn btn-outline-success" role="button" data-bs-toggle="modal" data-bs-target="#createStudentModal">+</button>
-                </div>
+            <div class="d-flex justify-content-end mx-5 my-3">
                 <div class="d-flex">
                     <form class="d-flex" role="search">
                         <input class="search " id="searchStudent" type="search" placeholder="Search" aria-label="Search">
                         <span class="input-group-text border-0" id="search-addon">
-                            <i class="fas fa-search"></i>
+                            <i class="bi bi-search"></i>
                 </div>
             </div>
             <!--table div-->
             <div class="d-flex justify-content-center">
-                <table class="table table-striped table-borderless mx-auto w-75" id="studentTable">
+                <table class="table table-stripe table-borderless shadow-lg  p-3 mb-5 bg-body rounded mx-auto w-75" id="studentTable">
                     <thead>
                         <tr>
                             <th class="border" scope="col" onclick="sortTable(0, 'studentTable')" role="button">ID</th>
@@ -321,6 +332,31 @@
                     </tbody>
                 </table>
             </div>
+            <!--create modal-->
+            <div class="d-flex justify-content-center py-2">
+                <button class="btn btn-outline-success" role="button" data-bs-toggle="modal" data-bs-target="#createStudentModal">+</button>
+            </div>
+            <!--pagination-->
+            <div class="d-flex justify-content-center py-2">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
             <!--Student Insert Modal-->
             <div class="modal fade" id="createStudentModal" tabindex="-1" aria-labelledby="createStudentLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-lg overflow-auto">
@@ -415,19 +451,16 @@
         </div>
         <!--Faculty-->
         <div class="tab-pane fade" id="faculty">
-            <div class="d-flex">
-                <div>
-                    <button class="btn btn-outline-success" role="button" data-bs-toggle="modal" data-bs-target="#createFacultyModal">+</button>
-                </div>
-                <div class="input-group rounded">
-                    <input type="text" id="searchFaculty" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
-                    <span class="input-group-text border-0" id="search-addon">
-                        <i class="fas fa-search"></i>
-                    </span>
+            <div class="d-flex justify-content-end mx-5 my-3">
+                <div class="d-flex">
+                    <form class="d-flex" role="search">
+                        <input class="search " id="searchFaculty" type="search" placeholder="Search" aria-label="Search">
+                        <span class="input-group-text border-0" id="search-addon">
+                            <i class="bi bi-search"></i>
                 </div>
             </div>
             <div class="d-flex justify-content-center">
-                <table id="facultyTable" class="table table-strip table-borderless mx-auto w-75">
+                <table id="facultyTable" class="table table-stripe table-borderless shadow-lg p-3 mb-5 bg-body rounded mx-auto w-75">
                     <thead>
                         <th class="border" scope="col" onclick="sortTable(0, 'facultyTable')" role="button">ID</th>
                         <th class="border" scope="col" onclick="sortTable(1, 'facultyTable')" role="button">Name</th>
@@ -601,6 +634,30 @@
                     ?>
                 </table>
             </div>
+            <!--create modal-->
+            <div class="d-flex justify-content-center py-2">
+                <button class="btn btn-outline-success" role="button" data-bs-toggle="modal" data-bs-target="#createStudentModal">+</button>
+            </div>
+            <!--pagination-->
+            <div class="d-flex justify-content-center py-2">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
             <!--Faculty Insert Modal-->
             <div class="modal fade" id="createFacultyModal" tabindex="-1" aria-labelledby="createFacultyLabel">
                 <div class="modal-dialog modal-dialog-centered modal-lg overflow-auto">
@@ -696,13 +753,16 @@
         </div>
         <!--Vaccine Tab-->
         <div class="tab-pane fade" id="vaccine">
-            <div class="d-flex">
-                <div class="d-flex justify-content-center">
-                    <button class="btn btn-outline-success" role="button" data-bs-toggle="modal" data-bs-target="#createVacModal">+</button>
+            <div class="d-flex justify-content-end mx-5 my-3">
+                <div class="d-flex">
+                    <form class="d-flex" role="search">
+                        <input class="search " id="searchVaccine" type="search" placeholder="Search" aria-label="Search">
+                        <span class="input-group-text border-0" id="search-addon">
+                            <i class="bi bi-search"></i>
                 </div>
             </div>
             <div class="d-flex justify-content-center">
-                <table class="table table-strip table-borderless">
+                <table class="table table-stripe table-borderless shadow-lg p-3 mb-5 bg-body rounded mx-auto w-75">
                     <thead>
                         <tr>
                             <th class="border" scope="col">No.</th>
@@ -722,7 +782,7 @@
                                 <!--edit vac-->
                                 <td>
                                     <!--resize-->
-                                    <a cla type="button" data-bs-toggle="modal" href="adminview.php?editID=<?php echo $info['id'] ?>" data-bs-target="#upVacModal<?php echo $i ?>">
+                                    <a cla type="button" data-bs-toggle="modal" href="adminview.php?editID=<?php echo $info['brand'] ?>" data-bs-target="#upVacModal<?php echo $i ?>">
                                         <i class="bi bi-pencil-fill"></i>
                                     </a>
                                 </td>
@@ -784,6 +844,30 @@
                     </tbody>
                 </table>
             </div>
+            <div class="d-flex justify-content-center py-2">
+                <button class="btn btn-outline-success" role="button" data-bs-toggle="modal" data-bs-target="#createStudentModal">+</button>
+            </div>
+            <!--pagination-->
+            <div class="d-flex justify-content-center py-2">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
             <!--Create Vac brand modal-->
             <div class="modal fade" id="createVacModal" tabindex="-1" aria-labelledby="createVacModal">
                 <div class="modal-dialog modal-dialog-centered">
@@ -809,9 +893,6 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="d-flex justify-content-center">
-        <a href="adminview.php?report=1">Generate Report</a>
     </div>
     <script>
         function sortTable(n, table) {
