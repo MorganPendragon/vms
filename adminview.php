@@ -117,20 +117,20 @@
         <!--Student Tab-->
         <div class="tab-pane fade" id="student">
             <!--search and insert-->
-            <div class="d-flex">
+            <div class="d-flex justify-content-sm-evenly">
                 <div>
-                    <button class="btn btn-outline-success me-2" role="button" data-bs-toggle="modal" data-bs-target="#createStudentModal">+</button>
+                    <button class="btn btn-outline-success" role="button" data-bs-toggle="modal" data-bs-target="#createStudentModal">+</button>
                 </div>
-                <div class="input-group rounded">
-                    <input type="text" id="searchStudent" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
-                    <span class="input-group-text border-0" id="search-addon">
-                        <i class="fas fa-search"></i>
-                    </span>
+                <div class="d-flex">
+                    <form class="d-flex" role="search">
+                        <input class="search " id="searchStudent" type="search" placeholder="Search" aria-label="Search">
+                        <span class="input-group-text border-0" id="search-addon">
+                            <i class="fas fa-search"></i>
                 </div>
             </div>
             <!--table div-->
             <div class="d-flex justify-content-center">
-                <table class="table table-strip table-borderless mx-auto w-75" id="studentTable">
+                <table class="table table-striped table-borderless mx-auto w-75" id="studentTable">
                     <thead>
                         <tr>
                             <th class="border" scope="col" onclick="sortTable(0, 'studentTable')" role="button">ID</th>
