@@ -18,52 +18,59 @@ $(document).ready(function () {
         });
     });
 
-    //year level filter
-    $filter = $('#yearLevel, #brand')
-    $filter.change(function(){
+    //student filter
+    $filter = $('#yearLevel, #brand, #studentStatus')
+    $filter.change(function () {
         filterStudent();
     })
     $('#studentContent tr').show();
 
-    function filterStudent()
-    {
+    function filterStudent() {
         $('#studentContent tr').hide();
         var yearFlag = 0;
         var yearValue = $('#yearLevel').val();
         var brandFlag = 0;
         var brandValue = $('#brand').val();
-        
+        var statusFlag = 0;
+        var statusValue = $('#studentStatus').val();
+
         //row traverse
-        $('#studentTable tr').each(function(){
+        $('#studentTable tr').each(function () {
             //year Filter
-            if(yearValue == 0)
-            {
+            if (yearValue == 0) {
                 yearFlag = 1;
             }
-            else if(yearValue == $(this).find('#yearTd').data('yr'))
-            {
+            else if (yearValue == $(this).find('#yearTd').data('yr')) {
                 yearFlag = 1;
             }
-            else
-            {
+            else {
                 yearFlag = 0;
             }
 
             //brand filter
-            if(brandValue == 0)
-            {
+            if (brandValue == 0) {
                 brandFlag = 1;
             }
-            else if(brandValue == $(this).find('#brandTd').data('brand'))
-            {
+            else if (brandValue == $(this).find('#brandTd').data('brand')) {
                 brandFlag = 1;
             }
-            else
-            {
+            else {
                 brandFlag = 0;
             }
-            console.log(yearFlag);
-            if(yearFlag && brandFlag)
+
+            //status Filter
+            if (statusValue == 0) {
+                statusFlag = 1;
+            }
+            else if (statusValue == $(this).find('#statusTd').data('status')) {
+                statusFlag = 1;
+            }
+            else {
+                statusFlag = 0;
+            }
+
+            console.log(statusValue);
+            if (yearFlag && brandFlag && statusFlag) 
             {
                 $(this).show();
             }
