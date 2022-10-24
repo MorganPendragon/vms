@@ -112,17 +112,30 @@
             <!--search and insert-->
             <nav class="navbar navbar-expand-lg bg-light justify-content-around my-2">
                 <!--dropdown-->
-                <div class="input-group">
-                    <select class="form-select" id="yearFilter">
-                        <option id="default" selected disabled hidden>Year Level</option>
-                        <option value="Grade 7">Grade 7</option>
-                        <option value="Grade 8">Grade 8</option>
-                        <option value="Grade 9">Grade 9</option>
-                        <option value="Grade 10">Grade 10</option>
-                        <option value="Grade 11">Grade 11</option>
-                        <option value="Grade 12">Grade 12</option>
-                    </select>
-                </div>
+                    <div class="input-group">
+                        <select class="form-select" id="yearLevel" autocomplete="off">
+                            <option value="0">Year Level</option>
+                            <option value="Grade 7">Grade 7</option>
+                            <option value="Grade 8">Grade 8</option>
+                            <option value="Grade 9">Grade 9</option>
+                            <option value="Grade 10">Grade 10</option>
+                            <option value="Grade 11">Grade 11</option>
+                            <option value="Grade 12">Grade 12</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <select class="form-select" id="brand" autocomplete="off">
+                            <option value="0">Brand Name</option>
+                            <?php
+                            $data = $vac->displayTable('vacBrand');
+                            foreach ($data as $info) {
+                            ?>
+                                <option value="<?php echo $info['brand']?>"><?php echo $info['brand'] ?></option>
+                            <?php
+                            }
+                            ?>
+                        </select>
+                    </div>
                 <div>
                     <div class="d-flex">
                         <input class="search " id="searchStudent" type="search" placeholder="Search" aria-label="Search">
@@ -155,19 +168,18 @@
                         <!--grade7-->
                         <?php
                         $data = $vac->displayTable('student');
-                        $colName = $vac->getColumnName('student');
                         foreach ($data as $info) {
                         ?>
                             <tr>
                                 <td class="border"> <?php echo $info['id'] ?> </td>
                                 <td class="border"> <?php echo $info['name'] ?> </td>
                                 <td class="border"> <?php echo $info['gender'] ?> </td>
-                                <td class="border"><?php echo $info['yearLevel'] ?></td>
+                                <td class="border" id="yearTd" data-yr="<?php echo $info['yearLevel']?>"><?php echo $info['yearLevel'] ?></td>
                                 <td class="border"> <?php echo $info['address'] ?> </td>
                                 <td class="border"> <?php echo $info['email'] ?> </td>
                                 <td class="border"> <?php echo $info['firstdose'] ?></td>
                                 <td class="border"> <?php echo $info['seconddose'] ?></td>
-                                <td class="border"><?php echo $info['brand'] ?></td>
+                                <td class="border" id="brandTd" data-brand="<?php echo $info['brand']?>"><?php echo $info['brand'] ?></td>
                                 <!--edit-->
                                 <td>
                                     <!--resize-->
@@ -373,7 +385,6 @@
                                 </div>
                                 <div class="col input-group">
                                     <select class="form-select" name="gender[0]" required>
-                                        <option></option>
                                         <option value="Male">Male</option>
                                         <option value="Female">Female</option>
                                     </select>

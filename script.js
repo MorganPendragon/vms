@@ -1,6 +1,6 @@
 $(document).ready(function () {
     var yearFilter = '';
-    var brandFilter ='';
+    var brandFilter = '';
     //caches selected tab before the page reload and shows the tab on reload
     $('a[data-bs-toggle="tab"]').on('show.bs.tab', function (e) {
         localStorage.setItem('activeTab', $(e.target).attr('href'));
@@ -11,7 +11,7 @@ $(document).ready(function () {
     }
 
     //global search
-    $(".search").on("keyup", function () {
+    $(".search").on("input", function () {
         var value = $(this).val().toLowerCase();
         $("tbody tr").filter(function () {
             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
@@ -19,24 +19,56 @@ $(document).ready(function () {
     });
 
     //year level filter
-    $("#yearLevelFilter option").on("click", function () {
-        var value;
-        if ($(this).val() != yearFilter) {
-            value = $(this).val();
-            $("#studentContent tr").filter(function () {
-                $(this).toggle($(this).text().indexOf(value) > -1)
-            });
-        }
-        else
-        {
-            value = '';
-            $("#studentContent tr").filter(function () {
-                $(this).toggle($(this).text().indexOf(value) > -1)
-            });
-            $('#yearFilter').prop('selectedIndex',0);
-        }
-        yearFilter = $(this).val();
-    });
+    $filter = $('#yearLevel, #brand')
+    $filter.change(function(){
+        filterStudent();
+    })
+    $('#studentContent tr').show();
+
+    function filterStudent()
+    {
+        $('#studentContent tr').hide();
+        var yearFlag = 0;
+        var yearValue = $('#yearLevel').val();
+        var brandFlag = 0;
+        var brandValue = $('#brand').val();
+        
+        //row traverse
+        $('#studentTable tr').each(function(){
+            //year Filter
+            if(yearValue == 0)
+            {
+                yearFlag = 1;
+            }
+            else if(yearValue == $(this).find('#yearTd').data('yr'))
+            {
+                yearFlag = 1;
+            }
+            else
+            {
+                yearFlag = 0;
+            }
+
+            //brand filter
+            if(brandValue == 0)
+            {
+                brandFlag = 1;
+            }
+            else if(brandValue == $(this).find('#brandTd').data('brand'))
+            {
+                brandFlag = 1;
+            }
+            else
+            {
+                brandFlag = 0;
+            }
+            console.log(yearFlag);
+            if(yearFlag && brandFlag)
+            {
+                $(this).show();
+            }
+        })
+    }
 
     //generate random id for student
     $("#studentForm").submit(function () {
