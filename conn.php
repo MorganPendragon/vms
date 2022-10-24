@@ -6,10 +6,13 @@ require __DIR__.'/vendor/autoload.php';
 //calls the lib
 use PhpOffice\PhpWord\Shared\Converter;
 
+$_GET['submit'] = 0;
+$_GET['edit'] = 0;
+$_GET['delete'] = 0;
 class connection
 {
     private $servername = 'localhost';
-	private $username = 'j';
+	private $username = 'jay';
 	private $password = 'password';
 	private $dbname = 'Vaccine';
 	private $conn;
@@ -150,9 +153,9 @@ class connection
 			$ctr++;
 		}
 		if($this->conn->query($sql))
+		{
 			header('location:adminview.php');
-		else 
-			die('Insert Unsucessful');
+		}
 	}
 
 	//update
