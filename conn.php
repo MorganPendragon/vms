@@ -6,9 +6,6 @@ require __DIR__.'/vendor/autoload.php';
 //calls the lib
 use PhpOffice\PhpWord\Shared\Converter;
 
-$_GET['submit'] = 0;
-$_GET['edit'] = 0;
-$_GET['delete'] = 0;
 class connection
 {
     private $servername = 'localhost';
