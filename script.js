@@ -1,6 +1,4 @@
 $(document).ready(function () {
-    var yearFilter = '';
-    var brandFilter = '';
     //caches selected tab before the page reload and shows the tab on reload
     $('a[data-bs-toggle="tab"]').on('show.bs.tab', function (e) {
         localStorage.setItem('activeTab', $(e.target).attr('href'));
@@ -69,19 +67,26 @@ $(document).ready(function () {
                 statusFlag = 0;
             }
 
-            console.log(statusValue);
-            if (yearFlag && brandFlag && statusFlag) 
-            {
+            if (yearFlag && brandFlag && statusFlag) {
                 $(this).show();
             }
         })
     }
 
-    //generate random id for student
     $("#studentForm").submit(function () {
+        //generate random id for student
         var id = new Date().getFullYear().toString().substring(2);
         id += "-";
         id += Math.random().toString(9).substring(2, 8);
         $("#studentID").val(id);
+    });
+
+    //TODO:Regex WIP
+    $('#fname,#mname,#lname').on('input',function(){
+        console.log(/^[a-zA-Z ]+$/.test($(this).val().toString()));
+    });
+    
+    //tablesorter call
+    $('table').tablesorter({
     });
 });

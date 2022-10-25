@@ -5,13 +5,26 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>AdminView</title>
+    <!--bootstrap css-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <!--bootstrap icons--->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <!--Date Picker-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
     <!--bootstrap js lib-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+    <!--jQuery-->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <!--Validation plugin for jQuery-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js" integrity="sha512-rstIgDs0xPgmG6RX1Aba4KV5cWJbAMcvRCVmglpam9SoHZiUCyQVDdH2LPlxoHtrv17XWblE/V/PP+Tr04hbtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!--Table Sorter plugin for jQuery-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/jquery.tablesorter.min.js" integrity="sha512-qzgd5cYSZcosqpzpn7zF2ZId8f/8CHmFKZ8j7mU4OUXTNRd5g+ZHBPsgKEwoqxCtdQvExE5LprwwPAgoicguNg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="script.js"></script>
+    <style>
+        th{
+            cursor: pointer;
+        }
+    </style>
 </head>
 
 
@@ -157,7 +170,7 @@
 
             <!--table div-->
             <div class="d-flex justify-content-center">
-                <table class="table table-stripe table-borderless w-75" id="studentTable">
+                <table class="table table-stripe table-borderless w-75" id="studentTable" data-sortlist="[[0,0], [2,0]]">
                     <thead>
                         <tr>
                             <th scope="col" role="button">ID</th>
@@ -342,13 +355,13 @@
                                 <div class="row mb-3">
                                     <input type="hidden" id="studentID" name="id[0]" class="form-control" placeholder="ID No." required>
                                     <div class="col">
-                                        <input type="text" name="firstName[0]" class="form-control" placeholder="First name" required>
+                                        <input type="text" name="firstName[0]" id="fname" class="form-control" placeholder="First name" required>
                                     </div>
                                     <div class="col">
-                                        <input type="text" name="middleName[0]" class="form-control" placeholder="Middle name" required>
+                                        <input type="text" name="middleName[0]" id="mname" class="form-control" placeholder="Middle name" required>
                                     </div>
                                     <div class="col">
-                                        <input type="text" name="lastName[0]" class="form-control" placeholder="Last name" required>
+                                        <input type="text" name="lastName[0]" id="lname" class="form-control" placeholder="Last name" required>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
