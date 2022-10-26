@@ -971,7 +971,9 @@
             </div>
         </div>
     </div>
-    </div>
+    <script>
+        $('table').tablesorter();
+    </script>
 </body>
 
 </html>
