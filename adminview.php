@@ -23,6 +23,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
     
     <script src="script.js"></script>
+    <script src="https://kit.fontawesome.com/9dd1cea6a6.js" crossorigin="anonymous"></script>
     <style>
         th {
             cursor: pointer;
@@ -48,20 +49,19 @@
     </header>
     <main>
         <!--sidebar-->
-        <div class="row">
             <div class="container-fluid window-height elevation-4" aria-orientation="vertical">
                 <div class=" row flex-nowrap">
                     <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0" style="background-color:#102d41">
                         <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
                             <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="tableTab">
                                 <li class="nav-item active">
-                                    <a href="#student" class="nav-link active" data-bs-toggle="tab">Student</a>
+                                    <a href="#student" class="nav-link active" data-bs-toggle="tab"><i class="fa-sharp fa-solid fa-graduation-cap"></i>&nbsp;&nbsp;Student</a>
                                 </li>
                                 <li class="nav-item active">
-                                    <a href="#faculty" class="nav-link" data-bs-toggle="tab">Faculty</a>
+                                    <a href="#faculty" class="nav-link" data-bs-toggle="tab"><i class="fa-sharp fa-solid fa-user-tie"></i>&nbsp;&nbsp;Faculty</a>
                                 </li>
                                 <li class="nav-item active">
-                                    <a href="#vaccine" class="nav-link" data-bs-toggle="tab">Vaccine</a>
+                                    <a href="#vaccine" class="nav-link" data-bs-toggle="tab"><i class="fa-solid fa-syringe"></i>&nbsp;&nbsp;Vaccine</a>
                                 </li>
                             </ul>
                             <div class="pb-4 justify-content-around">
