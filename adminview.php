@@ -58,19 +58,14 @@
                             <a href="#vaccine" class="nav-link" data-bs-toggle="tab">Vaccine</a>
                         </li>
                     </ul>
-                    <div class="dropdown pb-4">
-                        <a href="#" class="d-flex align-items-between text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="https://github.com/mdo.png" alt="hugenerd" width="30" height="30" class="rounded-circle">
+                    <div class="pb-4 justify-content-around">
+                        <a href="login.php" class="text-white text-decoration-none">
                             <span class="d-none d-sm-inline mx-1">Log out </span>
                         </a>
-                    </div>
-                    <div class="d-flex align-content-between flex-wrap mx-5">
-                        <li class="nav-item active">
-                            <a class="btn" type="button" href="adminview.php?report=1">
-                                <i class="bi bi-clipboard-data">
+                            <a class="btn btn-outline-light" type="button" href="adminview.php?report=1">
+                                <i class="bi bi-clipboard2-data">
                                 </i>
                             </a>
-                        </li>
                     </div>
                 </div>
             </div>
@@ -198,7 +193,7 @@
 
                 <!--table div-->
                 <div class="d-flex justify-content-center">
-                    <table class="table table-stripe table-borderless w-75" id="studentTable" data-sortlist="[[0,0], [2,0]]">
+                    <table class="table table-stripe table-borderless w-auto" id="studentTable" data-sortlist="[[0,0], [2,0]]">
                         <thead>
                             <tr>
                                 <th class="border" scope="col" role="button">ID</th>
@@ -539,7 +534,7 @@
                     </div>
                 </div>
                 <div class="d-flex justify-content-center">
-                    <table id="facultyTable" class="table table-stripe table-borderless w-75">
+                    <table id="facultyTable" class="table table-stripe table-borderless w-auto">
                         <thead>
                             <th class="border" scope="col" role="button">ID</th>
                             <th class="border" scope="col" role="button">Name</th>
