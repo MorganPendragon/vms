@@ -140,7 +140,7 @@
         <div class="container col-8">
             <div class="tab-content" id="tableTabContent">
                 <!--Student Tab-->
-                <div class="tab-pane fade position-absolute" id="student">
+                <div class="tab-pane fade show active position-absolute" id="student">
                     <!--search and filter-->
                     <div class="d-flex py-3">
                         <!--year level filter-->
