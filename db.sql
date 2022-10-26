@@ -50,6 +50,29 @@ INSERT INTO `faculty` VALUES ('b','fname mname lname','Female','2018-07-15','tes
 UNLOCK TABLES;
 
 --
+-- Table structure for table `password`
+--
+
+DROP TABLE IF EXISTS `password`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `password` (
+  `id` varchar(30) NOT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `password`
+--
+
+LOCK TABLES `password` WRITE;
+/*!40000 ALTER TABLE `password` DISABLE KEYS */;
+/*!40000 ALTER TABLE `password` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `student`
 --
 
@@ -69,6 +92,7 @@ CREATE TABLE `student` (
   `firstdose` date DEFAULT NULL,
   `seconddose` date DEFAULT NULL,
   `brand` varchar(255) DEFAULT NULL,
+  `doctor` text,
   PRIMARY KEY (`id`),
   KEY `brand` (`brand`),
   CONSTRAINT `student_ibfk_1` FOREIGN KEY (`brand`) REFERENCES `vacBrand` (`brand`)
@@ -81,7 +105,7 @@ CREATE TABLE `student` (
 
 LOCK TABLES `student` WRITE;
 /*!40000 ALTER TABLE `student` DISABLE KEYS */;
-INSERT INTO `student` VALUES ('3','test3 test3 test3','Grade 7','Enrolled','.exclamationtrueisequaltofalse@gmail.com','124','Female','2001-01-01','reee','2001-01-01','2001-01-01','test'),('5','test5 test5 test5','Grade 8','Enrolled','randomizedgg9@gmail.com','555','Female','2000-10-04','555','2001-01-01','2001-01-01','brimdaddy'),('6','test6 tset6 test6','Grade 8','Dropped','randomizedgg9@gmail.com','666','Female','2022-10-12','111','2001-01-01','2001-01-01','astra'),('7','test7 test7 test7','Grade 10','Enrolled','randomizedgg9@gmail.com','777','Male','2022-10-19','777','2001-01-01','2001-01-01','brimdaddy'),('id','fname mname lname','Grade 7','Enrolled','test2@gmail.cpom','435','Female','2016-07-14','add','2001-01-01','2001-01-01','astra'),('reeee','fname mname lname','Grade 7','Dropped','test1@gmail.com','tel','Female','2020-07-15','add','2001-01-01','2001-01-01','meh'),('reeeese','fname mname lname','Grade 8','Enrolled','test1@gmail.com','tel','Female','2019-08-15','add','2001-01-01','2001-01-01','brimdaddy');
+INSERT INTO `student` VALUES ('22-186102','asfasf asdafa asfafs','Grade 7','Enrolled','123','asf','Female','2022-10-21','123123','2022-10-21',NULL,'astra','asda'),('22-382444','asd asd asd','Grade 7','Enrolled','as@gmail.com','asf','Male',NULL,'asd','2022-10-12',NULL,'astra','asasd'),('22-726483','test test test','Grade 8','Enrolled','test@gmail.com','1234','Female','2016-07-23','test','2010-06-20',NULL,'brimdaddy','fafafafa'),('22-827533','asd asd asd','Grade 7','Enrolled','asfaf@gmail.com','asd','Male','2022-10-14','asdasd',NULL,NULL,'meh','asd');
 /*!40000 ALTER TABLE `student` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -117,4 +141,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-10-25 19:06:17
+-- Dump completed on 2022-10-27  2:17:23
