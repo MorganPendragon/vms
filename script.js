@@ -73,25 +73,31 @@ $(document).ready(function () {
         })
     }
 
-    $name = $('#fname, #mname, #lname');
+    $name = $('input[name="firstName[0]"], input[name="middleName[0]"], input[name="lastName[0]"], input[name="doctorName[0]"]');
     $('#studentForm').submit(function (e) {
+        e.preventDefault();
+        var validated = 0;
         //generate random id for student
-
+        $name.each(function() {
+            if(!(/^[a-zA-Z ]+$/test($(this).val())))
+            {
+                validated--;
+            }
+            else
+            {
+                validated++;
+            }
+        });
         var id = new Date().getFullYear().toString().substring(2);
         id += "-";
         id += Math.random().toString(9).substring(2, 8);
         $("#studentID").val(id);
-
-        //TODO:Regex WIP
-        $name.each(function () {
-            $(this).on("input", function () {
-                if (!(/[a-zA-Z]/.test($(this).val().toString()))) {
-                    e.preventDefault();
-                }
-            });
-        });
-        $('studentForm').submit();
-
+        
+        console.log(validated);
+        if(validated == 4)
+        {
+            console.log('success');
+        }
     });
 
 
