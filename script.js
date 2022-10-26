@@ -17,7 +17,7 @@ $(document).ready(function () {
     });
 
     //student filter
-    $filter = $('#yearLevel, #brand, #studentStatus')
+    $filter = $('#yearLevel, #brandFilter, #studentStatus')
     $filter.change(function () {
         filterStudent();
     })
@@ -73,20 +73,27 @@ $(document).ready(function () {
         })
     }
 
-    $('#studentForm').submit(function () {
+    $name = $('#fname, #mname, #lname');
+    $('#studentForm').submit(function (e) {
         //generate random id for student
+
         var id = new Date().getFullYear().toString().substring(2);
         id += "-";
         id += Math.random().toString(9).substring(2, 8);
         $("#studentID").val(id);
+
+        //TODO:Regex WIP
+        $name.each(function () {
+            $(this).on("input", function () {
+                if (!(/[a-zA-Z]/.test($(this).val().toString()))) {
+                    e.preventDefault();
+                }
+            });
+        });
+        $('studentForm').submit();
+
     });
 
-    //TODO:Regex WIP
-    $('#fname,#mname,#lname').on('input', function () {
-        if (!(/^[a-zA-Z ]+$/.test($(this).val().toString()))) {
-            $('p').text('invalid');
-        }
-    });
 
     $('#login').submit(function (e) {
         e.preventDefault();
@@ -104,5 +111,16 @@ $(document).ready(function () {
         }
     });
 
-    
+    $('#firstStudentDose').on('change', function () {
+        console.log($(this).val());
+        if (!$(this).val().toString() == "") {
+            $('#secondStudentDose').removeAttr('disabled');
+            $('#brandStudent').removeAttr('disabled');
+            $('#brandStudent').attr('required', 'required');
+        }
+        else {
+            $('#secondStudentDose').attr('disabled', 'disabled');
+            $('#brandStudent').attr('disabled', 'disabled');
+        }
+    });
 });
