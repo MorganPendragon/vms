@@ -74,7 +74,7 @@ $(document).ready(function () {
     }
 
     $name = $('input[name="firstName[0]"], input[name="middleName[0]"], input[name="lastName[0]"], input[name="doctorName[0]"]');
-    $('#studentFButton').on('click',function (e) {
+    $('#studentForm').submit(function (e) {
         var validated = 0;
         //generate random id for student
         $name.each(function() {
@@ -93,10 +93,11 @@ $(document).ready(function () {
         $("#studentID").val(id);
         
         console.log(validated);
-        if(validated == 4)
+        if(validated < 4)
         {
-            $('#studentForm').submit();
+            e.preventDefault();
         }
+        location.href('adminview.php');
     });
 
 
