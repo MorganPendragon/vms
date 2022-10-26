@@ -9,7 +9,7 @@ $(document).ready(function () {
     }
 
     //global search
-    $(".search").on("input", function () {
+    $('.search').on('input', function () {
         var value = $(this).val().toLowerCase();
         $("tbody tr").filter(function () {
             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
@@ -73,7 +73,7 @@ $(document).ready(function () {
         })
     }
 
-    $("#studentForm").submit(function () {
+    $('#studentForm').submit(function () {
         //generate random id for student
         var id = new Date().getFullYear().toString().substring(2);
         id += "-";
@@ -82,11 +82,20 @@ $(document).ready(function () {
     });
 
     //TODO:Regex WIP
-    $('#fname,#mname,#lname').on('input',function(){
+    $('#fname,#mname,#lname').on('input', function () {
         console.log(/^[a-zA-Z ]+$/.test($(this).val().toString()));
     });
-    
-    //tablesorter call
-    $('table').tablesorter({
+
+
+    $('#login').submit(function (e) {
+        e.preventDefault();
+        if(/-[0-9]{8,}/.test($('#idNo').val().toString()))
+        {
+            $('#idFeedback').text("success").show().fadeOut(2000);
+        }
+        else
+        {
+            $('#idFeedback').text("fuck you").show().fadeOut(2000);
+        }
     });
 });
