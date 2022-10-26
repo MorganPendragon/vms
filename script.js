@@ -83,27 +83,26 @@ $(document).ready(function () {
 
     //TODO:Regex WIP
     $('#fname,#mname,#lname').on('input', function () {
-        console.log(/^[a-zA-Z ]+$/.test($(this).val().toString()));
+        if (!(/^[a-zA-Z ]+$/.test($(this).val().toString()))) {
+            $('p').text('invalid');
+        }
     });
-
 
     $('#login').submit(function (e) {
         e.preventDefault();
         var id = $('#idNo').val().toString();
-        if(/-[0-9]{8,}/.test(id))
-        {
+        if (/-[0-9]{8,}/.test(id)) {
             $('#idFeedback').text("success").show().fadeOut(2000);
         }
-        else if(/admin/.test(id)) 
-        {
-            if($('#pwd').val().toString() == 'admin')
-            {
-                location.href='adminview.php';
+        else if (/admin/.test(id)) {
+            if ($('#pwd').val().toString() == 'admin') {
+                location.href = 'adminview.php';
             }
         }
-        else
-        {
+        else {
             $('#idFeedback').text("fuck you").show().fadeOut(2000);
         }
     });
+
+    
 });

@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+<!--TODO:Idiotproofing-->
 
 <head>
     <meta charset="utf-8">
@@ -9,8 +10,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <!--bootstrap icons--->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
-    <!--Date Picker-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
     <!--bootstrap js lib-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
     <!--jQuery-->
@@ -19,6 +18,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js" integrity="sha512-rstIgDs0xPgmG6RX1Aba4KV5cWJbAMcvRCVmglpam9SoHZiUCyQVDdH2LPlxoHtrv17XWblE/V/PP+Tr04hbtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!--Table Sorter plugin for jQuery-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/jquery.tablesorter.min.js" integrity="sha512-qzgd5cYSZcosqpzpn7zF2ZId8f/8CHmFKZ8j7mU4OUXTNRd5g+ZHBPsgKEwoqxCtdQvExE5LprwwPAgoicguNg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!--Date Picker-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
+    
     <script src="script.js"></script>
     <style>
         th {
@@ -210,8 +213,6 @@
                                 </thead>
 
                                 <tbody id="studentContent">
-                                    <!--yearLevelContent-->
-                                    <!--grade7-->
                                     <?php
                                     $data = $vac->displayTable('student');
                                     foreach ($data as $info) {
@@ -373,18 +374,22 @@
                                         <h5 class="modal-title" id="createModalLabel">Create</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
+                                    <!--TODO:invalid feedback formatting-->
                                     <form id="studentForm" action="adminview.php?submit=1" method="POST">
                                         <div class="modal-body">
                                             <div class="row mb-3">
                                                 <input type="hidden" id="studentID" name="id[0]" class="form-control" placeholder="ID No." required>
                                                 <div class="col">
                                                     <input type="text" name="firstName[0]" id="fname" class="form-control" placeholder="First name" required>
+                                                    <p></p>
                                                 </div>
                                                 <div class="col">
                                                     <input type="text" name="middleName[0]" id="mname" class="form-control" placeholder="Middle name" required>
+                                                    <p></p>
                                                 </div>
                                                 <div class="col">
                                                     <input type="text" name="lastName[0]" id="lname" class="form-control" placeholder="Last name" required>
+                                                    <p></p>
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
@@ -447,7 +452,7 @@
                                                     <label for="brand">
                                                         Brand
                                                     </label>
-                                                    <select id="brand" class="form-select" name="brand[0]">
+                                                    <select id="brand" class="form-select" name="brand[0]" disabled>
                                                         <option></option>
                                                         <?php
                                                         $brand = $vac->getData('vacBrand', 'brand');
