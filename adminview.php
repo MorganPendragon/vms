@@ -7,6 +7,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>AdminView</title>
+    <!--googlefont-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
     <!--bootstrap css-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <!--bootstrap icons--->
@@ -22,7 +24,6 @@
     <!--Date Picker-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
-
     <script src="script.js"></script>
     <script src="https://kit.fontawesome.com/9dd1cea6a6.js" crossorigin="anonymous"></script>
     <style>
@@ -39,6 +40,11 @@
         * {
             margin: 0;
             padding: 0;
+        }
+
+        table {
+            font-size: 16px;
+
         }
     </style>
 </head>
