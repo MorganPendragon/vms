@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+<!--TODO:Idiotproofing-->
 
 <head>
     <meta charset="utf-8">
@@ -9,8 +10,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <!--bootstrap icons--->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
-    <!--Date Picker-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
     <!--bootstrap js lib-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
     <!--jQuery-->
@@ -19,6 +18,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js" integrity="sha512-rstIgDs0xPgmG6RX1Aba4KV5cWJbAMcvRCVmglpam9SoHZiUCyQVDdH2LPlxoHtrv17XWblE/V/PP+Tr04hbtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!--Table Sorter plugin for jQuery-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/jquery.tablesorter.min.js" integrity="sha512-qzgd5cYSZcosqpzpn7zF2ZId8f/8CHmFKZ8j7mU4OUXTNRd5g+ZHBPsgKEwoqxCtdQvExE5LprwwPAgoicguNg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!--Date Picker-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
+    
     <script src="script.js"></script>
     <script src="https://kit.fontawesome.com/9dd1cea6a6.js" crossorigin="anonymous"></script>
     <style>
@@ -209,286 +212,288 @@
                                 </tr>
                             </thead>
 
-                            <tbody id="studentContent">
-                                <!--yearLevelContent-->
-                                <!--grade7-->
-                                <?php
-                                $data = $vac->displayTable('student');
-                                foreach ($data as $info) {
-                                ?>
-                                    <tr>
-                                        <td class="border"> <?php echo $info['id'] ?> </td>
-                                        <td class="border"> <?php echo $info['name'] ?> </td>
-                                        <td class="border"> <?php echo $info['gender'] ?> </td>
-                                        <td class="border" id="yearTd" data-yr="<?php echo $info['yearLevel'] ?>"><?php echo $info['yearLevel'] ?></td>
-                                        <td class="border" id="statusTd" data-status="<?php echo $info['status'] ?>"><?php echo $info['status'] ?></td>
-                                        <td class="border"> <?php echo $info['address'] ?> </td>
-                                        <td class="border"> <?php echo $info['email'] ?> </td>
-                                        <td class="border"> <?php echo $info['firstdose'] ?></td>
-                                        <td class="border"> <?php echo $info['seconddose'] ?></td>
-                                        <td class="border" id="brandTd" data-brand="<?php echo $info['brand'] ?>"><?php echo $info['brand'] ?></td>
-                                        <!--edit-->
-                                        <td>
-                                            <!--resize-->
-                                            <a cla type="button" data-bs-toggle="modal" href="adminview.php?editID=<?php echo $info['id'] ?>" data-bs-target="#editStudentModal<?php echo $i ?>">
-                                                <i class="bi bi-pencil-fill"></i>
-                                            </a>
-                                        </td>
-                                        <!--delete info-->
-                                        <td>
-                                            <!--resize-->
-                                            <a type="button" data-bs-toggle="modal" data-bs-target="#deleteStudentModal<?php echo $i ?>">
-                                                <i class="bi bi-trash-fill"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <!--Edit Student Modal-->
-                                    <div class="modal fade" id="editStudentModal<?php echo $i ?>" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered modal-lg">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="Edit" id="editModalLabel">Edit</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <tbody id="studentContent">
+                                    <?php
+                                    $data = $vac->displayTable('student');
+                                    foreach ($data as $info) {
+                                    ?>
+                                        <tr>
+                                            <td class="border"> <?php echo $info['id'] ?> </td>
+                                            <td class="border"> <?php echo $info['name'] ?> </td>
+                                            <td class="border"> <?php echo $info['gender'] ?> </td>
+                                            <td class="border" id="yearTd" data-yr="<?php echo $info['yearLevel'] ?>"><?php echo $info['yearLevel'] ?></td>
+                                            <td class="border" id="statusTd" data-status="<?php echo $info['status'] ?>"><?php echo $info['status'] ?></td>
+                                            <td class="border"> <?php echo $info['address'] ?> </td>
+                                            <td class="border"> <?php echo $info['email'] ?> </td>
+                                            <td class="border"> <?php echo $info['firstdose'] ?></td>
+                                            <td class="border"> <?php echo $info['seconddose'] ?></td>
+                                            <td class="border" id="brandTd" data-brand="<?php echo $info['brand'] ?>"><?php echo $info['brand'] ?></td>
+                                            <!--edit-->
+                                            <td>
+                                                <!--resize-->
+                                                <a cla type="button" data-bs-toggle="modal" href="adminview.php?editID=<?php echo $info['id'] ?>" data-bs-target="#editStudentModal<?php echo $i ?>">
+                                                    <i class="bi bi-pencil-fill"></i>
+                                                </a>
+                                            </td>
+                                            <!--delete info-->
+                                            <td>
+                                                <!--resize-->
+                                                <a type="button" data-bs-toggle="modal" data-bs-target="#deleteStudentModal<?php echo $i ?>">
+                                                    <i class="bi bi-trash-fill"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <!--Edit Student Modal-->
+                                        <div class="modal fade" id="editStudentModal<?php echo $i ?>" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered modal-lg">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="Edit" id="editModalLabel">Edit</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <!--put content here-->
+                                                    <?php
+                                                    $name = explode(' ', $info['name']);
+                                                    ?>
+                                                    <form action="adminview.php?editStudent=<?php echo $info['id']; ?>&edit=1" method="POST">
+                                                        <div class="modal-body">
+                                                            <div class="row mb-2">
+                                                                <div class="col">
+                                                                    <input type="text" name="upID[0]" class="form-control" placeholder="First name" value="<?php echo $info['id'] ?>">
+                                                                </div>
+                                                            </div>
+                                                            <div class="row mb-2">
+                                                                <div class="col">
+                                                                    <input type="text" name="upFirstName[0]" class="form-control" placeholder="First name" value="<?php echo $name[0] ?>">
+                                                                </div>
+                                                                <div class="col">
+                                                                    <input type="text" name="upMiddleName[0]" class="form-control" placeholder="Middle name" value="<?php echo $name[1] ?>">
+                                                                </div>
+                                                                <div class="col">
+                                                                    <input type="text" name="upLastName[0]" class="form-control" placeholder="Last name" value="<?php echo $name[2] ?>">
+                                                                </div>
+                                                            </div>
+                                                            <div class="row mb-2">
+                                                                <div class="col">
+                                                                    <input type="email" name="upEmail[0]" class="form-control" id="emailFormControl" placeholder="Email" value="<?php echo $info['email']; ?>" required>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row mb-2">
+                                                                <div class="col">
+                                                                    <input type="text" name="upTel[0]" class="form-control" placeholder="Telephone No." value="<?php echo $info['tel']; ?>">
+                                                                </div>
+                                                                <div class="col input-group">
+                                                                    <select class="form-select" name="upGender[0]" required>
+                                                                        <option></option>
+                                                                        <option value="Male">Male</option>
+                                                                        <option value="Female">Female</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row mb-2">
+                                                                <div class="col">
+                                                                    <input type="date" name="upDate[0]" class="form-control" name="date-field" value="<?php echo $info['birthday']; ?>">
+                                                                </div>
+                                                                <div class="col">
+                                                                    <input type="text" name="upAddress[0]" class="form-control" placeholder="Address" value="<?php echo $info['address']; ?>">
+                                                                </div>
+                                                            </div>
+                                                            <div class="row mb-3">
+                                                                <div class="col text-center">
+                                                                    <label class="form-check-label" for="firstDose">
+                                                                        1st Dose
+                                                                    </label>
+                                                                    <input type="date" id="firstDose" name="upFirstDose[0]" class="form-control" name="date-field" value="<?php echo $info['firstdose']; ?>">
+                                                                </div>
+                                                                <div class="col text-center">
+                                                                    <label class="form-check-label" for="secondDose">
+                                                                        2nd Dose
+                                                                    </label>
+                                                                    <input type="date" id="secondDose" name="upSecondDose[0]" class="form-control" name="date-field" value="<?php echo $info['seconddose']; ?>">
+                                                                </div>
+                                                                <div class="col text-center">
+                                                                    <label for="brand">
+                                                                        Brand
+                                                                    </label>
+                                                                    <select id="brand" class="form-select" name="brand[0]" required>
+                                                                        <option></option>
+                                                                        <?php
+                                                                        $brand = $vac->getData('vacBrand', 'brand');
+                                                                        foreach ($brand as $data) {
+                                                                        ?>
+                                                                            <option value="<?php echo $data['brand']; ?>"><?php echo $data['brand']; ?></option>
+                                                                        <?php
+                                                                        }
+                                                                        ?>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                                                        </div>
+                                                    </form>
                                                 </div>
-                                                <!--put content here-->
-                                                <?php
-                                                $name = explode(' ', $info['name']);
-                                                ?>
-                                                <form action="adminview.php?editStudent=<?php echo $info['id']; ?>&edit=1" method="POST">
+                                            </div>
+                                        </div>
+                                        <!--Delete Student Modal-->
+                                        <div class="modal fade" id="deleteStudentModal<?php echo $i ?>" tabindex="-1" aria-labelledby="delModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="Edit" id="delModalLabel">Confirmation</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <!--put content here-->
                                                     <div class="modal-body">
-                                                        <div class="row mb-2">
-                                                            <div class="col">
-                                                                <input type="text" name="upID[0]" class="form-control" placeholder="First name" value="<?php echo $info['id'] ?>">
-                                                            </div>
-                                                        </div>
-                                                        <div class="row mb-2">
-                                                            <div class="col">
-                                                                <input type="text" name="upFirstName[0]" class="form-control" placeholder="First name" value="<?php echo $name[0] ?>">
-                                                            </div>
-                                                            <div class="col">
-                                                                <input type="text" name="upMiddleName[0]" class="form-control" placeholder="Middle name" value="<?php echo $name[1] ?>">
-                                                            </div>
-                                                            <div class="col">
-                                                                <input type="text" name="upLastName[0]" class="form-control" placeholder="Last name" value="<?php echo $name[2] ?>">
-                                                            </div>
-                                                        </div>
-                                                        <div class="row mb-2">
-                                                            <div class="col">
-                                                                <input type="email" name="upEmail[0]" class="form-control" id="emailFormControl" placeholder="Email" value="<?php echo $info['email']; ?>" required>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row mb-2">
-                                                            <div class="col">
-                                                                <input type="text" name="upTel[0]" class="form-control" placeholder="Telephone No." value="<?php echo $info['tel']; ?>">
-                                                            </div>
-                                                            <div class="col input-group">
-                                                                <select class="form-select" name="upGender[0]" required>
-                                                                    <option></option>
-                                                                    <option value="Male">Male</option>
-                                                                    <option value="Female">Female</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row mb-2">
-                                                            <div class="col">
-                                                                <input type="date" name="upDate[0]" class="form-control" name="date-field" value="<?php echo $info['birthday']; ?>">
-                                                            </div>
-                                                            <div class="col">
-                                                                <input type="text" name="upAddress[0]" class="form-control" placeholder="Address" value="<?php echo $info['address']; ?>">
-                                                            </div>
-                                                        </div>
-                                                        <div class="row mb-3">
-                                                            <div class="col text-center">
-                                                                <label class="form-check-label" for="firstDose">
-                                                                    1st Dose
-                                                                </label>
-                                                                <input type="date" id="firstDose" name="upFirstDose[0]" class="form-control" name="date-field" value="<?php echo $info['firstdose']; ?>">
-                                                            </div>
-                                                            <div class="col text-center">
-                                                                <label class="form-check-label" for="secondDose">
-                                                                    2nd Dose
-                                                                </label>
-                                                                <input type="date" id="secondDose" name="upSecondDose[0]" class="form-control" name="date-field" value="<?php echo $info['seconddose']; ?>">
-                                                            </div>
-                                                            <div class="col text-center">
-                                                                <label for="brand">
-                                                                    Brand
-                                                                </label>
-                                                                <select id="brand" class="form-select" name="brand[0]" required>
-                                                                    <option></option>
-                                                                    <?php
-                                                                    $brand = $vac->getData('vacBrand', 'brand');
-                                                                    foreach ($brand as $data) {
-                                                                    ?>
-                                                                        <option value="<?php echo $data['brand']; ?>"><?php echo $data['brand']; ?></option>
-                                                                    <?php
-                                                                    }
-                                                                    ?>
-                                                                </select>
-                                                            </div>
-                                                        </div>
+                                                        Are you sure about the deletion?
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                                                        <a type="button" class="btn btn-primary" href="adminview.php?delete=1&delStudentID=<?php echo $info['id'] ?>">Yes</a>
                                                     </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--Delete Student Modal-->
-                                    <div class="modal fade" id="deleteStudentModal<?php echo $i ?>" tabindex="-1" aria-labelledby="delModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="Edit" id="delModalLabel">Confirmation</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <!--put content here-->
-                                                <div class="modal-body">
-                                                    Are you sure about the deletion?
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                                                    <a type="button" class="btn btn-primary" href="adminview.php?delete=1&delStudentID=<?php echo $info['id'] ?>">Yes</a>
                                                 </div>
                                             </div>
                                         </div>
+                                    <?php
+                                    }
+                                    ?>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!--insert button-->
+                        <div class="d-flex justify-content-center py-2">
+                            <button class="btn btn-outline-success" role="button" data-bs-toggle="modal" data-bs-target="#createStudentModal">+</button>
+                        </div>
+                        <!--Student Insert Modal-->
+                        <div class="modal fade" id="createStudentModal" tabindex="-1" aria-labelledby="createStudentLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-lg overflow-auto">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="createModalLabel">Create</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
-                                <?php
-                                }
-                                ?>
-                            </tbody>
-                        </table>
-                    </div>
-                    <!--insert button-->
-                    <div class="d-flex justify-content-center py-2">
-                        <button class="btn btn-outline-success" role="button" data-bs-toggle="modal" data-bs-target="#createStudentModal">+</button>
-                    </div>
-                    <!--Student Insert Modal-->
-                    <div class="modal fade" id="createStudentModal" tabindex="-1" aria-labelledby="createStudentLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered modal-lg overflow-auto">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="createModalLabel">Create</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    <!--TODO:invalid feedback formatting-->
+                                    <form id="studentForm" action="adminview.php?submit=1" method="POST">
+                                        <div class="modal-body">
+                                            <div class="row mb-3">
+                                                <input type="hidden" id="studentID" name="id[0]" class="form-control" placeholder="ID No." required>
+                                                <div class="col">
+                                                    <input type="text" name="firstName[0]" id="fname" class="form-control" placeholder="First name" required>
+                                                    <p></p>
+                                                </div>
+                                                <div class="col">
+                                                    <input type="text" name="middleName[0]" id="mname" class="form-control" placeholder="Middle name" required>
+                                                    <p></p>
+                                                </div>
+                                                <div class="col">
+                                                    <input type="text" name="lastName[0]" id="lname" class="form-control" placeholder="Last name" required>
+                                                    <p></p>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col input-group">
+                                                    <select class="form-select" name="yearLevel[0]" required>
+                                                        <option value="Grade 7">Grade 7</option>
+                                                        <option value="Grade 8">Grade 8</option>
+                                                        <option value="Grade 9">Grade 9</option>
+                                                        <option value="Grade 10">Grade 10</option>
+                                                        <option value="Grade 11">Grade 11</option>
+                                                        <option value="Grade 12">Grade 12</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col input-group">
+                                                    <select class="form-select" name="status[0]" required>
+                                                        <option value="Enrolled">Enrolled</option>
+                                                        <option value="Dropped">Dropped</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col">
+                                                    <input type="email" name="email[0]" class="form-control" id="emailFormControl" placeholder="Email" required>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col">
+                                                    <input type="text" name="telephone[0]" class="form-control" placeholder="Telephone No." required>
+                                                </div>
+                                                <div class="col input-group">
+                                                    <select class="form-select" name="gender[0]" required>
+                                                        <option value="Male">Male</option>
+                                                        <option value="Female">Female</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col">
+                                                    <input type="date" name="birthday[0]" class="form-control" name="date-field" required>
+                                                </div>
+                                                <div class="col">
+                                                    <input type="text" name="address[0]" class="form-control" placeholder="Address" required>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col text-center">
+                                                    <label for="firstDose">
+                                                        1st Dose
+                                                    </label>
+                                                    <input type="date" id="firstDose" name="firstdose[0]" class="form-control" name="date-field">
+                                                </div>
+                                                <div class="col text-center">
+                                                    <label for="secondDose">
+                                                        2nd Dose
+                                                    </label>
+                                                    <input type="hidden" name="seconddose[0]" class="form-control" name="date-field" value="">
+                                                    <input type="date" id="secondDose" name="seconddose[0]" class="form-control" name="date-field" disabled>
+                                                </div>
+                                                <div class="col text-center">
+                                                    <label for="brand">
+                                                        Brand
+                                                    </label>
+                                                    <select id="brand" class="form-select" name="brand[0]" disabled>
+                                                        <option></option>
+                                                        <?php
+                                                        $brand = $vac->getData('vacBrand', 'brand');
+                                                        foreach ($brand as $data) {
+                                                        ?>
+                                                            <option value="<?php echo $data['brand'] ?>"><?php echo $data['brand'] ?></option>
+                                                        <?php
+                                                        }
+                                                        ?>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary">Save</button>
+                                        </div>
+                                    </form>
                                 </div>
-                                <form id="studentForm" action="adminview.php?submit=1" method="POST">
-                                    <div class="modal-body">
-                                        <div class="row mb-3">
-                                            <input type="hidden" id="studentID" name="id[0]" class="form-control" placeholder="ID No." required>
-                                            <div class="col">
-                                                <input type="text" name="firstName[0]" id="fname" class="form-control" placeholder="First name" required>
-                                            </div>
-                                            <div class="col">
-                                                <input type="text" name="middleName[0]" id="mname" class="form-control" placeholder="Middle name" required>
-                                            </div>
-                                            <div class="col">
-                                                <input type="text" name="lastName[0]" id="lname" class="form-control" placeholder="Last name" required>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <div class="col input-group">
-                                                <select class="form-select" name="yearLevel[0]" required>
-                                                    <option value="Grade 7">Grade 7</option>
-                                                    <option value="Grade 8">Grade 8</option>
-                                                    <option value="Grade 9">Grade 9</option>
-                                                    <option value="Grade 10">Grade 10</option>
-                                                    <option value="Grade 11">Grade 11</option>
-                                                    <option value="Grade 12">Grade 12</option>
-                                                </select>
-                                            </div>
-                                            <div class="col input-group">
-                                                <select class="form-select" name="status[0]" required>
-                                                    <option value="Enrolled">Enrolled</option>
-                                                    <option value="Dropped">Dropped</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <div class="col">
-                                                <input type="email" name="email[0]" class="form-control" id="emailFormControl" placeholder="Email" required>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <div class="col">
-                                                <input type="text" name="telephone[0]" class="form-control" placeholder="Telephone No." required>
-                                            </div>
-                                            <div class="col input-group">
-                                                <select class="form-select" name="gender[0]" required>
-                                                    <option value="Male">Male</option>
-                                                    <option value="Female">Female</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <div class="col">
-                                                <input type="date" name="birthday[0]" class="form-control" name="date-field" required>
-                                            </div>
-                                            <div class="col">
-                                                <input type="text" name="address[0]" class="form-control" placeholder="Address" required>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <div class="col text-center">
-                                                <label for="firstDose">
-                                                    1st Dose
-                                                </label>
-                                                <input type="date" id="firstDose" name="firstdose[0]" class="form-control" name="date-field">
-                                            </div>
-                                            <div class="col text-center">
-                                                <label for="secondDose">
-                                                    2nd Dose
-                                                </label>
-                                                <input type="hidden" name="seconddose[0]" class="form-control" name="date-field" value="">
-                                                <input type="date" id="secondDose" name="seconddose[0]" class="form-control" name="date-field" disabled>
-                                            </div>
-                                            <div class="col text-center">
-                                                <label for="brand">
-                                                    Brand
-                                                </label>
-                                                <select id="brand" class="form-select" name="brand[0]">
-                                                    <option></option>
-                                                    <?php
-                                                    $brand = $vac->getData('vacBrand', 'brand');
-                                                    foreach ($brand as $data) {
-                                                    ?>
-                                                        <option value="<?php echo $data['brand'] ?>"><?php echo $data['brand'] ?></option>
-                                                    <?php
-                                                    }
-                                                    ?>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Save</button>
-                                    </div>
-                                </form>
                             </div>
                         </div>
-                    </div>
-                    <!--pagination-->
-                    <div class="d-flex justify-content-center py-2">
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination">
-                                <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Previous">
-                                        <span aria-hidden="true">&laquo;</span>
-                                    </a>
-                                </li>
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Next">
-                                        <span aria-hidden="true">&raquo;</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
+                        <!--pagination-->
+                        <div class="d-flex justify-content-center py-2">
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination">
+                                    <li class="page-item">
+                                        <a class="page-link" href="#" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
 
                 </div>
                 <!--Faculty-->
