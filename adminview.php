@@ -59,9 +59,6 @@
                         </li>
                     </ul>
                     <div class="pb-4 justify-content-around">
-                        <a href="login.php" class="text-white text-decoration-none">
-                            <span class="d-none d-sm-inline mx-1">Log out </span>
-                        </a>
                             <a class="btn btn-outline-light" type="button" href="adminview.php?report=1">
                                 <i class="bi bi-clipboard2-data">
                                 </i>
