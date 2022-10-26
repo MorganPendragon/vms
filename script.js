@@ -89,9 +89,17 @@ $(document).ready(function () {
 
     $('#login').submit(function (e) {
         e.preventDefault();
-        if(/-[0-9]{8,}/.test($('#idNo').val().toString()))
+        var id = $('#idNo').val().toString();
+        if(/-[0-9]{8,}/.test(id))
         {
             $('#idFeedback').text("success").show().fadeOut(2000);
+        }
+        else if(/admin/.test(id)) 
+        {
+            if($('#pwd').val().toString() == 'admin')
+            {
+                location.href='adminview.php';
+            }
         }
         else
         {

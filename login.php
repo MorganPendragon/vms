@@ -44,9 +44,8 @@
 							</div>
 							<div class="mb-3">
 								<label for="password" class="form-label">Password</label>
-								<input type="password" class="form-control"
-									placeholder="**********" required>
-								<div id="password-validation" class="invalid-feedback"></div>
+								<input type="password" id="pwd" class="form-control" placeholder="**********" required>
+								<div id="pwdFeedback" class="invalid-feedback"></div>
 							</div>
 							<div class="mb-3 gap-2 col-6 mx-auto">
 								<button type="submit" class="btn btn-primary">Log In</button>
