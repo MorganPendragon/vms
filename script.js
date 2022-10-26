@@ -28,7 +28,7 @@ $(document).ready(function () {
         var yearFlag = 0;
         var yearValue = $('#yearLevel').val();
         var brandFlag = 0;
-        var brandValue = $('#brand').val();
+        var brandValue = $('#brandFilter').val();
         var statusFlag = 0;
         var statusValue = $('#studentStatus').val();
 
@@ -74,14 +74,13 @@ $(document).ready(function () {
     }
 
     $name = $('input[name="firstName[0]"], input[name="middleName[0]"], input[name="lastName[0]"], input[name="doctorName[0]"]');
-    $('#studentForm').submit(function (e) {
-        e.preventDefault();
+    $('#studentFButton').on('click',function (e) {
         var validated = 0;
         //generate random id for student
         $name.each(function() {
-            if(!(/^[a-zA-Z ]+$/test($(this).val())))
+            if(!(/^[a-zA-Z ]+$/.test($(this).val())))
             {
-                validated--;
+                validated=0;
             }
             else
             {
@@ -96,7 +95,7 @@ $(document).ready(function () {
         console.log(validated);
         if(validated == 4)
         {
-            console.log('success');
+            $('#studentForm').submit();
         }
     });
 

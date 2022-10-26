@@ -389,7 +389,7 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <!--TODO:invalid feedback formatting-->
-                                <form id="studentForm" action="adminview.php?submit=1" method="POST">
+                                <form action="adminview.php?submit=1" method="POST">
                                     <div class="modal-body">
                                         <input type="hidden" id="studentID" name="id[0]" class="form-control" placeholder="ID No.">
                                         <div id="studentName" class="row mb-3">
@@ -490,7 +490,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Save</button>
+                                        <button type="button" id="studentFButton" class="btn btn-primary">Save</button>
                                     </div>
                                 </form>
                             </div>
