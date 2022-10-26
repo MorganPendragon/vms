@@ -389,7 +389,7 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <!--TODO:invalid feedback formatting-->
-                                <form action="adminview.php?submit=1" method="POST">
+                                <form id="studentForm" action="adminview.php?submit=1" method="POST">
                                     <div class="modal-body">
                                         <input type="hidden" id="studentID" name="id[0]" class="form-control" placeholder="ID No.">
                                         <div id="studentName" class="row mb-3">
