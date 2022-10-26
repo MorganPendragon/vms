@@ -46,8 +46,7 @@
     <main>
         <!--sidebar-->
         <div class="row">
-            <div class="container-fluid window-height elevation-4" aria-orientation="vertical"" >
-        <div class=" row flex-nowrap">
+            <div class=" row flex-nowrap">
                 <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0" style="background-color:#102d41">
                     <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
                         <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="tableTab">
