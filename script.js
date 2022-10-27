@@ -174,8 +174,8 @@ $(document).ready(function () {
 
     $('#firstStudentDose').on('change', function () {
         console.log($(this).val());
+        console.log($(this).siblings().toString());
         if (!$(this).val().toString() == "") {
-            $(this).siblings('input').removeAttr('disabled');
             $('#brandStudent').attr('required', 'required');
         }
         else {
