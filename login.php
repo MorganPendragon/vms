@@ -15,8 +15,7 @@
 	<script src="script.js"></script>
 	<link href='href="https://fonts.googleapis.com/css?family=Tangerine">' rel='stylesheet'>
 	<title>Log In</title>
-</head>
-<style>
+	<style>
 	.window-height {
 		height: 100vh;
 	}
@@ -39,6 +38,7 @@
 		box-shadow: 20px 20px 10px;
 	}
 </style>
+</head>
 
 <body>
 	<div class="bg-img">
