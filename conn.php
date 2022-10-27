@@ -149,7 +149,6 @@ class connection
 			}
 			$ctr++;
 		}
-		echo $sql;
 		if($this->conn->query($sql))
 		{
 			header('location:adminview.php');
@@ -222,7 +221,6 @@ class connection
 		}
 
 		$sql .= "WHERE $condition = '$primaryKey'";
-		
 		if($this->conn->query($sql))
 		{
 			header('location:adminview.php');

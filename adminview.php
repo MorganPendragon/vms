@@ -135,7 +135,7 @@
 
             switch ($_GET['edit']) {
                 case 1:
-                    $vac->updateInfo($_POST, 'student', 'id', $_GET['editStudent']);
+                    $vac->updateInfo($_POST, 'student', 'id', $_GET['editStudent'], false);
                     break;
                 case 2:
                     $vac->updateInfo($_POST, 'faculty', 'id', $_GET['editFaculty'], true, 1);
@@ -272,21 +272,38 @@
                                                     <form id="studentUpForm" action="adminview.php?editStudent=<?php echo $info['id']; ?>&edit=1" method="POST" data-form="2">
                                                         <div class="modal-body">
                                                             <div class="row mb-2">
-                                                                <input type="hidden" name="upID[0]" class="form-control" placeholder="First name" value="<?php echo $info['id'] ?>">
                                                                 <div class="col">
-                                                                    <input type="text" name="upFirstName[0]" class="form-control" placeholder="First name" value="<?php echo $name[0] ?>">
+                                                                    <input type="text" name="upFirstName[0]" class="form-control" placeholder="First name" value="<?php echo $name[0] ?>" required>
                                                                     <!--invalid feedback-->
                                                                     <p class="fw-bolder text-center text-danger"></p>
                                                                 </div>
                                                                 <div class="col">
-                                                                    <input type="text" name="upMiddleName[0]" class="form-control" placeholder="Middle name" value="<?php echo $name[1] ?>">
+                                                                    <input type="text" name="upMiddleName[0]" class="form-control" placeholder="Middle name" value="<?php echo $name[1] ?>" required>
                                                                     <!--invalid feedback-->
                                                                     <p class="fw-bolder text-center text-danger"></p>
                                                                 </div>
                                                                 <div class="col">
-                                                                    <input type="text" name="upLastName[0]" class="form-control" placeholder="Last name" value="<?php echo $name[2] ?>">
+                                                                    <input type="text" name="upLastName[0]" class="form-control" placeholder="Last name" value="<?php echo $name[2] ?>" required>
                                                                     <!--invalid feedback-->
                                                                     <p class="fw-bolder text-center text-danger"></p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row mb-3">
+                                                                <div class="col input-group">
+                                                                    <select class="form-select" name="yearLevel[0]" required>
+                                                                        <option value="Grade 7">Grade 7</option>
+                                                                        <option value="Grade 8">Grade 8</option>
+                                                                        <option value="Grade 9">Grade 9</option>
+                                                                        <option value="Grade 10">Grade 10</option>
+                                                                        <option value="Grade 11">Grade 11</option>
+                                                                        <option value="Grade 12">Grade 12</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="col input-group">
+                                                                    <select class="form-select" name="status[0]" required>
+                                                                        <option value="Enrolled">Enrolled</option>
+                                                                        <option value="Dropped">Dropped</option>
+                                                                    </select>
                                                                 </div>
                                                             </div>
                                                             <div class="row mb-2">
@@ -300,6 +317,7 @@
                                                                 </div>
                                                                 <div class="col input-group">
                                                                     <select class="form-select" name="upGender[0]" required>
+                                                                        <option value=""></option>
                                                                         <option value="Male">Male</option>
                                                                         <option value="Female">Female</option>
                                                                     </select>
@@ -307,24 +325,23 @@
                                                             </div>
                                                             <div class="row mb-2">
                                                                 <div class="col">
-                                                                    <input type="date" name="upDate[0]" class="form-control" name="date-field" value="<?php echo $info['birthday']; ?>">
+                                                                    <input type="date" name="upDate[0]" class="form-control" name="date-field" value="<?php echo $info['birthday']; ?>" required>
                                                                 </div>
                                                                 <div class="col">
-                                                                    <input type="text" name="upAddress[0]" class="form-control" placeholder="Address" value="<?php echo $info['address']; ?>">
+                                                                    <input type="text" name="upAddress[0]" class="form-control" placeholder="Address" value="<?php echo $info['address']; ?>" required>
                                                                 </div>
                                                             </div>
                                                             <div class="row mb-3">
                                                                 <div class="col text-center">
-                                                                    <label class="form-check-label" for="firstDose">
+                                                                    <label class="form-check-label">
                                                                         1st Dose
                                                                     </label>
                                                                     <input type="date" name="upFirstDose[0]" class="form-control" name="date-field" value="<?php echo $info['firstdose']; ?>" data-activate="2">
                                                                 </div>
                                                                 <div class="col text-center">
-                                                                    <label class="form-check-label" for="secondDose">
+                                                                    <label class="form-check-label">
                                                                         2nd Dose
                                                                     </label>
-                                                                    <input type="hidden" name="upSecondDose[0]" class="form-control" value="">
                                                                     <input type="date" name="upSecondDose[0]" class="form-control" name="date-field" value="<?php echo $info['seconddose']; ?>">
                                                                 </div>
                                                                 <div class="col text-center">
@@ -346,7 +363,8 @@
                                                             </div>
                                                             <div class="row mb-3">
                                                                 <div class="col">
-                                                                    <input type="text" name="upDoctorName[0]" id="doctor" class="form-control" placeholder="doctor" required>
+                                                                    <input type="hidden" name="upSecondDose[0]" class="form-control" value="">
+                                                                    <input type="text" name="upDoctorName[0]" id="doctor" class="form-control" placeholder="Doctor" value="<?php echo $info['doctor']; ?>" disabled>
                                                                     <!--invalid feedback-->
                                                                     <p class="fw-bolder text-center text-danger"></p>
                                                                 </div>

@@ -101,6 +101,7 @@ $(document).ready(function () {
             case 2:
                 $name = $('input[name="upFirstName[0]"], input[name="upMiddleName[0]"], input[name="upLastName[0]"], input[type="text"][name="upDoctorName[0]"]');
                 $tel = $('input[name="upTel[0]"]');
+                console.log('student update form fired');
                 break;
             //faculty insert
             case 3:
@@ -168,19 +169,20 @@ $(document).ready(function () {
     });
 
     //activate components on submit form
-    $date = $('input[name="firstDose[0]"], input[name="upFirstDose[0], input[name="firstdose[1]"]');
+    
+    $date = $('input[name="firstDose[0]"], input[name="upFirstDose[0]"], input[name="firstdose[1]"]');
     $date.on('change', function () {
         console.log($(this).val());
         switch ($(this).data('activate')) {
             case 1:
                 $activate = $('input[name="seconddose[0]"], select[name="brand[0]"], input[name="doctorName[0]"]');
-                $brand = $('input[name="brand[0]"]');
+                $brand = $('slect[name="brand[0]"]');
                 $doctorName = $('input[name="doctorName[0]"]');
                 console.log('student submit firsdose date activated');
                 break;
             case 2:
-                $activate = $('input[name="upSeconddose[0]"], select[name="upBrand[0]"], input[name="upDoctorName[0]"]');
-                $brand = $('input[name="upBrand[0]"]');
+                $activate = $('input[name="upSecondDose[0]"], select[name="upBrand[0]"], input[name="upDoctorName[0]"]');
+                $brand = $('select[name="upBrand[0]"]');
                 $doctorName = $('input[name="upDoctorName[0]"]');
                 console.log('student update firsdose date activated');
                 break;
