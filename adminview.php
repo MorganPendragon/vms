@@ -200,7 +200,7 @@
                             <!--search-->
                             <div>
                                 <div class="d-flex mx-5">
-                                    <input class="search " id="searchStudent" type="search" placeholder="Search" aria-label="Search">
+                                    <input class="search" id="searchStudent" type="search" placeholder="Search" aria-label="Search" data-table="1">
                                     <span class="input-group-text border-0" id="search-addon">
                                         <i class="bi bi-search"></i>
                                     </span>
@@ -269,7 +269,7 @@
                                                     <?php
                                                     $name = explode(' ', $info['name']);
                                                     ?>
-                                                    <form id="studentUpForm" action="adminview.php?editStudent=<?php echo $info['id']; ?>&edit=1" method="POST">
+                                                    <form id="studentUpForm" action="adminview.php?editStudent=<?php echo $info['id']; ?>&edit=1" method="POST" data-form="2">
                                                         <div class="modal-body">
                                                             <div class="row mb-2">
                                                                 <input type="hidden" name="upID[0]" class="form-control" placeholder="First name" value="<?php echo $info['id'] ?>">
@@ -300,7 +300,6 @@
                                                                 </div>
                                                                 <div class="col input-group">
                                                                     <select class="form-select" name="upGender[0]" required>
-                                                                        <option></option>
                                                                         <option value="Male">Male</option>
                                                                         <option value="Female">Female</option>
                                                                     </select>
@@ -319,19 +318,20 @@
                                                                     <label class="form-check-label" for="firstDose">
                                                                         1st Dose
                                                                     </label>
-                                                                    <input type="date" name="upFirstDose[0]" class="form-control" name="date-field" value="<?php echo $info['firstdose']; ?>">
+                                                                    <input type="date" name="upFirstDose[0]" class="form-control" name="date-field" value="<?php echo $info['firstdose']; ?>" data-activate="2">
                                                                 </div>
                                                                 <div class="col text-center">
                                                                     <label class="form-check-label" for="secondDose">
                                                                         2nd Dose
                                                                     </label>
+                                                                    <input type="hidden" name="upSecondDose[0]" class="form-control" value="">
                                                                     <input type="date" name="upSecondDose[0]" class="form-control" name="date-field" value="<?php echo $info['seconddose']; ?>">
                                                                 </div>
                                                                 <div class="col text-center">
                                                                     <label for="brand">
                                                                         Brand
                                                                     </label>
-                                                                    <select class="form-select" name="brand[0]">
+                                                                    <select class="form-select" name="upBrand[0]">
                                                                         <option value=""></option>
                                                                         <?php
                                                                         $brand = $vac->getData('vacBrand', 'brand');
@@ -398,9 +398,9 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <!--TODO:invalid feedback formatting-->
-                                    <form id="studentSubmitForm" action="adminview.php?submit=1" method="POST">
+                                    <form action="adminview.php?submit=1" method="POST" data-form="1">
                                         <div class="modal-body">
-                                            <input type="hidden" id="studentID" name="id[0]" class="form-control" placeholder="ID No.">
+                                            <input type="hidden" id="studentID" name="id[0]">
                                             <div id="studentName" class="row mb-3">
                                                 <div class="col">
                                                     <input type="text" name="firstName[0]" id="fname" class="form-control" placeholder="First name" autocomplete="off" required>
@@ -457,6 +457,8 @@
                                             <div class="row mb-3">
                                                 <div class="col">
                                                     <input type="date" name="birthday[0]" class="form-control" required>
+                                                    <!--TODO:Invalid Feedback-->
+                                                    <p></p>
                                                 </div>
                                                 <div class="col">
                                                     <input type="text" name="address[0]" class="form-control" placeholder="Address" required>
@@ -464,25 +466,29 @@
                                             </div>
                                             <div class="row mb-3">
                                                 <div class="col text-center">
-                                                    <label for="firstDose">
+                                                    <label for="firstStudentDose">
                                                         1st Dose
                                                     </label>
-                                                    <input type="hidden" name="firstdose[0]" class="form-control" value="">
-                                                    <input type="date" id="firstStudentDose" name="firstdose[0]" class="form-control" autocomplete="off">
+                                                    <input type="hidden" name="firstDose[0]" class="form-control" value="">
+                                                    <input type="date" id="firstStudentDose" name="firstDose[0]" data-activate="1" class="form-control" autocomplete="off">
+                                                    <!--TODO:Invalid Feedback-->
+                                                    <p></p>
                                                 </div>
                                                 <div class="col text-center">
-                                                    <label for="secondDose">
+                                                    <label for="secondStudentDose">
                                                         2nd Dose
                                                     </label>
                                                     <input type="hidden" name="seconddose[0]" class="form-control" value="">
                                                     <input type="date" id="secondStudentDose" name="seconddose[0]" class="form-control" autocomplete="off" disabled>
+                                                    <!--TODO:Invalid Feedback-->
+                                                    <p></p>
                                                 </div>
                                                 <div class="col text-center">
                                                     <label for="brand">
                                                         Brand
                                                     </label>
                                                     <input type="hidden" name="brand[0]" class="form-control" value="">
-                                                    <select id="brandStudent" class="form-select" name="brand[0]" disabled>
+                                                    <select id="brandStudent" class="form-select" name="brand[0]" autocomplete="off" disabled>
                                                         <option value=""></option>
                                                         <?php
                                                         $brand = $vac->getData('vacBrand', 'brand');
@@ -497,7 +503,8 @@
                                             </div>
                                             <div class="row mb-3">
                                                 <div class="col">
-                                                    <input type="text" name="doctorName[0]" class="form-control" placeholder="doctor" required>
+                                                    <input type="hidden" name="doctorName[0]" class="form-control" value="">
+                                                    <input type="text" id="doctorStudent" name="doctorName[0]" class="form-control" placeholder="doctor" autocomplete="off" disabled>
                                                     <!--invalid feedback-->
                                                     <p class="fw-bolder text-center text-danger"></p>
                                                 </div>
@@ -511,27 +518,6 @@
                                 </div>
                             </div>
                         </div>
-                        <!--pagination-->
-                        <div class="d-flex justify-content-center py-2">
-                            <nav aria-label="Page navigation example">
-                                <ul class="pagination">
-                                    <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Previous">
-                                            <span aria-hidden="true">&laquo;</span>
-                                        </a>
-                                    </li>
-                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Next">
-                                            <span aria-hidden="true">&raquo;</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
-
                     </div>
                     <!--Faculty-->
                     <div class="tab-pane fade position-absolute" id="faculty">
@@ -620,7 +606,7 @@
                                                         <?php
                                                         $name = explode(' ', $info['name']);
                                                         ?>
-                                                        <form action="adminview.php?editFaculty=<?php echo $info['id']; ?>&edit=2" method="post">
+                                                        <form action="adminview.php?editFaculty=<?php echo $info['id']; ?>&edit=2" method="post" data-form="4">
                                                             <div class="modal-body">
                                                                 <div class="row mb-3">
                                                                     <div class="col">
@@ -728,7 +714,7 @@
                                         <h5 class="modal-title" id="createModalLabel">Create</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
-                                    <form action="adminview.php?submit=2" method="post">
+                                    <form action="adminview.php?submit=2" method="post" data-form="3">
                                         <div class="modal-body">
                                             <div class="row mb-3">
                                                 <div class="col">
@@ -811,26 +797,6 @@
                                     </form>
                                 </div>
                             </div>
-                        </div>
-                        <!--pagination-->
-                        <div class="d-flex justify-content-center py-2">
-                            <nav aria-label="Page navigation example">
-                                <ul class="pagination">
-                                    <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Previous">
-                                            <span aria-hidden="true">&laquo;</span>
-                                        </a>
-                                    </li>
-                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Next">
-                                            <span aria-hidden="true">&raquo;</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </nav>
                         </div>
                     </div>
                     <!--Vaccine Tab-->
@@ -928,27 +894,6 @@
                         <div class="d-flex justify-content-center py-2">
                             <button class="btn btn-outline-success" role="button" data-bs-toggle="modal" data-bs-target="#createVacModal">+</button>
                         </div>
-                        <!--pagination-->
-                        <div class="d-flex justify-content-center py-2">
-                            <nav aria-label="Page navigation example">
-                                <ul class="pagination">
-                                    <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Previous">
-                                            <span aria-hidden="true">&laquo;</span>
-                                        </a>
-                                    </li>
-                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Next">
-                                            <span aria-hidden="true">&raquo;</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
-
                         <!--Create Vac brand modal-->
                         <div class="modal fade" id="createVacModal" tabindex="-1" aria-labelledby="createVacModal">
                             <div class="modal-dialog modal-dialog-centered">

@@ -1,6 +1,5 @@
 $(document).ready(function () {
     //TODO:Code restructure
-    //TODO:resolve conflict search
 
     //caches selected tab before the page reload and shows the tab on reload
     $('a[data-bs-toggle="tab"]').on('show.bs.tab', function (e) {
@@ -12,11 +11,17 @@ $(document).ready(function () {
     }
 
     //global search
-    $('#searchStudent').on('input', function () {
+    $('.search').on('input', function () {
         var value = $(this).val().toLowerCase();
-        $("#studentContent tr").filter(function () {
-            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-        });
+        switch ($(this).data('table')) {
+            case 1:
+                $("#studentContent tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+                break;
+            case 2:
+                break;
+        }
     });
 
     //student filter
@@ -76,17 +81,41 @@ $(document).ready(function () {
         })
     }
 
-    //submit validation
-    $('#studentSubmitForm').on('submit',function (e) {
+    //form validation
+    $('form').on('submit', function (e) {
         var validated = 0;
-        $name = $('input[name="firstName[0]"], input[name="middleName[0]"], input[name="lastName[0]"], input[name="doctorName[0]"]');
-        $tel = $('input[name="telephone[0]"]');
-
+        console.log($(this).data('form'));
+        switch ($(this).data('form')) {
+            //student submit
+            case 1:
+                $name = $('input[name="firstName[0]"], input[name="middleName[0]"], input[name="lastName[0]"], input[type="text"][name="doctorName[0]"]');
+                $tel = $('input[name="telephone[0]"]');
+                //generate random id for student
+                var id = new Date().getFullYear().toString().substring(2);
+                id += "-";
+                id += Math.random().toString(9).substring(2, 8);
+                $("#studentID").val(id);
+                console.log('student form fired');
+                break;
+            //student update
+            case 2:
+                $name = $('input[name="upFirstName[0]"], input[name="upMiddleName[0]"], input[name="upLastName[0]"], input[type="text"][name="upDoctorName[0]"]');
+                $tel = $('input[name="upTel[0]"]');
+                break;
+            //faculty insert
+            case 3:
+                break;
+            //faculty update
+            case 4:
+                break;
+            default:
+                break;
+        }
         //name validation check
         $name.each(function () {
-            if (!(/^[a-zA-Z ]+$/.test($(this).val()))) {
+            if (!(/^$|[a-zA-Z ]+$/.test($(this).val()))) {
                 validated = 0;
-                $(this).siblings('p').text('invalid');
+                $(this).siblings('p').text('invalid').fadeOut(5000);
             }
             else {
                 validated++;
@@ -94,17 +123,11 @@ $(document).ready(function () {
         });
 
         //tel validation
-        if (!(/^09[0-9]{9,9}$/.test($tel.val()))) {
+        if (!(/^$|^09[0-9]{9,9}$/.test($tel.val()))) {
             validated = 0;
-            $tel.siblings('p').text('invalid');
+            $tel.siblings('p').text('invalid').fadeOut(5000);
         }
         validated++;
-
-        //generate random id for student
-        var id = new Date().getFullYear().toString().substring(2);
-        id += "-";
-        id += Math.random().toString(9).substring(2, 8);
-        $("#studentID").val(id);
 
         //stop submit if < 5
         console.log(validated);
@@ -113,36 +136,8 @@ $(document).ready(function () {
         }
     });
 
-    //student update validation
-    $('#studentUpForm').submit(function () {
-        $name = $('input[name="upFirstName[0]"], input[name="upMiddleName[0]"], input[name="upLastName[0]"], input[name="upDoctorName[0]"]');
-        $tel = $('input[name="upTel[0]"]');
-
-        $name.each(function () {
-            if (!(/^[a-zA-Z ]+$/.test($(this).val()))) {
-                validated = 0;
-                $(this).siblings('p').text('invalid');
-            }
-            else {
-                validated++;
-            }
-        });
-
-        //tel validation
-        if (!(/^09[0-9]{9,9}$/.test($tel.val()))) {
-            validated = 0;
-            $tel.siblings('p').text('invalid');
-        }
-        validated++;
-
-        //stop submit if < 5
-        if (validated < 5) {
-            e.preventDefault();
-        }
-    });
-
     //faculty submit validation
-    $('#facultyForm').on('submit',function (e) {
+    $('#facultyForm').on('submit', function (e) {
         var validated = 0;
 
         $name = $('input[name="firstName[1]"], input[name="middleName[1]"], input[name="lastName[1]"], input[name="doctorName[1]"]');
@@ -156,7 +151,7 @@ $(document).ready(function () {
         });
     });
 
-    $('#login').on('submit',function (e) {
+    $('#login').on('submit', function (e) {
         e.preventDefault();
         var id = $('#idNo').val().toString();
         if (/-[0-9]{8,}/.test(id)) {
@@ -172,15 +167,41 @@ $(document).ready(function () {
         }
     });
 
-    $('#firstStudentDose').on('change', function () {
+    //activate components on submit form
+    $date = $('input[name="firstDose[0]"], input[name="upFirstDose[0], input[name="firstdose[1]"]');
+    $date.on('change', function () {
         console.log($(this).val());
-        console.log($(this).siblings().toString());
+        switch ($(this).data('activate')) {
+            case 1:
+                $activate = $('input[name="seconddose[0]"], select[name="brand[0]"], input[name="doctorName[0]"]');
+                $brand = $('input[name="brand[0]"]');
+                $doctorName = $('input[name="doctorName[0]"]');
+                console.log('student submit firsdose date activated');
+                break;
+            case 2:
+                $activate = $('input[name="upSeconddose[0]"], select[name="upBrand[0]"], input[name="upDoctorName[0]"]');
+                $brand = $('input[name="upBrand[0]"]');
+                $doctorName = $('input[name="upDoctorName[0]"]');
+                console.log('student update firsdose date activated');
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            default:
+                break;
+        }
         if (!$(this).val().toString() == "") {
-            $('#brandStudent').attr('required', 'required');
+            $activate.each(function () {
+                $(this).removeAttr('disabled');
+            });
+            $brand.attr('required', 'required');
+            $doctorName.attr('required', 'required');
         }
         else {
-            $('#secondStudentDose').attr('disabled', 'disabled');
-            $('#brandStudent').attr('disabled', 'disabled');
+            $activate.each(function () {
+                $(this).attr('disabled', 'disabled');
+            });
         }
     });
 });
