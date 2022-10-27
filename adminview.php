@@ -276,17 +276,17 @@
                                                                 <div class="col">
                                                                     <input type="text" name="upFirstName[0]" class="form-control" placeholder="First name" value="<?php echo $name[0] ?>">
                                                                     <!--invalid feedback-->
-                                                                    <p></p>
+                                                                    <p class="fw-bolder text-center text-danger"></p>
                                                                 </div>
                                                                 <div class="col">
                                                                     <input type="text" name="upMiddleName[0]" class="form-control" placeholder="Middle name" value="<?php echo $name[1] ?>">
                                                                     <!--invalid feedback-->
-                                                                    <p></p>
+                                                                    <p class="fw-bolder text-center text-danger"></p>
                                                                 </div>
                                                                 <div class="col">
                                                                     <input type="text" name="upLastName[0]" class="form-control" placeholder="Last name" value="<?php echo $name[2] ?>">
                                                                     <!--invalid feedback-->
-                                                                    <p></p>
+                                                                    <p class="fw-bolder text-center text-danger"></p>
                                                                 </div>
                                                             </div>
                                                             <div class="row mb-2">
@@ -348,7 +348,7 @@
                                                                 <div class="col">
                                                                     <input type="text" name="upDoctorName[0]" id="doctor" class="form-control" placeholder="doctor" required>
                                                                     <!--invalid feedback-->
-                                                                    <p></p>
+                                                                    <p class="fw-bolder text-center text-danger"></p>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -405,17 +405,17 @@
                                                 <div class="col">
                                                     <input type="text" name="firstName[0]" id="fname" class="form-control" placeholder="First name" autocomplete="off" required>
                                                     <!--invalid feedback-->
-                                                    <p></p>
+                                                    <p class="fw-bolder text-center text-danger"></p>
                                                 </div>
                                                 <div class="col">
                                                     <input type="text" name="middleName[0]" id="mname" class="form-control" placeholder="Middle name" autocomplete="off" required>
                                                     <!--invalid feedback-->
-                                                    <p></p>
+                                                    <p class="fw-bolder text-center text-danger"></p>
                                                 </div>
                                                 <div class="col">
                                                     <input type="text" name="lastName[0]" id="lname" class="form-control" placeholder="Last name" autocomplete="off" required>
                                                     <!--invalid feedback-->
-                                                    <p></p>
+                                                    <p class="fw-bolder text-center text-danger"></p>
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
@@ -499,7 +499,7 @@
                                                 <div class="col">
                                                     <input type="text" name="doctorName[0]" class="form-control" placeholder="doctor" required>
                                                     <!--invalid feedback-->
-                                                    <p></p>
+                                                    <p class="fw-bolder text-center text-danger"></p>
                                                 </div>
                                             </div>
                                         </div>
