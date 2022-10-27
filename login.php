@@ -37,7 +37,7 @@
 		
 		box-shadow: 20px 20px 10px;
 	}
-</style>
+</style>	
 </head>
 
 <body>

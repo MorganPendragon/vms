@@ -73,33 +73,62 @@ $(document).ready(function () {
         })
     }
 
-    $name = $('input[name="firstName[0]"], input[name="middleName[0]"], input[name="lastName[0]"], input[name="doctorName[0]"]');
-    $('#studentForm').submit(function (e) {
+    //submit validation
+    $('#studentSubmitForm').submit(function (e) {
         var validated = 0;
-        //generate random id for student
-        $name.each(function() {
-            if(!(/^[a-zA-Z ]+$/.test($(this).val())))
-            {
-                validated=0;
+        $name = $('input[name="firstName[0]"], input[name="middleName[0]"], input[name="lastName[0]"], input[name="doctorName[0]"]');
+        $tel = $('input[name="telephone[0]"]');
+
+        //name validation check
+        $name.each(function () {
+            if (!(/^[a-zA-Z ]+$/.test($(this).val()))) {
+                validated = 0;
+                $(this).siblings('p').text('invalid');
             }
-            else
-            {
+            else {
                 validated++;
             }
         });
+
+        //tel validation
+        if(!(/^09[0-9]{9,9}+$/.test($tel.val())))
+        {
+            validated=0;
+            $tel.siblings('p').text('invalid');
+        }
+        validated++;
+
+        //generate random id for student
         var id = new Date().getFullYear().toString().substring(2);
         id += "-";
         id += Math.random().toString(9).substring(2, 8);
         $("#studentID").val(id);
-        
-        console.log(validated);
-        if(validated < 4)
-        {
+
+        //stop submit if < 5
+        if (validated < 5) {
             e.preventDefault();
         }
-        location.href('adminview.php');
     });
 
+    //student update validation
+    $('#studentUpForm').submit(function(){
+
+    });
+
+    //faculty submit validation
+    $('#facultyForm').submit(function (e) {
+        var validated = 0;
+
+        $name = $('input[name="firstName[1]"], input[name="middleName[1]"], input[name="lastName[1]"], input[name="doctorName[1]"]');
+        $name.each(function () {
+            if (!(/^[a-zA-Z ]+$/.test($(this).val()))) {
+                validated = 0;
+            }
+            else {
+                validated++;
+            }
+        });
+    });
 
     $('#login').submit(function (e) {
         e.preventDefault();

@@ -1,3 +1,4 @@
+<?php ob_start() ?>
 <!doctype html>
 <html lang="en">
 <!--TODO:Idiotproofing-->
@@ -328,8 +329,8 @@
                                                                 <label for="brand">
                                                                     Brand
                                                                 </label>
-                                                                <select class="form-select" name="brand[0]" required>
-                                                                    <option></option>
+                                                                <select class="form-select" name="brand[0]">
+                                                                    <option value=""></option>
                                                                     <?php
                                                                     $brand = $vac->getData('vacBrand', 'brand');
                                                                     foreach ($brand as $data) {
@@ -388,7 +389,7 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <!--TODO:invalid feedback formatting-->
-                                <form id="studentForm" action="adminview.php?submit=1" method="POST">
+                                <form id="studentSubmitForm" action="adminview.php?submit=1" method="POST">
                                     <div class="modal-body">
                                         <input type="hidden" id="studentID" name="id[0]" class="form-control" placeholder="ID No.">
                                         <div id="studentName" class="row mb-3">
@@ -455,6 +456,7 @@
                                                 <label for="firstDose">
                                                     1st Dose
                                                 </label>
+                                                <input type="hidden" name="firstdose[0]" class="form-control" value="">
                                                 <input type="date" id="firstStudentDose" name="firstdose[0]" class="form-control" autocomplete="off">
                                             </div>
                                             <div class="col text-center">
@@ -468,7 +470,9 @@
                                                 <label for="brand">
                                                     Brand
                                                 </label>
+                                                <input type="hidden" name="brand[0]" class="form-control" value="">
                                                 <select id="brandStudent" class="form-select" name="brand[0]" disabled>
+                                                    <option value=""></option>
                                                     <?php
                                                     $brand = $vac->getData('vacBrand', 'brand');
                                                     foreach ($brand as $data) {
@@ -484,6 +488,7 @@
                                             <div class="col">
                                                 <input type="text" name="doctorName[0]" id="doctor" class="form-control" placeholder="doctor" required>
                                                 <!--invalid feedback-->
+                                                <p></p>
                                             </div>
                                         </div>
                                     </div>
