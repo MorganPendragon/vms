@@ -444,6 +444,8 @@
                                             <div class="row mb-3">
                                                 <div class="col">
                                                     <input type="text" name="telephone[0]" class="form-control" placeholder="Telephone No." required>
+                                                    <!--Invalid Feedback-->
+                                                    <p></p>
                                                 </div>
                                                 <div class="col input-group">
                                                     <select class="form-select" name="gender[0]" required>

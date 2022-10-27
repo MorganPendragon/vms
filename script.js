@@ -77,7 +77,7 @@ $(document).ready(function () {
     }
 
     //submit validation
-    $('#studentSubmitForm').submit(function (e) {
+    $('#studentSubmitForm').on('submit',function (e) {
         var validated = 0;
         $name = $('input[name="firstName[0]"], input[name="middleName[0]"], input[name="lastName[0]"], input[name="doctorName[0]"]');
         $tel = $('input[name="telephone[0]"]');
@@ -94,7 +94,7 @@ $(document).ready(function () {
         });
 
         //tel validation
-        if (!(/^09[0-9]{11,11}$/.test($tel.val()))) {
+        if (!(/^09[0-9]{9,9}$/.test($tel.val()))) {
             validated = 0;
             $tel.siblings('p').text('invalid');
         }
@@ -107,6 +107,7 @@ $(document).ready(function () {
         $("#studentID").val(id);
 
         //stop submit if < 5
+        console.log(validated);
         if (validated < 5) {
             e.preventDefault();
         }
@@ -128,7 +129,7 @@ $(document).ready(function () {
         });
 
         //tel validation
-        if (!(/^09[0-9]{11,11}$/.test($tel.val()))) {
+        if (!(/^09[0-9]{9,9}$/.test($tel.val()))) {
             validated = 0;
             $tel.siblings('p').text('invalid');
         }
@@ -141,7 +142,7 @@ $(document).ready(function () {
     });
 
     //faculty submit validation
-    $('#facultyForm').submit(function (e) {
+    $('#facultyForm').on('submit',function (e) {
         var validated = 0;
 
         $name = $('input[name="firstName[1]"], input[name="middleName[1]"], input[name="lastName[1]"], input[name="doctorName[1]"]');
@@ -155,7 +156,7 @@ $(document).ready(function () {
         });
     });
 
-    $('#login').submit(function (e) {
+    $('#login').on('submit',function (e) {
         e.preventDefault();
         var id = $('#idNo').val().toString();
         if (/-[0-9]{8,}/.test(id)) {
