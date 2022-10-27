@@ -53,7 +53,8 @@
 
 <body>
     <header>
-        <nav class="navbar justify-content-end px-5" style="background-color:#071759;">
+        <!--navbar gen rep place-->
+        <nav class="navbar justify-content-end px-5" style="background-color:#022e43;">
             <ul class="nav">
                 <li><a class="btn" type="button" href="adminview.php?report=1">
                         <span class="badge text-bg-light">GENERATE REPORTS</span>
@@ -64,13 +65,12 @@
         </nav>
     </header>
     <main>
-        <!--navbar gen rep place-->
         <div class="row">
 
             <!--sidebar-->
             <div class="container-fluid window-height" aria-orientation="vertical">
                 <div class=" row flex-nowrap">
-                    <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0" style="background-color:#071759">
+                    <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0" style="background-color:#022e43">
                         <img src="img\logo.png" class="img-fluid" alt="...">
                         <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
                             <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="tableTab">
@@ -154,7 +154,7 @@
 
             ?>
             <!--content div-->
-            <div class="container col-8">
+            <div class="container-fluid col-8">
                 <div class="tab-content" id="tableTabContent">
                     <!--Student Tab-->
                     <div class="tab-pane fade show active position-absolute" id="student">
@@ -536,7 +536,42 @@
                     <!--Faculty-->
                     <div class="tab-pane fade position-absolute" id="faculty">
                         <div class="d-flex py-3">
-
+                            <div class="input-group mx-5">
+                                <select class="form-select" autocomplete="off">
+                                    <option value="0" hidden>Year Level</option>b
+                                    <option value="0">---</option>
+                                    <option value="Grade 7">Grade 7</option>
+                                    <option value="Grade 8">Grade 8</option>
+                                    <option value="Grade 9">Grade 9</option>
+                                    <option value="Grade 10">Grade 10</option>
+                                    <option value="Grade 11">Grade 11</option>
+                                    <option value="Grade 12">Grade 12</option>
+                                </select>
+                            </div>
+                            <!--brand filter-->
+                            <div class="input-group mx-5">
+                                <select class="form-select" autocomplete="off">
+                                    <option value="0" hidden>Brand Name</option>
+                                    <option value="0">---</option>
+                                    <?php
+                                    $data = $vac->displayTable('vacBrand');
+                                    foreach ($data as $info) {
+                                    ?>
+                                        <option value="<?php echo $info['brand'] ?>"><?php echo $info['brand'] ?></option>
+                                    <?php
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                            <!--search-->
+                            <div>
+                                <div class="d-flex mx-5">
+                                    <input class="search " type="search" placeholder="Search" aria-label="Search">
+                                    <span class="input-group-text border-0" id="search-addon">
+                                        <i class="bi bi-search"></i>
+                                    </span>
+                                </div>
+                            </div>
                         </div>
                         <div class="container mx-5 px-5">
                             <table id="facultyTable" class="table table-stripe table-borderless">
