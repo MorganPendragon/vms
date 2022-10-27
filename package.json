@@ -1,0 +1,22 @@
+{
+  "name": "vaccination",
+  "version": "1.0.0",
+  "description": "vaccination management system",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MorganPendragon/vms.git"
+  },
+  "author": "mockingj, morganpendragon",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MorganPendragon/vms/issues"
+  },
+  "homepage": "https://github.com/MorganPendragon/vms#readme",
+  "dependencies": {
+    "jquery": "^3.6.1"
+  }
+}

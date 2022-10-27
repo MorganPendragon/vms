@@ -149,6 +149,7 @@ class connection
 			}
 			$ctr++;
 		}
+		echo $sql;
 		if($this->conn->query($sql))
 		{
 			header('location:adminview.php');

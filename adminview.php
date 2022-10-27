@@ -17,7 +17,7 @@
     <!--bootstrap js lib-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
     <!--jQuery-->
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="./node_modules/jquery/dist/jquery.js"></script>
     <!--Validation plugin for jQuery-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js" integrity="sha512-rstIgDs0xPgmG6RX1Aba4KV5cWJbAMcvRCVmglpam9SoHZiUCyQVDdH2LPlxoHtrv17XWblE/V/PP+Tr04hbtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!--Table Sorter plugin for jQuery-->
@@ -444,6 +444,8 @@
                                             <div class="row mb-3">
                                                 <div class="col">
                                                     <input type="text" name="telephone[0]" class="form-control" placeholder="Telephone No." required>
+                                                    <!--Invalid Feedback-->
+                                                    <p></p>
                                                 </div>
                                                 <div class="col input-group">
                                                     <select class="form-select" name="gender[0]" required>
