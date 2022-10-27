@@ -1,4 +1,7 @@
 $(document).ready(function () {
+    //TODO:Code restructure
+    //TODO:resolve conflict search
+
     //caches selected tab before the page reload and shows the tab on reload
     $('a[data-bs-toggle="tab"]').on('show.bs.tab', function (e) {
         localStorage.setItem('activeTab', $(e.target).attr('href'));
@@ -9,9 +12,9 @@ $(document).ready(function () {
     }
 
     //global search
-    $('.search').on('input', function () {
+    $('#searchStudent').on('input', function () {
         var value = $(this).val().toLowerCase();
-        $("tbody tr").filter(function () {
+        $("#studentContent tr").filter(function () {
             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
     });
@@ -91,9 +94,8 @@ $(document).ready(function () {
         });
 
         //tel validation
-        if(!(/^09[0-9]{9,9}+$/.test($tel.val())))
-        {
-            validated=0;
+        if (!(/^09[0-9]{11,11}$/.test($tel.val()))) {
+            validated = 0;
             $tel.siblings('p').text('invalid');
         }
         validated++;
@@ -111,8 +113,31 @@ $(document).ready(function () {
     });
 
     //student update validation
-    $('#studentUpForm').submit(function(){
+    $('#studentUpForm').submit(function () {
+        $name = $('input[name="upFirstName[0]"], input[name="upMiddleName[0]"], input[name="upLastName[0]"], input[name="upDoctorName[0]"]');
+        $tel = $('input[name="upTel[0]"]');
 
+        $name.each(function () {
+            if (!(/^[a-zA-Z ]+$/.test($(this).val()))) {
+                validated = 0;
+                $(this).siblings('p').text('invalid');
+            }
+            else {
+                validated++;
+            }
+        });
+
+        //tel validation
+        if (!(/^09[0-9]{11,11}$/.test($tel.val()))) {
+            validated = 0;
+            $tel.siblings('p').text('invalid');
+        }
+        validated++;
+
+        //stop submit if < 5
+        if (validated < 5) {
+            e.preventDefault();
+        }
     });
 
     //faculty submit validation
@@ -149,8 +174,7 @@ $(document).ready(function () {
     $('#firstStudentDose').on('change', function () {
         console.log($(this).val());
         if (!$(this).val().toString() == "") {
-            $('#secondStudentDose').removeAttr('disabled');
-            $('#brandStudent').removeAttr('disabled');
+            $(this).siblings('input').removeAttr('disabled');
             $('#brandStudent').attr('required', 'required');
         }
         else {
