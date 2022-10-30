@@ -32,10 +32,9 @@
 		<div class="row">
 			<div class="col-2">
 				<div class="container-fluid position-absolute" aria-orientation="vertical">
-					<div class="row flex-nowrap">
+					<div class="row">
 						<div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0" style="background-color: #022e43">
-							<div
-								class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+							<div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
 								<div class="container">
 									<img src="img/logo.png" alt="Bootstrap" width="250" height="250">
 								</div>
@@ -56,7 +55,47 @@
 			</div>
 			<!--content-->
 			<div class="col-8">
-				
+				<div class="tab-content" id="tableTabContent">
+					<div class="tab pane fade show active" id="account">
+						<form method="post">
+							<div class="row mb-3">
+								<div class="col">
+									<input type="text" name="fname" class="form-control" placeholder="First Name" autocomplete="off" required>
+								</div>
+								<div class="col">
+									<input type="text" name="mname" class="form-control" placeholder="Middle Name" autocomplete="off" required>
+								</div>
+								<div class="col">
+									<input type="text" name="lname" class="form-control" placeholder="Last Name" autocomplete="off" required>
+								</div>
+							</div>
+							<div class="row mb-3">
+								<div class="col input-group">
+									<select class="form-select" name="yearLevel[0]" required>
+										<option value="Grade 7">Grade 7</option>
+										<option value="Grade 8">Grade 8</option>
+										<option value="Grade 9">Grade 9</option>
+										<option value="Grade 10">Grade 10</option>
+										<option value="Grade 11">Grade 11</option>
+										<option value="Grade 12">Grade 12</option>
+									</select>
+								</div>
+								<div class="col input-group">
+									<select class="form-select" name="status[0]" required>
+										<option value="Enrolled">Enrolled</option>
+										<option value="Dropped">Dropped</option>
+									</select>
+								</div>
+							</div>
+							<div class="row">
+								<button type="button" class="btn btn-secondary">Close</button>
+								<button type="submit" class="btn btn-primary">Save</button>
+							</div>
+						</form>
+					</div>
+					<div class="tab pane fade" id="upload">
+					</div>
+				</div>
 			</div>
 		</div>
 	</main>
