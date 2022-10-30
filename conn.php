@@ -249,7 +249,10 @@ class connection
 		return $result->num_rows;
 	}
 
-	
+	public function imageHandler()
+	{
+		
+	}
 
 	//report generation using PHPOffice
 	public function report()
