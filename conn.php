@@ -249,9 +249,9 @@ class connection
 		return $result->num_rows;
 	}
 
-	public function imageHandler()
+	public function imageHandler($post)
 	{
-		
+		$post['vaccineStudent'];
 	}
 
 	//report generation using PHPOffice
