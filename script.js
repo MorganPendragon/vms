@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(function () {
     //TODO:Code restructure
 
     //caches selected tab before the page reload and shows the tab on reload
@@ -9,6 +9,15 @@ $(document).ready(function () {
     if (activeTab) {
         $('#tableTab a[href="' + activeTab + '"]').tab('show');
     }
+
+    //login magic
+    $signUpButton = $('#signUpStudent, #signUpFaculty, button[name="back"]')
+    $signUpButton.on('click', function(e) {
+        var showDiv= "#" + $(this).data('show').toString();
+        var hideDiv = "#" + $(this).data('hide').toString();
+        $(hideDiv).hide('fast');
+        $(showDiv).show('fast');
+    });
 
     //global search
     $('.search').on('input', function () {
@@ -118,9 +127,6 @@ $(document).ready(function () {
                 validated = 0;
                 $(this).siblings('p').text('invalid').fadeOut(5000);
             }
-            else {
-                validated++;
-            }
         });
 
         //tel validation
@@ -137,26 +143,11 @@ $(document).ready(function () {
         }
     });
 
-    //faculty submit validation
-    $('#facultyForm').on('submit', function (e) {
-        var validated = 0;
-
-        $name = $('input[name="firstName[1]"], input[name="middleName[1]"], input[name="lastName[1]"], input[name="doctorName[1]"]');
-        $name.each(function () {
-            if (!(/^[a-zA-Z ]+$/.test($(this).val()))) {
-                validated = 0;
-            }
-            else {
-                validated++;
-            }
-        });
-    });
-
     $('#login').on('submit', function (e) {
         e.preventDefault();
         var id = $('#idNo').val().toString();
         if (/-[0-9]{8,}/.test(id)) {
-            $('#idFeedback').text("success").show().fadeOut(2000);
+            window.location = ''
         }
         else if (/admin/.test(id)) {
             if ($('#pwd').val().toString() == 'admin') {
@@ -168,8 +159,7 @@ $(document).ready(function () {
         }
     });
 
-    //activate components on submit form
-    
+    //activate components on form
     $date = $('input[name="firstDose[0]"], input[name="upFirstDose[0]"], input[name="firstdose[1]"]');
     $date.on('change', function () {
         console.log($(this).val());
