@@ -4,6 +4,7 @@ $(function () {
     //caches selected tab before the page reload and shows the tab on reload
     $('a[data-bs-toggle="tab"]').on('show.bs.tab', function (e) {
         localStorage.setItem('activeTab', $(e.target).attr('href'));
+        console.log($(e.target).attr('href'));
     });
     var activeTab = localStorage.getItem('activeTab');
     if (activeTab) {
@@ -12,25 +13,19 @@ $(function () {
 
     //login magic
     $signUpButton = $('#signUpStudent, #signUpFaculty, button[name="back"]')
-    $signUpButton.on('click', function(e) {
-        var showDiv= "#" + $(this).data('show').toString();
-        var hideDiv = "#" + $(this).data('hide').toString();
-        $(hideDiv).hide('fast');
-        $(showDiv).show('fast');
+    $signUpButton.on('click', function (e) {
+        //hides and shows div what do you expect?
+        $($(this).data('hide')).hide();
+        $($(this).data('show')).show();
     });
 
     //global search
     $('.search').on('input', function () {
         var value = $(this).val().toLowerCase();
-        switch ($(this).data('table')) {
-            case 1:
-                $("#studentContent tr").filter(function () {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });
-                break;
-            case 2:
-                break;
-        }
+        $table = $($(this).data('table').toString() + " tr");
+        $table.filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
     });
 
     //student filter
@@ -93,12 +88,13 @@ $(function () {
     //form validation
     $('form').on('submit', function (e) {
         var validated = 0;
+        var name = "";
         console.log($(this).data('form'));
         switch ($(this).data('form')) {
             //student submit
             case 1:
-                $name = $('input[name="firstName[0]"], input[name="middleName[0]"], input[name="lastName[0]"], input[type="text"][name="doctorName[0]"]');
-                $tel = $('input[name="telephone[0]"]');
+                $name = $('input[name="fname[0]"], input[name="mname[0]"], input[name="lname[0]"], input[type="text"][name="firstdoctor[0]"]');
+                $tel = $('input[name="tel[0]"]');
                 //generate random id for student
                 var id = new Date().getFullYear().toString().substring(2);
                 id += "-";
@@ -121,18 +117,35 @@ $(function () {
             default:
                 break;
         }
+
         //name validation check
         $name.each(function () {
-            if (!(/^$|[a-zA-Z ]+$/.test($(this).val()))) {
+            if (/^$|[a-zA-Z ]+$/.test($(this).val())) {
+                validated++;
+                if (validated < 4) {
+                    if (validated % 2 == 0) {
+                        name += " " + $(this).val().toString() + " ";
+                        console.log('valid');
+                    }
+                    else {
+                        name += $(this).val().toString();
+                        console.log('valid');
+                    }
+                }
+            }
+            else {
                 validated = 0;
                 $(this).siblings('p').text('invalid').fadeOut(5000);
             }
         });
 
+        $('input[name="name[0]"]').val(name);
+        console.log(name);
         //tel validation
         if (!(/^$|^09[0-9]{9,9}$/.test($tel.val()))) {
             validated = 0;
             $tel.siblings('p').text('invalid').fadeOut(5000);
+            console.log('invalid');
         }
         validated++;
 
