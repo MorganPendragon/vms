@@ -111,10 +111,10 @@
                     header('location:adminview.php');
                     break;
                 case 2:
-                    $vac->insertInfo($_POST, 'faculty', 1,true, 1);
+                    $vac->insertInfo($_POST, 'faculty', 1, true, 1);
                     break;
                 case 3:
-                    $table= array('vacBrand');
+                    $table = array('vacBrand');
                     $vac->insertInfo($_POST, $table);
                     header('location:adminview.php');
                     break;
@@ -235,27 +235,28 @@
 
                                 <tbody id="studentContent">
                                     <?php
-                                    $data = $vac->displayTable('student');
-                                    foreach ($data as $info) {
+                                    $info = $vac->displayTable('student');
+                                    for ($i = 0; $i < count($info); $i++) {
+                                        $vacStatus = $vac->displayRowByID('vaccineStatus', 'id', $info[$i]['id']);
                                     ?>
                                         <tr>
-                                            <td class="border"> <?php echo $info['id'] ?> </td>
-                                            <td class="border"> <?php echo $info['name'] ?> </td>
-                                            <td class="border"> <?php echo $info['gender'] ?> </td>
-                                            <td class="border" id="yearTd" data-yr="<?php echo $info['yearLevel'] ?>"><?php echo $info['yearLevel'] ?></td>
-                                            <td class="border" id="statusTd" data-status="<?php echo $info['status'] ?>"><?php echo $info['status'] ?></td>
-                                            <td class="border"> <?php echo $info['address'] ?> </td>
-                                            <td class="border"> <?php echo $info['email'] ?> </td>
+                                            <td class="border"> <?php echo $info[$i]['id'] ?> </td>
+                                            <td class="border"> <?php echo $info[$i]['name'] ?> </td>
+                                            <td class="border"> <?php echo $info[$i]['gender'] ?> </td>
+                                            <td class="border" id="yearTd" data-yr="<?php echo $info[$i]['yearLevel'] ?>"><?php echo $info[$i]['yearLevel'] ?></td>
+                                            <td class="border" id="statusTd" data-status="<?php echo $info[$i]['status'] ?>"><?php echo $info[$i]['status'] ?></td>
+                                            <td class="border"> <?php echo $info[$i]['address'] ?> </td>
+                                            <td class="border"> <?php echo $info[$i]['email'] ?> </td>
                                             <!--edit-->
                                             <td>
                                                 <!--resize-->
-                                                <a cla type="button" data-bs-toggle="modal" href="adminview.php?editID=<?php echo $info['id'] ?>" data-bs-target="#editStudentModal<?php echo $i ?>">
+                                                <a cla type="button" data-bs-toggle="modal" href="adminview.php?editID=<?php echo $info[$i]['id'] ?>" data-bs-target="#editStudentModal<?php echo $i ?>">
                                                     <i class="bi bi-pencil-fill"></i>
                                                 </a>
                                             </td>
                                             <!--delete info-->
                                             <td>
-                                                <!--resize-->
+                                                <!--TODO:resize-->
                                                 <a type="button" data-bs-toggle="modal" data-bs-target="#deleteStudentModal<?php echo $i ?>">
                                                     <i class="bi bi-trash-fill"></i>
                                                 </a>
@@ -271,30 +272,32 @@
                                                     </div>
                                                     <!--put content here-->
                                                     <?php
-                                                    $name = explode(' ', $info['name']);
+                                                    $name = explode(' ', $info[$i]['name']);
                                                     ?>
-                                                    <form id="studentUpForm" action="adminview.php?editStudent=<?php echo $info['id']; ?>&edit=1" method="POST" data-form="2">
+                                                    <form action="adminview.php?edit=1&editStudent=<?php echo $info[$i]['id'] ?>" method="POST" data-form="2">
                                                         <div class="modal-body">
-                                                            <div class="row mb-2">
+                                                            <input type="text" name="id[0]" placeholder="ID No." autocomplete="off" required>
+                                                            <div class="row">
                                                                 <div class="col">
-                                                                    <input type="text" name="upFirstName[0]" class="form-control" placeholder="First name" value="<?php echo $name[0] ?>" required>
+                                                                    <input type="text" name="fname[1]" class="form-control" placeholder="First name" value="<?php echo $name[0] ?>" autocomplete="off" required>
                                                                     <!--invalid feedback-->
                                                                     <p class="fw-bolder text-center text-danger"></p>
                                                                 </div>
                                                                 <div class="col">
-                                                                    <input type="text" name="upMiddleName[0]" class="form-control" placeholder="Middle name" value="<?php echo $name[1] ?>" required>
+                                                                    <input type="text" name="mname[1]" class="form-control" placeholder="Middle name" value="<?php echo $name[1] ?>" autocomplete="off" required>
                                                                     <!--invalid feedback-->
                                                                     <p class="fw-bolder text-center text-danger"></p>
                                                                 </div>
                                                                 <div class="col">
-                                                                    <input type="text" name="upLastName[0]" class="form-control" placeholder="Last name" value="<?php echo $name[2] ?>" required>
+                                                                    <input type="text" name="lname[1]" class="form-control" placeholder="Last name" value="<?php echo $name[2] ?>" autocomplete="off" required>
                                                                     <!--invalid feedback-->
                                                                     <p class="fw-bolder text-center text-danger"></p>
+                                                                    <input type="hidden" name="name[1]">
                                                                 </div>
                                                             </div>
                                                             <div class="row mb-3">
                                                                 <div class="col input-group">
-                                                                    <select class="form-select" name="yearLevel[0]" required>
+                                                                    <select class="form-select" name="yearLevel[1]" required>
                                                                         <option value="Grade 7">Grade 7</option>
                                                                         <option value="Grade 8">Grade 8</option>
                                                                         <option value="Grade 9">Grade 9</option>
@@ -304,73 +307,15 @@
                                                                     </select>
                                                                 </div>
                                                                 <div class="col input-group">
-                                                                    <select class="form-select" name="status[0]" required>
+                                                                    <select class="form-select" name="status[1]" required>
                                                                         <option value="Enrolled">Enrolled</option>
                                                                         <option value="Dropped">Dropped</option>
                                                                     </select>
                                                                 </div>
                                                             </div>
-                                                            <div class="row mb-2">
-                                                                <div class="col">
-                                                                    <input type="email" name="upEmail[0]" class="form-control" id="emailFormControl" placeholder="Email" value="<?php echo $info['email']; ?>" required>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row mb-2">
-                                                                <div class="col">
-                                                                    <input type="text" name="upTel[0]" class="form-control" placeholder="Telephone No." value="<?php echo $info['tel']; ?>">
-                                                                </div>
-                                                                <div class="col input-group">
-                                                                    <select class="form-select" name="upGender[0]" required>
-                                                                        <option value=""></option>
-                                                                        <option value="Male">Male</option>
-                                                                        <option value="Female">Female</option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row mb-2">
-                                                                <div class="col">
-                                                                    <input type="date" name="upDate[0]" class="form-control" name="date-field" value="<?php echo $info['birthday']; ?>" required>
-                                                                </div>
-                                                                <div class="col">
-                                                                    <input type="text" name="upAddress[0]" class="form-control" placeholder="Address" value="<?php echo $info['address']; ?>" required>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row mb-3">
-                                                                <div class="col text-center">
-                                                                    <label class="form-check-label">
-                                                                        1st Dose
-                                                                    </label>
-                                                                    <input type="date" name="upFirstDose[0]" class="form-control" name="date-field" value="<?php echo $info['firstdose']; ?>" data-activate="2">
-                                                                </div>
-                                                                <div class="col text-center">
-                                                                    <label class="form-check-label">
-                                                                        2nd Dose
-                                                                    </label>
-                                                                    <input type="date" name="upSecondDose[0]" class="form-control" name="date-field" value="<?php echo $info['seconddose']; ?>">
-                                                                </div>
-                                                                <div class="col text-center">
-                                                                    <label for="brand">
-                                                                        Brand
-                                                                    </label>
-                                                                    <select class="form-select" name="upBrand[0]">
-                                                                        <option value=""></option>
-                                                                        <?php
-                                                                        $brand = $vac->getData('vacBrand', 'brand');
-                                                                        foreach ($brand as $data) {
-                                                                        ?>
-                                                                            <option value="<?php echo $data['brand']; ?>"><?php echo $data['brand']; ?></option>
-                                                                        <?php
-                                                                        }
-                                                                        ?>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
                                                             <div class="row mb-3">
                                                                 <div class="col">
-                                                                    <input type="hidden" name="upSecondDose[0]" class="form-control" value="">
-                                                                    <input type="text" name="upDoctorName[0]" id="doctor" class="form-control" placeholder="Doctor" value="<?php echo $info['doctor']; ?>" disabled>
-                                                                    <!--invalid feedback-->
-                                                                    <p class="fw-bolder text-center text-danger"></p>
+                                                                    <input type="email" name="email[1]" class="form-control" id="emailFormControl" placeholder="Email" required>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -396,7 +341,7 @@
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                                                        <a type="button" class="btn btn-primary" href="adminview.php?delete=1&delStudentID=<?php echo $info['id'] ?>">Yes</a>
+                                                        <a type="button" class="btn btn-primary" href="adminview.php?delete=1&delStudentID=<?php echo $info[$i]['id'] ?>">Yes</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -420,22 +365,23 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <!--TODO:invalid feedback formatting-->
+                                    <!--TODO:CSS on form-->
                                     <form action="adminview.php?submit=1" method="POST" data-form="1">
                                         <div class="modal-body">
-                                            <input type="hidden" id="studentID" name="id[0]">
-                                            <div id="studentName" class="row mb-3">
+                                            <input type="hidden" name="id[0]" placeholder="ID No." autocomplete="off" required>
+                                            <div class="row mb-3">
                                                 <div class="col">
-                                                    <input type="text" name="fname[0]" id="fname" class="form-control" placeholder="First name" autocomplete="off" required>
+                                                    <input type="text" name="fname[0]" class="form-control" placeholder="First name" autocomplete="off" required>
                                                     <!--invalid feedback-->
                                                     <p class="fw-bolder text-center text-danger"></p>
                                                 </div>
                                                 <div class="col">
-                                                    <input type="text" name="mname[0]" id="mname" class="form-control" placeholder="Middle name" autocomplete="off" required>
+                                                    <input type="text" name="mname[0]" class="form-control" placeholder="Middle name" autocomplete="off" required>
                                                     <!--invalid feedback-->
                                                     <p class="fw-bolder text-center text-danger"></p>
                                                 </div>
                                                 <div class="col">
-                                                    <input type="text" name="lname[0]" id="lname" class="form-control" placeholder="Last name" autocomplete="off" required>
+                                                    <input type="text" name="lname[0]" class="form-control" placeholder="Last name" autocomplete="off" required>
                                                     <!--invalid feedback-->
                                                     <p class="fw-bolder text-center text-danger"></p>
                                                     <input type="hidden" name="name[0]">
@@ -487,45 +433,41 @@
                                                     <input type="text" name="address[0]" class="form-control" placeholder="Address" required>
                                                 </div>
                                             </div>
-                                            <div class="row mb-3">
+                                            <hr>
+                                            <div class="row mb-3 text-center">
+                                                <p class="h5">Vaccine Status</p>
+                                                <p class="h6">1st Dose</p>
                                                 <div class="col text-center">
-                                                    <label for="firstStudentDose">
-                                                        1st Dose
-                                                    </label>
-                                                    <input type="hidden" name="firstDose[0]" class="form-control" value="">
-                                                    <input type="date" name="firstdose[0]" data-activate="1" class="form-control" autocomplete="off">
+                                                    <input type="hidden" name="firstdose[0]" class="form-control" value="">
+                                                    <input type="date" name="firstdose[0]" data-activate='input[type="text"][name="firstdoctor[0]"], input[type="date"][name="seconddose[0]"], select[name="vacbrand[0]"]' data-required='input[type="text"][name="firstdoctor[0]"], select[name="vacbrand[0]"]' class="form-control" autocomplete="off">
                                                     <!--TODO:Invalid Feedback-->
                                                     <p></p>
                                                 </div>
                                                 <div class="col">
                                                     <input type="hidden" name="firstdoctor[0]" class="form-control" value="">
-                                                    <input type="text" name="firstdoctor[0]" class="form-control" placeholder="doctor" autocomplete="off" disabled>
+                                                    <input type="text" name="firstdoctor[0]" class="form-control" placeholder="Doctor" autocomplete="off" disabled>
                                                     <!--invalid feedback-->
                                                     <p class="fw-bolder text-center text-danger"></p>
                                                 </div>
                                             </div>
-                                            <div class="row mb-3">
+                                            <div class="row mb-3 text-center">
+                                                <p class="h6">2nd Dose</p>
                                                 <div class="col text-center">
-                                                    <label for="secondStudentDose">
-                                                        2nd Dose
-                                                    </label>
                                                     <input type="hidden" name="seconddose[0]" class="form-control" value="">
-                                                    <input type="date" name="seconddose[0]" class="form-control" autocomplete="off" disabled>
+                                                    <input type="date" name="seconddose[0]" data-activate='input[type="text"][name="seconddoctor[0]"], input[type="date"][name="booster[0]"]' data-required='input[type="text"][name="seconddoctor[0]"]' class="form-control" autocomplete="off" disabled>
                                                     <!--TODO:Invalid Feedback-->
                                                     <p></p>
                                                 </div>
                                                 <div class="col">
                                                     <input type="hidden" name="seconddoctor[0]" class="form-control" value="">
-                                                    <input type="text" name="seconddoctor[0]" class="form-control" placeholder="doctor" autocomplete="off" disabled>
+                                                    <input type="text" name="seconddoctor[0]" class="form-control" placeholder="Doctor" autocomplete="off" disabled>
                                                     <!--invalid feedback-->
                                                     <p class="fw-bolder text-center text-danger"></p>
                                                 </div>
                                             </div>
-                                            <div class="row mb-3">
+                                            <div class="row mb-3 text-center">
+                                                <p class="h6">Brand</p>
                                                 <div class="col text-center">
-                                                    <label for="brand">
-                                                        Brand
-                                                    </label>
                                                     <input type="hidden" name="vacbrand[0]" class="form-control" value="">
                                                     <select id="brandStudent" class="form-select" name="vacbrand[0]" autocomplete="off" disabled>
                                                         <option value=""></option>
@@ -540,28 +482,24 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="row mb-3">
+                                            <div class="row mb-3 text-center">
+                                                <p class="h6">Booster</p>
                                                 <div class="col text-center">
-                                                    <label for="secondStudentDose">
-                                                        Booster Dose
-                                                    </label>
                                                     <input type="hidden" name="booster[0]" class="form-control" value="">
-                                                    <input type="date" name="booster[0]" class="form-control" autocomplete="off" disabled>
+                                                    <input type="date" name="booster[0]" data-activate='input[type="text"][name="boosterdoctor[0]"], select[name="boosterbrand[0]"]' data-required='input[type="text"][name="boosterdoctor[0]"], select[name="boosterbrand[0]"]' class="form-control" autocomplete="off" disabled>
                                                     <!--TODO:Invalid Feedback-->
                                                     <p></p>
                                                 </div>
                                                 <div class="col">
                                                     <input type="hidden" name="boosterdoctor[0]" class="form-control" value="">
-                                                    <input type="text" name="boosterdoctor[0]" class="form-control" placeholder="doctor" autocomplete="off" disabled>
+                                                    <input type="text" name="boosterdoctor[0]" class="form-control" placeholder="Doctor" autocomplete="off" disabled>
                                                     <!--invalid feedback-->
                                                     <p class="fw-bolder text-center text-danger"></p>
                                                 </div>
                                             </div>
-                                            <div class="row mb-3">
+                                            <div class="row mb-3 text-center">
+                                                <p class="h6">Brand</p>
                                                 <div class="col text-center">
-                                                    <label for="brand">
-                                                        Brand
-                                                    </label>
                                                     <input type="hidden" name="boosterbrand[0]" class="form-control" value="">
                                                     <select id="brandStudent" class="form-select" name="boosterbrand[0]" autocomplete="off" disabled>
                                                         <option value=""></option>
@@ -633,170 +571,16 @@
                                     <th class="border" scope="col" role="button">Name</th>
                                     <th class="border" scope="col" role="button">Gender</th>
                                     <th class="border" scope="col" role="button">Birthday</th>
-                                    <th class="border" scope="col" role="button">Address</th>
-                                    <th class="border" scope="col" role="button">Telephone</th>
-                                    <th class="border" scope="col" role="button">Email</th>
                                     <th class="border" scope="col">First Dose</th>
                                     <th class="border" scope="col">Second Dose</th>
                                     <th class="border" scope="col" role="button">Brand</th>
                                 </thead>
                                 <tbody id="facultyContent">
                                     <?php
-                                    $i = 1;
-                                    $data = $vac->displayTable('faculty');
-                                    foreach ($data as $info) {
+                                    $info = $vac->displayTable('faculty');
+                                    for ($i = 0; $i < count($info); $i++) {
                                     ?>
-                                        <tr>
-                                            <td class="border"> <?php echo $info['id'] ?> </td>
-                                            <td class="border"> <?php echo $info['name'] ?> </td>
-                                            <td class="border"> <?php echo $info['gender'] ?> </td>
-                                            <td class="border"> <?php echo $info['birthday'] ?> </td>
-                                            <td class="border"><?php echo $info['address'] ?></td>
-                                            <td class="border"> <?php echo $info['tel'] ?></td>
-                                            <td class="border"> <?php echo $info['email'] ?> </td>
-                                            <td class="border">
-                                                <?php
-                                                if (isset($info['firstdose'])) {
-                                                ?>
-                                                    <i class="bi bi-check"></i>
-                                                <?php
-                                                } else {
-                                                ?>
-                                                    <i class="bi bi-x"></i>
-                                                <?php
-                                                }
-                                                ?>
-                                            </td>
-                                            <td class="border">
-                                                <?php
-                                                if (isset($info['seconddose'])) {
-                                                ?>
-                                                    <i class="bi bi-check"></i>
-                                                <?php
-                                                } else {
-                                                ?>
-                                                    <i class="bi bi-x"></i>
-                                                <?php
-                                                }
-                                                ?>
-                                            </td>
-                                            <td class="border"> <?php echo $info['brand'] ?></td>
-                                            <!--edit-->
-                                            <td>
-                                                <!--Edit Button-->
-                                                <!--resize-->
-                                                <a cla type="button" data-bs-toggle="modal" href="adminview.php?editID=<?php echo $info['id'] ?>" data-bs-target="#editFacultyInfoModal<?php echo $i ?>">
-                                                    <i class="bi bi-pencil-fill"></i>
-                                                </a>
-                                            </td>
-                                            <!--delete-->
-                                            <td>
-                                                <!--Delete Button-->
-                                                <!--resize-->
-                                                <a type="button" data-bs-toggle="modal" data-bs-target="#deleteFacultyInfoModal<?php echo $i ?>">
-                                                    <i class="bi bi-trash-fill"></i>
-                                                </a>
-                                            </td>
-                                            <!--Faculty Update Modal-->
-                                            <div class="modal fade" id="editFacultyInfoModal<?php echo $i ?>" tabindex="-1" aria-labelledby="editFacultyInfoModalLabel<?php echo $i ?>">
-                                                <div class="modal-dialog modal-dialog-centered modal-lg overflow-auto">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="editFacultyInfoModalLabel<?php echo $i ?>">Create</h5>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                        <?php
-                                                        $name = explode(' ', $info['name']);
-                                                        ?>
-                                                        <form action="adminview.php?editFaculty=<?php echo $info['id']; ?>&edit=2" method="post" data-form="4">
-                                                            <div class="modal-body">
-                                                                <div class="row mb-3">
-                                                                    <div class="col">
-                                                                        <input type="text" name="upId[1]" class="form-control" placeholder="ID No." value="<?php echo $info['id'] ?>" required>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row mb-3">
-                                                                    <div class="col">
-                                                                        <input type="text" name="upFirstName[1]" class="form-control" placeholder="First name" value="<?php echo $name[0] ?>" required>
-                                                                    </div>
-                                                                    <div class="col">
-                                                                        <input type="text" name="upMiddleName[1]" class="form-control" placeholder="Middle name" value="<?php echo $name[1] ?>" required>
-                                                                    </div>
-                                                                    <div class="col">
-                                                                        <input type="text" name="upLastName[1]" class="form-control" placeholder="Last name" value="<?php echo $name[2] ?>" required>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row mb-3">
-                                                                    <div class="col input-group">
-                                                                        <select class="form-select" name="upGender[1]" required>
-                                                                            <option></option>
-                                                                            <option value="Male">Male</option>
-                                                                            <option value="Female">Female</option>
-                                                                        </select>
-                                                                    </div>
-                                                                    <div class="col">
-                                                                        <input type="date" name="upBirthday[1]" class="form-control" value="<?php echo $info['birthday'] ?>" required>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row mb-3">
-                                                                    <div class="col">
-                                                                        <input type="email" name="upEmail[1]" class="form-control" id="emailFormControl" placeholder="Email" value="<?php echo $info['email'] ?>" required>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row mb-3">
-                                                                    <div class="col">
-                                                                        <input type="text" name="upAddress[1]" class="form-control" placeholder="Address" value="<?php echo $info['address'] ?>" required>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row mb-3">
-                                                                    <div class="col">
-                                                                        <input type="text" name="upTelephone[1]" class="form-control" placeholder="Telephone No." value="<?php echo $info['tel'] ?>" required>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row mb-3">
-                                                                    <div class="col text-center">
-                                                                        <label class="form-check-label" for="firstDose">
-                                                                            1st Dose
-                                                                        </label>
-                                                                        <input type="date" name="upSecondDose[1]" class="form-control" value="<?php echo $info['firstdose'] ?>">
-                                                                    </div>
-                                                                    <div class="col text-center">
-                                                                        <label class="form-check-label" for="secondDose">
-                                                                            2nd Dose
-                                                                        </label>
-                                                                        <input type="date" name="upSecondDose[1]" class="form-control" value="<?php echo $info['seconddose'] ?>">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                                <button type="submit" class="btn btn-primary">Save</button>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
 
-                                            <!--Faculty Delete Modal-->
-                                            <div class="modal fade" id="deleteFacultyInfoModal<?php echo $i ?>" tabindex="-1" aria-labelledby="delFacultyLabel" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-centered">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="Edit" id="delFacultyLabel">Confirmation</h5>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                        <!--put content here-->
-                                                        <div class="modal-body">
-                                                            Are you sure about the deletion?
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                                                            <a type="button" class="btn btn-primary" href="adminview.php?delete=2&delFacultyID=<?php echo $info['id'] ?>">Yes</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </tr>
                                     <?php
                                     }
                                     ?>
@@ -820,45 +604,46 @@
                                         <div class="modal-body">
                                             <div class="row mb-3">
                                                 <div class="col">
-                                                    <input type="text" name="id[1]" class="form-control" placeholder="ID No." required>
+                                                    <input type="text" name="id[3]" class="form-control" placeholder="ID No." required>
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
                                                 <div class="col">
-                                                    <input type="text" name="firstName[1]" class="form-control" placeholder="First name" required>
+                                                    <input type="text" name="fname[3]" class="form-control" placeholder="First name" required>
                                                 </div>
                                                 <div class="col">
-                                                    <input type="text" name="middleName[1]" class="form-control" placeholder="Middle name" required>
+                                                    <input type="text" name="mname[3]" class="form-control" placeholder="Middle name" required>
                                                 </div>
                                                 <div class="col">
-                                                    <input type="text" name="lastName[1]" class="form-control" placeholder="Last name" required>
+                                                    <input type="text" name="lname[3]" class="form-control" placeholder="Last name" required>
                                                 </div>
+                                                <input type="hidden" name="name[3]">
                                             </div>
                                             <div class="row mb-3">
                                                 <div class="col input-group">
-                                                    <select class="form-select" name="gender[1]" required>
+                                                    <select class="form-select" name="gender[3]" required>
                                                         <option></option>
                                                         <option value="Male">Male</option>
                                                         <option value="Female">Female</option>
                                                     </select>
                                                 </div>
                                                 <div class="col">
-                                                    <input type="date" name="birthday[1]" class="form-control" name="date-field" required>
+                                                    <input type="date" name="birthday[3]" class="form-control" name="date-field" required>
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
                                                 <div class="col">
-                                                    <input type="email" name="email[1]" class="form-control" id="emailFormControl" placeholder="Email" required>
+                                                    <input type="email" name="email[3]" class="form-control" id="emailFormControl" placeholder="Email" required>
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
                                                 <div class="col">
-                                                    <input type="text" name="address[1]" class="form-control" placeholder="Address" required>
+                                                    <input type="text" name="address[3]" class="form-control" placeholder="Address" required>
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
                                                 <div class="col">
-                                                    <input type="text" name="telephone[1]" class="form-control" placeholder="Telephone No." required>
+                                                    <input type="text" name="tel[3]" class="form-control" placeholder="Telephone No." required>
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
@@ -866,19 +651,23 @@
                                                     <label class="form-check-label" for="firstDose">
                                                         1st Dose
                                                     </label>
-                                                    <input type="date" name="firstdose[1]" class="form-control">
+                                                    <input type="date" name="firstdose[3]" class="form-control">
                                                 </div>
+                                            </div>
+                                            <div class="row mb-3">
                                                 <div class="col text-center">
                                                     <label class="form-check-label" for="secondDose">
                                                         2nd Dose
                                                     </label>
-                                                    <input type="date" name="seconddose[1]" class="form-control">
+                                                    <input type="date" name="seconddose[3]" class="form-control">
                                                 </div>
+                                            </div>
+                                            <div class="row mb-3">
                                                 <div class="col text-center">
                                                     <label for="brand">
                                                         Brand
                                                     </label>
-                                                    <select id="brandFaculty" class="form-select" name="brand[1]">
+                                                    <select class="form-select" name="brand[3]">
                                                         <option></option>
                                                         <?php
                                                         $brand = $vac->getData('vacBrand', 'brand');
@@ -925,7 +714,7 @@
                                     $i = 0;
                                     $data = $vac->displayTable('vacBrand');
                                     foreach ($data as $info) {
-                                    $i++;
+                                        $i++;
                                     ?>
                                         <tr>
                                             <td class="border"> <?php echo $info['brand'] ?> </td>
