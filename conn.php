@@ -158,8 +158,61 @@ class connection
 	public function updateInfo($post, $table, $condition, $primaryKey,$id=true, $formArr = 0)
 	{
 		$keys = array_keys($post);
-		$colName = $this->getColumnName($table);
-		$sql = "UPDATE $table SET ";
+		for($count = 0; $count < count($table);$count++)
+		{
+			$colName = $this->getColumnName($table);
+			$colCount = $this->getColumnName($table, 1);
+			$sql = "UPDATE $table[$count] SET";
+			$value = 0;
+			$j = 0;
+
+			if(!($id))
+			{
+				$j = 1;
+			}
+			for($i = 0; $i < $colCount; $i++)
+			{
+				if(strcmp($keys[$i], $colName[$j]) == 0)
+				{
+					$value = $post[$keys[$i]];
+					if(isset($formArr))
+					{
+						$value = $post[$keys[$i]][$formArr];
+					}
+					if($j < $colCount - 1)
+					{
+						//for those empty value
+						if($value == '')
+						{
+							$sql .= "$colName[$j] = NULL, ";
+							$j++;
+						}
+						else
+						{
+							$sql .= "$colName[$j] = '$value', ";
+							$j++;
+						}
+					}
+					else
+					{
+						//for those empty value
+						if($value == '')
+						{
+							$sql .= "$colName[$j] = NULL ";
+							$j++;
+						}
+						else
+						{
+							$sql .= "$colName[$j] = '$value' ";
+							$j++;
+						}
+					}
+				}
+			}
+			$sql .= "WHERE $condition[$count] = '$primaryKey[$count]'";
+			echo $sql;
+		}
+		/* $sql = "UPDATE $table SET ";
 		$value=0;
 		$j = 0;
 
@@ -176,20 +229,7 @@ class connection
 				$value = $post[$keys[$i]][$formArr];
 			}
 
-			if($keys[$i] == 'upFirstName')
-			{
-				$sql .= "$colName[$j] = '$value ";
-				$j++;
-			}
-			elseif($keys[$i] == 'upMiddleName')
-			{
-				$sql .= "$value ";
-			}
-			elseif($keys[$i] == 'upLastName')
-			{
-				$sql .= "$value', ";
-			}
-			elseif($i < count($keys) -1)
+			if($i < count($keys) -1)
 			{
 				//for those empty value
 				if($value == '')
@@ -219,8 +259,7 @@ class connection
 			}
 		}
 
-		$sql .= "WHERE $condition = '$primaryKey'";
-		echo $sql;
+		$sql .= "WHERE $condition = '$primaryKey'"; */
 	}
 
 	//delete
