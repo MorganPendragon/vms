@@ -43,7 +43,7 @@ class connection
 
 	public function displayRowByID($table, $col, $id)
 	{
-		$sql = "SELECT * FROM $table WHERE $col = $id";
+		$sql = "SELECT * FROM $table WHERE $col = '$id'";
 		$result = $this->conn->query($sql);
 		if ($result->num_rows == 1) 
 		{
@@ -82,7 +82,7 @@ class connection
 	}
 
 	//insert
-	public function insertInfo($post, $table, $id=true, $formArr=0)
+	public function insertInfo($post, $table, $id=true, $formArr = NULL)
 	{
 		$keys = array_keys($post);
 		print_r($keys);
@@ -155,22 +155,22 @@ class connection
 	}
 
 	//update
-	public function updateInfo($post, $table, $condition, $primaryKey,$id=true, $formArr = 0)
+	public function updateInfo($post, $table, $condition, $primaryKey, $id=true, $formArr = NULL)
 	{
 		$keys = array_keys($post);
+		print_r($keys);
 		for($count = 0; $count < count($table);$count++)
 		{
-			$colName = $this->getColumnName($table);
-			$colCount = $this->getColumnName($table, 1);
-			$sql = "UPDATE $table[$count] SET";
-			$value = 0;
+			$colName = $this->getColumnName($table[$count]);
+			$colCount = $this->getColumnName($table[$count], 1);
+			$sql = "UPDATE $table[$count] SET ";
 			$j = 0;
 
 			if(!($id))
 			{
 				$j = 1;
 			}
-			for($i = 0; $i < $colCount; $i++)
+			for($i = 0; $i < count($keys); $i++)
 			{
 				if(strcmp($keys[$i], $colName[$j]) == 0)
 				{
@@ -209,57 +209,9 @@ class connection
 					}
 				}
 			}
-			$sql .= "WHERE $condition[$count] = '$primaryKey[$count]'";
-			echo $sql;
+			$sql .= "WHERE $condition[$count] = '$primaryKey'";
+			$this->conn->query($sql);
 		}
-		/* $sql = "UPDATE $table SET ";
-		$value=0;
-		$j = 0;
-
-		if(!$id)
-		{
-			$j = 1;
-		}
-		//assigns the column name to their respective values
-		for($i = 0;$i < count($keys);$i++)
-		{
-			$value = $post[$keys[$i]];
-			if(isset($formArr))
-			{
-				$value = $post[$keys[$i]][$formArr];
-			}
-
-			if($i < count($keys) -1)
-			{
-				//for those empty value
-				if($value == '')
-				{
-					$sql .= "$colName[$j] = NULL, ";
-					$j++;
-				}
-				else
-				{
-					$sql .= "$colName[$j] = '$value', ";
-					$j++;
-				}
-			}
-			else
-			{
-				//for those empty value
-				if($value == '')
-				{
-					$sql .= "$colName[$j] = NULL ";
-					$j++;
-				}
-				else
-				{
-					$sql .= "$colName[$j] = '$value' ";
-					$j++;
-				}
-			}
-		}
-
-		$sql .= "WHERE $condition = '$primaryKey'"; */
 	}
 
 	//delete

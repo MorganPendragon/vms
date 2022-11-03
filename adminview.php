@@ -145,13 +145,19 @@
 
             switch ($_GET['edit']) {
                 case 1:
-                    $vac->updateInfo($_POST, 'student', 'id', $_GET['editStudent'], false);
+                    $table = array('student', 'vaccineStatus');
+                    $col = array('id', 'id');
+                    $vac->updateInfo($_POST, $table, $col, $_GET['editStudent'], true, 1);
+                    header('location:adminview.php');
                     break;
                 case 2:
                     $vac->updateInfo($_POST, 'faculty', 'id', $_GET['editFaculty'], true, 1);
                     break;
                 case 3:
-                    $vac->updateInfo($_POST, 'vacBrand', 'brand', $_GET['editVac']);
+                    $table = array('vacBrand');
+                    $col = array('brand');
+                    $vac->updateInfo($_POST, $table, $col, $_GET['editVac']);
+                    header('location:adminview.php');
                     break;
                 default:
                     break;
@@ -228,8 +234,11 @@
                                         <th class="border" scope="col" role="button">Gender</th>
                                         <th class="border" scope="col" role="button">Year Level</th>
                                         <th class="border" scope="col" role="button">Status</th>
-                                        <th class="border" scope="col" role="button">Address</th>
-                                        <th class="border" scope="col" role="button">Email</th>
+                                        <th class="border" scope="col" role="button">1st Dose</th>
+                                        <th class="border" scope="col" role="button">2nd Dose</th>
+                                        <th class="border" scope="col" role="button">Brand</th>
+                                        <th class="border" scope="col" role="button">Booster</th>
+                                        <th class="border" scope="col" role="button">Booster Brand</th>
                                     </tr>
                                 </thead>
 
@@ -245,8 +254,11 @@
                                             <td class="border"> <?php echo $info[$i]['gender'] ?> </td>
                                             <td class="border" id="yearTd" data-yr="<?php echo $info[$i]['yearLevel'] ?>"><?php echo $info[$i]['yearLevel'] ?></td>
                                             <td class="border" id="statusTd" data-status="<?php echo $info[$i]['status'] ?>"><?php echo $info[$i]['status'] ?></td>
-                                            <td class="border"> <?php echo $info[$i]['address'] ?> </td>
-                                            <td class="border"> <?php echo $info[$i]['email'] ?> </td>
+                                            <td class="border"><?php echo $vacStatus['firstdose'] ?></td>
+                                            <td class="border"><?php echo $vacStatus['seconddose'] ?></td>
+                                            <td class="border"><?php echo $vacStatus['vacbrand'] ?></td>
+                                            <td class="border"><?php echo $vacStatus['booster'] ?></td>
+                                            <td class="border"><?php echo $vacStatus['boosterbrand'] ?></td>
                                             <!--edit-->
                                             <td>
                                                 <!--resize-->
@@ -276,7 +288,7 @@
                                                     ?>
                                                     <form action="adminview.php?edit=1&editStudent=<?php echo $info[$i]['id'] ?>" method="POST" data-form="2">
                                                         <div class="modal-body">
-                                                            <input type="text" name="id[0]" placeholder="ID No." autocomplete="off" required>
+                                                            <input type="hidden" name="id[1]" placeholder="ID No." autocomplete="off" value="<?php echo $info[$i]['id'] ?>" required>
                                                             <div class="row">
                                                                 <div class="col">
                                                                     <input type="text" name="fname[1]" class="form-control" placeholder="First name" value="<?php echo $name[0] ?>" autocomplete="off" required>
@@ -298,6 +310,7 @@
                                                             <div class="row mb-3">
                                                                 <div class="col input-group">
                                                                     <select class="form-select" name="yearLevel[1]" required>
+                                                                        <option hidden>Year Level</option>
                                                                         <option value="Grade 7">Grade 7</option>
                                                                         <option value="Grade 8">Grade 8</option>
                                                                         <option value="Grade 9">Grade 9</option>
@@ -315,7 +328,129 @@
                                                             </div>
                                                             <div class="row mb-3">
                                                                 <div class="col">
-                                                                    <input type="email" name="email[1]" class="form-control" id="emailFormControl" placeholder="Email" required>
+                                                                    <input type="email" name="email[1]" class="form-control" id="emailFormControl" placeholder="Email" value="<?php echo $info[$i]['email'] ?>" required>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row mb-3">
+                                                                <div class="col">
+                                                                    <input type="text" name="tel[1]" class="form-control" placeholder="Telephone No." value="<?php echo $info[$i]['tel'] ?>" required>
+                                                                    <!--Invalid Feedback-->
+                                                                    <p></p>
+                                                                </div>
+                                                                <div class="col input-group">
+                                                                    <select class="form-select" name="gender[1]" required>
+                                                                        <option hidden>Gender</option>
+                                                                        <option value="Male">Male</option>
+                                                                        <option value="Female">Female</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row mb-3">
+                                                                <div class="col">
+                                                                    <input type="date" name="birthday[1]" class="form-control" value="<?php echo $info[$i]['birthday'] ?>" required>
+                                                                    <!--TODO:Invalid Feedback-->
+                                                                    <p></p>
+                                                                </div>
+                                                                <div class="col">
+                                                                    <input type="text" name="address[1]" class="form-control" value="<?php echo $info[$i]['birthday'] ?>" placeholder="Address" required>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row mb-3 text-center">
+                                                                <?php
+                                                                (isset($vacStatus['firstdose'])) ? $state = 'required' : $state = 'disabled';
+                                                                ?>
+                                                                <p class="h5">Vaccine Status</p>
+                                                                <p class="h6">1st Dose</p>
+                                                                <div class="col text-center">
+                                                                    <input type="hidden" name="firstdose[1]" class="form-control" value="">
+                                                                    <input type="date" name="firstdose[1]" data-activate='input[type="text"][name="firstdoctor[1]"], input[type="date"][name="seconddose[1]"], select[name="vacbrand[1]"]' data-required='input[type="text"][name="firstdoctor[1]"], select[name="vacbrand[1]"]' class="form-control" value="<?php echo $vacStatus['firstdose'] ?>" autocomplete="off">
+                                                                    <!--TODO:Invalid Feedback-->
+                                                                    <p></p>
+                                                                </div>
+                                                                <div class="col">
+                                                                    <input type="hidden" name="firstdoctor[1]" class="form-control" value="">
+                                                                    <input type="text" name="firstdoctor[1]" class="form-control" placeholder="Doctor" value="<?php echo $vacStatus['firstdoctor'] ?>" autocomplete="off" <?php echo $state ?>>
+                                                                    <!--invalid feedback-->
+                                                                    <p class="fw-bolder text-center text-danger"></p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row mb-3 text-center">
+                                                                <?php
+                                                                (isset($vacStatus['firstdose'])) ? $state = '' : $state = 'disabled';
+                                                                ?>
+                                                                <p class="h6">2nd Dose</p>
+                                                                <div class="col text-center">
+                                                                    <input type="hidden" name="seconddose[1]" class="form-control" value="">
+                                                                    <input type="date" name="seconddose[1]" data-activate='input[type="text"][name="seconddoctor[1]"], input[type="date"][name="booster[1]"]' data-required='input[type="text"][name="seconddoctor[1]"]' class="form-control" value="<?php echo $vacStatus['seconddose'] ?>" autocomplete="off" <?php echo $state ?>>
+                                                                    <!--TODO:Invalid Feedback-->
+                                                                    <p></p>
+                                                                </div>
+                                                                <?php
+                                                                (isset($vacStatus['seconddose'])) ? $state = 'required' : $state = 'disabled';
+                                                                ?>
+                                                                <div class="col">
+                                                                    <input type="hidden" name="seconddoctor[1]" class="form-control" value="">
+                                                                    <input type="text" name="seconddoctor[1]" class="form-control" placeholder="Doctor" value="<?php echo $vacStatus['seconddoctor'] ?>" autocomplete="off" <?php echo $state ?>>
+                                                                    <!--invalid feedback-->
+                                                                    <p class="fw-bolder text-center text-danger"></p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row mb-3 text-center">
+                                                                <?php
+                                                                (isset($vacStatus['firstdose'])) ? $state = 'required' : $state = 'disabled';
+                                                                ?>
+                                                                <p class="h6">Brand</p>
+                                                                <div class="col text-center">
+                                                                    <input type="hidden" name="vacbrand[1]" class="form-control" value="">
+                                                                    <select id="brandStudent" class="form-select" name="vacbrand[1]" value="<?php echo $vacStatus['vacbrand'] ?>" autocomplete="off" <?php echo $state ?>>
+                                                                        <option value="" hidden></option>
+                                                                        <?php
+                                                                        $brand = $vac->getData('vacBrand', 'brand');
+                                                                        foreach ($brand as $data) {
+                                                                        ?>
+                                                                            <option value="<?php echo $data['brand'] ?>"><?php echo $data['brand'] ?></option>
+                                                                        <?php
+                                                                        }
+                                                                        ?>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row mb-3 text-center">
+                                                                <?php
+                                                                (isset($vacStatus['seconddose'])) ? $state = '' : $state = 'disabled';
+                                                                ?>
+                                                                <p class="h6">Booster</p>
+                                                                <div class="col text-center">
+                                                                    <input type="hidden" name="booster[1]" class="form-control" value="">
+                                                                    <input type="date" name="booster[1]" data-activate='input[type="text"][name="boosterdoctor[1]"], select[name="boosterbrand[1]"]' data-required='input[type="text"][name="boosterdoctor[1]"], select[name="boosterbrand[1]"]' class="form-control" value="<?php echo $vacStatus['booster'] ?>" autocomplete="off" <?php echo $state ?>>
+                                                                    <!--TODO:Invalid Feedback-->
+                                                                    <p></p>
+                                                                </div>
+                                                                <?php
+                                                                (isset($vacStatus['booster'])) ? $state = 'required' : $state = 'disabled';
+                                                                ?>
+                                                                <div class="col">
+                                                                    <input type="hidden" name="boosterdoctor[1]" class="form-control" value="">
+                                                                    <input type="text" name="boosterdoctor[1]" class="form-control" placeholder="Doctor" value="<?php echo $vacStatus['boosterdoctor'] ?>" autocomplete="off" <?php echo $state ?>>
+                                                                    <!--invalid feedback-->
+                                                                    <p class="fw-bolder text-center text-danger"></p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row mb-3 text-center">
+                                                                <p class="h6">Brand</p>
+                                                                <div class="col text-center">
+                                                                    <input type="hidden" name="boosterbrand[1]" class="form-control" value="">
+                                                                    <select class="form-select" name="boosterbrand[1]" value="<?php echo $vacStatus['boosterbrand'] ?>" autocomplete="off" <?php echo $state ?>>
+                                                                        <option value="" hidden></option>
+                                                                        <?php
+                                                                        $brand = $vac->getData('vacBrand', 'brand');
+                                                                        foreach ($brand as $data) {
+                                                                        ?>
+                                                                            <option value="<?php echo $data['brand'] ?>"><?php echo $data['brand'] ?></option>
+                                                                        <?php
+                                                                        }
+                                                                        ?>
+                                                                    </select>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -418,6 +553,7 @@
                                                 </div>
                                                 <div class="col input-group">
                                                     <select class="form-select" name="gender[0]" required>
+                                                        <option hidden>Gender</option>
                                                         <option value="Male">Male</option>
                                                         <option value="Female">Female</option>
                                                     </select>
@@ -470,7 +606,7 @@
                                                 <div class="col text-center">
                                                     <input type="hidden" name="vacbrand[0]" class="form-control" value="">
                                                     <select id="brandStudent" class="form-select" name="vacbrand[0]" autocomplete="off" disabled>
-                                                        <option value=""></option>
+                                                        <option value="" hidden></option>
                                                         <?php
                                                         $brand = $vac->getData('vacBrand', 'brand');
                                                         foreach ($brand as $data) {
