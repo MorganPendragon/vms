@@ -2,37 +2,42 @@
 //TODO:Refactor docx generation and redirect the file path to somewhere else
 
 //autoloader cause lazy
-require __DIR__ . '/vendor/autoload.php';
+require __DIR__.'/vendor/autoload.php';
 //calls the lib
 use PhpOffice\PhpWord\Shared\Converter;
 
 class connection
 {
-	private $servername = 'localhost';
+    private $servername = 'localhost';
 	private $username = 'jay';
 	private $password = 'password';
 	private $dbname = 'Vaccine';
 	private $conn;
-
-	function __construct()
-	{
-		$this->conn = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
-		if ($this->conn->connect_error) {
+	
+    function __construct()
+    {
+        $this->conn = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
+		if ($this->conn->connect_error) 
+		{
 			echo 'Connection Failed';
-		} else {
+		} 
+		else 
+		{
 			return $this->conn;
 		}
-	}
+    }
 
 	public function displayTable($table)
 	{
 		$sql = "SELECT * FROM $table";
 		$result = $this->conn->query($sql);
-		if ($result->num_rows > 0) {
-			while ($row = $result->fetch_assoc()) {
+		if($result->num_rows > 0)
+		{
+			while($row = $result->fetch_assoc())
+			{
 				$data[] = $row;
 			}
-			return $data;
+			return $data;	
 		}
 	}
 
@@ -40,7 +45,8 @@ class connection
 	{
 		$sql = "SELECT * FROM $table WHERE $col = $id";
 		$result = $this->conn->query($sql);
-		if ($result->num_rows == 1) {
+		if ($result->num_rows == 1) 
+		{
 			$row = $result->fetch_assoc();
 			return $row;
 		}
@@ -52,11 +58,13 @@ class connection
 		$result = $this->conn->query($sql);
 		$colName = array();
 		$colCount = 0;
-		while ($row = $result->fetch_assoc()) {
+		while($row = $result->fetch_assoc())
+		{
 			$colName[] = $row['Field'];
 			$colCount++;
 		}
-		if ($count == 1) {
+		if($count == 1)
+		{
 			return $colCount;
 		}
 		return $colName;
@@ -66,105 +74,145 @@ class connection
 	{
 		$sql = "SELECT $column FROM $table";
 		$result = $this->conn->query($sql);
-		while ($row = $result->fetch_assoc()) {
+		while($row = $result->fetch_assoc())
+		{
 			$data[] = $row;
 		}
 		return $data;
 	}
 
 	//insert
-	public function insertInfo($post, $table, $id = true, $formArr = 0)
+	public function insertInfo($post, $table, $id=true, $formArr=0)
 	{
 		$keys = array_keys($post);
 		print_r($keys);
-
-		$colName = $this->getColumnName($table);
-		$colCount = $this->getColumnName($table, 1);
-		$sql = "INSERT INTO $table(";
-		$ctr = 0;
-		if (!$id) {
-			$ctr = 1;
-		}
-
-		//gets the column name and concats into sql query
-		for (; $ctr < $colCount; $ctr++) {
-			if ($ctr < $colCount - 1) {
-				$sql .= "$colName[$ctr], ";
-			} else {
-				$sql .= "$colName[$ctr])";
+		echo count($table);
+		for($count = 0; $count < count($table); $count++)
+		{
+			$colName = $this->getColumnName($table[$count]);
+			$colCount = $this->getColumnName($table[$count], 1);
+			$sql = "INSERT INTO $table[$count](";
+			$ctr = 0;
+			if(!$id)
+			{
+				$ctr = 1;
 			}
-		}
-		$sql .= " VALUES(";
 
-
-		for ($i = 0, $j = 0; $j < $colCount; $i++) {
-			if (strcmp($keys[$i], $colName[$j]) == 0) {
-				$value = $post[$keys[$i]];
-				if (isset($formArr)) {
-					$value = $post[$keys[$i]][$formArr];
+			//gets the column name and concats into sql query
+			for(;$ctr < $colCount;$ctr++)
+			{
+				if($ctr < $colCount-1)
+				{
+					$sql .= "$colName[$ctr], ";
 				}
-				if ($j < $colCount - 1) {
-					//for those empty value
-					if ($value == '') {
-						$sql .= "NULL, ";
-					} else {
-						$sql .= "'$value', ";
-					}
-				} else {
-					//for those empty value
-					if ($value == '') {
-						$sql .= "NULL)";
-					} else {
-						$sql .= "'$value')";
-					}
+				else
+				{
+					$sql .="$colName[$ctr])";
 				}
-				$j++;
 			}
+			$sql .= " VALUES(";
+
+
+			for($i = 0, $j = 0;$j < $colCount; $i++)
+			{
+				if(strcmp($keys[$i], $colName[$j]) == 0)
+				{
+					$value = $post[$keys[$i]];
+					if(isset($formArr))
+					{
+						$value = $post[$keys[$i]][$formArr];
+					}
+					if($j < $colCount - 1)
+					{
+						//for those empty value
+						if($value == '')
+						{
+							$sql .="NULL, ";
+						}
+						else
+						{
+							$sql .="'$value', ";
+						}
+					}
+					else
+					{
+						//for those empty value
+						if($value == '')
+						{
+							$sql .="NULL)";
+						}
+						else
+						{
+							$sql .="'$value')";
+						}
+					}
+					$j++;
+				}
+			}
+			echo $sql . "\n";
+			$this->conn->query($sql);
 		}
-		echo "\n". $sql . "\n";
 	}
 
 	//update
-	public function updateInfo($post, $table, $condition, $primaryKey, $id = true, $formArr = 0)
+	public function updateInfo($post, $table, $condition, $primaryKey,$id=true, $formArr = 0)
 	{
 		$keys = array_keys($post);
 		$colName = $this->getColumnName($table);
 		$sql = "UPDATE $table SET ";
-		$value = 0;
+		$value=0;
 		$j = 0;
 
-		if (!$id) {
+		if(!$id)
+		{
 			$j = 1;
 		}
 		//assigns the column name to their respective values
-		for ($i = 0; $i < count($keys); $i++) {
+		for($i = 0;$i < count($keys);$i++)
+		{
 			$value = $post[$keys[$i]];
-			if (isset($formArr)) {
+			if(isset($formArr))
+			{
 				$value = $post[$keys[$i]][$formArr];
 			}
 
-			if ($keys[$i] == 'upFirstName') {
+			if($keys[$i] == 'upFirstName')
+			{
 				$sql .= "$colName[$j] = '$value ";
 				$j++;
-			} elseif ($keys[$i] == 'upMiddleName') {
+			}
+			elseif($keys[$i] == 'upMiddleName')
+			{
 				$sql .= "$value ";
-			} elseif ($keys[$i] == 'upLastName') {
+			}
+			elseif($keys[$i] == 'upLastName')
+			{
 				$sql .= "$value', ";
-			} elseif ($i < count($keys) - 1) {
+			}
+			elseif($i < count($keys) -1)
+			{
 				//for those empty value
-				if ($value == '') {
+				if($value == '')
+				{
 					$sql .= "$colName[$j] = NULL, ";
 					$j++;
-				} else {
+				}
+				else
+				{
 					$sql .= "$colName[$j] = '$value', ";
 					$j++;
 				}
-			} else {
+			}
+			else
+			{
 				//for those empty value
-				if ($value == '') {
+				if($value == '')
+				{
 					$sql .= "$colName[$j] = NULL ";
 					$j++;
-				} else {
+				}
+				else
+				{
 					$sql .= "$colName[$j] = '$value' ";
 					$j++;
 				}
@@ -172,20 +220,16 @@ class connection
 		}
 
 		$sql .= "WHERE $condition = '$primaryKey'";
-		if ($this->conn->query($sql)) {
-			header('location:adminview.php');
-		}
+		echo $sql;
 	}
 
 	//delete
 	public function deleteInfo($table, $col, $id)
 	{
-		$sql = "DELETE FROM $table WHERE $col = '$id'";
-		$result = $this->conn->query($sql);
-		if ($result) {
-			header('location:adminview.php');
-		} else {
-			echo "ERROR" . $sql . "<br>" . $this->conn->server;
+		for($i = 0; $i < count($table); $i++)
+		{
+			$sql = "DELETE FROM $table[$i] WHERE $col[$i] = '$id'";
+			$this->conn->query($sql);	
 		}
 	}
 
@@ -208,20 +252,21 @@ class connection
 
 		//font style for texts
 		$fStyle = [
-			'bold' => true
+			'bold'=>true
 		];
 		$section = $phpWord->addSection();
 		$section->addText('No. of Vaccinated', $fStyle, ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
-		$table = ['student', 'faculty'];
+		$table = ['student', 'faculty'];		
 		$header = $section->addHeader();
-
+		
 		//header content
-		$header->addText(date('m/d/Y'), $fStyle, ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::END]);
+		$header->addText(date('m/d/Y'),$fStyle, ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::END]);
 		//chart legends
 		$categories = array('First Dose only', 'First and Second');
 		$series = array();
 		$i = 0;
-		foreach ($table as $tableName) {
+		foreach($table as $tableName)
+		{
 			//chart data
 			$series[] = $this->find($tableName, 'firstdose IS NOT NULL and seconddose IS NULL');
 			$series[] = $this->find($tableName, 'firstdose IS NOT NULL and seconddose IS NOT NULL');
@@ -244,11 +289,13 @@ class connection
 		$brand = $this->getData('vacBrand', 'brand');
 		$i = 0;
 		unset($categories);
-		foreach ($table as $tableName) {
-			foreach ($brand as $brandName) {
+		foreach($table as $tableName)
+		{
+			foreach($brand as $brandName)
+			{
 				$categories[] = $brandName['brand'];
 				$temp = $brandName['brand'];
-				$series[] = $this->find($tableName, "brand = '$temp'");
+				$series[]= $this->find($tableName, "brand = '$temp'");
 			}
 			$style = [
 				'width' => Converter::inchToEmu(3),

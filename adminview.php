@@ -106,14 +106,17 @@
             //insert
             switch ($_GET['submit']) {
                 case 1:
-                    $vac->insertInfo($_POST, 'student');
-                    $vac->insertInfo($_POST, 'vaccineStatus');
+                    $table = array('student', 'vaccineStatus');
+                    $vac->insertInfo($_POST, $table);
+                    header('location:adminview.php');
                     break;
                 case 2:
                     $vac->insertInfo($_POST, 'faculty', 1,true, 1);
                     break;
                 case 3:
-                    $vac->insertInfo($_POST, 'vacBrand');
+                    $table= array('vacBrand');
+                    $vac->insertInfo($_POST, $table);
+                    header('location:adminview.php');
                     break;
                 default:
                     break;
@@ -122,13 +125,19 @@
             //delete
             switch ($_GET['delete']) {
                 case 1:
-                    $vac->deleteInfo('student', 'id', $_GET['delStudentID']);
+                    $table = array('student', 'vaccineStatus');
+                    $col = array('id', 'id');
+                    $vac->deleteInfo($table, $col, $_GET['delStudentID']);
+                    header('location:adminview.php');
                     break;
                 case 2:
                     $vac->deleteInfo('faculty', 'id', $_GET['delFacultyID']);
                     break;
                 case 3:
-                    $vac->deleteInfo('vacBrand', 'brand', $_GET['delVacID']);
+                    $table = array('vacBrand');
+                    $col = array('brand');
+                    $vac->deleteInfo($table, $col, $_GET['delVacID']);
+                    header('location:adminview.php');
                     break;
                 default:
                     break;
@@ -913,8 +922,10 @@
                                 </thead>
                                 <tbody>
                                     <?php
+                                    $i = 0;
                                     $data = $vac->displayTable('vacBrand');
                                     foreach ($data as $info) {
+                                    $i++;
                                     ?>
                                         <tr>
                                             <td class="border"> <?php echo $info['brand'] ?> </td>
