@@ -19,7 +19,18 @@
 
 <body>
 	<?php
+	include('conn.php');
+	$vac = new connection();
+	$target_file = "vaccine upload/" . basename($_FILES["fileToUpload"]["name"]);
 
+	if(isset($_POST['submit']))
+	{
+		if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+			echo "The file " . htmlspecialchars(basename($_FILES["fileToUpload"]["name"])) . " has been uploaded.";
+		} else {
+			echo "Sorry, there was an error uploading your file.";
+		}
+	}
 	?>
 	<header>
 		<div class="row">
@@ -29,9 +40,9 @@
 	<main>
 		<div class="row">
 			<!--sidebar-->
-			<div class="col-2" style="background-color:#022e43; height:100vh;">
+			<div class="col-2" style="background-color:#022e43; height:100vh;" tabindex="1">
 				<img src="img\logo.png" class="img-fluid" alt="...">
-				<ul class="nav nav-pills flex-clumn">
+				<ul class="nav nav-pills nav-stacked">
 					<li class="nav-item active" id="tableTab">
 						<a href="#account" class="nav-link active" data-bs-toggle="tab">&nbsp;&nbsp;Account Information</a>
 					</li>
@@ -45,14 +56,18 @@
 				<div class="tab pane fade show active" id="account">
 
 				</div>
-				<div class="tab pane fade" id="upload">
+				<div class="tab pane fade" id="upload" enctype="multipart/form-data">
 					<div>
-						<form action="" method="POST">
-							<input type="file" name="vaccinceStudent" class="form-control">
-							<button type="submit" class="btn btn-primary">Submit</button>
+						<form action="studentview.php" method="post" enctype="multipart/form-data">
+							Select image to upload:
+							<input type="file" name="fileToUpload" id="fileToUpload">
+							<button type="submit" class="btn btn-primary">Upload</button>
 						</form>
 					</div>
 				</div>
+				<?php
+
+				?>
 			</div>
 		</div>
 	</main>
