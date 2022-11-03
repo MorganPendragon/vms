@@ -180,7 +180,7 @@ $(function () {
     });
 
     //activate components on form
-    $date = $('input[name="firstdose[0]"], input[name="firstdose[1]"], input[name="firstdose[2]"], input[name="firstdose[3]"], input[name="seconddose[0]"], input[name="seconddose[1]"], input[name="seconddose[2]"], input[name="seconddose[3]"]');
+    $date = $('input[name="firstdose[0]"], input[name="firstdose[1]"], input[name="firstdose[2]"], input[name="firstdose[3]"], input[name="seconddose[0]"], input[name="seconddose[1]"], input[name="seconddose[2]"], input[name="seconddose[3]"], input[name="booster[0]"], input[name="booster[1]"], input[name="booster[2]"], input[name="booster[3]"]');
     $date.on('change', activateAndReq);
 
     function activateAndReq()
