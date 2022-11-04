@@ -60,7 +60,7 @@ $(function () {
             if (brandValue == 0) {
                 brandFlag = 1;
             }
-            else if (brandValue == $(this).find('#brandTd').data('brand')) {
+            else if (brandValue == $(this).find('td[name="brandTd[0]"], td[name="brandTd[1]"]').data('brand')) {
                 brandFlag = 1;
             }
             else {
@@ -87,8 +87,7 @@ $(function () {
     //form validation
     $('form').on('submit', function (e) {
         var validated = 0;
-        var name = "";
-        console.log($(this).data('form'));
+        var formname = "";
         switch ($(this).data('form')) {
             //student submit
             case 1:
@@ -107,30 +106,36 @@ $(function () {
                 $name = $('input[name="fname[1]"], input[name="mname[1]"], input[name="lname[1]"], input[name = "firstdoctor[1]"], input[name = "seconddoctor[1]"], input[name = "boosterdoctor[1]"]');
                 $tel = $('input[name="tel[1]"]');
                 $finalName = $('input[name="name[1]"]');
-                console.log('student update form fired');
                 break;
             //faculty insert
             case 3:
+                $name = $('input[name="fname[2]"], input[name="mname[2]"], input[name="lname[2]"], input[name = "firstdoctor[2]"], input[name = "seconddoctor[2]"], input[name = "boosterdoctor[2]"]');
+                $tel = $('input[name="tel[2]"]');
+                $finalName = $('input[name="name[2]"]');
+                console.log('faculty form fired');
                 break;
             //faculty update
             case 4:
+                $name = $('input[name="fname[3]"], input[name="mname[3]"], input[name="lname[3]"], input[name = "firstdoctor[3]"], input[name = "seconddoctor[3]"], input[name = "boosterdoctor[3]"]');
+                $tel = $('input[name="tel[3]"]');
+                $finalName = $('input[name="name[3]"]');
+                console.log('faculty update form fired');
                 break;
             default:
                 break;
         }
-
         //name validation check
         $name.each(function () {
-            if (/^$|[a-zA-Z ]+$/.test($(this).val())) {
+            if (/^$|[a-zA-Z ]$/.test($(this).val())) {
                 validated++;
                 if (validated < 4) {
                     if (validated % 2 == 0) {
-                        name += " " + $(this).val().toString() + " ";
-                        console.log('valid');
+                        formname += " " + $(this).val().toString() + " ";
+                        console.log($(this).val().toString());
                     }
                     else {
-                        name += $(this).val().toString();
-                        console.log('valid');
+                        formname += $(this).val().toString();
+                        console.log($(this).val().toString());
                     }
                 }
             }
@@ -140,8 +145,8 @@ $(function () {
             }
         });
 
-        $finalName.val(name);
-        console.log(name);
+        $finalName.val(formname);
+        console.log(formname);
         //tel validation
         if (!(/^$|^09[0-9]{9,9}$/.test($tel.val()))) {
             validated = 0;
@@ -155,6 +160,7 @@ $(function () {
         if (validated < 5) {
             e.preventDefault();
         }
+
     });
 
     $('#login').on('submit', function (e) {
@@ -183,8 +189,7 @@ $(function () {
     $date = $('input[name="firstdose[0]"], input[name="firstdose[1]"], input[name="firstdose[2]"], input[name="firstdose[3]"], input[name="seconddose[0]"], input[name="seconddose[1]"], input[name="seconddose[2]"], input[name="seconddose[3]"], input[name="booster[0]"], input[name="booster[1]"], input[name="booster[2]"], input[name="booster[3]"]');
     $date.on('change', activateAndReq);
 
-    function activateAndReq()
-    {
+    function activateAndReq() {
         $activate = $($(this).data('activate').toString());
         $req = $($(this).data('required').toString());
         if ($(this).val().toString()) {
