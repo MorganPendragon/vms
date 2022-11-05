@@ -1,3 +1,2 @@
-# vms
-Midterm Project
+# Midterm Project
 </br>
