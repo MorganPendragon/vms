@@ -1,5 +1,5 @@
 # About
-Vaccination Management System
+Midterm Project by Sir Amir
 
 # Dependencies
 * PHPOffice
