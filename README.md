@@ -1,5 +1,5 @@
 # About
-Midterm Project by Sir Amir
+Final Project by Sir Amir
 
 # Dependencies
 * PHPOffice
