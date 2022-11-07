@@ -33,7 +33,7 @@
 <body>
 	<main>
 		<!--background image-->
-		<div class="bg-image justify-content-center align-items-center" style="background-image: url('img/bglogin.png'); height: 100vh;">
+		<div class="bg-image justify-content-center align-items-center" id="login" style="background-image: url('img/bglogin.png'); height: 100vh;">
 			<!--for logo-->
 			<div class="container-fluid">
 				<div class="row">
@@ -42,12 +42,12 @@
 					</div>
 					<!--log in-->
 					<div class="col-6 ">
-						<div id="login">
+						<div>
 							<div class="container">
 								<div class="d-flex container-fluid justify-content-center align-items-center window-height" style="background-color:rgb(255, 255, 255);">
-									
+
 									<div id="card" class="card w-75 h-50 shadow-lg p-3 mb-5 bg-body rounded-5">
-										<form id="login">
+										<form>
 											<div class="card-body w-75 mx-auto">
 												<P class="fs-1 fw-bold mt-3">Login</P>
 												<div class="mb-3 my-4">
@@ -92,26 +92,26 @@
 							<div class="modal-body">
 								<div class="row mb-3">
 									<div class="col">
-										<button class="btn btn-primary" data-bs-dismiss="modal" id="signUpStudent" data-show="student" data-hide="login">Student</button>
+										<button class="btn btn-primary" data-bs-dismiss="modal" id="signUpStudent" data-show="#student" data-hide="#login">Student</button>
 									</div>
 									<div class="col">
-										<button class="btn btn-primary" data-bs-dismiss="modal" id="signUpFaculty" data-show="faculty" data-hide="login">Faculty</button>
+										<button class="btn btn-primary" data-bs-dismiss="modal" id="signUpFaculty" data-show="#faculty" data-hide="#login">Faculty</button>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div id="student" style="display: none;">
-					<!--TODO:Content-->
-					<button class="btn btn-primary" name="back" data-show="login" data-hide="student">Back</button>
-					<p class="fs-1">DAMN</p>
-				</div>
-				<div id="faculty" style="display: none;">
-					<button class="btn btn-primary" name="back" data-show="login" data-hide="faculty">Back</button>
-					<p class="fs-1">DAYUM</p>
-				</div>
 			</div>
+		</div>
+		<div id="student" style="display: none;">
+			<!--TODO:Content-->
+			<button class="btn btn-primary" name="back" data-show="#login" data-hide="#student">Back</button>
+			<p class="fs-1">DAMN</p>
+		</div>
+		<div id="faculty" style="display: none;">
+			<button class="btn btn-primary" name="back" data-show="#login" data-hide="#faculty">Back</button>
+			<p class="fs-1">DAYUM</p>
 		</div>
 	</main>
 
