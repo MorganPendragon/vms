@@ -86,11 +86,37 @@ $(function () {
 
     //form validation
     $('form').on('submit', function (e) {
-        if ($(this).data('validation').val().toString()) {
-            var validated = 0;
+        if (typeof ($(this).data('validation')) != 'undefined') {
+            var validated = 1;
+
+            $id = $($(this).parent().find('input[type="text"][name^="id"]'))
+            switch ($(this).data('validation')) {
+                //student id validation
+                case 1:
+                    /*
+                        student id should look like this:
+                        XX-XXXXXX
+                    */
+                    if (!(/^[0-9]{1,2}-[0-9]{6,6}$/.test($id.val()))) {
+                        validated = 0;
+                        $(this).siblings('p').text('Invalid').fadeOut(5000);
+                    }
+                    break;
+                //faculty id validation
+                case 2:
+                    /* 
+                        faculty id should look like this:
+                        FX-XXXXXX
+                    */
+                    if (!(/^F[0-9]{1,1}-[0-9]{6,6}$/.test($id.val()))) {
+                        validated = 0;
+                        $(this).siblings('p').text('Invalid').fadeOut(5000);
+                    }
+                    break;
+            }
+
             //name check
             var name = $($(this).parent().find('input[type="text"][name*="name"]')).map(function (index) {
-                console.log(index);
                 if (/[a-zA-Z ]$/.test($(this).val().toString())) {
                     validated++;
                     return $(this).val();
@@ -114,8 +140,7 @@ $(function () {
                 }
             });
 
-            console.log(validated);
-
+            //telephone number validation
             $tel = $($(this).parent().find('input[type="text"][name^="tel"]'));
             if (!(/^09[0-9]{9,9}$/.test($tel.val()))) {
                 validated = 0;
@@ -123,8 +148,11 @@ $(function () {
             }
             validated++;
 
-            //prevents form submition if one is not validated
-            if (validated < 7) {
+            console.log(validated);
+            console.log(name);
+
+            //prevents form submition if one element is not validated
+            if (validated < 8) {
                 e.preventDefault();
             }
         }
@@ -133,11 +161,11 @@ $(function () {
     $('#login').on('submit', function (e) {
         e.preventDefault();
         var id = $('#idNo').val().toString();
-        if (/^[0-9]{1,2}-[0-9]{8,8}$/.test(id)) {
+        if (/^[0-9]{1,2}-[0-9]{6,6}$/.test(id)) {
             //redirect to student
             location.href = '';
         }
-        else if (/^F[0-9]{1,1}-[0-9]{8,8}$/.test(id)) {
+        else if (/^F[0-9]{1,1}-[0-9]{6,6}$/.test(id)) {
             //redirect to faculty
             location.href = '';
         }

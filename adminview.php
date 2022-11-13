@@ -256,8 +256,10 @@
                                 <tbody id="studentContent">
                                     <?php
                                     $data = $vac->displayTable('student');
+                                    $i = 0;
                                     foreach ($data as $info) {
                                         $vacStatus = $vac->displayRowByID('vaccineStatus', 'id', $info['id']);
+                                        $i++;
                                     ?>
                                         <tr>
                                             <td class="border"> <?php echo $info['id'] ?> </td>
@@ -299,8 +301,13 @@
                                                     ?>
                                                     <form action="adminview.php?edit=1&editStudent=<?php echo $info['id'] ?>" method="POST" data-validation="1">
                                                         <div class="modal-body">
-                                                            <input type="hidden" name="id[1]" placeholder="ID No." autocomplete="off" value="<?php echo $info['id'] ?>" required>
-                                                            <div class="row">
+                                                            <div class="row mb-3">
+                                                                <div class="col">
+                                                                    <input type="text" class="form-control" name="id[1]" placeholder="ID No." value="<?php echo $info['id'] ?>" autocomplete="off" required>
+                                                                    <p class="fw-bolder text-center text-danger"></p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row mb-3">
                                                                 <div class="col">
                                                                     <input type="text" name="fname[1]" class="form-control" placeholder="First name" value="<?php echo $name[0] ?>" autocomplete="off" required>
                                                                     <!--invalid feedback-->
@@ -369,7 +376,7 @@
                                                                     <p></p>
                                                                 </div>
                                                                 <div class="col">
-                                                                    <input type="text" name="address[1]" class="form-control" value="<?php echo $info['birthday'] ?>" placeholder="Address" required>
+                                                                    <input type="text" name="address[1]" class="form-control" value="<?php echo $info['address'] ?>" placeholder="Address" required>
                                                                 </div>
                                                             </div>
                                                             <div class="row mb-3 text-center">
@@ -520,7 +527,12 @@
                                     <!--TODO:CSS on form-->
                                     <form action="adminview.php?submit=1" method="POST" data-validation="1">
                                         <div class="modal-body">
-                                            <input type="hidden" name="id[0]" placeholder="ID No." autocomplete="off" required>
+                                            <div class="row mb-3">
+                                                <div class="col">
+                                                    <input type="text" class="form-control" name="id[0]" placeholder="ID No." autocomplete="off" required>
+                                                    <p class="fw-bolder text-center text-danger"></p>
+                                                </div>
+                                            </div>
                                             <div class="row mb-3">
                                                 <div class="col">
                                                     <input type="text" name="fname[0]" class="form-control" placeholder="First name" autocomplete="off" required>
@@ -708,8 +720,10 @@
                                 <tbody id="facultyContent">
                                     <?php
                                     $data = $vac->displayTable('faculty');
+                                    $i = 0;
                                     foreach ($data as $info) {
                                         $vacStatus = $vac->displayRowByID('vaccineStatus', 'id', $info['id']);
+                                        $i++;
                                     ?>
                                         <tr>
                                             <td class="border"><?php echo $info['id'] ?></td>
@@ -735,6 +749,7 @@
                                                 </a>
                                             </td>
                                         </tr>
+                                        <!--Edit Faculty modal-->
                                         <div class="modal fade" id="editFacultyModal<?php echo $i ?>" tabindex="-1" aria-labelledby="editFacultyLabel" aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered modal-lg">
                                                 <div class="modal-content">
@@ -748,7 +763,12 @@
                                                     ?>
                                                     <form action="adminview.php?edit=2&editFaculty=<?php echo $info['id'] ?>" method="POST" data-validation="2">
                                                         <div class="modal-body">
-                                                            <input type="hidden" name="id[3]" placeholder="ID No." autocomplete="off" value="<?php echo $info['id'] ?>" required>
+                                                            <div class="row mb-3">
+                                                                <div class="col">
+                                                                    <input type="text" class="form-control" name="id[3]" placeholder="ID No." value="<?php echo $info['id'] ?>" autocomplete="off" required>
+                                                                    <p class="fw-bolder text-center text-danger"></p>
+                                                                </div>
+                                                            </div>
                                                             <div class="row">
                                                                 <div class="col">
                                                                     <input type="text" name="fname[3]" class="form-control" placeholder="First name" value="<?php echo $name[0] ?>" autocomplete="off" required>
@@ -952,6 +972,7 @@
                                             <div class="row mb-3">
                                                 <div class="col">
                                                     <input type="text" name="id[2]" class="form-control" placeholder="ID no." autocomplete="off" required>
+                                                    <p class="fw-bolder text-center text-danger"></p>
                                                 </div>
                                             </div>
                                             <div class="row mb-3">

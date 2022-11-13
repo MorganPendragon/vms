@@ -210,6 +210,7 @@ class connection
 				}
 			}
 			$sql .= "WHERE $condition[$count] = '$primaryKey'";
+			echo $sql;
 			$this->conn->query($sql);
 		}
 	}
