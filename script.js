@@ -86,61 +86,48 @@ $(function () {
 
     //form validation
     $('form').on('submit', function (e) {
-        var validated = 0;
-        var formname = "";
-        switch ($(this).data('form')) {
-            //student submit
-            case 1:
-                $name = $('input[name$="name[0]"], input[name$="doctor[0]"]');
-                $tel = $('input[name="tel[0]"]');
-                $finalName = $('input[name="name[0]"]');
-                //generate random id for student
-                var id = new Date().getFullYear().toString().substring(2);
-                id += "-";
-                id += Math.random().toString(9).substring(2, 8);
-                $('input[name="id[0]"]').val(id);
-                console.log('student form fired');
-                break;
-            //student update
-            case 2:
-                $name = $('input[name$="name[1]"], input[name$="doctor[1]"]');
-                $tel = $('input[name="tel[1]"]');
-                $finalName = $('input[name="name[1]"]');
-                break;
-            //faculty insert
-            case 3:
-                $name = $('input[name$="name[2]"], input[name$="doctor[2]"]');
-                $tel = $('input[name="tel[2]"]');
-                $finalName = $('input[name="name[2]"]');
-                console.log('faculty form fired');
-                break;
-            //faculty update
-            case 4:
-                $name = $('input[name$="name[3]"], input[name$="doctor[3]"]');
-                $tel = $('input[name="tel[3]"]');
-                $finalName = $('input[name="name[3]"]');
-                console.log('faculty update form fired');
-                break;
-            default:
-                break;
+        if ($(this).data('validation').val().toString()) {
+            var validated = 0;
+            //name check
+            var name = $($(this).parent().find('input[type="text"][name*="name"]')).map(function (index) {
+                console.log(index);
+                if (/[a-zA-Z ]$/.test($(this).val().toString())) {
+                    validated++;
+                    return $(this).val();
+                }
+                else {
+                    validated = 0;
+                    $(this).siblings('p').text('Invalid').fadeOut(5000);
+                }
+            }).get().join(' ');
+            $(this).parent().find('input[type="hidden"][name^="name"]').val(name);
+
+            //doctor name check
+            $($(this).parent().find('input[type="text"][name*="doctor"]')).map(function () {
+                if (/^$|[a-zA-Z ]$/.test($(this).val().toString())) {
+                    validated++;
+                    return $(this).val();
+                }
+                else {
+                    validated = 0;
+                    $(this).siblings('p').text('Invalid').fadeOut(5000);
+                }
+            });
+
+            console.log(validated);
+
+            $tel = $($(this).parent().find('input[type="text"][name^="tel"]'));
+            if (!(/^09[0-9]{9,9}$/.test($tel.val()))) {
+                validated = 0;
+                $tel.siblings('p').text('invalid').fadeOut(5000);
+            }
+            validated++;
+
+            //prevents form submition if one is not validated
+            if (validated < 7) {
+                e.preventDefault();
+            }
         }
-        //name validation check
-        console.log($(this).data('name').toString());
-        formname = $($(this).data('name')).map(function(){
-            return $(this).val();
-        }).get().join(' ');
-
-        $finalName.val(formname);
-        console.log(formname);
-
-        validated++;
-
-        //stop submit if < 5
-        console.log(validated);
-        if (validated < 5) {
-            e.preventDefault();
-        }
-
     });
 
     $('#login').on('submit', function (e) {
@@ -166,21 +153,21 @@ $(function () {
     });
 
     //activate components on form
-    $date = $('input[type="date"][name*="dose"], input[type="date"][name^="booster"]');
+    $date = $('input[type="date"][name^="firstdose"], input[type="date"][name^="seconddose"],input[type="date"][name^="booster"]');
     $date.on('change', activateAndReq);
 
     function activateAndReq() {
-        console.log($(this).val().toString());
+        $activate = $($(this).data('activate'));
+        $req = $($(this).data('required'));
         if ($(this).val().toString()) {
-            $($(this).data('activate')).each(function () {
+            $activate.each(function () {
                 $(this).removeAttr('disabled');
             });
             $req.attr('required', 'required');
         }
         else {
-            $(this).data('required').each(function () {
+            $activate.each(function () {
                 $(this).attr('disabled', 'disabled');
-                $(this).val('');
                 $(this).removeAttr('required', 'required');
             });
         }
