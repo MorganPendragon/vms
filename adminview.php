@@ -255,16 +255,16 @@
 
                                 <tbody id="studentContent">
                                     <?php
-                                    $info = $vac->displayTable('student');
-                                    for ($i = 0; $i < count($info); $i++) {
-                                        $vacStatus = $vac->displayRowByID('vaccineStatus', 'id', $info[$i]['id']);
+                                    $data = $vac->displayTable('student');
+                                    foreach ($data as $info) {
+                                        $vacStatus = $vac->displayRowByID('vaccineStatus', 'id', $info['id']);
                                     ?>
                                         <tr>
-                                            <td class="border"> <?php echo $info[$i]['id'] ?> </td>
-                                            <td class="border"> <?php echo $info[$i]['name'] ?> </td>
-                                            <td class="border"> <?php echo $info[$i]['gender'] ?> </td>
-                                            <td class="border" id="yearTd" data-yr="<?php echo $info[$i]['yearLevel'] ?>"><?php echo $info[$i]['yearLevel'] ?></td>
-                                            <td class="border" id="statusTd" data-status="<?php echo $info[$i]['status'] ?>"><?php echo $info[$i]['status'] ?></td>
+                                            <td class="border"> <?php echo $info['id'] ?> </td>
+                                            <td class="border"> <?php echo $info['name'] ?> </td>
+                                            <td class="border"> <?php echo $info['gender'] ?> </td>
+                                            <td class="border" id="yearTd" data-yr="<?php echo $info['yearLevel'] ?>"><?php echo $info['yearLevel'] ?></td>
+                                            <td class="border" id="statusTd" data-status="<?php echo $info['status'] ?>"><?php echo $info['status'] ?></td>
                                             <td class="border"><?php echo $vacStatus['firstdose'] ?></td>
                                             <td class="border"><?php echo $vacStatus['seconddose'] ?></td>
                                             <td class="border" name="brandTd[0]" data-brand="<?php echo $vacStatus['vacbrand'] ?>"><?php echo $vacStatus['vacbrand'] ?></td>
@@ -273,7 +273,7 @@
                                             <!--edit-->
                                             <td>
                                                 <!--TODO:resize-->
-                                                <a cla type="button" data-bs-toggle="modal" href="adminview.php?editID=<?php echo $info[$i]['id'] ?>" data-bs-target="#editStudentModal<?php echo $i ?>">
+                                                <a cla type="button" data-bs-toggle="modal" href="adminview.php?editID=<?php echo $info['id'] ?>" data-bs-target="#editStudentModal<?php echo $i ?>">
                                                     <i class="bi bi-pencil-fill"></i>
                                                 </a>
                                             </td>
@@ -295,11 +295,11 @@
                                                     </div>
                                                     <!--put content here-->
                                                     <?php
-                                                    $name = explode(' ', $info[$i]['name']);
+                                                    $name = explode(' ', $info['name']);
                                                     ?>
-                                                    <form action="adminview.php?edit=1&editStudent=<?php echo $info[$i]['id'] ?>" method="POST" data-form="2">
+                                                    <form action="adminview.php?edit=1&editStudent=<?php echo $info['id'] ?>" method="POST" data-validation="1">
                                                         <div class="modal-body">
-                                                            <input type="hidden" name="id[1]" placeholder="ID No." autocomplete="off" value="<?php echo $info[$i]['id'] ?>" required>
+                                                            <input type="hidden" name="id[1]" placeholder="ID No." autocomplete="off" value="<?php echo $info['id'] ?>" required>
                                                             <div class="row">
                                                                 <div class="col">
                                                                     <input type="text" name="fname[1]" class="form-control" placeholder="First name" value="<?php echo $name[0] ?>" autocomplete="off" required>
@@ -339,12 +339,12 @@
                                                             </div>
                                                             <div class="row mb-3">
                                                                 <div class="col">
-                                                                    <input type="email" name="email[1]" class="form-control" id="emailFormControl" placeholder="Email" value="<?php echo $info[$i]['email'] ?>" required>
+                                                                    <input type="email" name="email[1]" class="form-control" id="emailFormControl" placeholder="Email" value="<?php echo $info['email'] ?>" required>
                                                                 </div>
                                                             </div>
                                                             <div class="row mb-3">
                                                                 <div class="col">
-                                                                    <input type="text" name="tel[1]" class="form-control" placeholder="Telephone No." value="<?php echo $info[$i]['tel'] ?>" required>
+                                                                    <input type="text" name="tel[1]" class="form-control" placeholder="Telephone No." value="<?php echo $info['tel'] ?>" required>
                                                                     <!--Invalid Feedback-->
                                                                     <p></p>
                                                                 </div>
@@ -353,7 +353,7 @@
                                                                         <option value="" hidden>Gender</option>
                                                                         <?php
                                                                         foreach ($genders as $gender) {
-                                                                            (strcmp($gender, $info[$i]['gender']) == 0) ? $state = 'selected' : $state = '';
+                                                                            (strcmp($gender, $info['gender']) == 0) ? $state = 'selected' : $state = '';
                                                                         ?>
                                                                             <option value="<?php echo $gender ?>" <?php echo $state ?>><?php echo $gender ?></option>
                                                                         <?php
@@ -364,12 +364,12 @@
                                                             </div>
                                                             <div class="row mb-3">
                                                                 <div class="col">
-                                                                    <input type="date" name="birthday[1]" class="form-control" value="<?php echo $info[$i]['birthday'] ?>" required>
+                                                                    <input type="date" name="birthday[1]" class="form-control" value="<?php echo $info['birthday'] ?>" required>
                                                                     <!--TODO:Invalid Feedback-->
                                                                     <p></p>
                                                                 </div>
                                                                 <div class="col">
-                                                                    <input type="text" name="address[1]" class="form-control" value="<?php echo $info[$i]['birthday'] ?>" placeholder="Address" required>
+                                                                    <input type="text" name="address[1]" class="form-control" value="<?php echo $info['birthday'] ?>" placeholder="Address" required>
                                                                 </div>
                                                             </div>
                                                             <div class="row mb-3 text-center">
@@ -493,7 +493,7 @@
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                                                        <a type="button" class="btn btn-primary" href="adminview.php?delete=1&delStudentID=<?php echo $info[$i]['id'] ?>">Yes</a>
+                                                        <a type="button" class="btn btn-primary" href="adminview.php?delete=1&delStudentID=<?php echo $info['id'] ?>">Yes</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -518,7 +518,7 @@
                                     </div>
                                     <!--TODO:invalid feedback formatting-->
                                     <!--TODO:CSS on form-->
-                                    <form action="adminview.php?submit=1" method="POST" data-form="1">
+                                    <form action="adminview.php?submit=1" method="POST" data-validation="1">
                                         <div class="modal-body">
                                             <input type="hidden" name="id[0]" placeholder="ID No." autocomplete="off" required>
                                             <div class="row mb-3">
@@ -707,14 +707,14 @@
                                 </thead>
                                 <tbody id="facultyContent">
                                     <?php
-                                    $info = $vac->displayTable('faculty');
-                                    for ($i = 0; $i < count($info); $i++) {
-                                        $vacStatus = $vac->displayRowByID('vaccineStatus', 'id', $info[$i]['id']);
+                                    $data = $vac->displayTable('faculty');
+                                    foreach ($data as $info) {
+                                        $vacStatus = $vac->displayRowByID('vaccineStatus', 'id', $info['id']);
                                     ?>
                                         <tr>
-                                            <td class="border"><?php echo $info[$i]['id'] ?></td>
-                                            <td class="border"><?php echo $info[$i]['name'] ?></td>
-                                            <td class="border"><?php echo $info[$i]['gender'] ?></td>
+                                            <td class="border"><?php echo $info['id'] ?></td>
+                                            <td class="border"><?php echo $info['name'] ?></td>
+                                            <td class="border"><?php echo $info['gender'] ?></td>
                                             <td class="border"><?php echo $vacStatus['firstdose'] ?></td>
                                             <td class="border"><?php echo $vacStatus['seconddose'] ?></td>
                                             <td class="border"><?php echo $vacStatus['vacbrand'] ?></td>
@@ -723,7 +723,7 @@
                                             <!--edit-->
                                             <td>
                                                 <!--TODO:resize-->
-                                                <a cla type="button" data-bs-toggle="modal" href="adminview.php?editID=<?php echo $info[$i]['id'] ?>" data-bs-target="#editFacultyModal<?php echo $i ?>">
+                                                <a cla type="button" data-bs-toggle="modal" href="adminview.php?editID=<?php echo $info['id'] ?>" data-bs-target="#editFacultyModal<?php echo $i ?>">
                                                     <i class="bi bi-pencil-fill"></i>
                                                 </a>
                                             </td>
@@ -744,11 +744,11 @@
                                                     </div>
                                                     <!--put content here-->
                                                     <?php
-                                                    $name = explode(' ', $info[$i]['name']);
+                                                    $name = explode(' ', $info['name']);
                                                     ?>
-                                                    <form action="adminview.php?edit=2&editFaculty=<?php echo $info[$i]['id'] ?>" method="POST" data-form="4">
+                                                    <form action="adminview.php?edit=2&editFaculty=<?php echo $info['id'] ?>" method="POST" data-validation="2">
                                                         <div class="modal-body">
-                                                            <input type="hidden" name="id[3]" placeholder="ID No." autocomplete="off" value="<?php echo $info[$i]['id'] ?>" required>
+                                                            <input type="hidden" name="id[3]" placeholder="ID No." autocomplete="off" value="<?php echo $info['id'] ?>" required>
                                                             <div class="row">
                                                                 <div class="col">
                                                                     <input type="text" name="fname[3]" class="form-control" placeholder="First name" value="<?php echo $name[0] ?>" autocomplete="off" required>
@@ -769,12 +769,12 @@
                                                             </div>
                                                             <div class="row mb-3">
                                                                 <div class="col">
-                                                                    <input type="email" name="email[3]" class="form-control" id="emailFormControl" placeholder="Email" value="<?php echo $info[$i]['email'] ?>" required>
+                                                                    <input type="email" name="email[3]" class="form-control" id="emailFormControl" placeholder="Email" value="<?php echo $info['email'] ?>" required>
                                                                 </div>
                                                             </div>
                                                             <div class="row mb-3">
                                                                 <div class="col">
-                                                                    <input type="text" name="tel[3]" class="form-control" placeholder="Telephone No." value="<?php echo $info[$i]['tel'] ?>" required>
+                                                                    <input type="text" name="tel[3]" class="form-control" placeholder="Telephone No." value="<?php echo $info['tel'] ?>" required>
                                                                     <!--Invalid Feedback-->
                                                                     <p></p>
                                                                 </div>
@@ -783,7 +783,7 @@
                                                                         <option value="" hidden>Gender</option>
                                                                         <?php
                                                                         foreach ($genders as $gender) {
-                                                                            (strcmp($gender, $info[$i]['gender']) == 0) ? $state = 'selected' : $state = '';
+                                                                            (strcmp($gender, $info['gender']) == 0) ? $state = 'selected' : $state = '';
                                                                         ?>
                                                                             <option value="<?php echo $gender ?>" <?php echo $state ?>><?php echo $gender ?></option>
                                                                         <?php
@@ -794,12 +794,12 @@
                                                             </div>
                                                             <div class="row mb-3">
                                                                 <div class="col">
-                                                                    <input type="date" name="birthday[3]" class="form-control" value="<?php echo $info[$i]['birthday'] ?>" required>
+                                                                    <input type="date" name="birthday[3]" class="form-control" value="<?php echo $info['birthday'] ?>" required>
                                                                     <!--TODO:Invalid Feedback-->
                                                                     <p></p>
                                                                 </div>
                                                                 <div class="col">
-                                                                    <input type="text" name="address[3]" class="form-control" value="<?php echo $info[$i]['birthday'] ?>" placeholder="Address" required>
+                                                                    <input type="text" name="address[3]" class="form-control" value="<?php echo $info['birthday'] ?>" placeholder="Address" required>
                                                                 </div>
                                                             </div>
                                                             <div class="row mb-3 text-center">
@@ -924,7 +924,7 @@
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                                                        <a type="button" class="btn btn-primary" href="adminview.php?delete=2&delFacultyID=<?php echo $info[$i]['id'] ?>">Yes</a>
+                                                        <a type="button" class="btn btn-primary" href="adminview.php?delete=2&delFacultyID=<?php echo $info['id'] ?>">Yes</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -947,7 +947,7 @@
                                         <h5 class="modal-title" id="createFacultyLabel">Faculty</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
-                                    <form action="adminview.php?submit=2" method="POST" data-form="3">
+                                    <form action="adminview.php?submit=2" method="POST" data-validation="2">
                                         <div class="modal-body">
                                             <div class="row mb-3">
                                                 <div class="col">
@@ -1187,7 +1187,7 @@
                             <button class="btn btn-outline-success" role="button" data-bs-toggle="modal" data-bs-target="#createVacModal">+</button>
                         </div>
                         <!--Create Vac brand modal-->
-                        <div class="modal fade" id="createVacModal" tabindex="-1" aria-labelledby="createVacLabel" data-form="5">
+                        <div class="modal fade" id="createVacModal" tabindex="-1" aria-labelledby="createVacLabel">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
                                     <div class="modal-header">
