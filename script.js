@@ -163,17 +163,13 @@ $(function () {
         $feedback = $($(this).parent().find('div[name="loginFeedback"]'));
         var id = $('input[name="id[0]"]').val().toString();
         var password = $('input[name="password[0]"]').val().toString();
-        if (/^[0-9]{1,2}-[0-9]{6,6}$/.test(id)) {
-            //redirect to student
+        if (/^[0-9]{1,2}-[0-9]{6,6}$|^F[0-9]{1,1}-[0-9]{6,6}$/.test(id)) {
+            //handles the redirecting and feedback
             $feedback.load('conn.php',{
                 type: '1',
                 id: id,
                 password: password
             });
-        }
-        else if (/^F[0-9]{1,1}-[0-9]{6,6}$/.test(id)) {
-            //redirect to faculty
-
         }
         else if (/admin/.test(id)) {
             //redirect to admin
@@ -181,8 +177,9 @@ $(function () {
                 location.href = 'adminview.php';
             }
         }
-        else {
-            $feedback.text("fuck you").show().fadeOut(2000);
+        else
+        {
+            $feedback.text('Please enter a valid ID');
         }
         return false;
     });
