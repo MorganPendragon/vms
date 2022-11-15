@@ -85,7 +85,7 @@ $(function () {
     }
 
     //form validation
-    $('form').on('submit', function (e) {
+    $('form[id!="login"]').on('submit', function (e) {
         if (typeof ($(this).data('validation')) != 'undefined') {
             var validated = 1;
 
@@ -151,7 +151,7 @@ $(function () {
             console.log(validated);
             console.log(name);
 
-            //prevents form submition if one element is not validated
+            //prevents form submission if one element is not validated
             if (validated < 8) {
                 e.preventDefault();
             }
@@ -159,15 +159,21 @@ $(function () {
     });
 
     $('#login').on('submit', function (e) {
-        e.preventDefault();
-        var id = $('#idNo').val().toString();
+
+        $feedback = $($(this).parent().find('div[name="loginFeedback"]'));
+        var id = $('input[name="id[0]"]').val().toString();
+        var password = $('input[name="password[0]"]').val().toString();
         if (/^[0-9]{1,2}-[0-9]{6,6}$/.test(id)) {
             //redirect to student
-            location.href = '';
+            $feedback.load('conn.php',{
+                type: '1',
+                id: id,
+                password: password
+            });
         }
         else if (/^F[0-9]{1,1}-[0-9]{6,6}$/.test(id)) {
             //redirect to faculty
-            location.href = '';
+
         }
         else if (/admin/.test(id)) {
             //redirect to admin
@@ -176,8 +182,9 @@ $(function () {
             }
         }
         else {
-            $('#idFeedback').text("fuck you").show().fadeOut(2000);
+            $feedback.text("fuck you").show().fadeOut(2000);
         }
+        return false;
     });
 
     //activate components on form

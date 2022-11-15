@@ -46,18 +46,17 @@
 									<p class="fs-1 mb-5 mt-5 ms-4 pt-5" style="font-weight:900;">Welcome</p>
 									<div class="d-flex justify-content-center">
 										<div id="card" class="card w-75 h-50 shadow-lg p-3 mb-5 bg-body rounded-5">
-											<form>
+											<form method="POST" id="login">
 												<div class="card-body w-75 mx-auto">
-													<P class="fs-1 fw-bold mt-3">Login</P>
+													<p class="fs-1 fw-bold mt-3">Login</p>
+													<div name="loginFeedback"></div>
 													<div class="mb-3 my-4">
 														<label class="fw-semibold" for="idNo">ID</label>
-														<input type="text" class="form-control text-center" id="idNo" required>
-														<div id="idFeedback"></div>
+														<input type="text" class="form-control text-center" name="id[0]" required>
 													</div>
 													<div class="mb-3">
 														<label class="fw-semibold" for="pwd">Password</label>
-														<input type="password" id="pwd" class="form-control text-center" required>
-														<div id="pwdFeedback" class="invalid-feedback"></div>
+														<input type="password" name="password[0]" class="form-control text-center" required>
 													</div>
 													<p class="text-end">
 														<a href="#" type="button" class="btn btn-link" style="color:#ED7E00;">Forgot password?</a>
@@ -68,8 +67,8 @@
 												</div>
 											</form>
 											<div class="d-flex justify-content-center  p-1">
-												<label for="snup">Don`t have an account?
-													<button type="button" id="snup" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#signup" style="color:black; font-weight:bold;">
+												<label for="signUp">Don`t have an account?
+													<button type="button" id="signUp" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#signup" style="color:black; font-weight:bold;">
 														Sign Up
 													</button>
 												</label>
@@ -80,8 +79,7 @@
 							</div>
 						</div>
 					</div>
-					<!--modal for signup-->
-				</div>
+				<!--modal for signup-->
 				<div class="modal fade" id="signup" tabindex="-1" aria-labelledby="signup" aria-hidden="true">
 					<div class="modal-dialog modal-dialog-centered">
 						<div class="modal-content">

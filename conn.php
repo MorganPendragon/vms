@@ -4,6 +4,8 @@
 //autoloader cause lazy
 require __DIR__.'/vendor/autoload.php';
 //calls the lib
+
+use LDAP\Result;
 use PhpOffice\PhpWord\Shared\Converter;
 
 class connection
@@ -232,11 +234,6 @@ class connection
 		return $result->num_rows;
 	}
 
-	public function imageHandler($post)
-	{
-		$post['vaccineStudent'];
-	}
-
 	//report generation using PHPOffice
 	public function report()
 	{
@@ -307,5 +304,26 @@ class connection
 		$objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
 		$objWriter->save('Report.docx');
 		header('location:adminview.php');
+	}
+}
+
+$conn = new connection();
+if($_POST['type'] == '1')
+{
+	$id = $_POST['id'];
+	$password = $_POST['password'];
+	$result = $conn->find('logCredentials', "id = '$id'");
+	$result += $conn->find('logCredentials', "id = '$id' and password ='$password'");
+	switch($result)
+	{
+		case 1:
+			echo 'Wrong Password';
+			break;
+		case 2:
+			echo '<script>location.href = "studentview.php"</script>';
+			break;
+		default:
+			echo 'User Does not Exist';
+			break;
 	}
 }

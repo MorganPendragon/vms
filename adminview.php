@@ -50,7 +50,6 @@
     </style>
 </head>
 
-
 <body>
     <header>
         <!--navbar gen rep place-->
@@ -1240,5 +1239,4 @@
         $('table').tablesorter();
     </script>
 </body>
-
 </html>
