@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.30, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.31, for Linux (x86_64)
 --
 -- Host: localhost    Database: Vaccine
 -- ------------------------------------------------------
--- Server version	8.0.30-0ubuntu0.22.04.1
+-- Server version	8.0.31-0ubuntu0.22.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -24,18 +24,13 @@ DROP TABLE IF EXISTS `faculty`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `faculty` (
   `id` varchar(30) NOT NULL,
-  `name` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `name` varchar(1500) NOT NULL,
+  `email` text,
+  `tel` varchar(20) DEFAULT NULL,
   `gender` varchar(255) DEFAULT NULL,
   `birthday` date DEFAULT NULL,
-  `email` text,
   `address` mediumtext,
-  `tel` text,
-  `firstdose` date DEFAULT NULL,
-  `seconddose` date DEFAULT NULL,
-  `brand` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `brand` (`brand`),
-  CONSTRAINT `faculty_ibfk_1` FOREIGN KEY (`brand`) REFERENCES `vacBrand` (`brand`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -45,18 +40,17 @@ CREATE TABLE `faculty` (
 
 LOCK TABLES `faculty` WRITE;
 /*!40000 ALTER TABLE `faculty` DISABLE KEYS */;
-INSERT INTO `faculty` VALUES ('b','fname mname lname','Female','2018-07-15','test@gmail.com','add','tel','2017-08-16',NULL,'brimdaddy'),('ea','fname mname lname','Female','2019-07-16','test@gmail.com','add','tel','2019-08-17',NULL,NULL),('id','fname mname lname','Male','2017-07-13','test2@gmail.cpom','add','tel','2020-08-16','2019-07-15',NULL),('test','reee','Female','2022-09-26','reese@gmail.com','easda','12341','2022-09-25',NULL,NULL),('x','fname mname lname','Female','2019-08-17','test@gmail.com','add','tel','2019-08-16',NULL,'brimdaddy'),('y','fname mname lname','Female','2019-08-17','test@gmail.com','add','tel','2016-08-16',NULL,'test'),('z','fname mname lname','Female','2018-07-15','test@gmail.com','add','tel','2019-07-16',NULL,NULL);
 /*!40000 ALTER TABLE `faculty` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `password`
+-- Table structure for table `logCredentials`
 --
 
-DROP TABLE IF EXISTS `password`;
+DROP TABLE IF EXISTS `logCredentials`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `password` (
+CREATE TABLE `logCredentials` (
   `id` varchar(30) NOT NULL,
   `password` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -64,12 +58,13 @@ CREATE TABLE `password` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `password`
+-- Dumping data for table `logCredentials`
 --
 
-LOCK TABLES `password` WRITE;
-/*!40000 ALTER TABLE `password` DISABLE KEYS */;
-/*!40000 ALTER TABLE `password` ENABLE KEYS */;
+LOCK TABLES `logCredentials` WRITE;
+/*!40000 ALTER TABLE `logCredentials` DISABLE KEYS */;
+INSERT INTO `logCredentials` VALUES ('12-123456','9uhc4azd'),('21-654321','lrofuif8');
+/*!40000 ALTER TABLE `logCredentials` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -81,21 +76,15 @@ DROP TABLE IF EXISTS `student`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `student` (
   `id` varchar(30) NOT NULL COMMENT 'Primary Key',
-  `name` mediumtext NOT NULL,
+  `name` varchar(1500) NOT NULL,
   `yearLevel` varchar(30) DEFAULT NULL,
   `status` varchar(50) DEFAULT NULL,
   `email` mediumtext,
-  `tel` varchar(255) DEFAULT NULL,
+  `tel` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `gender` varchar(50) DEFAULT NULL,
   `birthday` date DEFAULT NULL,
   `address` mediumtext,
-  `firstdose` date DEFAULT NULL,
-  `seconddose` date DEFAULT NULL,
-  `brand` varchar(255) DEFAULT NULL,
-  `doctor` text,
-  PRIMARY KEY (`id`),
-  KEY `brand` (`brand`),
-  CONSTRAINT `student_ibfk_1` FOREIGN KEY (`brand`) REFERENCES `vacBrand` (`brand`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -105,7 +94,7 @@ CREATE TABLE `student` (
 
 LOCK TABLES `student` WRITE;
 /*!40000 ALTER TABLE `student` DISABLE KEYS */;
-INSERT INTO `student` VALUES ('22-186102','asfasf asdafa asfafs','Grade 7','Enrolled','123','asf','Female','2022-10-21','123123','2022-10-21',NULL,'astra','asda'),('22-382444','asd asd asd','Grade 7','Enrolled','as@gmail.com','asf','Male',NULL,'asd','2022-10-12',NULL,'astra','asasd'),('22-726483','test test test','Grade 8','Enrolled','test@gmail.com','1234','Female','2016-07-23','test','2010-06-20',NULL,'brimdaddy','fafafafa'),('22-827533','asd asd asd','Grade 7','Enrolled','asfaf@gmail.com','asd','Male','2022-10-14','asdasd',NULL,NULL,'meh','asd');
+INSERT INTO `student` VALUES ('12-987654','jack mah boi','Grade 7','Enrolled','lordbatumbakal@email.com','09123456789','Female','2020-09-12','guimba'),('21-345678','percy val damn','Grade 8','Dropped','lordbatumbakal@email.com','09123456789','Female','2019-08-12','guimba'),('21-654321','jay emma sadboi','Grade 8','Enrolled','lordbatumbakal@email.com','09123456789','Female','2019-08-11','guimba');
 /*!40000 ALTER TABLE `student` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -117,8 +106,8 @@ DROP TABLE IF EXISTS `vacBrand`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `vacBrand` (
-  `brand` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  PRIMARY KEY (`brand`)
+  `brand` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  UNIQUE KEY `brand1` (`brand`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -128,8 +117,39 @@ CREATE TABLE `vacBrand` (
 
 LOCK TABLES `vacBrand` WRITE;
 /*!40000 ALTER TABLE `vacBrand` DISABLE KEYS */;
-INSERT INTO `vacBrand` VALUES ('astra'),('brimdaddy'),('meh'),('test');
+INSERT INTO `vacBrand` VALUES ('astra'),('brimdaddy'),('meh'),('num'),('test');
 /*!40000 ALTER TABLE `vacBrand` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `vaccineStatus`
+--
+
+DROP TABLE IF EXISTS `vaccineStatus`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `vaccineStatus` (
+  `id` varchar(30) NOT NULL,
+  `firstdose` date DEFAULT NULL,
+  `firstdoctor` varchar(1500) DEFAULT NULL,
+  `seconddose` date DEFAULT NULL,
+  `seconddoctor` varchar(1500) DEFAULT NULL,
+  `vacbrand` varchar(100) DEFAULT NULL,
+  `booster` date DEFAULT NULL,
+  `boosterdoctor` varchar(1500) DEFAULT NULL,
+  `boosterbrand` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `vaccineStatus`
+--
+
+LOCK TABLES `vaccineStatus` WRITE;
+/*!40000 ALTER TABLE `vaccineStatus` DISABLE KEYS */;
+INSERT INTO `vaccineStatus` VALUES ('12-987654',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),('21-345678',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),('21-654321','2017-08-11','gad',NULL,NULL,'meh',NULL,NULL,NULL);
+/*!40000 ALTER TABLE `vaccineStatus` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -141,4 +161,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-10-27  2:17:23
+-- Dump completed on 2022-11-16 19:15:58
