@@ -3,9 +3,7 @@
 
 //autoloader cause lazy
 require __DIR__.'/vendor/autoload.php';
-//calls the lib
 
-use LDAP\Result;
 use PhpOffice\PhpWord\Shared\Converter;
 
 class connection
@@ -308,6 +306,7 @@ class connection
 }
 
 $conn = new connection();
+//feedback for the login
 if($_POST['type'] == '1')
 {
 	$id = $_POST['id'];
@@ -325,5 +324,25 @@ if($_POST['type'] == '1')
 		default:
 			echo 'User Does not Exist';
 			break;
+	}
+}
+
+if(isset($_POST['upload']))
+{
+	$targetFile = "vaccine card/" . basename($_FILES['vaccinationCard']['name']);
+	$uploadOk = 1;
+	$fileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
+	if(
+		$fileType != "jpg" && $fileType != "png" && 
+		$fileType !="jpeg"
+	)
+	{
+		echo "Sorry, only JPG, JPEG and PNG are allowed";
+		$uploadOk = 0;
+	}
+
+	if($uploadOk != 0)
+	{
+		move_uploaded_file($_FILES["vaccinationCard"]["tmp_name"], $targetFile);
 	}
 }
