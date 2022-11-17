@@ -11,12 +11,18 @@ $(function () {
     }
 
     //login magic
-    $signUpButton = $('#signUpStudent, #signUpFaculty, button[name="back"]')
-    $signUpButton.on('click', function (e) {
+    $signUpButton = $('#signUpStudent, #signUpFaculty, button[name^="back"]')
+    $('#sidebar').on('click', hideAndShow);
+    $signUpButton.on('click', hideAndShow);
+
+
+    function hideAndShow() {
         //hides and shows div what do you expect?
         $($(this).data('hide')).hide();
+        console.log('hide now');
         $($(this).data('show')).show();
-    });
+        console.log('show now');
+    }
 
     //global search
     $('.search').on('input', function () {
@@ -85,7 +91,7 @@ $(function () {
     }
 
     //form validation
-    $('form[id!="login"]').on('submit', function (e) {
+    $('form[id!="login"][id!="upload"]').on('submit', function (e) {
         if (typeof ($(this).data('validation')) != 'undefined') {
             var validated = 1;
 
@@ -158,14 +164,14 @@ $(function () {
         }
     });
 
-    $('#login').on('submit', function (e) {
+    $('form[id="login"]').on('submit', function (e) {
 
         $feedback = $($(this).parent().find('div[name="loginFeedback"]'));
         var id = $('input[name="id[0]"]').val().toString();
         var password = $('input[name="password[0]"]').val().toString();
         if (/^[0-9]{1,2}-[0-9]{6,6}$|^F[0-9]{1,1}-[0-9]{6,6}$/.test(id)) {
             //handles the redirecting and feedback
-            $feedback.load('conn.php',{
+            $feedback.load('conn.php', {
                 type: '1',
                 id: id,
                 password: password
@@ -177,10 +183,29 @@ $(function () {
                 location.href = 'adminview.php';
             }
         }
-        else
-        {
+        else {
             $feedback.text('Please enter a valid ID');
         }
+        return false;
+    });
+
+    $('form[id="upload"]').on('submit', function (e) {
+        $fileInput = $('input[name="vaccinationCard"]')
+        var fd = new FormData();
+        fd.append('vaccinationCard', $('input[name="vaccinationCard"]').prop('files')[0]);
+        
+        $.ajax({
+            url: 'conn.php',
+            dataType: 'text',
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: fd,
+            type: 'post',
+            success: function (response) {
+                $fileInput.siblings('p').text(response);
+            }
+        });
         return false;
     });
 

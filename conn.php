@@ -327,7 +327,7 @@ if($_POST['type'] == '1')
 	}
 }
 
-if(isset($_POST['upload']))
+if(isset($_FILES['vaccinationCard']['name']))
 {
 	$targetFile = "vaccine card/" . basename($_FILES['vaccinationCard']['name']);
 	$uploadOk = 1;
@@ -344,5 +344,10 @@ if(isset($_POST['upload']))
 	if($uploadOk != 0)
 	{
 		move_uploaded_file($_FILES["vaccinationCard"]["tmp_name"], $targetFile);
+		echo 'Upload Succesful';
+	}
+	else
+	{
+		echo 'Upload unsuccessful';
 	}
 }
