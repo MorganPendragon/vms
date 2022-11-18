@@ -107,12 +107,12 @@
             //insert
             switch ($_GET['submit']) {
                 case 1:
-                    $table = array('student', 'vaccineStatus');
+                    $table = array('student', 'vaccineStatus', 'logCredentials');
                     $vac->insertInfo($_POST, $table, true, 0);
                     header('location:adminview.php');
                     break;
                 case 2:
-                    $table = array('faculty', 'vaccineStatus');
+                    $table = array('faculty', 'vaccineStatus', 'logCredentials');
                     $vac->insertInfo($_POST, $table, true, 2);
                     header('location:adminview.php');
                     break;
@@ -128,21 +128,18 @@
             //delete
             switch ($_GET['delete']) {
                 case 1:
-                    $table = array('student', 'vaccineStatus');
-                    $col = array('id', 'id');
-                    $vac->deleteInfo($table, $col, $_GET['delStudentID']);
+                    $table = array('student', 'vaccineStatus', 'logCredentials');
+                    $vac->deleteInfo($table, 'id', $_GET['delStudentID']);
                     header('location:adminview.php');
                     break;
                 case 2:
-                    $table = array('faculty', 'vaccineStatus');
-                    $col = array('id', 'id');
-                    $vac->deleteInfo($table, $col, $_GET['delFacultyID']);
+                    $table = array('faculty', 'vaccineStatus', 'logCredentials');
+                    $vac->deleteInfo($table, 'id', $_GET['delFacultyID']);
                     header('location:adminview.php');
                     break;
                 case 3:
                     $table = array('vacBrand');
-                    $col = array('brand');
-                    $vac->deleteInfo($table, $col, $_GET['delVacID']);
+                    $vac->deleteInfo($table, 'brand', $_GET['delVacID']);
                     header('location:adminview.php');
                     break;
                 default:
@@ -152,21 +149,18 @@
             //edit
             switch ($_GET['edit']) {
                 case 1:
-                    $table = array('student', 'vaccineStatus');
-                    $col = array('id', 'id');
-                    $vac->updateInfo($_POST, $table, $col, $_GET['editStudent'], true, 1);
+                    $table = array('student', 'vaccineStatus', 'logCredentials');
+                    $vac->updateInfo($_POST, $table, 'id', $_GET['editStudent'], true, 1);
                     header('location:adminview.php');
                     break;
                 case 2:
-                    $table = array('faculty', 'vaccineStatus');
-                    $col = array('id', 'id');
-                    $vac->updateInfo($_POST, $table, $col, $_GET['editFaculty'], true, 3);
+                    $table = array('faculty', 'vaccineStatus', 'logCredentials');
+                    $vac->updateInfo($_POST, $table, 'id', $_GET['editFaculty'], true, 3);
                     header('location:adminview.php');
                     break;
                 case 3:
                     $table = array('vacBrand');
-                    $col = array('brand');
-                    $vac->updateInfo($_POST, $table, $col, $_GET['editVac'], true, 1);
+                    $vac->updateInfo($_POST, $table, 'brand', $_GET['editVac'], true, 1);
                     header('location:adminview.php');
                     break;
                 default:
@@ -204,14 +198,6 @@
                                 <select class="form-select" id="brandFilter" autocomplete="off">
                                     <option value="0" hidden>Brand Name</option>
                                     <option value="0">---</option>
-                                    <?php
-                                    $data = $vac->displayTable('vacBrand');
-                                    foreach ($data as $info) {
-                                    ?>
-                                        <option value="<?php echo $info['brand'] ?>"><?php echo $info['brand'] ?></option>
-                                    <?php
-                                    }
-                                    ?>
                                 </select>
                             </div>
                             <!--status filter-->
@@ -259,10 +245,11 @@
                                     foreach ($data as $info) {
                                         $vacStatus = $vac->displayRowByID('vaccineStatus', 'id', $info['id']);
                                         $i++;
+                                        $name = str_replace(':', ' ', $info['name']);
                                     ?>
                                         <tr>
                                             <td class="border"> <?php echo $info['id'] ?> </td>
-                                            <td class="border"> <?php echo $info['name'] ?> </td>
+                                            <td class="border"> <?php echo $name ?> </td>
                                             <td class="border"> <?php echo $info['gender'] ?> </td>
                                             <td class="border" id="yearTd" data-yr="<?php echo $info['yearLevel'] ?>"><?php echo $info['yearLevel'] ?></td>
                                             <td class="border" id="statusTd" data-status="<?php echo $info['status'] ?>"><?php echo $info['status'] ?></td>
@@ -296,7 +283,7 @@
                                                     </div>
                                                     <!--put content here-->
                                                     <?php
-                                                    $name = explode(' ', $info['name']);
+                                                    $name = explode(':', $info['name']);
                                                     ?>
                                                     <form action="adminview.php?edit=1&editStudent=<?php echo $info['id'] ?>" method="POST" data-validation="1">
                                                         <div class="modal-body">
@@ -524,11 +511,12 @@
                                     </div>
                                     <!--TODO:invalid feedback formatting-->
                                     <!--TODO:CSS on form-->
-                                    <form action="adminview.php?submit=1" method="POST" data-validation="1">
+                                    <form action="adminview.php?submit=1" method="POST" data-validation="1" data-password="1">
                                         <div class="modal-body">
                                             <div class="row mb-3">
                                                 <div class="col">
                                                     <input type="text" class="form-control" name="id[0]" placeholder="ID No." autocomplete="off" required>
+                                                    <input type="hidden" name="password[0]" val="">
                                                     <p class="fw-bolder text-center text-danger"></p>
                                                 </div>
                                             </div>
@@ -634,16 +622,8 @@
                                             <div class="row mb-3 text-center">
                                                 <div class="col text-center">
                                                     <input type="hidden" name="vacbrand[0]" class="form-control" value="">
-                                                    <select id="brandStudent" class="form-select" name="vacbrand[0]" autocomplete="off" disabled>
+                                                    <select class="form-select" name="vacbrand[0]" autocomplete="off" disabled>
                                                         <option value="" hidden>Brand</option>
-                                                        <?php
-                                                        $brand = $vac->getData('vacBrand', 'brand');
-                                                        foreach ($brand as $data) {
-                                                        ?>
-                                                            <option value="<?php echo $data['brand'] ?>"><?php echo $data['brand'] ?></option>
-                                                        <?php
-                                                        }
-                                                        ?>
                                                     </select>
                                                 </div>
                                             </div>
@@ -665,16 +645,8 @@
                                             <div class="row mb-3 text-center">
                                                 <div class="col text-center">
                                                     <input type="hidden" name="boosterbrand[0]" class="form-control" value="">
-                                                    <select id="brandStudent" class="form-select" name="boosterbrand[0]" autocomplete="off" disabled>
+                                                    <select class="form-select" name="boosterbrand[0]" autocomplete="off" disabled>
                                                         <option value="" hidden>Booster Brand</option>
-                                                        <?php
-                                                        $brand = $vac->getData('vacBrand', 'brand');
-                                                        foreach ($brand as $data) {
-                                                        ?>
-                                                            <option value="<?php echo $data['brand'] ?>"><?php echo $data['brand'] ?></option>
-                                                        <?php
-                                                        }
-                                                        ?>
                                                     </select>
                                                 </div>
                                             </div>
@@ -758,9 +730,9 @@
                                                     </div>
                                                     <!--put content here-->
                                                     <?php
-                                                    $name = explode(' ', $info['name']);
+                                                    $name = explode(':', $info['name']);
                                                     ?>
-                                                    <form action="adminview.php?edit=2&editFaculty=<?php echo $info['id'] ?>" method="POST" data-validation="2">
+                                                    <form action="adminview.php?edit=2&editFaculty=<?php echo $info['id'] ?>" method="POST" data-validation="1">
                                                         <div class="modal-body">
                                                             <div class="row mb-3">
                                                                 <div class="col">
@@ -966,7 +938,7 @@
                                         <h5 class="modal-title" id="createFacultyLabel">Faculty</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
-                                    <form action="adminview.php?submit=2" method="POST" data-validation="2">
+                                    <form action="adminview.php?submit=2" method="POST" data-validation="1">
                                         <div class="modal-body">
                                             <div class="row mb-3">
                                                 <div class="col">
@@ -1056,16 +1028,8 @@
                                             <div class="row mb-3 text-center">
                                                 <div class="col text-center">
                                                     <input type="hidden" name="vacbrand[2]" class="form-control" value="">
-                                                    <select id="brandStudent" class="form-select" name="vacbrand[2]" autocomplete="off" disabled>
+                                                    <select class="form-select" name="vacbrand[2]" autocomplete="off" disabled>
                                                         <option hidden>Brand</option>
-                                                        <?php
-                                                        $brand = $vac->getData('vacBrand', 'brand');
-                                                        foreach ($brand as $data) {
-                                                        ?>
-                                                            <option value="<?php echo $data['brand'] ?>"><?php echo $data['brand'] ?></option>
-                                                        <?php
-                                                        }
-                                                        ?>
                                                     </select>
                                                 </div>
                                             </div>
@@ -1087,16 +1051,8 @@
                                             <div class="row mb-3 text-center">
                                                 <div class="col text-center">
                                                     <input type="hidden" name="boosterbrand[2]" class="form-control" value="">
-                                                    <select id="brandStudent" class="form-select" name="boosterbrand[2]" autocomplete="off" disabled>
+                                                    <select class="form-select" name="boosterbrand[2]" autocomplete="off" disabled>
                                                         <option hidden>Booster Brand</option>
-                                                        <?php
-                                                        $brand = $vac->getData('vacBrand', 'brand');
-                                                        foreach ($brand as $data) {
-                                                        ?>
-                                                            <option value="<?php echo $data['brand'] ?>"><?php echo $data['brand'] ?></option>
-                                                        <?php
-                                                        }
-                                                        ?>
                                                     </select>
                                                 </div>
                                             </div>
@@ -1239,4 +1195,5 @@
         $('table').tablesorter();
     </script>
 </body>
+
 </html>

@@ -12,16 +12,41 @@ $(function () {
 
     //login magic
     $signUpButton = $('#signUpStudent, #signUpFaculty, button[name^="back"]')
-    $('#sidebar').on('click', hideAndShow);
     $signUpButton.on('click', hideAndShow);
+    //manual activation of link on view
+    $('#sidebar a').on('click', function () {
+        hideAndShow.call(this);
+        $(this).parent().find('a').addClass('active');
+        $(this).parent().siblings('li').find('a').removeClass('active');
+    });
 
+    //brand populate select
+    if ($('select[name*="brand"], select[id*="brand"]').length) {
+        $.ajax({
+            url: 'conn.php',
+            type: "POST",
+            dataType: 'json',
+            data: ({
+                tableName: 'vacBrand',
+                column: 'brand'
+            }),
+            success: function (data) {
+                var option = '';
+                console.log(data);
+                $.each(data, function (index, value) {
+                    option += '<option value="' + value.brand + '">' + value.brand + '</option>';
+                });
+                $('select[name*="brand"]').append(option);
+            }
+        });
+    }
 
     function hideAndShow() {
         //hides and shows div what do you expect?
         $($(this).data('hide')).hide();
-        console.log('hide now');
+        console.log('hide:' + $(this).data('hide'));
         $($(this).data('show')).show();
-        console.log('show now');
+        console.log('show:' + $(this).data('show'));
     }
 
     //global search
@@ -94,31 +119,20 @@ $(function () {
     $('form[id!="login"][id!="upload"]').on('submit', function (e) {
         if (typeof ($(this).data('validation')) != 'undefined') {
             var validated = 1;
-
+            $password = $($(this).parent().find('input[type="hidden"][name^="password"]'));
             $id = $($(this).parent().find('input[type="text"][name^="id"]'))
-            switch ($(this).data('validation')) {
-                //student id validation
-                case 1:
-                    /*
-                        student id should look like this:
-                        XX-XXXXXX
-                    */
-                    if (!(/^[0-9]{1,2}-[0-9]{6,6}$/.test($id.val()))) {
-                        validated = 0;
-                        $(this).siblings('p').text('Invalid').fadeOut(5000);
-                    }
-                    break;
-                //faculty id validation
-                case 2:
-                    /* 
-                        faculty id should look like this:
-                        FX-XXXXXX
-                    */
-                    if (!(/^F[0-9]{1,1}-[0-9]{6,6}$/.test($id.val()))) {
-                        validated = 0;
-                        $(this).siblings('p').text('Invalid').fadeOut(5000);
-                    }
-                    break;
+            if($password.length)
+            {
+                $password.val(Math.random().toString(36).substring(2, 10));
+            }
+            /*
+                student and faculty id should look like this:
+                student:XX-XXXXXX
+                faculty:FX-XXXXXX
+            */
+            if (!(/^[0-9]{1,2}-[0-9]{6,6}$|^F[0-9]{1,1}-[0-9]{6,6}$/.test($id.val()))) {
+                validated = 0;
+                $id.siblings('p').text('Invalid').fadeOut(5000);
             }
 
             //name check
@@ -131,7 +145,7 @@ $(function () {
                     validated = 0;
                     $(this).siblings('p').text('Invalid').fadeOut(5000);
                 }
-            }).get().join(' ');
+            }).get().join(':');
             $(this).parent().find('input[type="hidden"][name^="name"]').val(name);
 
             //doctor name check
@@ -145,7 +159,6 @@ $(function () {
                     $(this).siblings('p').text('Invalid').fadeOut(5000);
                 }
             });
-
             //telephone number validation
             $tel = $($(this).parent().find('input[type="text"][name^="tel"]'));
             if (!(/^09[0-9]{9,9}$/.test($tel.val()))) {
@@ -164,6 +177,7 @@ $(function () {
         }
     });
 
+    //login ajax
     $('form[id="login"]').on('submit', function (e) {
 
         $feedback = $($(this).parent().find('div[name="loginFeedback"]'));
@@ -189,13 +203,24 @@ $(function () {
         return false;
     });
 
+    //image upload AJAX
     $('form[id="upload"]').on('submit', function (e) {
-        $fileInput = $('input[name="vaccinationCard"]')
+        $fileInput = $('input[name="vaccinationCard"]');
+        var $_GET = {};
+
+        document.location.search.replace(/\??(?:([^=]+)=([^&]*)&?)/g, function () {
+            function decode(s) {
+                return decodeURIComponent(s.split("+").join(" "));
+            }
+
+            $_GET[decode(arguments[1])] = decode(arguments[2]);
+        });
+        var id = $_GET['id'];
+        var url = 'conn.php?id=' + id;
         var fd = new FormData();
         fd.append('vaccinationCard', $('input[name="vaccinationCard"]').prop('files')[0]);
-        
         $.ajax({
-            url: 'conn.php',
+            url: url,
             dataType: 'text',
             cache: false,
             contentType: false,
