@@ -85,6 +85,11 @@
             box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.25);
             border-radius: 10px;
         }
+        .{
+            background-color: rgb(237, 126, 0);
+            
+        }
+
     </style>
 </head>
 
@@ -261,7 +266,7 @@
                     <!--Student Tab-->
                     <div class="d-inline tab-pane fade show active position-absolute" style="margin-left:5%;" id="student">
                         <!--search and filter-->
-                        <div class="d-flex py-3">
+                        <div class="d-flex " style="padding-top:10%; padding-bottom:5%;">
                             <!--year level filter-->
                             <div class="input-group mx-5">
                                 <select class="form-select" id="yearLevel" autocomplete="off">
@@ -306,7 +311,7 @@
                         <div class="container mx-5 px-5">
                             <table class="table table-stripe table-borderless" style="display:inline-block;" id="studentTable" data-sortlist="[[0,0], [2,0]]">
                                 <thead>
-                                    <tr>
+                                    <tr style="background-color:rgb(2, 46, 67) ; color:white;">
                                         <th class="border" scope="col" role="button">ID</th>
                                         <th class="border" scope="col" role="button">Name</th>
                                         <th class="border" scope="col" role="button">Gender</th>
@@ -743,10 +748,10 @@
                         </div>
                     </div>
                     <!--Faculty-->
-                    <div class="tab-pane fade position-absolute" style="margin-left:15%;" id="faculty">
+                    <div class="d-inline tab-pane fade position-absolute" style="margin-left:15%;" id="faculty">
                         <!--search and filter-->
-                        <div class="d-flex justify-content-end py-3 ms-5">
-                            <div>
+                        <div class="d-flex justify-content-end " style="padding-top:10%; padding-bottom:5%; margin-right:8%;">
+                            <div class="">
                                 <div class="d-flex">
                                     <input class="search" type="search" placeholder="Search" aria-label="Search" data-table="#facultyContent">
                                     <span class="input-group-text border-0" id="search-addon">
@@ -759,7 +764,7 @@
                         <div class="container mt-4">
                             <table class="table table-stripe table-borderless" style="display:inline-block;" data-sortlist="[[0,0], [2,0]]">
                                 <thead>
-                                    <tr>
+                                    <tr style="background-color:rgb(2, 46, 67) ; color:white;">
                                         <th class="border" scope="col" role="button">ID</th>
                                         <th class="border" scope="col" role="button">Name</th>
                                         <th class="border" scope="col" role="button">Gender</th>
@@ -1162,7 +1167,7 @@
                             <table class="table table-stripe table-borderless rounded">
                                 <!--table-->
                                 <thead>
-                                    <tr>
+                                    <tr style="background-color:rgb(2, 46, 67) ; color:white;">
                                         <th class="border" scope="col">Vaccine Brand</th>
                                     </tr>
                                 </thead>
