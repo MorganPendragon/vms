@@ -8,12 +8,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>AdminView</title>
-    <!--googlefont-->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+    <!--font-->
+    <link href="https://fonts.cdnfonts.com/css/montserrat" rel="stylesheet">
     <!--bootstrap css-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <!--bootstrap icons--->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
     <!--bootstrap js lib-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
     <!--jQuery-->
@@ -33,19 +33,57 @@
         }
 
         .window-height {
-            height: auto;
-            position: absolute;
+            height: 100vh;
+            position: fixed;
         }
 
 
         * {
             margin: 0;
             padding: 0;
+            font-family: 'Montserrat';
         }
 
         table {
             font-size: 16px;
 
+        }
+
+
+        .nav-pills {
+            --bs-nav-pills-link-active-bg: rgb(14, 32, 45);
+        }
+
+        .col-lg {
+            box-sizing: border-box;
+            width: 398px;
+            height: 478px;
+            left: 495px;
+            top: 154px;
+            background: #ffffff;
+            box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.25);
+            border-radius: 10px;
+        }
+
+        .col-sm {
+            width: 1331px;
+            height: 233px;
+            left: 495px;
+            top: 735px;
+            background: #ffffff;
+            box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.25);
+            border-radius: 10px;
+        }
+
+        .col {
+            width: 496px;
+            height: 230px;
+            left: 912px;
+            top: 399px;
+
+            background: #FFFFFF;
+            box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.25);
+            border-radius: 10px;
         }
     </style>
 </head>
@@ -53,6 +91,7 @@
 <body>
     <header>
         <!--navbar gen rep place-->
+        <!--
         <nav class="navbar justify-content-end px-5" style="background-color:#022e43;">
             <ul class="nav">
                 <li><a class="btn" type="button" href="adminview.php?report=1">
@@ -62,25 +101,32 @@
                 </li>
             </ul>
         </nav>
+        -->
     </header>
     <main>
         <div class="row">
 
             <!--sidebar-->
             <div class="container-fluid window-height" aria-orientation="vertical">
-                <div class=" row flex-nowrap">
-                    <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0" style="background-color:#022e43">
+                <div class="d-flex">
+                    <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0" style="background-color:#022e43;font-size:20px;">
                         <img src="img\logo.png" class="img-fluid" alt="...">
-                        <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+                        <div class="d-flex flex-column align-items-center align-items-sm-center px-3 pt-1 min-vh-100">
                             <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="tableTab">
-                                <li class="nav-item active">
-                                    <a href="#student" class="nav-link active" data-bs-toggle="tab"><i class="fs-2 fa-sharp fa-solid fa-graduation-cap"></i>&nbsp;&nbsp;Student</a>
+                                <li class="nav-item">
+                                    <a href="#dashboard" class="nav-link" data-bs-toggle="tab" style="color:rgb(232, 177, 62);"><i class="bi bi-stack"></i>&nbsp;&nbsp;Dashboard</a>
                                 </li>
                                 <li class="nav-item active">
-                                    <a href="#faculty" class="nav-link" data-bs-toggle="tab"><i class="fs-2 fa-sharp fa-solid fa-user-tie"></i>&nbsp;&nbsp;Faculty</a>
+                                    <a href="#student" class="nav-link active" data-bs-toggle="tab" style="color:rgb(232, 177, 62);"><i class="bi bi-database"></i>&nbsp;&nbsp;Student Database</a>
                                 </li>
                                 <li class="nav-item active">
-                                    <a href="#vaccine" class="nav-link" data-bs-toggle="tab"><i class="fs-2 fa-solid fa-syringe"></i>&nbsp;&nbsp;Brand</a>
+                                    <a href="#faculty" class="nav-link" data-bs-toggle="tab" style="color:rgb(232, 177, 62);"><i class="bi bi-database"></i>&nbsp;&nbsp;Faculty Database</a>
+                                </li>
+                                <li class="nav-item active">
+                                    <a href="#vaccine" class="nav-link" data-bs-toggle="tab" style="color:rgb(232, 177, 62);"><i class="bi bi-database"></i>&nbsp;&nbsp;Brand Database</a>
+                                </li>
+                                <li class="nav-item active">
+                                    <button type="button" id="signUp" class="nav-link" data-bs-toggle="modal" data-bs-target="#reports" style="color:rgb(232, 177, 62);"><i class="bi bi-clipboard-data-fill"></i>&nbsp;&nbsp;Reports</a></button>
                                 </li>
                             </ul>
 
@@ -176,8 +222,44 @@
             <!--content div-->
             <div class="container-fluid col-8">
                 <div class="tab-content" id="tableTabContent">
+                    <!--Dashboard Tab-->
+                    <div class="d-inline winh tab-pane fade show active position-absolute" style="margin-left:30;" id="dashboard">
+                        <p class="fs-2 py-3" style="margin-left:5%; font-weight:900;">Dashboard</p>
+                        <div class="container text-center" style="margin-left: 10%;">
+                            <div class="row">
+                                <div class="col-lg mx-3">
+                                    content
+                                </div>
+                                <div class="col-xl">
+                                    <div class="col mb-3">
+                                        content
+                                    </div>
+                                    <div class="col mt-3">
+                                        content
+                                    </div>
+                                </div>
+                                <div class="col-lg mx-3">
+                                    content
+                                </div>
+                            </div>
+                            <div class="row my-5">
+                                <div class="col-sm mx-3">
+                                    content
+                                </div>
+                                <div class="col-sm mx-3">
+                                    content
+                                </div>
+                                <div class="col-sm mx-3">
+                                    content
+                                </div>
+                                <div class="col-sm mx-3">
+                                    content
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <!--Student Tab-->
-                    <div class="tab-pane fade show active position-absolute" id="student">
+                    <div class="d-inline tab-pane fade show active position-absolute" style="margin-left:5%;" id="student">
                         <!--search and filter-->
                         <div class="d-flex py-3">
                             <!--year level filter-->
@@ -661,11 +743,11 @@
                         </div>
                     </div>
                     <!--Faculty-->
-                    <div class="tab-pane fade position-absolute" id="faculty">
+                    <div class="tab-pane fade position-absolute" style="margin-left:15%;" id="faculty">
                         <!--search and filter-->
-                        <div class="d-flex py-3">
+                        <div class="d-flex justify-content-end py-3 ms-5">
                             <div>
-                                <div class="d-flex mx-5">
+                                <div class="d-flex">
                                     <input class="search" type="search" placeholder="Search" aria-label="Search" data-table="#facultyContent">
                                     <span class="input-group-text border-0" id="search-addon">
                                         <i class="bi bi-search"></i>
@@ -674,7 +756,7 @@
                             </div>
                         </div>
                         <!--table div-->
-                        <div class="container mx-5 px-5">
+                        <div class="container mt-4">
                             <table class="table table-stripe table-borderless" style="display:inline-block;" data-sortlist="[[0,0], [2,0]]">
                                 <thead>
                                     <tr>
@@ -1067,17 +1149,17 @@
                         </div>
                     </div>
                     <!--Vaccine Tab-->
-                    <div class="tab-pane position-absolute" id="vaccine">
-                        <div>
-                            <div class="d-flex mx-5">
+                    <div class="tab-pane position-absolute" style="margin-left:30%;" id="vaccine">
+                        <div class="d-flex justify-content-start py-3">
+                            <div class="d-flex">
                                 <input class="search" type="search" placeholder="Search" aria-label="Search" data-table="#vacContent">
                                 <span class="input-group-text border-0" id="search-addon">
                                     <i class="bi bi-search"></i>
                                 </span>
                             </div>
                         </div>
-                        <div class="d-flex justify-content-center">
-                            <table class="table table-stripe table-borderless rounded mx-auto w-auto">
+                        <div class="container">
+                            <table class="table table-stripe table-borderless rounded">
                                 <!--table-->
                                 <thead>
                                     <tr>
@@ -1183,6 +1265,24 @@
                                             <button type="submit" class="btn btn-primary">Save Changes</button>
                                         </div>
                                     </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--reports tab-->
+                    <div class="modal fade" id="reports" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    content here
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary">Save changes</button>
                                 </div>
                             </div>
                         </div>
