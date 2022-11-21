@@ -814,7 +814,7 @@
                                                     <?php
                                                     $name = explode(':', $info['name']);
                                                     ?>
-                                                    <form action="adminview.php?edit=2&editFaculty=<?php echo $info['id'] ?>" method="POST" data-validation="1">
+                                                    <form action="adminview.php?edit=2&editFaculty=<?php echo $info['id'] ?>" method="POST" data-validation="2">
                                                         <div class="modal-body">
                                                             <div class="row mb-3">
                                                                 <div class="col">
@@ -1020,7 +1020,7 @@
                                         <h5 class="modal-title" id="createFacultyLabel">Faculty</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
-                                    <form action="adminview.php?submit=2" method="POST" data-validation="1">
+                                    <form action="adminview.php?submit=2" method="POST" data-validation="2">
                                         <div class="modal-body">
                                             <div class="row mb-3">
                                                 <div class="col">

@@ -130,9 +130,20 @@ $(function () {
                 student:XX-XXXXXX
                 faculty:FX-XXXXXX
             */
-            if (!(/^[0-9]{1,2}-[0-9]{6,6}$|^F[0-9]{1,1}-[0-9]{6,6}$/.test($id.val()))) {
-                validated = 0;
-                $id.siblings('p').text('Invalid').fadeOut(5000);
+            switch($(this).data('validation'))
+            {
+                case 1:
+                    if (!(/^[0-9]{1,2}-[0-9]{6,6}$/.test($id.val()))) {
+                        validated = 0;
+                        $id.siblings('p').text('Invalid').fadeOut(5000);
+                    }
+                    break;
+                case 2:
+                    if (!(/^F[0-9]{1,1}-[0-9]{6,6}$/.test($id.val()))) {
+                        validated = 0;
+                        $id.siblings('p').text('Invalid').fadeOut(5000);
+                    }
+                    break;
             }
 
             //name check
