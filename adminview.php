@@ -54,7 +54,7 @@
             --bs-nav-pills-link-active-bg: rgb(14, 32, 45);
         }
 
-        .col-lg {
+        .whole{
             box-sizing: border-box;
             width: 398px;
             height: 478px;
@@ -65,7 +65,7 @@
             border-radius: 10px;
         }
 
-        .col-sm {
+        .small{
             width: 1331px;
             height: 233px;
             left: 495px;
@@ -75,7 +75,7 @@
             border-radius: 10px;
         }
 
-        .col {
+        .half{
             width: 496px;
             height: 230px;
             left: 912px;
@@ -227,32 +227,32 @@
                         <p class="fs-2 py-3" style="margin-left:5%; font-weight:900;">Dashboard</p>
                         <div class="container text-center" style="margin-left: 10%;">
                             <div class="row">
-                                <div class="col-lg mx-3">
+                                <div class="whole col-lg mx-3">
                                     content
                                 </div>
-                                <div class="col-xl">
-                                    <div class="col mb-3">
+                                <div class="whole col-xl">
+                                    <div class="half col mb-3">
                                         content
                                     </div>
-                                    <div class="col mt-3">
+                                    <div class="half col mt-3">
                                         content
                                     </div>
                                 </div>
-                                <div class="col-lg mx-3">
+                                <div class="whole col-lg mx-3">
                                     content
                                 </div>
                             </div>
                             <div class="row my-5">
-                                <div class="col-sm mx-3">
+                                <div class="small col-sm mx-3">
                                     content
                                 </div>
-                                <div class="col-sm mx-3">
+                                <div class="small col-sm mx-3">
                                     content
                                 </div>
-                                <div class="col-sm mx-3">
+                                <div class="small col-sm mx-3">
                                     content
                                 </div>
-                                <div class="col-sm mx-3">
+                                <div class="small col-sm mx-3">
                                     content
                                 </div>
                             </div>
