@@ -5,7 +5,7 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<title>Student View</title>
-
+	<link href="https://fonts.cdnfonts.com/css/montserrat" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 	<!--bootstrap js lib-->
@@ -45,7 +45,13 @@
 		});
 	</script>
 </head>
-
+<style>
+	*{
+		padding: 0;
+		margin: 0;
+		font-family: 'Montserrat';
+	}
+</style>
 <body>
 	<header>
 		<div class="row">
@@ -70,6 +76,7 @@
 			<div class="col-8">
 				<div id="account">
 					<div>
+						<span class="fs-1" style="font-weight:900;">Account Information</span>
 						<button class="btn btn-primary" type="button">Edit</button>
 						<button class="btn btn-primary" type="button">Save</button>
 					</div>

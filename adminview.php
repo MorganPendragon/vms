@@ -54,7 +54,7 @@
             --bs-nav-pills-link-active-bg: rgb(14, 32, 45);
         }
 
-        .lg{
+        .lg {
             box-sizing: border-box;
             width: 398px;
             height: 478px;
@@ -65,7 +65,7 @@
             border-radius: 10px;
         }
 
-        .sm{
+        .sm {
             width: 1331px;
             height: 233px;
             left: 495px;
@@ -75,7 +75,7 @@
             border-radius: 10px;
         }
 
-        .hf{
+        .hf {
             width: 496px;
             height: 230px;
             left: 912px;
@@ -113,20 +113,20 @@
                         <img src="img\logo.png" class="img-fluid" alt="...">
                         <div class="d-flex flex-column align-items-center align-items-sm-center px-3 pt-1 min-vh-100">
                             <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="tableTab">
-                                <li class="nav-item">
+                                <li class="nav-item ">
                                     <a href="#dashboard" class="nav-link" data-bs-toggle="tab" style="color:rgb(232, 177, 62);"><i class="bi bi-stack"></i>&nbsp;&nbsp;Dashboard</a>
                                 </li>
                                 <li class="nav-item active">
                                     <a href="#student" class="nav-link active" data-bs-toggle="tab" style="color:rgb(232, 177, 62);"><i class="bi bi-database"></i>&nbsp;&nbsp;Student Database</a>
                                 </li>
-                                <li class="nav-item active">
+                                <li class="nav-item ">
                                     <a href="#faculty" class="nav-link" data-bs-toggle="tab" style="color:rgb(232, 177, 62);"><i class="bi bi-database"></i>&nbsp;&nbsp;Faculty Database</a>
                                 </li>
-                                <li class="nav-item active">
+                                <li class="nav-item ">
                                     <a href="#vaccine" class="nav-link" data-bs-toggle="tab" style="color:rgb(232, 177, 62);"><i class="bi bi-database"></i>&nbsp;&nbsp;Brand Database</a>
                                 </li>
-                                <li class="nav-item active">
-                                    <button type="button" id="signUp" class="nav-link" data-bs-toggle="modal" data-bs-target="#reports" style="color:rgb(232, 177, 62);"><i class="bi bi-clipboard-data-fill"></i>&nbsp;&nbsp;Reports</a></button>
+                                <li class="nav-item ">
+                                    <button type="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#reports" style="color:rgb(232, 177, 62);"><i class="bi bi-clipboard-data-fill"></i>&nbsp;&nbsp;Reports</a></button>
                                 </li>
                             </ul>
 
@@ -223,7 +223,7 @@
             <div class="container-fluid col-8">
                 <div class="tab-content" id="tableTabContent">
                     <!--Dashboard Tab-->
-                    <div class="d-inline winh tab-pane fade show active position-absolute" style="margin-left:30;" id="dashboard">
+                    <div class="tab-pane fade position-absolute" style="margin-left:30;" id="dashboard">
                         <p class="fs-2 py-3" style="margin-left:5%; font-weight:900;">Dashboard</p>
                         <div class="container text-center" style="margin-left: 10%;">
                             <div class="row">
