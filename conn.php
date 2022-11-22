@@ -59,7 +59,7 @@ class connection
 						$row = $result->fetch_assoc();
 						return $row;
 					}
-					
+
 			}
 		}
 	}
@@ -208,68 +208,6 @@ class connection
 	{
 		$phpWord = new \PhpOffice\PhpWord\PhpWord();
 
-		//font style for texts
-		$fStyle = [
-			'bold' => true
-		];
-		$section = $phpWord->addSection();
-		$section->addText('No. of Vaccinated', $fStyle, ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
-		$table = ['student', 'faculty'];
-		$header = $section->addHeader();
-
-		//header content
-		$header->addText(date('m/d/Y'), $fStyle, ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::END]);
-		//chart legends
-		$categories = array('First Dose only', 'First and Second');
-		$series = array();
-		$i = 0;
-		foreach ($table as $tableName) {
-			//chart data
-			$series[] = $this->find($tableName, 'firstdose IS NOT NULL and seconddose IS NULL');
-			$series[] = $this->find($tableName, 'firstdose IS NOT NULL and seconddose IS NOT NULL');
-
-			//chart style specification
-			$style = [
-				'width' => Converter::inchToEmu(3),
-				'height' => Converter::inchToEmu(3),
-				'title' => (ucfirst($tableName)),
-				'showLegend' => true,
-				'legendPosition' => 'b',
-			];
-			//chart creation
-			$chart = $section->addChart('pie', $categories, $series, $style);
-			$i++;
-			unset($series);
-			$section->addTextBreak();
-		}
-
-		$brand = $this->getData('vacBrand', 'brand');
-		$i = 0;
-		unset($categories);
-		foreach ($table as $tableName) {
-			foreach ($brand as $brandName) {
-				$categories[] = $brandName['brand'];
-				$temp = $brandName['brand'];
-				$series[] = $this->find($tableName, "brand = '$temp'");
-			}
-			$style = [
-				'width' => Converter::inchToEmu(3),
-				'height' => Converter::inchToEmu(3),
-				'title' => (ucfirst($tableName)),
-				'showLegend' => true,
-				'legendPosition' => 'b',
-			];
-			$chart = $section->addChart('pie', $categories, $series, $style);
-			$i++;
-			unset($categories);
-			unset($series);
-			$section->addTextBreak();
-		}
-
-		// Saving the document as DOCX file...
-		$objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
-		$objWriter->save('Report.docx');
-		header('location:adminview.php');
 	}
 }
 
@@ -317,4 +255,14 @@ if (isset($_FILES['vaccinationCard']['name'])) {
 if (isset($_POST['tableName'])) {
 	$row = $conn->display($_POST['tableName']);
 	echo json_encode($row);
+}
+
+if (isset($_GET['tableName'])) {
+	$row = $conn->display('vacBrand');
+	for ($i = 0; $i < count($row); $i++) {
+		$brand[] = $row[$i]['brand'];
+	}
+	$value = array(8, 7, 6, 5, 4);
+	$test = array_combine($brand, $value);
+	echo json_encode($test);
 }

@@ -20,13 +20,14 @@
     <script src="./node_modules/jquery/dist/jquery.js"></script>
     <!--Validation plugin for jQuery-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js" integrity="sha512-rstIgDs0xPgmG6RX1Aba4KV5cWJbAMcvRCVmglpam9SoHZiUCyQVDdH2LPlxoHtrv17XWblE/V/PP+Tr04hbtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <!--Table Sorter plugin for jQuery-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/jquery.tablesorter.min.js" integrity="sha512-qzgd5cYSZcosqpzpn7zF2ZId8f/8CHmFKZ8j7mU4OUXTNRd5g+ZHBPsgKEwoqxCtdQvExE5LprwwPAgoicguNg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!--Date Picker-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
     <script src="script.js"></script>
     <script src="https://kit.fontawesome.com/9dd1cea6a6.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+
     <style>
         th {
             cursor: pointer;
@@ -86,6 +87,37 @@
             border-radius: 10px;
         }
     </style>
+    <script>
+        $(function() {
+            var dataPoints = [];
+            var chart = new CanvasJS.Chart("brandOverall", {
+                title: {
+                    text: "Overall"
+                },
+                data: [{
+                    type: "pie",
+                    dataPoints: dataPoints,
+                }]
+            });
+            /*Ajax request for charts on dashboard*/
+            $.getJSON("conn.php", {
+                    tableName: 'vacBrand'
+                })
+                .done(function(data) {
+                    $.each(data, function(index, value) {
+                        dataPoints.push({
+                            label: index,
+                            y: parseInt(value)
+                        });
+                    });
+                    chart.render();
+                })
+                .fail(function(jqxhr, textStatus, error) {
+                    var err = textStatus + ", " + error;
+                    console.log("Request Failed: " + err);
+                });
+        });
+    </script>
 </head>
 
 <body>
@@ -226,8 +258,12 @@
                         <p class="fs-2 py-3" style="margin-left:5%; font-weight:900;">Dashboard</p>
                         <div class="container text-center" style="margin-left: 10%;">
                             <div class="row">
+
                                 <div class="lg col-lg mx-3">
-                                    content
+                                    <!--Chart-->
+                                    <div id="brandOverall">
+                                    </div>
+                                    <p>text</p>
                                 </div>
                                 <div class="col-xl">
                                     <div class="hf col mb-3">
@@ -1385,6 +1421,8 @@
             </div>
         </div>
     </main>
+    <!--Table Sorter plugin for jQuery-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/jquery.tablesorter.min.js" integrity="sha512-qzgd5cYSZcosqpzpn7zF2ZId8f/8CHmFKZ8j7mU4OUXTNRd5g+ZHBPsgKEwoqxCtdQvExE5LprwwPAgoicguNg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
         $('table').tablesorter();
     </script>
