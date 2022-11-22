@@ -26,9 +26,8 @@ class connection
 
 	public function __call($name, $arguments)
 	{
-		if($name == 'display') {
-			switch(count($arguments))
-			{
+		if ($name == 'display') {
+			switch (count($arguments)) {
 				case 1:
 					$sql = "SELECT * FROM $arguments[0]";
 					$result = $this->conn->query($sql);
@@ -37,14 +36,22 @@ class connection
 							$data[] = $row;
 						}
 						return $data;
+					} else {
+						return $data = array();
 					}
 				case 2:
 					$sql = "SELECT $arguments[0] FROM $arguments[1]";
 					$result = $this->conn->query($sql);
-					while ($row = $result->fetch_assoc()) {
-						$data[] = $row;
+					if ($result->num_rows != 0) {
+						while ($row = $result->fetch_assoc()) {
+							$data[] = $row;
+						}
+						return $data;
 					}
-					return $data;
+					else
+					{
+						return $data = array();
+					}
 				case 3:
 					$sql = "SELECT * FROM $arguments[0] WHERE $arguments[1] = '$arguments[2]'";
 					$result = $this->conn->query($sql);
@@ -52,6 +59,7 @@ class connection
 						$row = $result->fetch_assoc();
 						return $row;
 					}
+					
 			}
 		}
 	}
@@ -194,6 +202,7 @@ class connection
 		return $result->num_rows;
 	}
 
+	//TODO:Report filter and update this BS
 	//report generation using PHPOffice
 	public function report()
 	{
