@@ -264,14 +264,20 @@ if (isset($_POST['tableName'])) {
 	echo json_encode($row);
 }
 
+//chart json 
 if (isset($_GET['chart'])) {
-	$row = $conn->display('vacbrand');
-	for ($i = 0; $i < count($row); $i++) {
-		$brand[] = $row[$i]['brand'];
+	switch($_GET['chart'])
+	{
+		case 'overall':
+			$row = $conn->display('vacbrand');
+			for ($i = 0; $i < count($row); $i++) {
+				$brand[] = $row[$i]['brand'];
+			}
+			for ($i = 0; $i < count($row); $i++) {
+				$value[] = count($conn->display('vaccinestatus', 'vacbrand', $brand[$i], 1));
+			}
+			$test = array_combine($brand, $value);
+			echo json_encode($test);
+			break;
 	}
-	for ($i = 0; $i < count($row); $i++) {
-		$value[] = count($conn->display('vaccinestatus', 'vacbrand', $brand[$i], 1));
-	}
-	$test = array_combine($brand, $value);
-	echo json_encode($test);
 }
