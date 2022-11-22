@@ -262,7 +262,7 @@
                     <!--Student Tab-->
                     <div class="tab-pane fade show active position-absolute" style="margin-left:5%;" id="student">
                         <!--search and filter-->
-                        <div class="d-flex " style="padding-top:10%; padding-bottom:5%;">
+                        <div class="d-flex " style="padding-top:2%; padding-bottom:5%;">
                             <!--year level filter-->
                             <div class="input-group mx-5">
                                 <select class="form-select" id="yearLevel" autocomplete="off">
@@ -746,7 +746,7 @@
                     <!--Faculty-->
                     <div class=" tab-pane fade position-absolute" style="margin-left:15%;" id="faculty">
                         <!--search and filter-->
-                        <div class="d-flex justify-content-end " style="padding-top:10%; padding-bottom:5%; margin-right:8%;">
+                        <div class="d-flex justify-content-end " style="padding-top:2%; padding-bottom:5%; margin-right:8%;">
                             <div class="">
                                 <div class="d-flex">
                                     <input class="search" type="search" placeholder="Search" aria-label="Search" data-table="#facultyContent">
@@ -1150,8 +1150,8 @@
                         </div>
                     </div>
                     <!--Vaccine Tab-->
-                    <div class="tab-pane position-absolute" style="margin-left:30%;" id="vaccine">
-                        <div class="d-flex justify-content-start py-3">
+                    <div class="tab-pane position-absolute" style="margin-left:30%; margin-top:2%;" id="vaccine">
+                        <div class="d-flex">
                             <div class="d-flex">
                                 <input class="search" type="search" placeholder="Search" aria-label="Search" data-table="#vacContent">
                                 <span class="input-group-text border-0" id="search-addon">
@@ -1159,7 +1159,7 @@
                                 </span>
                             </div>
                         </div>
-                        <div class="container">
+                        <div class="container mt-4">
                             <table class="table table-stripe table-borderless rounded">
                                 <!--table-->
                                 <thead>
