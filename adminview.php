@@ -91,9 +91,6 @@
         $(function() {
             var dataPoints = [];
             var chart = new CanvasJS.Chart("brandOverall", {
-                title: {
-                    text: "Overall"
-                },
                 data: [{
                     type: "pie",
                     dataPoints: dataPoints,
