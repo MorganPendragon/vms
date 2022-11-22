@@ -61,14 +61,14 @@
 	<main>
 		<div class="row">
 			<!--sidebar-->
-			<div class="col-2 position-fixed" style="background-color:#022e43; height:100vh;" tabindex="1">
+			<div class="col-2 position-fixed" style="background-color:#022e43;font-size:20px; height:100vh;" tabindex="1">
 				<img src="img\logo.png" class="img-fluid" alt="...">
-				<ul class="nav nav-pills nav-stacked" id="sidebar">
+				<ul class="nav nav-pills mb-sm-auto mb-0 align-items-center align-items-sm-start" id="sidebar">
 					<li class="nav-item">
-						<a href="#account" class="nav-link active" style="color:rgb(232, 177, 62);" data-show="#account" data-hide="#settings">&nbsp;&nbsp;Account Information</a>
+						<a href="#account" class="nav-link active" style="color:rgb(232, 177, 62);" data-show="#account" data-hide="#settings"><i class="bi bi-person-fill"></i>&nbsp;&nbsp;Account Information</a>
 					</li>
 					<li class="nav-item">
-						<a href="#settings" class="nav-link" style="color:rgb(232, 177, 62);" data-show="#settings" data-hide="#account">&nbsp;&nbsp;Upload</a>
+						<a href="#settings" class="nav-link" style="color:rgb(232, 177, 62);" data-show="#settings" data-hide="#account"><i class="bi bi-gear-fill"></i>&nbsp;&nbsp;Settings</a>
 					</li>
 				</ul>
 			</div>
@@ -85,11 +85,11 @@
 					<div id="disabled">
 						<div class="row mb-3">
 						</div>
-						<!--student-->
 						<?php
 
 						if (preg_match("/^[0-9]{1,2}-[0-9]{6,6}$/", $_GET['id']) == 1) {
 						?>
+						<!--student-->
 							<div>
 								<div class="row mb-3">
 									<div class="col">
@@ -239,6 +239,7 @@
 						}
 						if (preg_match("/^F[0-9]{1,1}-[0-9]{6,6}$/", $_GET['id']) == 1) {
 						?>
+						
 							<div>
 								<div class="row mb-3">
 									<div class="col">
@@ -246,7 +247,6 @@
 										<p class="fw-bolder text-center text-danger"></p>
 									</div>
 								</div>
-								<!--faculty-->
 								<div class="row mb-3">
 									<div class="col">
 										<input type="text" name="fname[1]" class="form-control" placeholder="First name" autocomplete="off" required>
@@ -372,8 +372,8 @@
 						</div>
 					</div>
 				</div>
-				<div class="" id="sttings" style="display: none;">
-
+				<div class="col-8 position absolute" id="#settings">
+					content here 
 				</div>
 			</div>
 		</div>
