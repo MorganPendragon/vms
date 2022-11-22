@@ -1127,6 +1127,7 @@
                                                 <div class="col">
                                                     <span class="fs-5 fw-semibold">ID No.</span>
                                                     <input type="text" name="id[2]" class="form-control" autocomplete="off" required>
+                                                    <input type="hidden" name="password[2]" val="">
                                                     <p class="fw-bolder text-center text-danger"></p>
                                                 </div>
                                             </div>
