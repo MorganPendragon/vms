@@ -1174,72 +1174,74 @@
                                     <?php
                                     $i = 0;
                                     $data = $vac->display('vacBrand');
-                                    foreach ($data as $info) {
-                                        $i++;
+                                    if (count($data) != 0) {
+                                        foreach ($data as $info) {
+                                            $i++;
                                     ?>
-                                        <tr>
-                                            <td class="border"> <?php echo $info['brand'] ?> </td>
+                                            <tr>
+                                                <td class="border"> <?php echo $info['brand'] ?> </td>
 
-                                            <!--edit vac-->
-                                            <td>
-                                                <!--resize-->
-                                                <a cla type="button" data-bs-toggle="modal" href="adminview.php?editID=<?php echo $info['brand'] ?>" data-bs-target="#upVacModal<?php echo $i ?>">
-                                                    <i class="bi bi-pencil-fill"></i>
-                                                </a>
-                                            </td>
+                                                <!--edit vac-->
+                                                <td>
+                                                    <!--resize-->
+                                                    <a cla type="button" data-bs-toggle="modal" href="adminview.php?editID=<?php echo $info['brand'] ?>" data-bs-target="#upVacModal<?php echo $i ?>">
+                                                        <i class="bi bi-pencil-fill"></i>
+                                                    </a>
+                                                </td>
 
-                                            <!--delete vac-->
-                                            <td>
-                                                <!--resize-->
-                                                <a type="button" data-bs-toggle="modal" data-bs-target="#deleteVacModal<?php echo $i ?>">
-                                                    <i class="bi bi-trash-fill"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <!--update vac-->
-                                        <div class="modal fade" id="upVacModal<?php echo $i ?>" tabindex="-1" aria-labelledby="upVacModal">
-                                            <div class="modal-dialog modal-dialog-centered">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="upVacLabel">Edit</h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                    </div>
-                                                    <form action="adminview.php?edit=3&editVac=<?php echo $info['brand'] ?>" method="POST">
-                                                        <div class="modal-body">
-                                                            <div class="row mb-2">
-                                                                <div class="col">
-                                                                    <input type="text" name="brand[1]" class="form-control" placeholder="Brand Name" value="<?php echo $info['brand']; ?>">
+                                                <!--delete vac-->
+                                                <td>
+                                                    <!--resize-->
+                                                    <a type="button" data-bs-toggle="modal" data-bs-target="#deleteVacModal<?php echo $i ?>">
+                                                        <i class="bi bi-trash-fill"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <!--update vac-->
+                                            <div class="modal fade" id="upVacModal<?php echo $i ?>" tabindex="-1" aria-labelledby="upVacModal">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="upVacLabel">Edit</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <form action="adminview.php?edit=3&editVac=<?php echo $info['brand'] ?>" method="POST">
+                                                            <div class="modal-body">
+                                                                <div class="row mb-2">
+                                                                    <div class="col">
+                                                                        <input type="text" name="brand[1]" class="form-control" placeholder="Brand Name" value="<?php echo $info['brand']; ?>">
+                                                                    </div>
                                                                 </div>
                                                             </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                                                                <button type="submit" class="btn btn-primary">Save Changes</submit>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--Delete Modal-->
+                                            <div class="modal fade" id="deleteVacModal<?php echo $i ?>" tabindex="-1" aria-labelledby="delVacLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="Edit" id="delVacLabel">Confirmation</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <!--put content here-->
+                                                        <div class="modal-body">
+                                                            Are you sure about the deletion?
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                                                            <button type="submit" class="btn btn-primary">Save Changes</submit>
+                                                            <a type="button" class="btn btn-primary" href="adminview.php?delete=3&delVacID=<?php echo $info['brand'] ?>">Yes</a>
                                                         </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--Delete Modal-->
-                                        <div class="modal fade" id="deleteVacModal<?php echo $i ?>" tabindex="-1" aria-labelledby="delVacLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="Edit" id="delVacLabel">Confirmation</h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                    </div>
-                                                    <!--put content here-->
-                                                    <div class="modal-body">
-                                                        Are you sure about the deletion?
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                                                        <a type="button" class="btn btn-primary" href="adminview.php?delete=3&delVacID=<?php echo $info['brand'] ?>">Yes</a>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
                                     <?php
+                                        }
                                     }
                                     ?>
                                 </tbody>
