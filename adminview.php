@@ -97,6 +97,7 @@
         $(function() {
             var dataPoints = [];
             var chart = new CanvasJS.Chart("brandOverall", {
+                showInLegend: true,
                 data: [{
                     type: "pie",
                     dataPoints: dataPoints,
@@ -104,10 +105,11 @@
             });
             /*Ajax request for charts on dashboard*/
             $.getJSON("conn.php", {
-                    tableName: 'vacbrand'
+                    chart: 'overall'
                 })
                 .done(function(data) {
                     $.each(data, function(index, value) {
+                        console.log(index);
                         dataPoints.push({
                             label: index,
                             y: parseInt(value)
@@ -187,12 +189,12 @@
             //insert
             switch ($_GET['submit']) {
                 case 1:
-                    $table = array('student', 'vaccinestatus', 'logCredentials');
+                    $table = array('student', 'vaccinestatus', 'logcredentials');
                     $vac->insertInfo($_POST, $table, true, 0);
                     header('location:adminview.php');
                     break;
                 case 2:
-                    $table = array('faculty', 'vaccinestatus', 'logCredentials');
+                    $table = array('faculty', 'vaccinestatus', 'logcredentials');
                     $vac->insertInfo($_POST, $table, true, 2);
                     header('location:adminview.php');
                     break;
@@ -208,12 +210,12 @@
             //delete
             switch ($_GET['delete']) {
                 case 1:
-                    $table = array('student', 'vaccinestatus', 'logCredentials');
+                    $table = array('student', 'vaccinestatus', 'logcredentials');
                     $vac->deleteInfo($table, 'id', $_GET['delStudentID']);
                     header('location:adminview.php');
                     break;
                 case 2:
-                    $table = array('faculty', 'vaccinestatus', 'logCredentials');
+                    $table = array('faculty', 'vaccinestatus', 'logcredentials');
                     $vac->deleteInfo($table, 'id', $_GET['delFacultyID']);
                     header('location:adminview.php');
                     break;
@@ -229,12 +231,12 @@
             //edit
             switch ($_GET['edit']) {
                 case 1:
-                    $table = array('student', 'vaccinestatus', 'logCredentials');
+                    $table = array('student', 'vaccinestatus', 'logcredentials');
                     $vac->updateInfo($_POST, $table, 'id', $_GET['editStudent'], true, 1);
                     header('location:adminview.php');
                     break;
                 case 2:
-                    $table = array('faculty', 'vaccinestatus', 'logCredentials');
+                    $table = array('faculty', 'vaccinestatus', 'logcredentials');
                     $vac->updateInfo($_POST, $table, 'id', $_GET['editFaculty'], true, 3);
                     header('location:adminview.php');
                     break;

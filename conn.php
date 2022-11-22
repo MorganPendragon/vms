@@ -223,8 +223,8 @@ $conn = new connection();
 if (isset($_POST['type'])) {
 	$id = $_POST['id'];
 	$password = $_POST['password'];
-	$result = $conn->find('logCredentials', "id = '$id'");
-	$result += $conn->find('logCredentials', "id = '$id' and password ='$password'");
+	$result = $conn->find('logcredentials', "id = '$id'");
+	$result += $conn->find('logcredentials', "id = '$id' and password ='$password'");
 	switch ($result) {
 		case 1:
 			echo 'Wrong Password';
@@ -270,7 +270,7 @@ if (isset($_GET['chart'])) {
 		$brand[] = $row[$i]['brand'];
 	}
 	for ($i = 0; $i < count($row); $i++) {
-		$value[] = count($conn->display('vaccineStatus', 'vacbrand', $brand[$i], 1));
+		$value[] = count($conn->display('vaccinestatus', 'vacbrand', $brand[$i], 1));
 	}
 	$test = array_combine($brand, $value);
 	echo json_encode($test);
