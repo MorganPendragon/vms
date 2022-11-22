@@ -128,13 +128,13 @@
 																<label class="fw-semibold">First
 																	Name</label>
 																<input type="text" class="form-control" required>
-																<div id="idFeedback"></div>
+																<div ></div>
 															</div>
 															<div class="col-6">
 																<label class="fw-semibold">Email
 																	Address</label>
 																<input type="text" class="form-control" required>
-																<div id="idFeedback"></div>
+																<div></div>
 															</div>
 														</div>
 														<div class="row mb-3 my-4">
@@ -142,31 +142,31 @@
 																<label class="fw-semibold">Middle
 																	Initial</label>
 																<input type="text" class="form-control" required>
-																<div id="idFeedback"></div>
+																<div ></div>
 															</div>
 															<div class="col-6">
 																<label class="fw-semibold">Age</label>
 																<input type="text" class="form-control" required>
-																<div id="idFeedback"></div>
+																<div ></div>
 															</div>
 														</div>
 														<div class="row mb-3 my-4">
 															<div class="col-6">
 																<label class="fw-semibold">Surname</label>
 																<input type="text" class="form-control" required>
-																<div id="idFeedback"></div>
+																<div ></div>
 															</div>
 															<div class="col-6">
 																<label class="fw-semibold">Birthday</label>
 																<input type="date" class="form-control" required>
-																<div id="idFeedback"></div>
+																<div ></div>
 															</div>
 														</div>
 														<div class="row mb-3 my-4">
 															<div class="col-6">
 																<label class="fw-semibold">Suffix</label>
 																<input type="text" class="form-control">
-																<div id="idFeedback"></div>
+																<div ></div>
 																<label class="fw-semibold">Year
 																	Level</label>
 																<select class="form-select" required>
@@ -178,13 +178,13 @@
 																	<option value="Grade 11">Grade 11</option>
 																	<option value="Grade 12">Grade 12</option>
 																</select>
-																<div id="idFeedback"></div>
+																<div ></div>
 															</div>
 															<div class="col-6">
 																<label class="fw-semibold">Student ID
 																	Number</label>
 																<input type="text" class="form-control" required>
-																<div id="idFeedback"></div>
+																<div ></div>
 															</div>
 														</div>
 													</form>
@@ -228,13 +228,13 @@
 																<label class="fw-semibold">First
 																	Name</label>
 																<input type="text" class="form-control" required>
-																<div id="idFeedback"></div>
+																<div ></div>
 															</div>
 															<div class="col-6">
 																<label class="fw-semibold">Email
 																	Address</label>
 																<input type="text" class="form-control" required>
-																<div id="idFeedback"></div>
+																<div ></div>
 															</div>
 														</div>
 														<div class="row mb-3 my-4">
@@ -242,31 +242,31 @@
 																<label class="fw-semibold">Middle
 																	Initial</label>
 																<input type="text" class="form-control" required>
-																<div id="idFeedback"></div>
+																<div ></div>
 															</div>
 															<div class="col-6">
 																<label class="fw-semibold">Age</label>
 																<input type="text" class="form-control" required>
-																<div id="idFeedback"></div>
+																<div ></div>
 															</div>
 														</div>
 														<div class="row mb-3 my-4">
 															<div class="col-6">
 																<label class="fw-semibold">Surname</label>
 																<input type="text" class="form-control" required>
-																<div id="idFeedback"></div>
+																<div ></div>
 															</div>
 															<div class="col-6">
 																<label class="fw-semibold">Birthday</label>
 																<input type="date" class="form-control" required>
-																<div id="idFeedback"></div>
+																<div ></div>
 															</div>
 														</div>
 														<div class="row mb-3 my-4">
 															<div class="col-6">
 																<label class="fw-semibold">Suffix</label>
 																<input type="text" class="form-control">
-																<div id="idFeedback"></div>
+																<div ></div>
 																<label class="fw-semibold">Year
 																	Level</label>
 																<select class="form-select" required>
@@ -278,13 +278,13 @@
 																	<option value="Grade 11">Grade 11</option>
 																	<option value="Grade 12">Grade 12</option>
 																</select>
-																<div id="idFeedback"></div>
+																<div ></div>
 															</div>
 															<div class="col-6">
 																<label class="fw-semibold">Faculty ID
 																	Number</label>
 																<input type="text" class="form-control" required>
-																<div id="idFeedback"></div>
+																<div ></div>
 															</div>
 														</div>
 													</form>
