@@ -38,6 +38,10 @@ class connection
 						}
 						return $data;
 					}
+					else
+					{
+						return $data = array(); 
+					}
 				case 2:
 					$sql = "SELECT $arguments[0] FROM $arguments[1]";
 					$result = $this->conn->query($sql);
@@ -52,6 +56,7 @@ class connection
 						$row = $result->fetch_assoc();
 						return $row;
 					}
+					
 			}
 		}
 	}
