@@ -258,9 +258,10 @@
 
                                 <div class="lg col-lg mx-3">
                                     <!--Chart-->
-                                    <div id="brandOverall">
+                                    <div style="width:50%; margin-left:14%; margin-top:20%;" id="brandOverall">
                                     </div>
-                                    <p>text</p>
+                                    <p class="fs-5 fw-semibold">Vaccine Manufacturer</pc>
+                                    
                                 </div>
                                 <div class="col-xl">
                                     <div class="hf col mb-3">
