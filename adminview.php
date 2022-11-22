@@ -76,20 +76,12 @@
             border-radius: 10px;
         }
 
-        .hf {
-            width: 496px;
-            height: 230px;
-            left: 912px;
-            top: 399px;
-
-            background: #FFFFFF;
-            box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.25);
-            border-radius: 10px;
-        }
         .vacmanu{
-            height: 300px;
-            width: 85%;
-            margin-left: 8%;
+           width:80%;
+           height:300px;
+           margin-left:10%; 
+           
+            
 
         }
     </style>
@@ -266,20 +258,12 @@
 
                                 <div class="lg col-lg mx-3">
                                     <!--Chart-->
-                                    <p class="fs-5 pt-2  text-start" style="font-weight:900;" >Vaccine Manufacturer</p>
+                                    <p class="fs-5  text-start" style="font-weight:900;" >Vaccine Manufacturer</p>
                                     <p class="text-start">This data shows the percentage of vaccine brands on the data gathered on the population</p>
                                     <div class="vacmanu" id="brandOverall">
                                     </div>
                                     
                                     
-                                </div>
-                                <div class="col-xl">
-                                    <div class="hf col mb-3">
-                                        content
-                                    </div>
-                                    <div class="hf col mt-3">
-                                        content
-                                    </div>
                                 </div>
                                 <div class="lg col-lg mx-3">
                                     content
