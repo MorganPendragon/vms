@@ -71,23 +71,17 @@
 						<?php
 						include('conn.php');
 						$conn = new connection();
-						$info = $conn->display('student', 'id', $_GET['id']);
 						$brand = $conn->display('vacBrand');
 						$genders = array('Male', 'Female');
-						$name = str_replace(':', ' ', $info['name']);
 						if (preg_match("/^[0-9]{1,2}-[0-9]{6,6}$/", $_GET['id']) == 1) {
+							$info = $conn->display('student', 'id', $_GET['id']);
+							$name = str_replace(':', ' ', $info['name']);
 						?>
 							<!--student-->
 							<div>
 								<div class="row mb-3">
 									<div class="col">
-										<span class="fs-5 fw-semibold">ID No.</span>
-										<input type="text" class="form-control" name="id" value="<?php echo $info['id'] ?>" autocomplete="off" required>
-										<p class="fw-bolder text-center text-danger"></p>
-									</div>
-								</div>
-								<div class="row mb-3">
-									<div class="col">
+										<input type="hidden" name="id" value="<?php echo $info['id'] ?>">
 										<span class="fs-5 fw-semibold">Full Name</span>
 										<input type="text" name="name" value="<?php echo $name ?>" class="form-control">
 										<!--invalid feedback-->
@@ -240,6 +234,8 @@
 						<?php
 						}
 						if (preg_match("/^F[0-9]{1,1}-[0-9]{6,6}$/", $_GET['id']) == 1) {
+							$info = $conn->display('faculty', 'id', $_GET['id']);
+							$name = str_replace(':', ' ', $info['name']);
 						?>
 							<!-- Faculty -->
 							<div>
