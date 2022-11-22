@@ -260,7 +260,7 @@
                         </div>
                     </div>
                     <!--Student Tab-->
-                    <div class="d-inline tab-pane fade show active position-absolute" style="margin-left:5%;" id="student">
+                    <div class="tab-pane fade show active position-absolute" style="margin-left:5%;" id="student">
                         <!--search and filter-->
                         <div class="d-flex " style="padding-top:10%; padding-bottom:5%;">
                             <!--year level filter-->
@@ -744,7 +744,7 @@
                         </div>
                     </div>
                     <!--Faculty-->
-                    <div class="d-inline tab-pane fade position-absolute" style="margin-left:15%;" id="faculty">
+                    <div class=" tab-pane fade position-absolute" style="margin-left:15%;" id="faculty">
                         <!--search and filter-->
                         <div class="d-flex justify-content-end " style="padding-top:10%; padding-bottom:5%; margin-right:8%;">
                             <div class="">
