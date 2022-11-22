@@ -138,7 +138,7 @@
             <?php
             include('conn.php');
             $vac = new connection();
-            $brand = $vac->displayTable('vacBrand');
+            $brand = $vac->display('vacBrand');
             $genders = array('Male', 'Female');
 
 
@@ -323,10 +323,10 @@
 
                                 <tbody id="studentContent">
                                     <?php
-                                    $data = $vac->displayTable('student');
+                                    $data = $vac->display('student');
                                     $i = 0;
                                     foreach ($data as $info) {
-                                        $vacStatus = $vac->displayRowByID('vaccineStatus', 'id', $info['id']);
+                                        $vacStatus = $vac->display('vaccineStatus', 'id', $info['id']);
                                         $i++;
                                         $name = str_replace(':', ' ', $info['name']);
                                     ?>
@@ -773,10 +773,10 @@
                                 </thead>
                                 <tbody id="facultyContent">
                                     <?php
-                                    $data = $vac->displayTable('faculty');
+                                    $data = $vac->display('faculty');
                                     $i = 0;
                                     foreach ($data as $info) {
-                                        $vacStatus = $vac->displayRowByID('vaccineStatus', 'id', $info['id']);
+                                        $vacStatus = $vac->display('vaccineStatus', 'id', $info['id']);
                                         $i++;
                                     ?>
                                         <tr>
@@ -1170,7 +1170,7 @@
                                 <tbody id="vacContent">
                                     <?php
                                     $i = 0;
-                                    $data = $vac->displayTable('vacBrand');
+                                    $data = $vac->display('vacBrand');
                                     foreach ($data as $info) {
                                         $i++;
                                     ?>
