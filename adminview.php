@@ -104,7 +104,7 @@
             });
             /*Ajax request for charts on dashboard*/
             $.getJSON("conn.php", {
-                    tableName: 'vacBrand'
+                    tableName: 'vacbrand'
                 })
                 .done(function(data) {
                     $.each(data, function(index, value) {
@@ -171,7 +171,7 @@
             <?php
             include('conn.php');
             $vac = new connection();
-            $brand = $vac->display('vacBrand');
+            $brand = $vac->display('vacbrand');
             $genders = array('Male', 'Female');
 
 
@@ -187,17 +187,17 @@
             //insert
             switch ($_GET['submit']) {
                 case 1:
-                    $table = array('student', 'vaccineStatus', 'logCredentials');
+                    $table = array('student', 'vaccinestatus', 'logCredentials');
                     $vac->insertInfo($_POST, $table, true, 0);
                     header('location:adminview.php');
                     break;
                 case 2:
-                    $table = array('faculty', 'vaccineStatus', 'logCredentials');
+                    $table = array('faculty', 'vaccinestatus', 'logCredentials');
                     $vac->insertInfo($_POST, $table, true, 2);
                     header('location:adminview.php');
                     break;
                 case 3:
-                    $table = array('vacBrand');
+                    $table = array('vacbrand');
                     $vac->insertInfo($_POST, $table, true, 0);
                     header('location:adminview.php');
                     break;
@@ -208,17 +208,17 @@
             //delete
             switch ($_GET['delete']) {
                 case 1:
-                    $table = array('student', 'vaccineStatus', 'logCredentials');
+                    $table = array('student', 'vaccinestatus', 'logCredentials');
                     $vac->deleteInfo($table, 'id', $_GET['delStudentID']);
                     header('location:adminview.php');
                     break;
                 case 2:
-                    $table = array('faculty', 'vaccineStatus', 'logCredentials');
+                    $table = array('faculty', 'vaccinestatus', 'logCredentials');
                     $vac->deleteInfo($table, 'id', $_GET['delFacultyID']);
                     header('location:adminview.php');
                     break;
                 case 3:
-                    $table = array('vacBrand');
+                    $table = array('vacbrand');
                     $vac->deleteInfo($table, 'brand', $_GET['delVacID']);
                     header('location:adminview.php');
                     break;
@@ -229,17 +229,17 @@
             //edit
             switch ($_GET['edit']) {
                 case 1:
-                    $table = array('student', 'vaccineStatus', 'logCredentials');
+                    $table = array('student', 'vaccinestatus', 'logCredentials');
                     $vac->updateInfo($_POST, $table, 'id', $_GET['editStudent'], true, 1);
                     header('location:adminview.php');
                     break;
                 case 2:
-                    $table = array('faculty', 'vaccineStatus', 'logCredentials');
+                    $table = array('faculty', 'vaccinestatus', 'logCredentials');
                     $vac->updateInfo($_POST, $table, 'id', $_GET['editFaculty'], true, 3);
                     header('location:adminview.php');
                     break;
                 case 3:
-                    $table = array('vacBrand');
+                    $table = array('vacbrand');
                     $vac->updateInfo($_POST, $table, 'brand', $_GET['editVac'], true, 1);
                     header('location:adminview.php');
                     break;
@@ -367,7 +367,7 @@
                                     $i = 0;
                                     if (count($data) != 0) {
                                         foreach ($data as $info) {
-                                            $vacStatus = $vac->display('vaccineStatus', 'id', $info['id']);
+                                            $vacStatus = $vac->display('vaccinestatus', 'id', $info['id']);
                                             $i++;
                                             $name = str_replace(':', ' ', $info['name']);
                                     ?>
@@ -858,7 +858,7 @@
                                     $i = 0;
                                     if (count($data) != 0) {
                                         foreach ($data as $info) {
-                                            $vacStatus = $vac->display('vaccineStatus', 'id', $info['id']);
+                                            $vacStatus = $vac->display('vaccinestatus', 'id', $info['id']);
                                             $i++;
                                             $name = str_replace(':', ' ', $info['name']);
                                     ?>
@@ -1023,7 +1023,7 @@
                                                                         <select class="form-select text-center" name="vacbrand[3]" value="<?php echo $vacStatus['vacbrand'] ?>" autocomplete="off" <?php echo $state ?>>
                                                                             <option value="" hidden>---</option>
                                                                             <?php
-                                                                            $brand = $vac->getData('vacBrand', 'brand');
+                                                                            $brand = $vac->getData('vacbrand', 'brand');
                                                                             foreach ($brand as $data) {
                                                                                 (strcmp($data['brand'], $vacStatus['vacbrand']) == 0) ? $state = 'selected' : $state = '';
                                                                             ?>
@@ -1298,7 +1298,7 @@
                                             <tbody id="vacContent">
                                                 <?php
                                                 $i = 0;
-                                                $data = $vac->display('vacBrand');
+                                                $data = $vac->display('vacbrand');
                                                 if (count($data) != 0) {
                                                     foreach ($data as $info) {
                                                         $i++;

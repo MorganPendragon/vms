@@ -27,7 +27,7 @@ $(function () {
             type: "POST",
             dataType: 'json',
             data: ({
-                tableName: 'vacBrand',
+                tableName: 'vacbrand',
                 column: 'brand'
             }),
             success: function (data) {

@@ -47,26 +47,27 @@ class connection
 							$data[] = $row;
 						}
 						return $data;
-					}
-					else
-					{
+					} else {
 						return $data = array();
 					}
 				case 3:
 					$sql = "SELECT * FROM $arguments[0] WHERE $arguments[1] = '$arguments[2]'";
 					$result = $this->conn->query($sql);
 					if ($result->num_rows != 0) {
-						while($row = $result->fetch_assoc())
-						{
+						$row = $result->fetch_assoc();
+						return $row;
+					}
+				case 4:
+					$sql = "SELECT * FROM $arguments[0] WHERE $arguments[1] = '$arguments[2]'";
+					$result = $this->conn->query($sql);
+					if ($result->num_rows != 0) {
+						while ($row = $result->fetch_assoc()) {
 							$data[] = $row;
 						}
 						return $data;
-					}
-					else
-					{
+					} else {
 						return $data = array();
 					}
-
 			}
 		}
 	}
@@ -214,7 +215,6 @@ class connection
 	public function report()
 	{
 		$phpWord = new \PhpOffice\PhpWord\PhpWord();
-
 	}
 }
 
@@ -265,18 +265,13 @@ if (isset($_POST['tableName'])) {
 }
 
 if (isset($_GET['chart'])) {
-	switch($_GET['chart'])
-	{
-		case 'overall':
-			$row = $conn->display('vacBrand');
-			for ($i = 0; $i < count($row); $i++) {
-				$brand[] = $row[$i]['brand'];
-			}
-			for ($i = 0; $i < count($row); $i++) {
-				$value[] = count($conn->display('vaccineStatus', 'vacbrand', $brand[$i]));
-			}
-			$test = array_combine($brand, $value);
-			echo json_encode($test);
-			break;
+	$row = $conn->display('vacbrand');
+	for ($i = 0; $i < count($row); $i++) {
+		$brand[] = $row[$i]['brand'];
 	}
+	for ($i = 0; $i < count($row); $i++) {
+		$value[] = count($conn->display('vaccineStatus', 'vacbrand', $brand[$i], 1));
+	}
+	$test = array_combine($brand, $value);
+	echo json_encode($test);
 }
