@@ -495,7 +495,7 @@
                                                                 <p class="h6">Brand</p>
                                                                 <div class="col text-center">
                                                                     <input type="hidden" name="vacbrand[1]" class="form-control" value="">
-                                                                    <select id="brandStudent" class="form-select" name="vacbrand[1]" value="<?php echo $vacStatus['vacbrand'] ?>" autocomplete="off" <?php echo $state ?>>
+                                                                    <select  class="form-select" name="vacbrand[1]" value="<?php echo $vacStatus['vacbrand'] ?>" autocomplete="off" <?php echo $state ?>>
                                                                         <option value="" hidden>Brand</option>
                                                                         <?php
                                                                         foreach ($brand as $data) {
@@ -923,7 +923,7 @@
                                                                 <p class="h6">Brand</p>
                                                                 <div class="col text-center">
                                                                     <input type="hidden" name="vacbrand[3]" class="form-control" value="">
-                                                                    <select id="brandStudent" class="form-select" name="vacbrand[3]" value="<?php echo $vacStatus['vacbrand'] ?>" autocomplete="off" <?php echo $state ?>>
+                                                                    <select  class="form-select" name="vacbrand[3]" value="<?php echo $vacStatus['vacbrand'] ?>" autocomplete="off" <?php echo $state ?>>
                                                                         <option value="" hidden>Brand</option>
                                                                         <?php
                                                                         $brand = $vac->getData('vacBrand', 'brand');
