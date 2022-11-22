@@ -105,7 +105,6 @@
     </header>
     <main>
         <div class="row">
-
             <!--sidebar-->
             <div class="container-fluid window-height" aria-orientation="vertical">
                 <div class="d-flex">
@@ -263,7 +262,7 @@
                         <!--search and filter-->
                         <div class="d-flex " style="padding-top:2%; padding-bottom:5%;">
                             <!--year level filter-->
-                            <div class="input-group mx-5">
+                            <div class="input-group mx-5 ">
                                 <select class="form-select" id="yearLevel" autocomplete="off">
                                     <option value="0" hidden>Year Level</option>b
                                     <option value="0">---</option>
@@ -357,11 +356,11 @@
                                                 </td>
                                             </tr>
                                             <!--Edit Student Modal-->
-                                            <div class="modal fade" id="editStudentModal<?php echo $i ?>" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+                                            <div class="modal fade" id="editStudentModal<?php echo $i ?>" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true" style="margin-left:7%;">
                                                 <div class="modal-dialog modal-dialog-centered modal-lg">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="Edit" id="editModalLabel">Edit</h5>
+                                                            <p class="modal-title fs-2" style="font-weight:900;" id="createStudentLabel">Edit</p>
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
                                                         <!--put content here-->
@@ -372,32 +371,37 @@
                                                             <div class="modal-body">
                                                                 <div class="row mb-3">
                                                                     <div class="col">
+                                                                        <span class="fs-5 fw-semibold">ID No.</span>
                                                                         <input type="text" class="form-control" name="id[1]" placeholder="ID No." value="<?php echo $info['id'] ?>" autocomplete="off" required>
                                                                         <p class="fw-bolder text-center text-danger"></p>
                                                                     </div>
                                                                 </div>
                                                                 <div class="row mb-3">
                                                                     <div class="col">
-                                                                        <input type="text" name="fname[1]" class="form-control" placeholder="First name" value="<?php echo $name[0] ?>" autocomplete="off" required>
+                                                                        <span class="fs-5 fw-semibold">First Name</span>
+                                                                        <input type="text" name="fname[1]" class="form-control" value="<?php echo $name[0] ?>" autocomplete="off" required>
                                                                         <!--invalid feedback-->
                                                                         <p class="fw-bolder text-center text-danger"></p>
                                                                     </div>
                                                                     <div class="col">
-                                                                        <input type="text" name="mname[1]" class="form-control" placeholder="Middle name" value="<?php echo $name[1] ?>" autocomplete="off" required>
+                                                                        <span class="fs-5 fw-semibold">Middle Name</span>
+                                                                        <input type="text" name="mname[1]" class="form-control" value="<?php echo $name[1] ?>" autocomplete="off" required>
                                                                         <!--invalid feedback-->
                                                                         <p class="fw-bolder text-center text-danger"></p>
                                                                     </div>
                                                                     <div class="col">
-                                                                        <input type="text" name="lname[1]" class="form-control" placeholder="Last name" value="<?php echo $name[2] ?>" autocomplete="off" required>
+                                                                        <span class="fs-5 fw-semibold">Last Name</span>
+                                                                        <input type="text" name="lname[1]" class="form-control" value="<?php echo $name[2] ?>" autocomplete="off" required>
                                                                         <!--invalid feedback-->
                                                                         <p class="fw-bolder text-center text-danger"></p>
                                                                         <input type="hidden" name="name[1]">
                                                                     </div>
                                                                 </div>
                                                                 <div class="row mb-3">
-                                                                    <div class="col input-group">
-                                                                        <select class="form-select" name="yearLevel[1]" required>
-                                                                            <option value="" hidden>Year Level</option>
+                                                                    <div class="col">
+                                                                        <span class="fs-5 fw-semibold">Year</span>
+                                                                        <select class="form-select text-center" name="yearLevel[1]" required>
+                                                                            <option value="" hidden>---</option>
                                                                             <option value="Grade 7">Grade 7</option>
                                                                             <option value="Grade 8">Grade 8</option>
                                                                             <option value="Grade 9">Grade 9</option>
@@ -406,8 +410,10 @@
                                                                             <option value="Grade 12">Grade 12</option>
                                                                         </select>
                                                                     </div>
-                                                                    <div class="col input-group">
-                                                                        <select class="form-select" name="status[1]" required>
+                                                                    <div class="col">
+                                                                        <span class="fs-5 fw-semibold">Status</span>
+                                                                        <select class="form-select text-center" name="status[1]" required>
+                                                                            <option value="" hidden>---</option>
                                                                             <option value="Enrolled">Enrolled</option>
                                                                             <option value="Dropped">Dropped</option>
                                                                         </select>
@@ -415,17 +421,20 @@
                                                                 </div>
                                                                 <div class="row mb-3">
                                                                     <div class="col">
-                                                                        <input type="email" name="email[1]" class="form-control" id="emailFormControl" placeholder="Email" value="<?php echo $info['email'] ?>" required>
+                                                                        <span class="fs-5 fw-semibold">Email</span>
+                                                                        <input type="email" name="email[1]" class="form-control" id="emailFormControl" value="<?php echo $info['email'] ?>" required>
                                                                     </div>
                                                                 </div>
                                                                 <div class="row mb-3">
                                                                     <div class="col">
-                                                                        <input type="text" name="tel[1]" class="form-control" placeholder="Telephone No." value="<?php echo $info['tel'] ?>" required>
+                                                                        <span class="fs-5 fw-semibold">Telephone No.</span>
+                                                                        <input type="text" name="tel[1]" class="form-control" placeholder="09XXXXXXXX" value="<?php echo $info['tel'] ?>" required>
                                                                         <!--Invalid Feedback-->
-                                                                        <p></p>
+                                                                        <p class="fw-bolder text-center text-danger"></p>
                                                                     </div>
-                                                                    <div class="col input-group">
-                                                                        <select class="form-select" name="gender[1]" required>
+                                                                    <div class="col">
+                                                                        <span class="fs-5 fw-semibold">Gender</span>
+                                                                        <select class="form-select text-center" name="gender[1]" required>
                                                                             <option value="" hidden>Gender</option>
                                                                             <?php
                                                                             foreach ($genders as $gender) {
@@ -440,63 +449,71 @@
                                                                 </div>
                                                                 <div class="row mb-3">
                                                                     <div class="col">
+                                                                        <span class="fs-5 fw-semibold">Birthday</span>
                                                                         <input type="date" name="birthday[1]" class="form-control" value="<?php echo $info['birthday'] ?>" required>
-                                                                        <!--TODO:Invalid Feedback-->
-                                                                        <p></p>
+                                                                        <!--Invalid Feedback-->
+                                                                        <p class="fw-bolder text-center text-danger"></p>
                                                                     </div>
                                                                     <div class="col">
+                                                                        <span class="fs-5 fw-semibold">Adress</span>
                                                                         <input type="text" name="address[1]" class="form-control" value="<?php echo $info['address'] ?>" placeholder="Address" required>
                                                                     </div>
                                                                 </div>
-                                                                <div class="row mb-3 text-center">
+                                                                <div class="row mb-3">
                                                                     <?php
                                                                     (isset($vacStatus['firstdose'])) ? $state = 'required' : $state = 'disabled';
                                                                     ?>
-                                                                    <p class="h5">Vaccine Status</p>
-                                                                    <p class="h6">1st Dose</p>
-                                                                    <div class="col text-center">
+                                                                    <hr>
+                                                                    <p class="fs-2" style="font-weight:900;">Vaccine Status</p>
+                                                                    <p class="fs-4 fw-bold text-center">1st Dose</p>
+                                                                    <div class="col">
+                                                                        <span class="fs-5 fw-semibold">Date</span>
                                                                         <input type="hidden" name="firstdose[1]" class="form-control" value="">
                                                                         <input type="date" name="firstdose[1]" data-activate='input[type="text"][name="firstdoctor[1]"], input[type="date"][name="seconddose[1]"], select[name="vacbrand[1]"]' data-required='input[type="text"][name="firstdoctor[1]"], select[name="vacbrand[1]"]' class="form-control" value="<?php echo $vacStatus['firstdose'] ?>" autocomplete="off">
-                                                                        <!--TODO:Invalid Feedback-->
-                                                                        <p></p>
+                                                                        <!--Invalid Feedback-->
+                                                                        <p class="fw-bolder text-center text-danger"></p>
                                                                     </div>
                                                                     <div class="col">
+                                                                        <span class="fs-5 fw-semibold">Doctor</span>
                                                                         <input type="hidden" name="firstdoctor[1]" class="form-control" value="">
                                                                         <input type="text" name="firstdoctor[1]" class="form-control" placeholder="Doctor" value="<?php echo $vacStatus['firstdoctor'] ?>" autocomplete="off" <?php echo $state ?>>
                                                                         <!--invalid feedback-->
                                                                         <p class="fw-bolder text-center text-danger"></p>
                                                                     </div>
                                                                 </div>
-                                                                <div class="row mb-3 text-center">
+                                                                <div class="row mb-3">
                                                                     <?php
                                                                     (isset($vacStatus['firstdose'])) ? $state = '' : $state = 'disabled';
                                                                     ?>
-                                                                    <p class="h6">2nd Dose</p>
-                                                                    <div class="col text-center">
+                                                                    <p class="fs-4 fw-bold text-center">2nd Dose</p>
+                                                                    <div class="col ">
+                                                                        <span class="fs-5 fw-semibold">Date</span>
                                                                         <input type="hidden" name="seconddose[1]" class="form-control" value="">
                                                                         <input type="date" name="seconddose[1]" data-activate='input[type="text"][name="seconddoctor[1]"], input[type="date"][name="booster[1]"]' data-required='input[type="text"][name="seconddoctor[1]"]' class="form-control" value="<?php echo $vacStatus['seconddose'] ?>" autocomplete="off" <?php echo $state ?>>
-                                                                        <!--TODO:Invalid Feedback-->
-                                                                        <p></p>
+                                                                        <!--Invalid Feedback-->
+                                                                        <p class="fw-bolder text-center text-danger"></p>
                                                                     </div>
                                                                     <?php
                                                                     (isset($vacStatus['seconddose'])) ? $state = 'required' : $state = 'disabled';
                                                                     ?>
                                                                     <div class="col">
+                                                                        <span class="fs-5 fw-semibold">Date</span>
                                                                         <input type="hidden" name="seconddoctor[1]" class="form-control" value="">
                                                                         <input type="text" name="seconddoctor[1]" class="form-control" placeholder="Doctor" value="<?php echo $vacStatus['seconddoctor'] ?>" autocomplete="off" <?php echo $state ?>>
                                                                         <!--invalid feedback-->
                                                                         <p class="fw-bolder text-center text-danger"></p>
                                                                     </div>
                                                                 </div>
-                                                                <div class="row mb-3 text-center">
+                                                                <div class="row mb-3">
                                                                     <?php
                                                                     (isset($vacStatus['firstdose'])) ? $state = 'required' : $state = 'disabled';
                                                                     ?>
-                                                                    <p class="h6">Brand</p>
+
                                                                     <div class="col text-center">
+                                                                        <span class="fs-5 fw-semibold me-4">Vaccine Brand</span>
                                                                         <input type="hidden" name="vacbrand[1]" class="form-control" value="">
-                                                                        <select class="form-select" name="vacbrand[1]" value="<?php echo $vacStatus['vacbrand'] ?>" autocomplete="off" <?php echo $state ?>>
-                                                                            <option value="" hidden>Brand</option>
+                                                                        <select class="form-select text-center" name="vacbrand[1]" value="<?php echo $vacStatus['vacbrand'] ?>" autocomplete="off" <?php echo $state ?>>
+                                                                            <option value="" hidden>---</option>
                                                                             <?php
                                                                             foreach ($brand as $data) {
                                                                                 (strcmp($data['brand'], $vacStatus['vacbrand']) == 0) ? $state = 'selected' : $state = '';
@@ -508,33 +525,35 @@
                                                                         </select>
                                                                     </div>
                                                                 </div>
-                                                                <div class="row mb-3 text-center">
+                                                                <div class="row mb-3">
                                                                     <?php
                                                                     (isset($vacStatus['seconddose'])) ? $state = '' : $state = 'disabled';
                                                                     ?>
-                                                                    <p class="h6">Booster</p>
-                                                                    <div class="col text-center">
+                                                                    <p class="fs-4 fw-bold text-center">Booster</p>
+                                                                    <div class="col ">
+                                                                        <span class="fs-5 fw-semibold">Date</span>
                                                                         <input type="hidden" name="booster[1]" class="form-control" value="">
                                                                         <input type="date" name="booster[1]" data-activate='input[type="text"][name="boosterdoctor[1]"], select[name="boosterbrand[1]"]' data-required='input[type="text"][name="boosterdoctor[1]"], select[name="boosterbrand[1]"]' class="form-control" value="<?php echo $vacStatus['booster'] ?>" autocomplete="off" <?php echo $state ?>>
-                                                                        <!--TODO:Invalid Feedback-->
-                                                                        <p></p>
+                                                                        <!--Invalid Feedback-->
+                                                                        <p class="fw-bolder text-center text-danger"></p>
                                                                     </div>
                                                                     <?php
                                                                     (isset($vacStatus['booster'])) ? $state = 'required' : $state = 'disabled';
                                                                     ?>
                                                                     <div class="col">
+                                                                        <span class="fs-5 fw-semibold">Doctor</span>
                                                                         <input type="hidden" name="boosterdoctor[1]" class="form-control" value="">
                                                                         <input type="text" name="boosterdoctor[1]" class="form-control" placeholder="Doctor" value="<?php echo $vacStatus['boosterdoctor'] ?>" autocomplete="off" <?php echo $state ?>>
                                                                         <!--invalid feedback-->
                                                                         <p class="fw-bolder text-center text-danger"></p>
                                                                     </div>
                                                                 </div>
-                                                                <div class="row mb-3 text-center">
-                                                                    <p class="h6">Brand</p>
+                                                                <div class="row mb-3 ">
                                                                     <div class="col text-center">
+                                                                        <span class="fs-5 fw-semibold me-4">Vaccine Brand</span>
                                                                         <input type="hidden" name="boosterbrand[1]" class="form-control" value="">
-                                                                        <select class="form-select" name="boosterbrand[1]" value="<?php echo $vacStatus['boosterbrand'] ?>" autocomplete="off" <?php echo $state ?>>
-                                                                            <option value="" hidden>Booster Brand</option>
+                                                                        <select class="form-select text-center" name="boosterbrand[1]" value="<?php echo $vacStatus['boosterbrand'] ?>" autocomplete="off" <?php echo $state ?>>
+                                                                            <option value="" hidden>---</option>
                                                                             <?php
                                                                             foreach ($brand as $data) {
                                                                                 (strcmp($data['brand'], $vacStatus['boosterbrand']) == 0) ? $state = 'selected' : $state = '';
@@ -548,8 +567,8 @@
                                                                 </div>
                                                             </div>
                                                             <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                                                                <button type="button" class="btn " style="background-color:rgb(16, 45, 65); color:white" data-bs-dismiss="modal">Close</button>
+                                                                <button type="submit" class="btn " style="background-color:rgb(237, 126, 0); color:white">Save</button>
                                                             </div>
                                                         </form>
                                                     </div>
@@ -586,46 +605,51 @@
                             <button class="btn btn-outline-success" role="button" data-bs-toggle="modal" data-bs-target="#createStudentModal">+</button>
                         </div>
                         <!--Student Insert Modal-->
-                        <div class="modal fade" id="createStudentModal" tabindex="-1" aria-labelledby="createStudentLabel" aria-hidden="true">
+                        <div class="modal fade" id="createStudentModal" tabindex="-1" aria-labelledby="createStudentLabel" aria-hidden="true" style="margin-left:7%;">
                             <div class="modal-dialog modal-dialog-centered modal-lg overflow-auto">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="createStudentLabel">Create</h5>
+                                        <p class="modal-title fs-2" style="font-weight:900;" id="createStudentLabel">Student</p>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
-                                    <!--TODO:invalid feedback formatting-->
-                                    <!--TODO:CSS on form-->
+                                    <!--invalid feedback formatting-->
+                                    <!--CSS on form-->
                                     <form action="adminview.php?submit=1" method="POST" data-validation="1" data-password="1">
                                         <div class="modal-body">
                                             <div class="row mb-3">
                                                 <div class="col">
-                                                    <input type="text" class="form-control" name="id[0]" placeholder="ID No." autocomplete="off" required>
+                                                    <span class="fs-5 fw-semibold">ID no.</span>
+                                                    <input type="text" class="form-control" name="id[0]" autocomplete="off" required>
                                                     <input type="hidden" name="password[0]" val="">
                                                     <p class="fw-bolder text-center text-danger"></p>
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
                                                 <div class="col">
-                                                    <input type="text" name="fname[0]" class="form-control" placeholder="First name" autocomplete="off" required>
+                                                    <span class="fs-5 fw-semibold">First Name</span>
+                                                    <input type="text" name="fname[0]" class="form-control" autocomplete="off" required>
                                                     <!--invalid feedback-->
                                                     <p class="fw-bolder text-center text-danger"></p>
                                                 </div>
                                                 <div class="col">
-                                                    <input type="text" name="mname[0]" class="form-control" placeholder="Middle name" autocomplete="off" required>
+                                                    <span class="fs-5 fw-semibold">Middle Name</span>
+                                                    <input type="text" name="mname[0]" class="form-control" autocomplete="off" required>
                                                     <!--invalid feedback-->
                                                     <p class="fw-bolder text-center text-danger"></p>
                                                 </div>
                                                 <div class="col">
-                                                    <input type="text" name="lname[0]" class="form-control" placeholder="Last name" autocomplete="off" required>
+                                                    <span class="fs-5 fw-semibold">Last Name</span>
+                                                    <input type="text" name="lname[0]" class="form-control" autocomplete="off" required>
                                                     <!--invalid feedback-->
                                                     <p class="fw-bolder text-center text-danger"></p>
                                                     <input type="hidden" name="name[0]">
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
-                                                <div class="col input-group">
-                                                    <select class="form-select" name="yearLevel[0]" required>
-                                                        <option value="" hidden>Year Level</option>
+                                                <div class="col">
+                                                    <span class="fs-5 fw-semibold">Year Level</span>
+                                                    <select class="form-select text-center" name="yearLevel[0]" required>
+                                                        <option value="" hidden>---</option>
                                                         <option value="Grade 7">Grade 7</option>
                                                         <option value="Grade 8">Grade 8</option>
                                                         <option value="Grade 9">Grade 9</option>
@@ -634,9 +658,10 @@
                                                         <option value="Grade 12">Grade 12</option>
                                                     </select>
                                                 </div>
-                                                <div class="col input-group">
-                                                    <select class="form-select" name="status[0]" required>
-                                                        <option value="" hidden>Status</option>
+                                                <div class="col">
+                                                    <span class="fs-5 fw-semibold">Status</span>
+                                                    <select class="form-select text-center" name="status[0]" required>
+                                                        <option value="" hidden>---</option>
                                                         <option value="Enrolled">Enrolled</option>
                                                         <option value="Dropped">Dropped</option>
                                                     </select>
@@ -644,17 +669,20 @@
                                             </div>
                                             <div class="row mb-3">
                                                 <div class="col">
-                                                    <input type="email" name="email[0]" class="form-control" id="emailFormControl" placeholder="Email" required>
+                                                    <span class="fs-5 fw-semibold">Email</span>
+                                                    <input type="email" name="email[0]" class="form-control" id="emailFormControl" required>
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
                                                 <div class="col">
-                                                    <input type="text" name="tel[0]" class="form-control" placeholder="Telephone No." required>
+                                                    <span class="fs-5 fw-semibold">Telephone No.</span>
+                                                    <input type="text" name="tel[0]" class="form-control" placeholder="09XXXXXXXXX" required>
                                                     <!--Invalid Feedback-->
-                                                    <p></p>
+                                                    <p class="fw-bolder text-center text-danger"></p>
                                                 </div>
-                                                <div class="col input-group">
-                                                    <select class="form-select" name="gender[0]" required>
+                                                <div class="col">
+                                                    <span class="fs-5 fw-semibold">Gender</span>
+                                                    <select class="form-select text-center" name="gender[0]" required>
                                                         <option value="" hidden>Gender</option>
                                                         <option value="Male">Male</option>
                                                         <option value="Female">Female</option>
@@ -663,81 +691,91 @@
                                             </div>
                                             <div class="row mb-3">
                                                 <div class="col">
+                                                    <span class="fs-5 fw-semibold">Birthday</span>
                                                     <input type="date" name="birthday[0]" class="form-control" required>
-                                                    <!--TODO:Invalid Feedback-->
-                                                    <p></p>
+                                                    <!--Invalid Feedback-->
+                                                    <p class="fw-bolder text-center text-danger"></p>
                                                 </div>
                                                 <div class="col">
-                                                    <input type="text" name="address[0]" class="form-control" placeholder="Address" required>
+                                                    <span class="fs-5 fw-semibold">Address</span>
+                                                    <input type="text" name="address[0]" class="form-control" required>
                                                 </div>
                                             </div>
                                             <hr>
-                                            <div class="row mb-3 text-center">
-                                                <p class="h5">Vaccine Status</p>
-                                                <p class="h6">1st Dose</p>
-                                                <div class="col text-center">
+                                            <p class="fs-2" style="font-weight:900;">Vaccine Status</p>
+                                            <div class="row mb-3">
+                                                <p class="fs-4 fw-bold text-center">1st Dose</p>
+                                                <div class="col">
+                                                    <span class="fs-5 fw-semibold">Date</span>
                                                     <input type="hidden" name="firstdose[0]" class="form-control" value="">
                                                     <input type="date" name="firstdose[0]" data-activate='input[type="text"][name="firstdoctor[0]"], input[type="date"][name="seconddose[0]"], select[name="vacbrand[0]"]' data-required='input[type="text"][name="firstdoctor[0]"], select[name="vacbrand[0]"]' class="form-control" autocomplete="off">
-                                                    <!--TODO:Invalid Feedback-->
-                                                    <p></p>
+                                                    <!--Invalid Feedback-->
+                                                    <p class="fw-bolder text-center text-danger"></p>
                                                 </div>
                                                 <div class="col">
+                                                    <span class="fs-5 fw-semibold">Doctor</span>
                                                     <input type="hidden" name="firstdoctor[0]" class="form-control" value="">
                                                     <input type="text" name="firstdoctor[0]" class="form-control" placeholder="Doctor" autocomplete="off" disabled>
                                                     <!--invalid feedback-->
                                                     <p class="fw-bolder text-center text-danger"></p>
                                                 </div>
                                             </div>
-                                            <div class="row mb-3 text-center">
-                                                <p class="h6">2nd Dose</p>
-                                                <div class="col text-center">
+                                            <div class="row mb-3">
+                                                <p class="fs-4 fw-bold text-center">2nd Dose</p>
+                                                <div class="col">
+                                                    <span class="fs-5 fw-semibold">Date</span>
                                                     <input type="hidden" name="seconddose[0]" class="form-control" value="">
                                                     <input type="date" name="seconddose[0]" data-activate='input[type="text"][name="seconddoctor[0]"], input[type="date"][name="booster[0]"]' data-required='input[type="text"][name="seconddoctor[0]"]' class="form-control" autocomplete="off" disabled>
-                                                    <!--TODO:Invalid Feedback-->
-                                                    <p></p>
+                                                    <!--Invalid Feedback-->
+                                                    <p class="fw-bolder text-center text-danger"></p>
                                                 </div>
                                                 <div class="col">
+                                                    <span class="fs-5 fw-semibold">Doctor</span>
                                                     <input type="hidden" name="seconddoctor[0]" class="form-control" value="">
                                                     <input type="text" name="seconddoctor[0]" class="form-control" placeholder="Doctor" autocomplete="off" disabled>
                                                     <!--invalid feedback-->
                                                     <p class="fw-bolder text-center text-danger"></p>
                                                 </div>
                                             </div>
-                                            <div class="row mb-3 text-center">
-                                                <div class="col text-center">
+                                            <div class="row mb-3">
+                                                <div class="col text-center me-4">
+                                                    <span class="fs-5 fw-semibold">Vaccine Brand</span>
                                                     <input type="hidden" name="vacbrand[0]" class="form-control" value="">
-                                                    <select class="form-select" name="vacbrand[0]" autocomplete="off" disabled>
+                                                    <select class="form-select text-center " name="vacbrand[0]" autocomplete="off" disabled>
                                                         <option value="" hidden>Brand</option>
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="row mb-3 text-center">
-                                                <p class="h6">Booster</p>
-                                                <div class="col text-center">
+                                            <div class="row mb-3">
+                                                <p class="fs-4 fw-bold text-center">Booster</p>
+                                                <div class="col">
+                                                    <span class="fs-5 fw-semibold">Date</span>
                                                     <input type="hidden" name="booster[0]" class="form-control" value="">
                                                     <input type="date" name="booster[0]" data-activate='input[type="text"][name="boosterdoctor[0]"], select[name="boosterbrand[0]"]' data-required='input[type="text"][name="boosterdoctor[0]"], select[name="boosterbrand[0]"]' class="form-control" autocomplete="off" disabled>
-                                                    <!--TODO:Invalid Feedback-->
-                                                    <p></p>
+                                                    <!--Invalid Feedback-->
+                                                    <p class="fw-bolder text-center text-danger"></p>
                                                 </div>
                                                 <div class="col">
+                                                    <span class="fs-5 fw-semibold">Doctor</span>
                                                     <input type="hidden" name="boosterdoctor[0]" class="form-control" value="">
                                                     <input type="text" name="boosterdoctor[0]" class="form-control" placeholder="Doctor" autocomplete="off" disabled>
                                                     <!--invalid feedback-->
                                                     <p class="fw-bolder text-center text-danger"></p>
                                                 </div>
                                             </div>
-                                            <div class="row mb-3 text-center">
+                                            <div class="row mb-3">
                                                 <div class="col text-center">
+                                                    <span class="fs-5 fw-semibold me-4">Vaccine Brand</span>
                                                     <input type="hidden" name="boosterbrand[0]" class="form-control" value="">
-                                                    <select class="form-select" name="boosterbrand[0]" autocomplete="off" disabled>
+                                                    <select class="form-select text-center" name="boosterbrand[0]" autocomplete="off" disabled>
                                                         <option value="" hidden>Booster Brand</option>
                                                     </select>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn btn-primary">Save</button>
+                                            <button type="button" class="btn " style="background-color:rgb(16, 45, 65); color:white" data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn " style="background-color:rgb(237, 126, 0); color:white">Save</button>
                                         </div>
                                     </form>
                                 </div>
@@ -780,10 +818,11 @@
                                         foreach ($data as $info) {
                                             $vacStatus = $vac->display('vaccineStatus', 'id', $info['id']);
                                             $i++;
+                                            $name = str_replace(':', ' ', $info['name']);
                                     ?>
                                             <tr>
                                                 <td class="border"><?php echo $info['id'] ?></td>
-                                                <td class="border"><?php echo $info['name'] ?></td>
+                                                <td class="border"><?php echo $name ?></td>
                                                 <td class="border"><?php echo $info['gender'] ?></td>
                                                 <td class="border"><?php echo $vacStatus['firstdose'] ?></td>
                                                 <td class="border"><?php echo $vacStatus['seconddose'] ?></td>
@@ -810,7 +849,7 @@
                                                 <div class="modal-dialog modal-dialog-centered modal-lg">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="Edit" id="editFacultyLabel">Edit</h5>
+                                                            <p class="fs-2" style="font-weight:900;">Edit</p>
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
                                                         <!--put content here-->
@@ -821,23 +860,27 @@
                                                             <div class="modal-body">
                                                                 <div class="row mb-3">
                                                                     <div class="col">
-                                                                        <input type="text" class="form-control" name="id[3]" placeholder="ID No." value="<?php echo $info['id'] ?>" autocomplete="off" required>
+                                                                        <span class="fs-5 fw-semibold">ID No.</span>
+                                                                        <input type="text" class="form-control" name="id[3]" value="<?php echo $info['id'] ?>" autocomplete="off" required>
                                                                         <p class="fw-bolder text-center text-danger"></p>
                                                                     </div>
                                                                 </div>
                                                                 <div class="row">
-                                                                    <div class="col">
-                                                                        <input type="text" name="fname[3]" class="form-control" placeholder="First name" value="<?php echo $name[0] ?>" autocomplete="off" required>
+                                                                    <div class="col">]
+                                                                        <span class="fs-5 fw-semibold">First Name</span>
+                                                                        <input type="text" name="fname[3]" class="form-control" value="<?php echo $name[0] ?>" autocomplete="off" required>
                                                                         <!--invalid feedback-->
                                                                         <p class="fw-bolder text-center text-danger"></p>
                                                                     </div>
                                                                     <div class="col">
-                                                                        <input type="text" name="mname[3]" class="form-control" placeholder="Middle name" value="<?php echo $name[1] ?>" autocomplete="off" required>
+                                                                        <span class="fs-5 fw-semibold">Middle Name</span>
+                                                                        <input type="text" name="mname[3]" class="form-control" value="<?php echo $name[1] ?>" autocomplete="off" required>
                                                                         <!--invalid feedback-->
                                                                         <p class="fw-bolder text-center text-danger"></p>
                                                                     </div>
                                                                     <div class="col">
-                                                                        <input type="text" name="lname[3]" class="form-control" placeholder="Last name" value="<?php echo $name[2] ?>" autocomplete="off" required>
+                                                                        <span class="fs-5 fw-semibold">Last Name</span>
+                                                                        <input type="text" name="lname[3]" class="form-control" value="<?php echo $name[2] ?>" autocomplete="off" required>
                                                                         <!--invalid feedback-->
                                                                         <p class="fw-bolder text-center text-danger"></p>
                                                                         <input type="hidden" name="name[3]">
@@ -845,16 +888,19 @@
                                                                 </div>
                                                                 <div class="row mb-3">
                                                                     <div class="col">
-                                                                        <input type="email" name="email[3]" class="form-control" id="emailFormControl" placeholder="Email" value="<?php echo $info['email'] ?>" required>
+                                                                        <span class="fs-5 fw-semibold">Email</span>
+                                                                        <input type="email" name="email[3]" class="form-control" id="emailFormControl" value="<?php echo $info['email'] ?>" required>
                                                                     </div>
                                                                 </div>
                                                                 <div class="row mb-3">
                                                                     <div class="col">
-                                                                        <input type="text" name="tel[3]" class="form-control" placeholder="Telephone No." value="<?php echo $info['tel'] ?>" required>
+                                                                        <span class="fs-5 fw-semibold">Telephone No.</span>
+                                                                        <input type="text" name="tel[3]" class="form-control" placeholder="09XXXXXXXX" value="<?php echo $info['tel'] ?>" required>
                                                                         <!--Invalid Feedback-->
-                                                                        <p></p>
+                                                                        <p class="fw-bolder text-center text-danger"></p>
                                                                     </div>
-                                                                    <div class="col input-group">
+                                                                    <div class="col">
+                                                                        <span class="fs-5 fw-semibold">Gender</span>
                                                                         <select class="form-select" name="gender[3]" required>
                                                                             <option value="" hidden>Gender</option>
                                                                             <?php
@@ -870,48 +916,55 @@
                                                                 </div>
                                                                 <div class="row mb-3">
                                                                     <div class="col">
+                                                                        <span class="fs-5 fw-semibold">Birthday</span>
                                                                         <input type="date" name="birthday[3]" class="form-control" value="<?php echo $info['birthday'] ?>" required>
-                                                                        <!--TODO:Invalid Feedback-->
-                                                                        <p></p>
+                                                                        <!--Invalid Feedback-->
+                                                                        <p class="fw-bolder text-center text-danger"></p>
                                                                     </div>
                                                                     <div class="col">
-                                                                        <input type="text" name="address[3]" class="form-control" value="<?php echo $info['birthday'] ?>" placeholder="Address" required>
+                                                                        <span class="fs-5 fw-semibold">Address</span>
+                                                                        <input type="text" name="address[3]" class="form-control" value="<?php echo $info['birthday'] ?>" required>
                                                                     </div>
                                                                 </div>
-                                                                <div class="row mb-3 text-center">
+                                                                <div class="row mb-3">
                                                                     <?php
                                                                     (isset($vacStatus['firstdose'])) ? $state = 'required' : $state = 'disabled';
                                                                     ?>
-                                                                    <p class="h5">Vaccine Status</p>
-                                                                    <p class="h6">1st Dose</p>
-                                                                    <div class="col text-center">
+                                                                    <hr>
+                                                                    <p class="fs-2" style="font-weight:900;">Vaccine Status</p>
+                                                                    <p class="fs-4 fw-bold text-center">1st Dose</p>
+                                                                    <div class="col">
+                                                                        <span class="fs-5 fw-semibold">Date</span>
                                                                         <input type="hidden" name="firstdose[3]" class="form-control" value="">
                                                                         <input type="date" name="firstdose[3]" data-activate='input[type="text"][name="firstdoctor[3]"], input[type="date"][name="seconddose[3]"], select[name="vacbrand[3]"]' data-required='input[type="text"][name="firstdoctor[3]"], select[name="vacbrand[3]"]' class="form-control" value="<?php echo $vacStatus['firstdose'] ?>" autocomplete="off">
-                                                                        <!--TODO:Invalid Feedback-->
-                                                                        <p></p>
+                                                                        <!--Invalid Feedback-->
+                                                                        <p class="fw-bolder text-center text-danger"></p>
                                                                     </div>
                                                                     <div class="col">
+                                                                        <span class="fs-5 fw-semibold">Doctor</span>
                                                                         <input type="hidden" name="firstdoctor[3]" class="form-control" value="">
                                                                         <input type="text" name="firstdoctor[3]" class="form-control" placeholder="Doctor" value="<?php echo $vacStatus['firstdoctor'] ?>" autocomplete="off" <?php echo $state ?>>
                                                                         <!--invalid feedback-->
                                                                         <p class="fw-bolder text-center text-danger"></p>
                                                                     </div>
                                                                 </div>
-                                                                <div class="row mb-3 text-center">
+                                                                <div class="row mb-3">
                                                                     <?php
                                                                     (isset($vacStatus['firstdose'])) ? $state = '' : $state = 'disabled';
                                                                     ?>
-                                                                    <p class="h6">2nd Dose</p>
-                                                                    <div class="col text-center">
+                                                                    <p class="fs-4 fw-bold text-center">2nd Dose</p>
+                                                                    <div class="col">
+                                                                        <span class="fs-5 fw-semibold">Date</span>
                                                                         <input type="hidden" name="seconddose[3]" class="form-control" value="">
                                                                         <input type="date" name="seconddose[3]" data-activate='input[type="text"][name="seconddoctor[3]"], input[type="date"][name="booster[3]"]' data-required='input[type="text"][name="seconddoctor[3]"]' class="form-control" value="<?php echo $vacStatus['seconddose'] ?>" autocomplete="off" <?php echo $state ?>>
-                                                                        <!--TODO:Invalid Feedback-->
-                                                                        <p></p>
+                                                                        <!--Invalid Feedback-->
+                                                                        <p class="fw-bolder text-center text-danger"></p>
                                                                     </div>
                                                                     <?php
                                                                     (isset($vacStatus['seconddose'])) ? $state = 'required' : $state = 'disabled';
                                                                     ?>
                                                                     <div class="col">
+                                                                        <span class="fs-5 fw-semibold">Doctor</span>
                                                                         <input type="hidden" name="seconddoctor[3]" class="form-control" value="">
                                                                         <input type="text" name="seconddoctor[3]" class="form-control" placeholder="Doctor" value="<?php echo $vacStatus['seconddoctor'] ?>" autocomplete="off" <?php echo $state ?>>
                                                                         <!--invalid feedback-->
@@ -922,11 +975,11 @@
                                                                     <?php
                                                                     (isset($vacStatus['firstdose'])) ? $state = 'required' : $state = 'disabled';
                                                                     ?>
-                                                                    <p class="h6">Brand</p>
+                                                                    <span class="fs-5 fw-semibold me-4">Vaccine Brand</span>
                                                                     <div class="col text-center">
                                                                         <input type="hidden" name="vacbrand[3]" class="form-control" value="">
-                                                                        <select class="form-select" name="vacbrand[3]" value="<?php echo $vacStatus['vacbrand'] ?>" autocomplete="off" <?php echo $state ?>>
-                                                                            <option value="" hidden>Brand</option>
+                                                                        <select class="form-select text-center" name="vacbrand[3]" value="<?php echo $vacStatus['vacbrand'] ?>" autocomplete="off" <?php echo $state ?>>
+                                                                            <option value="" hidden>---</option>
                                                                             <?php
                                                                             $brand = $vac->getData('vacBrand', 'brand');
                                                                             foreach ($brand as $data) {
@@ -939,21 +992,23 @@
                                                                         </select>
                                                                     </div>
                                                                 </div>
-                                                                <div class="row mb-3 text-center">
+                                                                <div class="row mb-3">
                                                                     <?php
                                                                     (isset($vacStatus['seconddose'])) ? $state = '' : $state = 'disabled';
                                                                     ?>
-                                                                    <p class="h6">Booster</p>
-                                                                    <div class="col text-center">
+                                                                    <p class="fs-4 fw-bold text-center">Booster</p>
+                                                                    <div class="col ">
+                                                                        <span class="fs-5 fw-semibold me-4">Date</span>
                                                                         <input type="hidden" name="booster[3]" class="form-control" value="">
                                                                         <input type="date" name="booster[3]" data-activate='input[type="text"][name="boosterdoctor[3]"], select[name="boosterbrand[3]"]' data-required='input[type="text"][name="boosterdoctor[3]"], select[name="boosterbrand[3]"]' class="form-control" value="<?php echo $vacStatus['booster'] ?>" autocomplete="off" <?php echo $state ?>>
-                                                                        <!--TODO:Invalid Feedback-->
-                                                                        <p></p>
+                                                                        <!--Invalid Feedback-->
+                                                                        <p class="fw-bolder text-center text-danger"></p>
                                                                     </div>
                                                                     <?php
                                                                     (isset($vacStatus['booster'])) ? $state = 'required' : $state = 'disabled';
                                                                     ?>
                                                                     <div class="col">
+                                                                        <span class="fs-5 fw-semibold me-4">Doctor</span>
                                                                         <input type="hidden" name="boosterdoctor[3]" class="form-control" value="">
                                                                         <input type="text" name="boosterdoctor[3]" class="form-control" placeholder="Doctor" value="<?php echo $vacStatus['boosterdoctor'] ?>" autocomplete="off" <?php echo $state ?>>
                                                                         <!--invalid feedback-->
@@ -961,11 +1016,11 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="row mb-3 text-center">
-                                                                    <p class="h6">Brand</p>
+                                                                    <span class="fs-5 fw-semibold me-4">Vaccine Brand</span>
                                                                     <div class="col text-center">
                                                                         <input type="hidden" name="boosterbrand[3]" class="form-control" value="">
-                                                                        <select class="form-select" name="boosterbrand[3]" autocomplete="off" <?php echo $state ?>>
-                                                                            <option value="" hidden>Booster Brand</option>
+                                                                        <select class="form-select text-center" name="boosterbrand[3]" autocomplete="off" <?php echo $state ?>>
+                                                                            <option value="" hidden>---</option>
                                                                             <?php
                                                                             foreach ($brand as $data) {
                                                                                 (strcmp($data['brand'], $vacStatus['boosterbrand']) == 0) ? $state = 'selected' : $state = '';
@@ -979,8 +1034,8 @@
                                                                 </div>
                                                             </div>
                                                             <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                                                                <button type="button" class="btn " style="background-color:rgb(16, 45, 65); color:white" data-bs-dismiss="modal">Close</button>
+                                                                <button type="submit" class="btn " style="background-color:rgb(237, 126, 0); color:white">Save</button>
                                                             </div>
                                                         </form>
                                                     </div>
@@ -1017,34 +1072,38 @@
                             <button class="btn btn-outline-success" role="button" data-bs-toggle="modal" data-bs-target="#createFacultyModal">+</button>
                         </div>
                         <!--Faculty Insert Modal-->
-                        <div class="modal fade" id="createFacultyModal" tabindex="-1" aria-labelledby="createFacultyLabel" aria-hidden="true">
+                        <div class="modal fade" id="createFacultyModal" tabindex="-1" aria-labelledby="createFacultyLabel" aria-hidden="true" style="margin-left:7%;">
                             <div class="modal-dialog modal-dialog-centered modal-lg overflow-auto">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="createFacultyLabel">Faculty</h5>
+                                        <p class="modal-title fs-2" style="font-weight:900;" id="createStudentLabel">Faculty</p>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <form action="adminview.php?submit=2" method="POST" data-validation="2">
                                         <div class="modal-body">
                                             <div class="row mb-3">
                                                 <div class="col">
-                                                    <input type="text" name="id[2]" class="form-control" placeholder="ID no." autocomplete="off" required>
+                                                    <span class="fs-5 fw-semibold">ID No.</span>
+                                                    <input type="text" name="id[2]" class="form-control" autocomplete="off" required>
                                                     <p class="fw-bolder text-center text-danger"></p>
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
                                                 <div class="col">
-                                                    <input type="text" name="fname[2]" class="form-control" placeholder="First name" autocomplete="off" required>
+                                                    <span class="fs-5 fw-semibold">First Name</span>
+                                                    <input type="text" name="fname[2]" class="form-control" autocomplete="off" required>
                                                     <!--invalid feedback-->
                                                     <p class="fw-bolder text-center text-danger"></p>
                                                 </div>
                                                 <div class="col">
-                                                    <input type="text" name="mname[2]" class="form-control" placeholder="Middle name" autocomplete="off" required>
+                                                    <span class="fs-5 fw-semibold">Middle Name</span>
+                                                    <input type="text" name="mname[2]" class="form-control" autocomplete="off" required>
                                                     <!--invalid feedback-->
                                                     <p class="fw-bolder text-center text-danger"></p>
                                                 </div>
                                                 <div class="col">
-                                                    <input type="text" name="lname[2]" class="form-control" placeholder="Last name" autocomplete="off" required>
+                                                    <span class="fs-5 fw-semibold">Last Name</span>
+                                                    <input type="text" name="lname[2]" class="form-control" autocomplete="off" required>
                                                     <!--invalid feedback-->
                                                     <p class="fw-bolder text-center text-danger"></p>
                                                     <input type="hidden" name="name[2]">
@@ -1052,18 +1111,21 @@
                                             </div>
                                             <div class="row mb-3">
                                                 <div class="col">
-                                                    <input type="email" name="email[2]" class="form-control" id="emailFormControl" placeholder="Email" required>
+                                                    <span class="fs-5 fw-semibold">Email</span>
+                                                    <input type="email" name="email[2]" class="form-control" id="emailFormControl" required>
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
                                                 <div class="col">
-                                                    <input type="text" name="tel[2]" class="form-control" placeholder="Telephone No." required>
+                                                    <span class="fs-5 fw-semibold">Phone No.</span>
+                                                    <input type="text" name="tel[2]" class="form-control" placeholder="09XXXXXXXXX" required>
                                                     <!--Invalid Feedback-->
-                                                    <p></p>
+                                                    <p class="fw-bolder text-center text-danger"></p>
                                                 </div>
-                                                <div class="col input-group">
-                                                    <select class="form-select" name="gender[2]" required>
-                                                        <option value="" hidden>Gender</option>
+                                                <div class="col">
+                                                    <span class="fs-5 fw-semibold">Gender</span>
+                                                    <select class="form-select text-center" name="gender[2]" required>
+                                                        <option value="" hidden>---</option>
                                                         <option value="Male">Male</option>
                                                         <option value="Female">Female</option>
                                                     </select>
@@ -1071,63 +1133,72 @@
                                             </div>
                                             <div class="row mb-3">
                                                 <div class="col">
+                                                    <span class="fs-5 fw-semibold">Birthday</span>
                                                     <input type="date" name="birthday[2]" class="form-control" required>
-                                                    <!--TODO:Invalid Feedback-->
-                                                    <p></p>
+                                                    <!--Invalid Feedback-->
+                                                    <p class="fw-bolder text-center text-danger"></p>
                                                 </div>
                                                 <div class="col">
-                                                    <input type="text" name="address[2]" class="form-control" placeholder="Address" required>
+                                                    <span class="fs-5 fw-semibold">Address</span>
+                                                    <input type="text" name="address[2]" class="form-control" required>
                                                 </div>
                                             </div>
                                             <hr>
-                                            <div class="row mb-3 text-center">
-                                                <p class="h5">Vaccine Status</p>
-                                                <p class="h6">1st Dose</p>
-                                                <div class="col text-center">
+                                            <div class="row mb-3">
+                                                <p class="fs-2" style="font-weight:900;">Vaccine Status</p>
+                                                <p class="fs-4 fw-bold text-center">1st Dose</p>
+                                                <div class="col">
+                                                    <span class="fs-5 fw-semibold">Date</span>
                                                     <input type="hidden" name="firstdose[2]" class="form-control" value="">
                                                     <input type="date" name="firstdose[2]" data-activate='input[type="text"][name="firstdoctor[2]"], input[type="date"][name="seconddose[2]"], select[name="vacbrand[2]"]' data-required='input[type="text"][name="firstdoctor[2]"], select[name="vacbrand[2]"]' class="form-control" autocomplete="off">
-                                                    <!--TODO:Invalid Feedback-->
-                                                    <p></p>
+                                                    <!--Invalid Feedback-->
+                                                    <p class="fw-bolder text-center text-danger"></p>
                                                 </div>
                                                 <div class="col">
+                                                    <span class="fs-5 fw-semibold">Doctor</span>
                                                     <input type="hidden" name="firstdoctor[2]" class="form-control" value="">
                                                     <input type="text" name="firstdoctor[2]" class="form-control" placeholder="Doctor" autocomplete="off" disabled>
                                                     <!--invalid feedback-->
                                                     <p class="fw-bolder text-center text-danger"></p>
                                                 </div>
                                             </div>
-                                            <div class="row mb-3 text-center">
-                                                <p class="h6">2nd Dose</p>
-                                                <div class="col text-center">
+                                            <div class="row mb-3">
+                                                <p class="fs-4 fw-bold text-center">2nd Dose</p>
+                                                <div class="col">
+                                                    <span class="fs-5 fw-semibold">Date</span>
                                                     <input type="hidden" name="seconddose[2]" class="form-control" value="">
                                                     <input type="date" name="seconddose[2]" data-activate='input[type="text"][name="seconddoctor[2]"], input[type="date"][name="booster[2]"]' data-required='input[type="text"][name="seconddoctor[2]"]' class="form-control" autocomplete="off" disabled>
-                                                    <!--TODO:Invalid Feedback-->
-                                                    <p></p>
+                                                    <!--Invalid Feedback-->
+                                                    <p class="fw-bolder text-center text-danger"></p>
                                                 </div>
                                                 <div class="col">
+                                                    <span class="fs-5 fw-semibold">Doctor</span>
                                                     <input type="hidden" name="seconddoctor[2]" class="form-control" value="">
                                                     <input type="text" name="seconddoctor[2]" class="form-control" placeholder="Doctor" autocomplete="off" disabled>
                                                     <!--invalid feedback-->
                                                     <p class="fw-bolder text-center text-danger"></p>
                                                 </div>
                                             </div>
-                                            <div class="row mb-3 text-center">
+                                            <div class="row mb-3">
                                                 <div class="col text-center">
+                                                    <span class="fs-5 fw-semibold me-4">Vaccine Brand</span>
                                                     <input type="hidden" name="vacbrand[2]" class="form-control" value="">
-                                                    <select class="form-select" name="vacbrand[2]" autocomplete="off" disabled>
+                                                    <select class="form-select text-center" name="vacbrand[2]" autocomplete="off" disabled>
                                                         <option hidden>Brand</option>
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="row mb-3 text-center">
-                                                <p class="h6">Booster</p>
-                                                <div class="col text-center">
+                                            <div class="row mb-3">
+                                                <p class="fs-4 fw-bold text-center">Booster</p>
+                                                <div class="col">
+                                                    <span class="fs-5 fw-semibold">Date</span>
                                                     <input type="hidden" name="booster[2]" class="form-control" value="">
                                                     <input type="date" name="booster[2]" data-activate='input[type="text"][name="boosterdoctor[2]"], select[name="boosterbrand[2]"]' data-required='input[type="text"][name="boosterdoctor[2]"], select[name="boosterbrand[2]"]' class="form-control" autocomplete="off" disabled>
-                                                    <!--TODO:Invalid Feedback-->
-                                                    <p></p>
+                                                    <!--Invalid Feedback-->
+                                                    <p class="fw-bolder text-center text-danger"></p>
                                                 </div>
                                                 <div class="col">
+                                                    <span class="fs-5 fw-semibold">Doctor</span>
                                                     <input type="hidden" name="boosterdoctor[2]" class="form-control" value="">
                                                     <input type="text" name="boosterdoctor[2]" class="form-control" placeholder="Doctor" autocomplete="off" disabled>
                                                     <!--invalid feedback-->
@@ -1136,22 +1207,24 @@
                                             </div>
                                             <div class="row mb-3 text-center">
                                                 <div class="col text-center">
+                                                    <span class="fs-5 fw-semibold me-4">Vaccine Brand</span>
                                                     <input type="hidden" name="boosterbrand[2]" class="form-control" value="">
-                                                    <select class="form-select" name="boosterbrand[2]" autocomplete="off" disabled>
+                                                    <select class="form-select text-center" name="boosterbrand[2]" autocomplete="off" disabled>
                                                         <option hidden>Booster Brand</option>
                                                     </select>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn btn-primary">Save</button>
+                                            <button type="button" class="btn" style="background-color:rgb(16, 45, 65); color:white" data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn" style="background-color:rgb(237, 126, 0); color:white">Save</button>
                                         </div>
                                     </form>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <!-- vaccine modal -->
                     <!--TODO:Modal on Edit and Create not working-->
                     <!--Vac Manufacturer Modal-->
                     <div class="modal fade" id="vacManufacturerModal" tabindex="-1" aria-labelledby="vacManufacturerLabel" aria-hidden="true">
@@ -1161,9 +1234,9 @@
                                     <h5 class="modal-title" id="vacManufacturerLabel">Vaccine Manufacturer</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
-                                <div class="modal-header">
+                                <div class="modal-body">
 
-                                    <div class="d-flex">
+                                    <div class="d-flex" style="margin-left:44%;">
                                         <div class="d-flex">
                                             <input class="search" type="search" placeholder="Search" aria-label="Search" data-table="#vacContent">
                                             <span class="input-group-text border-0" id="search-addon">
@@ -1172,7 +1245,7 @@
                                         </div>
                                     </div>
                                     <div class="container mt-4">
-                                        <table class="table table-stripe table-borderless rounded">
+                                        <table class="table table-stripe table-borderless rounded" style="margin-left:10%;">
                                             <!--table-->
                                             <thead>
                                                 <tr style="background-color:rgb(2, 46, 67) ; color:white;">
@@ -1264,7 +1337,7 @@
                                         <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="createVacLabel">Create</h5>
+                                                    <p class="modal-title fs-2" style="font-weight:900;" id="createStudentLabel">Create</p>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <form action="adminview.php?submit=3" method="POST">
