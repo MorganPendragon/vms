@@ -207,7 +207,11 @@ class connection
 	{
 		$sql = "SELECT * FROM $table WHERE $condition";
 		$result = $this->conn->query($sql);
-		return $result->num_rows;
+		if ($result->num_rows != 0) {
+			return $result->num_rows;
+		} else {
+			return 0;
+		}
 	}
 
 	//TODO:Report filter and update this BS
@@ -264,20 +268,80 @@ if (isset($_POST['tableName'])) {
 	echo json_encode($row);
 }
 
+$totalStudent = $conn->find('vaccinestatus', "id REGEXP '^[0-9]{1,2}-[0-9]{6,6}$'");
+$totalFaculty = $conn->find('vaccinestatus', "id REGEXP '^F[0-9]{1,1}-[0-9]{6,6}$'");
 //chart json 
 if (isset($_GET['chart'])) {
-	switch($_GET['chart'])
-	{
-		case 'overall':
+	switch ($_GET['chart']) {
+		case 'firstAndSecond':
 			$row = $conn->display('vacbrand');
 			for ($i = 0; $i < count($row); $i++) {
 				$brand[] = $row[$i]['brand'];
 			}
 			for ($i = 0; $i < count($row); $i++) {
-				$value[] = count($conn->display('vaccinestatus', 'vacbrand', $brand[$i], 1));
+				$value[] = $conn->find('vaccinestatus', "vacbrand = '$brand[$i]'");
 			}
-			$test = array_combine($brand, $value);
-			echo json_encode($test);
+			$result = array_combine($brand, $value);
+			echo json_encode($result);
+			break;
+		case 'booster':
+			$row = $conn->display('vacbrand');
+			for ($i = 0; $i < count($row); $i++) {
+				$brand[] = $row[$i]['brand'];
+			}
+			for ($i = 0; $i < count($row); $i++) {
+				$value[] = $conn->find('vaccinestatus', "boosterbrand = '$brand[$i]'");
+			}
+			$result = array_combine($brand, $value);
+			echo json_encode($result);
+			break;
+		case 'firstDoseStudent':
+			$key = ['First Dose Only', 'Total Student'];
+			$value = array();
+			array_push($value, $conn->find('vaccinestatus', "id REGEXP '^[0-9]{1,2}-[0-9]{6,6}$' and firstdose IS NOT NULL"));
+			array_push($value, $totalStudent);
+			$result = array_combine($key, $value);
+			echo json_encode($result);
+			break;
+		case 'firstDoseFaculty':
+			$key = ['First Dose Only', 'Total Faculty'];
+			$value = array();
+			array_push($value, $conn->find('vaccinestatus', "id REGEXP '^F[0-9]{1,1}-[0-9]{6,6}$' and firstdose IS NOT NULL"));
+			array_push($value, $totalFaculty);
+			$result = array_combine($key, $value);
+			echo json_encode($result);
+			break;
+		case 'completeDoseStudent':
+			$key = ['Complete Dose', 'Total Student'];
+			$value = array();
+			array_push($value, $conn->find('vaccinestatus', "id REGEXP '^[0-9]{1,2}-[0-9]{6,6}$' and seconddose IS NOT NULL"));
+			array_push($value, $totalStudent);
+			$result = array_combine($key, $value);
+			echo json_encode($result);
+			break;
+		case 'completeDoseFaculty':
+			$key = ['Complete Dose', 'Total Faculty'];
+			$value = array();
+			array_push($value, $conn->find('vaccinestatus', "id REGEXP '^F[0-9]{1,1}-[0-9]{6,6}$' and seconddose IS NOT NULL"));
+			array_push($value, $totalFaculty);
+			$result = array_combine($key, $value);
+			echo json_encode($result);
+			break;
+		case 'boosterStudent':
+			$key = ['Booster', 'Total Student'];
+			$value = array();
+			array_push($value, $conn->find('vaccinestatus', "id REGEXP '^[0-9]{1,2}-[0-9]{6,6}$' and booster IS NOT NULL"));
+			array_push($value, $totalStudent);
+			$result = array_combine($key, $value);
+			echo json_encode($result);
+			break;
+		case 'boosterFaculty':
+			$key = ['Booster', 'Total Faculty'];
+			$value = array();
+			array_push($value, $conn->find('vaccinestatus', "id REGEXP '^F[0-9]{1,1}-[0-9]{6,6}$' and booster IS NOT NULL"));
+			array_push($value, $totalFaculty);
+			$result = array_combine($key, $value);
+			echo json_encode($result);
 			break;
 	}
 }

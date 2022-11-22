@@ -8,6 +8,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>AdminView</title>
+    <link rel="shortcut icon" href="#">
     <!--font-->
     <link href="https://fonts.cdnfonts.com/css/montserrat" rel="stylesheet">
     <!--bootstrap css-->
@@ -76,43 +77,57 @@
             border-radius: 10px;
         }
 
-        .vacmanu{
-           width:80%;
-           height:300px;
-           margin-left:10%; 
-           
-            
+        .vacmanu {
+            width: 80%;
+            height: 300px;
+            margin-left: 10%;
+
+
 
         }
     </style>
-    <script>
+    <script type="text/javascript">
         $(function() {
-            var dataPoints = [];
-            var chart = new CanvasJS.Chart("brandOverall", {
-                showInLegend: true,
-                data: [{
-                    type: "pie",
-                    dataPoints: dataPoints,
-                }]
-            });
-            /*Ajax request for charts on dashboard*/
-            $.getJSON("conn.php", {
-                    chart: 'overall'
-                })
-                .done(function(data) {
-                    $.each(data, function(index, value) {
-                        console.log(index);
-                        dataPoints.push({
-                            label: index,
-                            y: parseInt(value)
+            var chartId = ['firstAndSecond', 'booster', 'firstDoseStudent', 'firstDoseFaculty', 'completeDoseStudent', 'completeDoseFaculty', 'boosterStudent', 'boosterFaculty'];
+            var chartTitle = ['Vaccine Brand for First and Second Doses', 'Vaccine Brand for Booster', 'Student', 'Faculty', 'Student', 'Faculty', 'Student', 'Faculty'];
+            var chartType = ['doughnut', 'pie'];
+            var chart = [];
+            var type;
+            //chart instantiate
+            $.each(chartId, function(index, value) {
+                var dataPoints = [];
+                //randomizer
+                type = Math.floor((Math.random() * 2));
+                chart.push(new CanvasJS.Chart(value, {
+                    animationEnabled: true,
+                    title: {
+                        text: chartTitle[index],
+                        fontFamily: 'Montserrat',
+                        verticalAlign: "center",
+                        fontSize: 15
+                    },
+                    showInLegend: true,
+                    exportFileName: chartTitle[index],
+                    exportEnabled: true,
+                    data: [{
+                        type: chartType[type],
+                        dataPoints: dataPoints,
+                    }]
+                }));
+                //Ajax request for charts on dashboard
+                $.getJSON("conn.php", {
+                        chart: value
+                    })
+                    .done(function(data) {
+                        $.each(data, function(index, value) {
+                            dataPoints.push({
+                                label: index,
+                                y: parseInt(value)
+                            });
                         });
+                        chart[index].render();
                     });
-                    chart.render();
-                })
-                .fail(function(jqxhr, textStatus, error) {
-                    var err = textStatus + ", " + error;
-                    console.log("Request Failed: " + err);
-                });
+            });
         });
     </script>
 </head>
@@ -258,29 +273,29 @@
 
                                 <div class="lg col-lg mx-3">
                                     <!--Chart-->
-                                    <p class="fs-5  text-start" style="font-weight:900;" >Vaccine Manufacturer</p>
+                                    <p class="fs-5  text-start" style="font-weight:900;">Vaccine Manufacturer</p>
                                     <p class="text-start">This data shows the percentage of vaccine brands on the data gathered on the population</p>
-                                    <div class="vacmanu" id="brandOverall">
+                                    <div class="vacmanu" id="firstAndSecond">
                                     </div>
-                                    
-                                    
+
+
                                 </div>
                                 <div class="lg col-lg mx-3">
-                                    content
+                                    <div class="vacmanu" id="booster"></div>
                                 </div>
                             </div>
                             <div class="row my-5">
-                                <div class="sm col-sm mx-3">
-                                    content
+                                <div id="firstDoseStudent" class="sm col-sm mx-3">
                                 </div>
-                                <div class="sm col-sm mx-3">
-                                    content
+                                <div id="firstDoseFaculty" class="sm col-sm mx-3">
                                 </div>
-                                <div class="sm col-sm mx-3">
-                                    content
+                                <div id="completeDoseStudent" class="sm col-sm mx-3">
                                 </div>
-                                <div class="sm col-sm mx-3">
-                                    content
+                                <div id="completeDoseFaculty" class="sm col-sm mx-3">
+                                </div>
+                                <div id="boosterStudent" class="sm col-sm mx-3">
+                                </div>
+                                <div id="boosterFaculty" class="sm col-sm mx-3">
                                 </div>
                             </div>
                         </div>
