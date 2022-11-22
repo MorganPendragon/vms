@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.31, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.31, for Win64 (x86_64)
 --
 -- Host: localhost    Database: Vaccine
 -- ------------------------------------------------------
--- Server version	8.0.31-0ubuntu0.22.04.1
+-- Server version	8.0.31
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -40,17 +40,18 @@ CREATE TABLE `faculty` (
 
 LOCK TABLES `faculty` WRITE;
 /*!40000 ALTER TABLE `faculty` DISABLE KEYS */;
+INSERT INTO `faculty` VALUES ('F1-123414','gavsdv:ghjg:ghchg','test@email.com','09284617234','Female','2022-11-19','asf'),('F1-231232','xfac:sad:asd','test@email.com','09284617234','Male','2022-12-08','asd'),('F1-412412','lkjasfl:lhl:dcnvbc','test@email.com','09284617234','Male','2022-11-19','fgak'),('F2-123132','xacas:sda:zxc','eme@email.com','09432345256','Female','2022-11-12','licaong NE'),('F2-142412','jkhk:nbmn:cdgh','test@email.com','09284617234','Male','2022-11-11','jhkh'),('F2-212313','klajsd:kjg:ghd','test@email.com','09284617234','Female','2022-11-04','ljkk');
 /*!40000 ALTER TABLE `faculty` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `logCredentials`
+-- Table structure for table `logcredentials`
 --
 
-DROP TABLE IF EXISTS `logCredentials`;
+DROP TABLE IF EXISTS `logcredentials`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `logCredentials` (
+CREATE TABLE `logcredentials` (
   `id` varchar(30) NOT NULL,
   `password` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -58,13 +59,13 @@ CREATE TABLE `logCredentials` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `logCredentials`
+-- Dumping data for table `logcredentials`
 --
 
-LOCK TABLES `logCredentials` WRITE;
-/*!40000 ALTER TABLE `logCredentials` DISABLE KEYS */;
-INSERT INTO `logCredentials` VALUES ('12-123456','9uhc4azd'),('21-654321','lrofuif8');
-/*!40000 ALTER TABLE `logCredentials` ENABLE KEYS */;
+LOCK TABLES `logcredentials` WRITE;
+/*!40000 ALTER TABLE `logcredentials` DISABLE KEYS */;
+INSERT INTO `logcredentials` VALUES ('12-321234','wkffs46m'),('12-326732','7ofo2ja2'),('12-372345','7imxxarl'),('12-372743','lkmz8qzq'),('12-372747','8f4m8eib'),('21-123728','73ep3xce'),('21-232134','sjld149o'),('23-212654','qv7hm6m3'),('31-123128','y2g9igf7'),('43-123215','0o8rus0u'),('F1-123414','xbqdrp2w'),('F1-231232','lmlc082w'),('F1-412412','pn8yrujj'),('F2-123132','2qn3vseu'),('F2-142412','l7llazpl'),('F2-212313','60iiqkfj');
+/*!40000 ALTER TABLE `logcredentials` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -94,41 +95,41 @@ CREATE TABLE `student` (
 
 LOCK TABLES `student` WRITE;
 /*!40000 ALTER TABLE `student` DISABLE KEYS */;
-INSERT INTO `student` VALUES ('12-987654','jack mah boi','Grade 7','Enrolled','lordbatumbakal@email.com','09123456789','Female','2020-09-12','guimba'),('21-345678','percy val damn','Grade 8','Dropped','lordbatumbakal@email.com','09123456789','Female','2019-08-12','guimba'),('21-654321','jay emma sadboi','Grade 8','Enrolled','lordbatumbakal@email.com','09123456789','Female','2019-08-11','guimba');
+INSERT INTO `student` VALUES ('12-321234','qwe:qwe:as','Grade 9','Enrolled','testa@gmail.com','09224521234','Male','2022-11-08','asdsd'),('12-326732','asd:asd:asd','Grade 8','Enrolled','test@gmail.com','09224521234','Male','2022-11-20','test'),('12-372345','asdq:asd:aa','Grade 10','Enrolled','testa@gmail.com','09224521234','Female','2022-11-09','asdsd'),('12-372743','asd:s:sasd','Grade 9','Enrolled','test@gmail.com','09224521234','Male','2022-11-21','asdsd'),('12-372747','asd:asd:asd','Grade 8','Enrolled','test@gmail.com','09224521234','Male','2022-11-08','add'),('21-123728','aasd:asd:s','Grade 9','Dropped','testa@gmail.com','09224521234','Female','2022-11-02','add'),('21-232134','asd:asd:asd','Grade 7','Enrolled','test@gmail.com','09224521234','Male','2022-11-24','asdsd'),('23-212654','asd:a:sdasd','Grade 9','Enrolled','testa@gmail.com','09224521234','Female','2022-11-01','add'),('31-123128','asd:a:asds','Grade 7','Dropped','testa@gmail.com','09224521234','Male','2022-11-21','test'),('43-123215','as:h:gajsd','Grade 7','Enrolled','test@gmail.com','09224521234','Male','2022-11-09','asdsd');
 /*!40000 ALTER TABLE `student` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `vacBrand`
+-- Table structure for table `vacbrand`
 --
 
-DROP TABLE IF EXISTS `vacBrand`;
+DROP TABLE IF EXISTS `vacbrand`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `vacBrand` (
+CREATE TABLE `vacbrand` (
   `brand` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   UNIQUE KEY `brand1` (`brand`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `vacBrand`
+-- Dumping data for table `vacbrand`
 --
 
-LOCK TABLES `vacBrand` WRITE;
-/*!40000 ALTER TABLE `vacBrand` DISABLE KEYS */;
-INSERT INTO `vacBrand` VALUES ('astra'),('brimdaddy'),('meh'),('num'),('test');
-/*!40000 ALTER TABLE `vacBrand` ENABLE KEYS */;
+LOCK TABLES `vacbrand` WRITE;
+/*!40000 ALTER TABLE `vacbrand` DISABLE KEYS */;
+INSERT INTO `vacbrand` VALUES ('astra'),('j&j'),('moderna'),('pfizer'),('sino');
+/*!40000 ALTER TABLE `vacbrand` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `vaccineStatus`
+-- Table structure for table `vaccinestatus`
 --
 
-DROP TABLE IF EXISTS `vaccineStatus`;
+DROP TABLE IF EXISTS `vaccinestatus`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `vaccineStatus` (
+CREATE TABLE `vaccinestatus` (
   `id` varchar(30) NOT NULL,
   `firstdose` date DEFAULT NULL,
   `firstdoctor` varchar(1500) DEFAULT NULL,
@@ -143,13 +144,13 @@ CREATE TABLE `vaccineStatus` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `vaccineStatus`
+-- Dumping data for table `vaccinestatus`
 --
 
-LOCK TABLES `vaccineStatus` WRITE;
-/*!40000 ALTER TABLE `vaccineStatus` DISABLE KEYS */;
-INSERT INTO `vaccineStatus` VALUES ('12-987654',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),('21-345678',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),('21-654321','2017-08-11','gad',NULL,NULL,'meh',NULL,NULL,NULL);
-/*!40000 ALTER TABLE `vaccineStatus` ENABLE KEYS */;
+LOCK TABLES `vaccinestatus` WRITE;
+/*!40000 ALTER TABLE `vaccinestatus` DISABLE KEYS */;
+INSERT INTO `vaccinestatus` VALUES ('12-321234','2022-11-10','asd','2022-11-14','asd','sino','2022-11-21','sda','astra'),('12-326732','2022-11-17','sda','2022-11-09','asd','j&j','2022-11-25','asda','j&j'),('12-372345','2022-11-09','asda','2022-11-14','asd','moderna','2022-11-30','asd','pfizer'),('12-372743','2022-11-14','asdw','2022-11-20','asd','astra','2022-11-10','asda','moderna'),('12-372747','2022-11-11','happy','2022-11-07','happy','j&j','2022-11-01','happy','j&j'),('21-123728','2022-11-17','asdad','2022-11-12','asd','sino','2022-11-29','asd','pfizer'),('21-232134','2022-11-09','asda','2022-11-16','asd','pfizer','2022-11-18','asda','astra'),('23-212654','2022-11-17','asd','2022-11-22','asd','j&j','2022-11-06','asda','astra'),('31-123128','2022-11-15','asd','2022-11-16','asda','j&j','2022-11-14','asd','moderna'),('43-123215','2022-11-08','asd','2022-11-23','asd','astra','2022-11-24','asd','pfizer'),('F1-123414','2022-11-19','af','2022-11-18','dsga','astra','2022-11-26','jkh','pfizer'),('F1-231232','2022-12-02','ad','2022-11-17','qwe','pfizer','2022-11-12','qwe','j&j'),('F1-412412','2022-11-19','klj','2022-11-10','jhkjh','moderna','2022-11-05','nmb','j&j'),('F2-123132','2022-11-19','aweqw','2022-11-19','rqwtrfcas','astra','2022-11-19','ASDW','moderna'),('F2-142412','2022-11-05','mnb','2022-11-12','bnvc','astra','2022-11-12','nbmnb','sino'),('F2-212313','2022-11-03','hjgjhg','2022-11-25','hjgjhg','j&j','2022-12-03','hjgjhgj','sino');
+/*!40000 ALTER TABLE `vaccinestatus` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -161,4 +162,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-11-16 19:15:58
+-- Dump completed on 2022-11-23  1:08:35
