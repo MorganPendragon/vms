@@ -86,6 +86,12 @@
             box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.25);
             border-radius: 10px;
         }
+        .vacmanu{
+            height: 300px;
+            width: 85%;
+            margin-left: 8%;
+
+        }
     </style>
     <script>
         $(function() {
@@ -258,9 +264,11 @@
 
                                 <div class="lg col-lg mx-3">
                                     <!--Chart-->
-                                    <div style="width:50%; margin-left:14%; margin-top:20%;" id="brandOverall">
+                                    <p class="fs-5 pt-2  text-start" style="font-weight:900;" >Vaccine Manufacturer</p>
+                                    <p class="text-start">This data shows the percentage of vaccine brands on the data gathered on the population</p>
+                                    <div class="vacmanu" id="brandOverall">
                                     </div>
-                                    <p class="fs-5 fw-semibold">Vaccine Manufacturer</pc>
+                                    
                                     
                                 </div>
                                 <div class="col-xl">
