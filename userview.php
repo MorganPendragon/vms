@@ -55,6 +55,9 @@
 	.nav-pills {
 		--bs-nav-pills-link-active-bg: rgb(14, 32, 45);
 	}
+	.button{
+		padding: 4px 80px;
+	}
 </style>
 
 <body>
@@ -78,9 +81,9 @@
 				<div id="account">
 					<div class="d-flex">
 						<span class="fs-1" style="font-weight:900;">Account Information</span>
-						<div class="d-flex gap-2" style="margin-left:50%;">
-							<button class="btn rounded-pill mt-2 fs-5" style="background-color:rgb(16, 45, 65); color:white" type="button">Edit</button>
-							<button class="btn rounded-pill mt-2 fs-5" style="background-color:rgb(237, 126, 0); color:white" type="button">Save</button>
+						<div class=" gap-2" style="margin-left:30%;">
+							<button class="btn button rounded-pill mt-2 fs-5" style="background-color:rgb(16, 45, 65); color:white" type="button">Edit</button>
+							<button class="btn button rounded-pill mt-2 fs-5" style="background-color:rgb(237, 126, 0); color:white" type="button">Save</button>
 						</div>
 					</div>
 					<div id="disabled">
@@ -95,7 +98,7 @@
 								<div class="row mb-3">
 									<div class="col">
 										<span class="fs-5 fw-semibold">ID No.</span>
-										<input type="text" class="form-control" name="id[0]" placeholder="ID No." value="<?php echo $info['id'] ?>" autocomplete="off" required>
+										<input type="text" class="form-control" name="id[0]" value="<?php echo $info['id'] ?>" autocomplete="off" required>
 										<p class="fw-bolder text-center text-danger"></p>
 									</div>
 								</div>
@@ -140,7 +143,7 @@
 										<span class="fs-5 fw-semibold">Telephone No.</span>
 										<input type="text" name="tel[0]" class="form-control" placeholder="09XXXXXXXXX" required>
 										<!--Invalid Feedback-->
-										<p></p>
+										<p class="fw-bolder text-center text-danger"></p>
 									</div>
 									<div class="col-6">
 										<span class="fs-5 fw-semibold">Gender</span>
@@ -155,8 +158,8 @@
 									<div class="col">
 										<span class="fs-5 fw-semibold">Date</span>
 										<input type="date" name="birthday[0]" class="form-control" required>
-										<!--TODO:Invalid Feedback-->
-										<p></p>
+										<!--Invalid Feedback-->
+										<p class="fw-bolder text-center text-danger"></p>
 									</div>
 									<div class="col">
 										<span class="fs-5 fw-semibold">Address</span>
@@ -172,13 +175,13 @@
 										<span class="fs-5 fw-semibold">Date</span>
 										<input type="hidden" name="firstdose[0]" class="form-control" value="">
 										<input type="date" name="firstdose[0]" data-activate='input[type="text"][name="firstdoctor[0]"], input[type="date"][name="seconddose[0]"], select[name="vacbrand[0]"]' data-required='input[type="text"][name="firstdoctor[0]"], select[name="vacbrand[0]"]' class="form-control" autocomplete="off">
-										<!--TODO:Invalid Feedback-->
-										<p></p>
+										<!--Invalid Feedback-->
+										<p class="fw-bolder text-center text-danger"></p>
 									</div>
 									<div class="col">
 										<span class="fs-5 fw-semibold">Doctor</span>
 										<input type="hidden" name="firstdoctor[0]" class="form-control" value="">
-										<input type="text" name="firstdoctor[0]" class="form-control" placeholder="Doctor" autocomplete="off" disabled>
+										<input type="text" name="firstdoctor[0]" class="form-control" autocomplete="off" disabled>
 										<!--invalid feedback-->
 										<p class="fw-bolder text-center text-danger"></p>
 									</div>
@@ -189,13 +192,13 @@
 										<span class="fs-5 fw-semibold">Date</span>
 										<input type="hidden" name="seconddose[0]" class="form-control" value="">
 										<input type="date" name="seconddose[0]" data-activate='input[type="text"][name="seconddoctor[0]"], input[type="date"][name="booster[0]"]' data-required='input[type="text"][name="seconddoctor[0]"]' class="form-control" autocomplete="off" disabled>
-										<!--TODO:Invalid Feedback-->
-										<p></p>
+										<!--Invalid Feedback-->
+										<p class="fw-bolder text-center text-danger"></p>
 									</div>
 									<div class="col">
 										<span class="fs-5 fw-semibold">Doctor</span>
 										<input type="hidden" name="seconddoctor[0]" class="form-control" value="">
-										<input type="text" name="seconddoctor[0]" class="form-control" placeholder="Doctor" autocomplete="off" disabled>
+										<input type="text" name="seconddoctor[0]" class="form-control" autocomplete="off" disabled>
 										<!--invalid feedback-->
 										<p class="fw-bolder text-center text-danger"></p>
 									</div>
@@ -215,13 +218,13 @@
 										<span class="fs-5 fw-semibold">Date</span>
 										<input type="hidden" name="booster[0]" class="form-control" value="">
 										<input type="date" name="booster[0]" data-activate='input[type="text"][name="boosterdoctor[0]"], select[name="boosterbrand[0]"]' data-required='input[type="text"][name="boosterdoctor[0]"], select[name="boosterbrand[0]"]' class="form-control" autocomplete="off" disabled>
-										<!--TODO:Invalid Feedback-->
-										<p></p>
+										<!--Invalid Feedback-->
+										<p class="fw-bolder text-center text-danger"></p>
 									</div>
 									<div class="col">
 										<span class="fs-5 fw-semibold">Doctor</span>
 										<input type="hidden" name="boosterdoctor[0]" class="form-control" value="">
-										<input type="text" name="boosterdoctor[0]" class="form-control" placeholder="Doctor" autocomplete="off" disabled>
+										<input type="text" name="boosterdoctor[0]" class="form-control" autocomplete="off" disabled>
 										<!--invalid feedback-->
 										<p class="fw-bolder text-center text-danger"></p>
 									</div>
@@ -240,7 +243,7 @@
 						}
 						if (preg_match("/^F[0-9]{1,1}-[0-9]{6,6}$/", $_GET['id']) == 1) {
 						?>
-
+							<!-- Faculty -->
 							<div>
 								<div class="row mb-3">
 									<div class="col">
@@ -288,8 +291,8 @@
 								<div class="row mb-3">
 									<div class="col">
 										<input type="date" name="birthday[1]" class="form-control" required>
-										<!--TODO:Invalid Feedback-->
-										<p></p>
+										<!--Invalid Feedback-->
+										<p class="fw-bolder text-center text-danger"></p>
 									</div>
 									<div class="col">
 										<input type="text" name="address[1]" class="form-control" placeholder="Address" required>
@@ -302,8 +305,8 @@
 									<div class="col text-center">
 										<input type="hidden" name="firstdose[1]" class="form-control" value="">
 										<input type="date" name="firstdose[1]" data-activate='input[type="text"][name="firstdoctor[2]"], input[type="date"][name="seconddose[2]"], select[name="vacbrand[2]"]' data-required='input[type="text"][name="firstdoctor[2]"], select[name="vacbrand[2]"]' class="form-control" autocomplete="off">
-										<!--TODO:Invalid Feedback-->
-										<p></p>
+										<!--Invalid Feedback-->
+										<p class="fw-bolder text-center text-danger"></p>
 									</div>
 									<div class="col">
 										<input type="hidden" name="firstdoctor[1]" class="form-control" value="">
@@ -317,8 +320,8 @@
 									<div class="col text-center">
 										<input type="hidden" name="seconddose[1]" class="form-control" value="">
 										<input type="date" name="seconddose[1]" data-activate='input[type="text"][name="seconddoctor[2]"], input[type="date"][name="booster[2]"]' data-required='input[type="text"][name="seconddoctor[2]"]' class="form-control" autocomplete="off" disabled>
-										<!--TODO:Invalid Feedback-->
-										<p></p>
+										<!--Invalid Feedback-->
+										<p class="fw-bolder text-center text-danger"></p>
 									</div>
 									<div class="col">
 										<input type="hidden" name="seconddoctor[1]" class="form-control" value="">
@@ -340,8 +343,8 @@
 									<div class="col text-center">
 										<input type="hidden" name="booster[1]" class="form-control" value="">
 										<input type="date" name="booster[1]" data-activate='input[type="text"][name="boosterdoctor[2]"], select[name="boosterbrand[2]"]' data-required='input[type="text"][name="boosterdoctor[2]"], select[name="boosterbrand[2]"]' class="form-control" autocomplete="off" disabled>
-										<!--TODO:Invalid Feedback-->
-										<p></p>
+										<!--Invalid Feedback-->
+										<p class="fw-bolder text-center text-danger"></p>
 									</div>
 									<div class="col">
 										<input type="hidden" name="boosterdoctor[1]" class="form-control" value="">
@@ -365,7 +368,7 @@
 						<div>
 							<!--TODO: CSS server response-->
 							<form class="mb-5" id="upload" method="post" enctype="multipart/form-data">
-								<p></p>
+								<p class="fw-bolder text-center text-success"></p>
 								Select image to upload:
 								<input type="file" name="vaccinationCard">
 								<button type="submit" id="upload" class="btn btn-primary">Upload</button>
