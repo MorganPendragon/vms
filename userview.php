@@ -90,10 +90,13 @@
 						<div class="row mb-3">
 						</div>
 						<?php
-
+						include('conn.php');
+						$conn = new connection();
+						$info = $conn->display('student', 'id', $_GET['id']);
+						$name = str_replace(':', ' ', $info['name']);
 						if (preg_match("/^[0-9]{1,2}-[0-9]{6,6}$/", $_GET['id']) == 1) {
 						?>
-							<!--student-->
+								<!--student-->
 							<div>
 								<div class="row mb-3">
 									<div class="col">
@@ -105,7 +108,7 @@
 								<div class="row mb-3">
 									<div class="col">
 										<span class="fs-5 fw-semibold">Full Name</span>
-										<input type="text" name="name[0]" class="form-control">
+										<input type="text" name="name[0]" value="<?php echo $info['id'] ?>" class="form-control">
 										<!--invalid feedback-->
 										<p class="fw-bolder text-center text-danger"></p>
 									</div>
@@ -376,20 +379,8 @@
 						</div>
 					</div>
 				</div>
-				<!-- settings content -->
-				<div class="col-8 position-fixed" id="#settings" style="display:inline-block;">
-					<div class="col">
-						<span class="fs-5 fw-semibold">Year Level</span>
-						<select class="form-select" name="yearLevel[0]" required>
-							<option value="" hidden>---</option>
-							<option value="Grade 7">Grade 7</option>
-							<option value="Grade 8">Grade 8</option>
-							<option value="Grade 9">Grade 9</option>
-							<option value="Grade 10">Grade 10</option>
-							<option value="Grade 11">Grade 11</option>
-							<option value="Grade 12">Grade 12</option>
-						</select>
-					</div>
+				<div class="col-8 position absolute" id="#settings" style="display: none;">
+					content here
 				</div>
 			</div>
 		</div>

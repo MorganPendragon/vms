@@ -24,25 +24,35 @@ class connection
 		}
 	}
 
-	public function displayTable($table)
+	public function __call($name, $arguments)
 	{
-		$sql = "SELECT * FROM $table";
-		$result = $this->conn->query($sql);
-		if ($result->num_rows > 0) {
-			while ($row = $result->fetch_assoc()) {
-				$data[] = $row;
+		if($name == 'display') {
+			switch(count($arguments))
+			{
+				case 1:
+					$sql = "SELECT * FROM $arguments[0]";
+					$result = $this->conn->query($sql);
+					if ($result->num_rows > 0) {
+						while ($row = $result->fetch_assoc()) {
+							$data[] = $row;
+						}
+						return $data;
+					}
+				case 2:
+					$sql = "SELECT $arguments[0] FROM $arguments[1]";
+					$result = $this->conn->query($sql);
+					while ($row = $result->fetch_assoc()) {
+						$data[] = $row;
+					}
+					return $data;
+				case 3:
+					$sql = "SELECT * FROM $arguments[0] WHERE $arguments[1] = '$arguments[2]'";
+					$result = $this->conn->query($sql);
+					if ($result->num_rows != 0) {
+						$row = $result->fetch_assoc();
+						return $row;
+					}
 			}
-			return $data;
-		}
-	}
-
-	public function displayRowByID($table, $col, $id)
-	{
-		$sql = "SELECT * FROM $table WHERE $col = '$id'";
-		$result = $this->conn->query($sql);
-		if ($result->num_rows != 0) {
-			$row = $result->fetch_assoc();
-			return $row;
 		}
 	}
 
@@ -60,16 +70,6 @@ class connection
 			return $colCount;
 		}
 		return $colName;
-	}
-
-	public function getData($table, $column)
-	{
-		$sql = "SELECT $column FROM $table";
-		$result = $this->conn->query($sql);
-		while ($row = $result->fetch_assoc()) {
-			$data[] = $row;
-		}
-		return $data;
 	}
 
 	//insert
@@ -306,6 +306,6 @@ if (isset($_FILES['vaccinationCard']['name'])) {
 }
 
 if (isset($_POST['tableName'])) {
-	$row = $conn->getData($_POST['tableName'], $_POST['column']);
+	$row = $conn->display($_POST['tableName']);
 	echo json_encode($row);
 }
