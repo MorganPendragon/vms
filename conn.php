@@ -56,8 +56,15 @@ class connection
 					$sql = "SELECT * FROM $arguments[0] WHERE $arguments[1] = '$arguments[2]'";
 					$result = $this->conn->query($sql);
 					if ($result->num_rows != 0) {
-						$row = $result->fetch_assoc();
-						return $row;
+						while($row = $result->fetch_assoc())
+						{
+							$data[] = $row;
+						}
+						return $data;
+					}
+					else
+					{
+						return $data = array();
 					}
 
 			}
@@ -257,12 +264,19 @@ if (isset($_POST['tableName'])) {
 	echo json_encode($row);
 }
 
-if (isset($_GET['tableName'])) {
-	$row = $conn->display('vacBrand');
-	for ($i = 0; $i < count($row); $i++) {
-		$brand[] = $row[$i]['brand'];
+if (isset($_GET['chart'])) {
+	switch($_GET['chart'])
+	{
+		case 'overall':
+			$row = $conn->display('vacBrand');
+			for ($i = 0; $i < count($row); $i++) {
+				$brand[] = $row[$i]['brand'];
+			}
+			for ($i = 0; $i < count($row); $i++) {
+				$value[] = count($conn->display('vaccineStatus', 'vacbrand', $brand[$i]));
+			}
+			$test = array_combine($brand, $value);
+			echo json_encode($test);
+			break;
 	}
-	$value = array(8, 7, 6, 5, 4);
-	$test = array_combine($brand, $value);
-	echo json_encode($test);
 }
