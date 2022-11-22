@@ -85,10 +85,6 @@
             box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.25);
             border-radius: 10px;
         }
-        .{
-            background-color: rgb(237, 126, 0);
-            
-        }
 
     </style>
 </head>
@@ -764,7 +760,7 @@
                         <div class="container mt-4">
                             <table class="table table-stripe table-borderless" style="display:inline-block;" data-sortlist="[[0,0], [2,0]]">
                                 <thead>
-                                    <tr style="background-color:rgb(2, 46, 67) ; color:white;">
+                                    <tr style="background-color:rgb(2, 46, 67); color:white;">
                                         <th class="border" scope="col" role="button">ID</th>
                                         <th class="border" scope="col" role="button">Name</th>
                                         <th class="border" scope="col" role="button">Gender</th>

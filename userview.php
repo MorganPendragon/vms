@@ -53,15 +53,11 @@
 	}
 </style>
 <body>
-	<header>
-		<div class="row">
-			<nav class="navbar" style="background-color: #022e43"></nav>
-		</div>
-	</header>
+
 	<main>
 		<div class="row">
 			<!--sidebar-->
-			<div class="col-2" style="background-color:#022e43; height:100vh;" tabindex="1">
+			<div class="col-2 position-fixed" style="background-color:#022e43; height:100vh;" tabindex="1">
 				<img src="img\logo.png" class="img-fluid" alt="...">
 				<ul class="nav nav-pills nav-stacked" id="sidebar">
 					<li class="nav-item">
@@ -73,12 +69,12 @@
 				</ul>
 			</div>
 			<!--content-->
-			<div class="col-8">
+			<div class="col-8" style="margin-left:25%;">
 				<div id="account">
 					<div>
 						<span class="fs-1" style="font-weight:900;">Account Information</span>
-						<button class="btn btn-primary" type="button">Edit</button>
-						<button class="btn btn-primary" type="button">Save</button>
+						<button class="btn rounded-pill mh-100 fs-5" style="background-color:rgb(16, 45, 65); color:white" type="button">Edit</button>
+						<button class="btn rounded-pill mh-100 fs-5" style="background-color:rgb(237, 126, 0); color:white" type="button">Save</button>
 					</div>
 					<div id="disabled">
 						<div class="row mb-3">
