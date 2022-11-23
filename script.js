@@ -204,7 +204,7 @@ $(function () {
         }
         else if (/admin/.test(id)) {
             //redirect to admin
-            if ($('#pwd').val().toString() == 'admin') {
+            if ($('input[name^="password"]').val().toString() == 'admin') {
                 location.href = 'adminview.php';
             }
         }

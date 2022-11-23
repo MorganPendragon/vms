@@ -1286,7 +1286,7 @@
                     <!-- vaccine modal -->
                     <!--TODO:Modal on Edit and Create not working-->
                     <!--Vac Manufacturer Modal-->
-                    <div class="modal fade" id="vacManufacturerModal" tabindex="-1" aria-labelledby="vacManufacturerLabel" aria-hidden="true">
+                    <div class="modal fade position-absolute" id="vacManufacturerModal" tabindex="-1" aria-labelledby="vacManufacturerLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered modal-lg overflow-auto">
                             <div class="modal-content">
                                 <div class="modal-header">
