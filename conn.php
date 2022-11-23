@@ -138,8 +138,7 @@ class connection
 					$j++;
 				}
 			}
-			echo $sql . "\n";
-			$this->conn->query($sql);
+			return $this->conn->query($sql);
 		}
 	}
 
@@ -271,6 +270,8 @@ if (isset($_POST['tableName'])) {
 $totalStudent = $conn->find('vaccinestatus', "id REGEXP '^[0-9]{1,2}-[0-9]{6,6}$'");
 $totalFaculty = $conn->find('vaccinestatus', "id REGEXP '^F[0-9]{1,1}-[0-9]{6,6}$'");
 //chart json 
+//am i high when i did this? probably
+//am i gonna change it? probably not
 if (isset($_GET['chart'])) {
 	switch ($_GET['chart']) {
 		case 'firstAndSecond':
@@ -342,6 +343,21 @@ if (isset($_GET['chart'])) {
 			array_push($value, $totalFaculty);
 			$result = array_combine($key, $value);
 			echo json_encode($result);
+			break;
+	}
+}
+
+if(isset($_POST['action']))
+{
+	switch($_POST['action'])
+	{
+		case 'submit':
+			$table = array($_POST['table'], 'vaccinestatus', 'logcredentials');
+			$conn->insertInfo($_POST, $table);
+			break;
+		case 'update':
+			break;
+		case 'delete':
 			break;
 	}
 }
