@@ -57,8 +57,7 @@
         }
 
         .lg {
-            box-sizing: border-box;
-            width: 398px;
+            min-width: 400px;
             height: 478px;
             left: 495px;
             top: 154px;
@@ -68,13 +67,12 @@
         }
 
         .sm {
-            width: 1331px;
-            height: 233px;
-            left: 495px;
-            top: 735px;
-            background: #ffffff;
-            box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.25);
-            border-radius: 10px;
+            width: 300px;
+            height: 300px;
+            left: 554px;
+            top: 765px;
+            margin-top: 2%;
+            margin-right: 20%;
         }
 
         .vacmanu {
@@ -85,6 +83,19 @@
 
 
         }
+
+        .chart {
+            width: 1650px;
+            height: 400px;
+            left: 495px;
+            top: 657px;
+            background: #ffffff;
+            box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.25);
+            border-radius: 10px;
+
+        }
+
+
     </style>
     <script type="text/javascript">
         $(function() {
@@ -266,10 +277,10 @@
             <div class="container-fluid col-8">
                 <div class="tab-content" id="tableTabContent">
                     <!--Dashboard Tab-->
-                    <div class="tab-pane fade position-absolute" style="margin-left:30;" id="dashboard">
-                        <p class="fs-2 py-3" style="margin-left:5%; font-weight:900;">Dashboard</p>
-                        <div class="container text-center" style="margin-left: 10%;">
-                            <div class="row">
+                    <div class="tab-pane fade position-absolute" id="dashboard">
+                        <p class="fs-2 py-2" style="margin-left:5%; font-weight:900;">Dashboard</p>
+                        <div class="container text-center">
+                            <div class="row" style="margin-left:30%;">
 
                                 <div class="lg col-lg mx-3">
                                     <!--Chart-->
@@ -281,22 +292,26 @@
 
                                 </div>
                                 <div class="lg col-lg mx-3">
+                                    <p class="fs-5  text-start" style="font-weight:900;">Vaccine Manufacturer</p>
+                                    <p class="text-start">This data shows the percentage of vaccine brands on the data gathered on the population</p>
                                     <div class="vacmanu" id="booster"></div>
                                 </div>
                             </div>
-                            <div class="row my-5">
-                                <div id="firstDoseStudent" class="sm col-sm mx-3">
+                            <div class="chart row mb-5 mt-4" style="margin-left:4%;">
+
+                                <div id="firstDoseStudent" class="sm col mx-2">
                                 </div>
-                                <div id="firstDoseFaculty" class="sm col-sm mx-3">
+                                <div id="firstDoseFaculty" class="sm col mx-3">
                                 </div>
-                                <div id="completeDoseStudent" class="sm col-sm mx-3">
+                                <div id="completeDoseStudent" class="sm col mx-2">
                                 </div>
-                                <div id="completeDoseFaculty" class="sm col-sm mx-3">
+                                <div id="completeDoseFaculty" class="sm col mx-3">
                                 </div>
-                                <div id="boosterStudent" class="sm col-sm mx-3">
+                                <div id="boosterStudent" class="sm col mx-2">
                                 </div>
-                                <div id="boosterFaculty" class="sm col-sm mx-3">
+                                <div id="boosterFaculty" class="sm col mx-3 ">
                                 </div>
+
                             </div>
                         </div>
                     </div>
