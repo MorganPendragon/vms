@@ -116,7 +116,7 @@ $(function () {
     }
 
     //form validation
-    $('form[id!="login"][id!="upload"]').on('submit', function (e) {
+/*     $('form[id!="login"][id!="upload"]').on('submit', function (e) {
         if (typeof ($(this).data('validation')) != 'undefined') {
             var validated = 1;
             $password = $($(this).parent().find('input[type="hidden"][name^="password"]'));
@@ -125,11 +125,9 @@ $(function () {
             {
                 $password.val(Math.random().toString(36).substring(2, 10));
             }
-            /*
                 student and faculty id should look like this:
                 student:XX-XXXXXX
                 faculty:FX-XXXXXX
-            */
             switch($(this).data('validation'))
             {
                 case 1:
@@ -186,7 +184,7 @@ $(function () {
                 e.preventDefault();
             }
         }
-    });
+    }); */
 
     //login ajax
     $('form[id="login"]').on('submit', function (e) {
