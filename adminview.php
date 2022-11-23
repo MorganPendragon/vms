@@ -77,7 +77,7 @@
 
         .vacmanu {
             width: 80%;
-            height: 300px;
+            height: 50%;
             margin-left: 10%;
 
 
@@ -85,17 +85,13 @@
         }
 
         .chart {
-            width: 1650px;
+            min-width: 500px;
             height: 400px;
-            left: 495px;
-            top: 657px;
             background: #ffffff;
             box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.25);
             border-radius: 10px;
 
         }
-
-
     </style>
     <script type="text/javascript">
         $(function() {
@@ -284,7 +280,7 @@
 
                                 <div class="lg col-lg mx-3">
                                     <!--Chart-->
-                                    <p class="fs-5  text-start" style="font-weight:900;">Vaccine Manufacturer</p>
+                                    <p class="fs-5  text-start" style="font-weight:900; margin-top:1vh;">Vaccine Manufacturer</p>
                                     <p class="text-start">This data shows the percentage of vaccine brands on the data gathered on the population</p>
                                     <div class="vacmanu" id="firstAndSecond">
                                     </div>
@@ -292,26 +288,33 @@
 
                                 </div>
                                 <div class="lg col-lg mx-3">
-                                    <p class="fs-5  text-start" style="font-weight:900;">Vaccine Manufacturer</p>
+                                    <p class="fs-5  text-start" style="font-weight:900; margin-top:1vh;">Vaccine Manufacturer</p>
                                     <p class="text-start">This data shows the percentage of vaccine brands on the data gathered on the population</p>
                                     <div class="vacmanu" id="booster"></div>
                                 </div>
                             </div>
-                            <div class="chart row mb-5 mt-4" style="margin-left:4%;">
-
-                                <div id="firstDoseStudent" class="sm col mx-2">
+                            <div class="d-flex" style="margin-left:3%;">
+                                <div class="chart row mb-5 mt-4" style="margin-left:4%;">
+                                    <span class="fs-5" style="margin-top:1vh;font-weight:900">First Dose Only</span>
+                                    <div id="firstDoseStudent" class="sm col mx-2">
+                                    </div>
+                                    <div id="firstDoseFaculty" class="sm col mx-3">
+                                    </div>
                                 </div>
-                                <div id="firstDoseFaculty" class="sm col mx-3">
+                                <div class="chart row mb-5 mt-4" style="margin-left:4%;">
+                                    <span class="fs-5" style="margin-top:1vh;font-weight:900">Complete Dose</span>
+                                    <div id="completeDoseStudent" class="sm col mx-2">
+                                    </div>
+                                    <div id="completeDoseFaculty" class="sm col mx-3">
+                                    </div>
                                 </div>
-                                <div id="completeDoseStudent" class="sm col mx-2">
+                                <div class="chart row mb-5 mt-4" style="margin-left:4%;">
+                                    <span class="fs-5" style="margin-top:1vh;font-weight:900">Booster</span>
+                                    <div id="boosterStudent" class="sm col mx-2">
+                                    </div>
+                                    <div id="boosterFaculty" class="sm col mx-3 ">
+                                    </div>
                                 </div>
-                                <div id="completeDoseFaculty" class="sm col mx-3">
-                                </div>
-                                <div id="boosterStudent" class="sm col mx-2">
-                                </div>
-                                <div id="boosterFaculty" class="sm col mx-3 ">
-                                </div>
-
                             </div>
                         </div>
                     </div>
