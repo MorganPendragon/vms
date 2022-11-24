@@ -200,26 +200,6 @@
             if (!isset($_GET['delete'])) {
                 $_GET['delete'] = 0;
             }
-            //insert
-            switch ($_GET['submit']) {
-                case 1:
-                    $table = array('student', 'vaccinestatus', 'logcredentials');
-                    $vac->insertInfo($_POST, $table, true, 0);
-                    header('location:adminview.php');
-                    break;
-                case 2:
-                    $table = array('faculty', 'vaccinestatus', 'logcredentials');
-                    $vac->insertInfo($_POST, $table, true, 2);
-                    header('location:adminview.php');
-                    break;
-                case 3:
-                    $table = array('vacbrand');
-                    $vac->insertInfo($_POST, $table, true, 0);
-                    header('location:adminview.php');
-                    break;
-                default:
-                    break;
-            }
 
             //delete
             switch ($_GET['delete']) {
@@ -675,13 +655,12 @@
                                     </div>
                                     <!--invalid feedback formatting-->
                                     <!--CSS on form-->
-                                    <form action="adminview.php?submit=1" method="POST" data-validation="1" data-password="1">
+                                    <form data-validation="student" data-action="submit">
                                         <div class="modal-body">
                                             <div class="row mb-3">
                                                 <div class="col">
                                                     <span class="fs-5 fw-semibold">ID no.</span>
                                                     <input type="text" class="form-control" name="id[0]" autocomplete="off" required>
-                                                    <input type="hidden" name="password[0]" val="">
                                                     <p class="fw-bolder text-center text-danger"></p>
                                                 </div>
                                             </div>
@@ -703,7 +682,6 @@
                                                     <input type="text" name="lname[0]" class="form-control" autocomplete="off" required>
                                                     <!--invalid feedback-->
                                                     <p class="fw-bolder text-center text-danger"></p>
-                                                    <input type="hidden" name="name[0]">
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
@@ -768,14 +746,12 @@
                                                 <p class="fs-4 fw-bold text-center">1st Dose</p>
                                                 <div class="col">
                                                     <span class="fs-5 fw-semibold">Date</span>
-                                                    <input type="hidden" name="firstdose[0]" class="form-control" value="">
                                                     <input type="date" name="firstdose[0]" data-activate='input[type="text"][name="firstdoctor[0]"], input[type="date"][name="seconddose[0]"], select[name="vacbrand[0]"]' data-required='input[type="text"][name="firstdoctor[0]"], select[name="vacbrand[0]"]' class="form-control" autocomplete="off">
                                                     <!--Invalid Feedback-->
                                                     <p class="fw-bolder text-center text-danger"></p>
                                                 </div>
                                                 <div class="col">
                                                     <span class="fs-5 fw-semibold">Doctor</span>
-                                                    <input type="hidden" name="firstdoctor[0]" class="form-control" value="">
                                                     <input type="text" name="firstdoctor[0]" class="form-control" placeholder="Doctor" autocomplete="off" disabled>
                                                     <!--invalid feedback-->
                                                     <p class="fw-bolder text-center text-danger"></p>
@@ -785,14 +761,12 @@
                                                 <p class="fs-4 fw-bold text-center">2nd Dose</p>
                                                 <div class="col">
                                                     <span class="fs-5 fw-semibold">Date</span>
-                                                    <input type="hidden" name="seconddose[0]" class="form-control" value="">
                                                     <input type="date" name="seconddose[0]" data-activate='input[type="text"][name="seconddoctor[0]"], input[type="date"][name="booster[0]"]' data-required='input[type="text"][name="seconddoctor[0]"]' class="form-control" autocomplete="off" disabled>
                                                     <!--Invalid Feedback-->
                                                     <p class="fw-bolder text-center text-danger"></p>
                                                 </div>
                                                 <div class="col">
                                                     <span class="fs-5 fw-semibold">Doctor</span>
-                                                    <input type="hidden" name="seconddoctor[0]" class="form-control" value="">
                                                     <input type="text" name="seconddoctor[0]" class="form-control" placeholder="Doctor" autocomplete="off" disabled>
                                                     <!--invalid feedback-->
                                                     <p class="fw-bolder text-center text-danger"></p>
@@ -801,7 +775,6 @@
                                             <div class="row mb-3">
                                                 <div class="col text-center me-4">
                                                     <span class="fs-5 fw-semibold">Vaccine Brand</span>
-                                                    <input type="hidden" name="vacbrand[0]" class="form-control" value="">
                                                     <select class="form-select text-center " name="vacbrand[0]" autocomplete="off" disabled>
                                                         <option value="" hidden>Brand</option>
                                                     </select>
@@ -811,14 +784,12 @@
                                                 <p class="fs-4 fw-bold text-center">Booster</p>
                                                 <div class="col">
                                                     <span class="fs-5 fw-semibold">Date</span>
-                                                    <input type="hidden" name="booster[0]" class="form-control" value="">
                                                     <input type="date" name="booster[0]" data-activate='input[type="text"][name="boosterdoctor[0]"], select[name="boosterbrand[0]"]' data-required='input[type="text"][name="boosterdoctor[0]"], select[name="boosterbrand[0]"]' class="form-control" autocomplete="off" disabled>
                                                     <!--Invalid Feedback-->
                                                     <p class="fw-bolder text-center text-danger"></p>
                                                 </div>
                                                 <div class="col">
                                                     <span class="fs-5 fw-semibold">Doctor</span>
-                                                    <input type="hidden" name="boosterdoctor[0]" class="form-control" value="">
                                                     <input type="text" name="boosterdoctor[0]" class="form-control" placeholder="Doctor" autocomplete="off" disabled>
                                                     <!--invalid feedback-->
                                                     <p class="fw-bolder text-center text-danger"></p>
@@ -827,7 +798,6 @@
                                             <div class="row mb-3">
                                                 <div class="col text-center">
                                                     <span class="fs-5 fw-semibold me-4">Vaccine Brand</span>
-                                                    <input type="hidden" name="boosterbrand[0]" class="form-control" value="">
                                                     <select class="form-select text-center" name="boosterbrand[0]" autocomplete="off" disabled>
                                                         <option value="" hidden>Booster Brand</option>
                                                     </select>
