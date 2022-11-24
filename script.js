@@ -1,5 +1,4 @@
 $(function () {
-    //TODO:Code restructure
 
     function $_GETValue() {
         var $_GET = {};
@@ -35,8 +34,14 @@ $(function () {
 
     //activate input
     $('#edit').on('click', function () {
+        var $_GET = $_GETValue();
+        var activate = 8;
+        if (/^[0-9]{1,2}-[0-9]{6,6}$/.test($_GET['id']))
+        {
+            activate = 10;
+        }
         $('input, select').each(function (index) {
-            if (index < 10) {
+            if (index < activate) {
                 $(this).removeAttr('disabled');
             } else if ($(this).val()) {
                 $(this).removeAttr('disabled');
