@@ -264,7 +264,7 @@
                                 <div class="lg col-lg mx-3">
                                     <!--Chart-->
                                     <p class="text-start ms-3" style="font-weight:900; margin-top:1vh;font-size:24px;">Vaccine Brand for First and Second Dose</p>
-                                    <p class="text-start ms-3">This data shows the percentage of vaccine brands on the data gathered on the population</p>
+                                    <p class="text-start ms-3">This data shows the percentage of first And second dose vaccine on the data gathered on the population</p>
                                     <div class="vacmanu" id="firstAndSecond">
                                     </div>
 
@@ -272,7 +272,7 @@
                                 </div>
                                 <div class="lg col-lg mx-3">
                                     <p class="text-start ms-3" style="font-weight:900; margin-top:1vh; font-size:24px;">Vaccine Brand for Booster</p>
-                                    <p class="text-start ms-3">This data shows the percentage of vaccine brands on the data gathered on the population</p>
+                                    <p class="text-start ms-3">This data shows the percentage of booster vaccine brands on the data gathered on the population</p>
                                     <div class="vacmanu" id="booster"></div>
                                 </div>
                             </div>
