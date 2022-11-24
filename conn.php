@@ -177,7 +177,6 @@ class connection
 	public function updateInfo($post, $table, $condition, $primaryKey, $id = true, $formArr = NULL)
 	{
 		$keys = array_keys($post);
-		print_r($keys);
 		for ($count = 0; $count < count($table); $count++) {
 			$colName = $this->getColumnName($table[$count]);
 			$colCount = $this->getColumnName($table[$count], 1);
@@ -219,7 +218,6 @@ class connection
 				}
 			}
 			$sql .= "WHERE $condition = '$primaryKey'";
-			echo $sql;
 			$this->conn->query($sql);
 		}
 	}
@@ -387,6 +385,8 @@ if(isset($_POST['action']))
 			$conn->insertInfo($_POST, $table);
 			break;
 		case 'update':
+			$table = array($_POST['table'], 'vaccinestatus', 'logcredentials');
+			$conn->updateInfo($_POST, $table, 'id', $_POST['id']);
 			break;
 		case 'delete':
 			break;
