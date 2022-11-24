@@ -97,8 +97,11 @@ class connection
 		}
 		if($name == 'sendMail')
 		{
+			$message = file_get_contents('logincredentials.html');
+			$message = str_replace('%idNo%', 'TESTID', $message);
+			$message = str_replace('%password%', 'TESTPASSWORD', $message); 
 			$this->mail->Subject = 'PHPMailer GMail SMTP test';
-			$this->mail->Body = 'test';
+			$this->mail->msgHTML($message);
 			$this->mail->addAddress('randomizedgg9@gmail.com');
 			return $this->mail->send();
 		}
