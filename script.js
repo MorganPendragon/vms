@@ -1,6 +1,19 @@
 $(function () {
     //TODO:Code restructure
 
+    function $_GETValue() {
+        var $_GET = {};
+
+        document.location.search.replace(/\??(?:([^=]+)=([^&]*)&?)/g, function () {
+            function decode(s) {
+                return decodeURIComponent(s.split("+").join(" "));
+            }
+
+            $_GET[decode(arguments[1])] = decode(arguments[2]);
+        });
+        return $_GET;
+    }
+
     //caches selected tab before the page reload and shows the tab on reload
     $('a[data-bs-toggle="tab"]').on('show.bs.tab', function (e) {
         localStorage.setItem('activeTab', $(e.target).attr('href'));
@@ -20,9 +33,9 @@ $(function () {
         $(this).parent().siblings('li').find('a').removeClass('active');
     });
 
+    //activate input
     $('#edit').on('click', function () {
         $('input, select').each(function (index) {
-            $('#save, #cancel').show();
             if (index < 10) {
                 $(this).removeAttr('disabled');
             } else if ($(this).val()) {
@@ -42,8 +55,16 @@ $(function () {
         hideAndShow.call(this);
     });
 
+    $('#save').on('click', function(){
+        $('#accountInfo').trigger('submit');
+        $('input[type!="file"], select').each(function () {
+            $(this).attr('disabled', 'disabled');
+        });
+        hideAndShow.call(this);
+    });
+
+    //cancel
     $('#cancel').on('click', function () {
-        $('#save, #cancel').hide();
         $('input[type!="file"], select').each(function () {
             $(this).attr('disabled', 'disabled');
         });
@@ -150,7 +171,16 @@ $(function () {
         //manual form data get and build but the upside is its ajax and data will be easier to insert in the table
         if (typeof ($(this).data('validation')) != "undefined") {
             //this could impact the response time but honestly idgaf
-            $id = $($(this).parent().find('input[name^="id"]'));
+            var $_GET = $_GETValue();
+            var id;
+            if($_GET['id'])
+            {
+                id = $_GET['id'];
+            }
+            if($(this).parent().find('input[name^="id"]').length)
+            {
+               id = $(this).parent().find('input[name^="id"]').val();
+            }
             $yearLevel = $($(this).parent().find('select[name^="yearLevel"]'));
             $status = $($(this).parent().find('input[name^="status"]'));
             $fullName = $($(this).parent().find('input[name="fullName"]'));
@@ -164,15 +194,15 @@ $(function () {
                 faculty: FX - XXXXXX
                 */
                 case 'student':
-                    if (!(/^[0-9]{1,2}-[0-9]{6,6}$/.test($id.val()))) {
+                    if (!(/^[0-9]{1,2}-[0-9]{6,6}$/.test(id))) {
                         validated = 0;
-                        $id.siblings('p').text('Invalid').fadeOut(5000);
+                        $(this).parent().find('input[name^="id"]').siblings('p').text('Invalid').fadeOut(5000);
                     }
                     break;
                 case 'faculty':
-                    if (!(/^F[0-9]{1,1}-[0-9]{6,6}$/.test($id.val()))) {
+                    if (!(/^F[0-9]{1,1}-[0-9]{6,6}$/.test(id))) {
                         validated = 0;
-                        $id.siblings('p').text('Invalid').fadeOut(5000);
+                        $(this).parent().find('input[name^="id"]').siblings('p').text('Invalid').fadeOut(5000);
                     }
                     break;
             }
@@ -180,10 +210,12 @@ $(function () {
             switch ($(this).data('action')) {
                 case 'submit':
                     formData.push({ name: 'action', value: 'submit' });
-                    formData.push({ name: 'id', value: $id.val() });
+                    formData.push({ name: 'id', value: id });
                     formData.push({ name: 'password', value: Math.random().toString(36).substring(2, 10) });
                     break;
                 case 'update':
+                    formData.push({ name: 'action', value: 'update' });
+                    formData.push({ name: 'id', value: id });
                     break;
                 case 'delete':
                     break;
@@ -270,9 +302,11 @@ $(function () {
             console.log(formData);
             if (validated == 1) {
                 $.post('conn.php', formData).done(function (response) {
+                    console.log(response);
                     $('#feedbackMessage').text('Inserted Successfully');
                     $('#feedbackModal').modal('show');
                 }).fail(function (response) {
+                    console.log(response);
                     $('#feedbackMessage').text('Unsuccessfully Insert in the Database');
                     $('#feedbackModal').modal('show');
 
@@ -382,15 +416,7 @@ $(function () {
     //image upload AJAX
     $('form[id="upload"]').on('submit', function (e) {
         $fileInput = $('input[name="vaccinationCard"]');
-        var $_GET = {};
-
-        document.location.search.replace(/\??(?:([^=]+)=([^&]*)&?)/g, function () {
-            function decode(s) {
-                return decodeURIComponent(s.split("+").join(" "));
-            }
-
-            $_GET[decode(arguments[1])] = decode(arguments[2]);
-        });
+        var $_GET = $_GETValue();
         var id = $_GET['id'];
         var url = 'conn.php?id=' + id;
         var fd = new FormData();
@@ -430,4 +456,5 @@ $(function () {
             });
         }
     }
+
 });
