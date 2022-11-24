@@ -57,10 +57,8 @@
         }
 
         .lg {
-            min-width: 400px;
-            height: 478px;
-            left: 495px;
-            top: 154px;
+            min-width:697px;
+            height: 400px;
             background: #ffffff;
             box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.25);
             border-radius: 10px;
@@ -69,14 +67,12 @@
         .sm {
             width: 300px;
             height: 300px;
-            left: 554px;
-            top: 765px;
             margin-top: 2%;
             margin-right: 20%;
         }
 
         .vacmanu {
-            width: 80%;
+            width: 85%;
             height: 50%;
             margin-left: 10%;
 
@@ -85,7 +81,7 @@
         }
 
         .chart {
-            min-width: 500px;
+            min-width: 450px;
             height: 400px;
             background: #ffffff;
             box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.25);
@@ -263,39 +259,39 @@
                     <div class="tab-pane fade position-absolute" id="dashboard">
                         <p class="fs-2 py-2" style="margin-left:5%; font-weight:900;">Dashboard</p>
                         <div class="container text-center">
-                            <div class="row" style="margin-left:30%;">
+                            <div class="d-flex" style="margin-left:49px;">
 
                                 <div class="lg col-lg mx-3">
                                     <!--Chart-->
-                                    <p class="text-start" style="font-weight:900; margin-top:1vh;font-size:24px;">Vaccine Brand for First and Second Dose</p>
-                                    <p class="text-start">This data shows the percentage of vaccine brands on the data gathered on the population</p>
+                                    <p class="text-start ms-3" style="font-weight:900; margin-top:1vh;font-size:24px;">Vaccine Brand for First and Second Dose</p>
+                                    <p class="text-start ms-3">This data shows the percentage of vaccine brands on the data gathered on the population</p>
                                     <div class="vacmanu" id="firstAndSecond">
                                     </div>
 
 
                                 </div>
                                 <div class="lg col-lg mx-3">
-                                    <p class="text-start" style="font-weight:900; margin-top:1vh; font-size:24px;">Vaccine Brand for Booster</p>
-                                    <p class=" pt-4 text-start">This data shows the percentage of vaccine brands on the data gathered on the population</p>
+                                    <p class="text-start ms-3" style="font-weight:900; margin-top:1vh; font-size:24px;">Vaccine Brand for Booster</p>
+                                    <p class="text-start ms-3">This data shows the percentage of vaccine brands on the data gathered on the population</p>
                                     <div class="vacmanu" id="booster"></div>
                                 </div>
                             </div>
-                            <div class="d-flex" style="margin-left:3%;">
-                                <div class="chart row mb-5 mt-4" style="margin-left:4%;">
+                            <div class="d-flex" style="margin-left:1%;">
+                                <div class="chart row mb-3 mt-4" style="margin-left:4%;">
                                     <span class="fs-5" style="margin-top:1vh;font-weight:900">First Dose Only</span>
                                     <div id="firstDoseStudent" class="sm col mx-2">
                                     </div>
                                     <div id="firstDoseFaculty" class="sm col mx-3">
                                     </div>
                                 </div>
-                                <div class="chart row mb-5 mt-4" style="margin-left:4%;">
+                                <div class="chart row mb-3 mt-4" style="margin-left:4%;">
                                     <span class="fs-5" style="margin-top:1vh;font-weight:900">Complete Dose</span>
                                     <div id="completeDoseStudent" class="sm col mx-2">
                                     </div>
                                     <div id="completeDoseFaculty" class="sm col mx-3">
                                     </div>
                                 </div>
-                                <div class="chart row mb-5 mt-4" style="margin-left:4%;">
+                                <div class="chart row mb-3 mt-4" style="margin-left:4%;">
                                     <span class="fs-5" style="margin-top:1vh;font-weight:900">Booster</span>
                                     <div id="boosterStudent" class="sm col mx-2">
                                     </div>
