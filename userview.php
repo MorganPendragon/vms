@@ -398,19 +398,20 @@
 									</div>
 								</div>
 							</form>
-					</div>
-				<?php
+						<?php
 						}
-				?>
-				<div>
-					<!--TODO: CSS server response-->
-					<form class="mb-5" id="upload" method="post" enctype="multipart/form-data">
-						<p class="fw-bolder text-center text-success"></p>
-						Select image to upload:
-						<input type="file" name="vaccinationCard">
-						<button type="submit" class="btn btn-primary">Upload</button>
-					</form>
-				</div>
+						?>
+					</div>
+
+					<div>
+						<!--TODO: CSS server response-->
+						<form class="mb-5" id="upload" method="post" enctype="multipart/form-data">
+							<p class="fw-bolder text-center text-success"></p>
+							Select image to upload:
+							<input type="file" name="vaccinationCard">
+							<button type="submit" class="btn btn-primary">Upload</button>
+						</form>
+					</div>
 				</div>
 			</div>
 			<div class="col-8 position-fixed" id="#settings" style="display: inline-block;">
