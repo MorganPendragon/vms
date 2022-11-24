@@ -253,8 +253,6 @@ class connection
 }
 
 $conn = new connection();
-$conn->mailer();
-$conn->sendMail();
 //feedback for the login
 if (isset($_POST['type'])) {
 	$id = $_POST['id'];
