@@ -7,5 +7,6 @@ Final Project by Sir Amir
 * PHPMailer
 * Bootstrap
 * jQuery
+* CanvasJS
 
 # System Requirements
