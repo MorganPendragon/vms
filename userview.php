@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <!--TODO: Sign up-->
+
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -19,7 +20,35 @@
 	<script>
 		$(function() {
 
-			$('input[type!=file][id!=upload], select').attr('disabled', 'disabled');
+			$('input[type!="file"], select').attr('disabled', 'disabled');
+
+			$('#edit').on('click', function() {
+				$('input, select').each(function(index) {
+					$('#save, #cancel').show();
+					if (index < 10) {
+						$(this).removeAttr('disabled');
+					} else if ($(this).val()) {
+						$(this).removeAttr('disabled');
+					} else {
+						$(this).removeAttr('disabled');
+						return false;
+					}
+				});
+
+				if ($('input[name="firstdose"]').val()) {
+					$('select[name="vacbrand"]').removeAttr('disabled');
+				}
+				if ($('input[name="booster"]').val()) {
+					$('select[name="boosterbrand"]').removeAttr('disabled');
+				}
+			});
+
+			$('#cancel').on('click', function() {
+				$('#save, #cancel').hide();
+				$('input[type!="file"], select').each(function() {
+					$(this).attr('disabled', 'disabled');
+				});
+			});
 		});
 	</script>
 </head>
@@ -61,8 +90,9 @@
 					<div class="d-flex">
 						<span class="fs-1" style="font-weight:900;">Account Information</span>
 						<div class=" gap-2" style="margin-left:30%;">
-							<button class="btn button rounded-pill mt-2 fs-5" style="background-color:rgb(16, 45, 65); color:white" type="button">Edit</button>
-							<button class="btn button rounded-pill mt-2 fs-5" style="background-color:rgb(237, 126, 0); color:white" type="button">Save</button>
+							<button class="btn button rounded-pill mt-2 fs-5" style="background-color:rgb(16, 45, 65); color:white" id="edit" type="button">Edit</button>
+							<button class="btn button rounded-pill mt-2 fs-5" style="background-color:rgb(237, 126, 0); color:white; display:none;" id="save" type="button">Save</button>
+							<button class="btn button rounded-pill mt-2 fs-5" style="background-color:rgb(237, 126, 0); color:white; display:none;" id="cancel" type="button">cancel</button>
 						</div>
 					</div>
 					<div id="">
@@ -71,19 +101,31 @@
 						<?php
 						include('conn.php');
 						$conn = new connection();
-						$brand = $conn->display('vacBrand');
+						$brand = $conn->display('vacbrand');
 						$genders = array('Male', 'Female');
 						if (preg_match("/^[0-9]{1,2}-[0-9]{6,6}$/", $_GET['id']) == 1) {
 							$info = $conn->display('student', 'id', $_GET['id']);
-							$name = str_replace(':', ' ', $info['name']);
+							$vacStatus = $conn->display('vaccinestatus', 'id', $_GET['id']);
+							$name = explode(':', $info['name']);
 						?>
 							<!--student-->
 							<div>
 								<div class="row mb-3">
 									<div class="col">
-										<input type="hidden" name="id" value="<?php echo $info['id'] ?>">
-										<span class="fs-5 fw-semibold">Full Name</span>
-										<input type="text" name="name" value="<?php echo $name ?>" class="form-control">
+										<span class="fs-5 fw-semibold">First Name</span>
+										<input type="text" name="fname[]" class="form-control" value="<?php echo $name[0] ?>" autocomplete="off" required>
+										<!--invalid feedback-->
+										<p class="fw-bolder text-center text-danger"></p>
+									</div>
+									<div class="col">
+										<span class="fs-5 fw-semibold">Middle Name</span>
+										<input type="text" name="mname[]" class="form-control" value="<?php echo $name[1] ?>" autocomplete="off" required>
+										<!--invalid feedback-->
+										<p class="fw-bolder text-center text-danger"></p>
+									</div>
+									<div class="col">
+										<span class="fs-5 fw-semibold">Last Name</span>
+										<input type="text" name="lname[]" class="form-control" value="<?php echo $name[2] ?>" autocomplete="off" required>
 										<!--invalid feedback-->
 										<p class="fw-bolder text-center text-danger"></p>
 									</div>
@@ -99,14 +141,6 @@
 											<option value="Grade 10">Grade 10</option>
 											<option value="Grade 11">Grade 11</option>
 											<option value="Grade 12">Grade 12</option>
-										</select>
-									</div>
-									<div class="col">
-										<span class="fs-5 fw-semibold">Status</span>
-										<select class="form-select" name="status" required>
-											<option value="" hidden>---</option>
-											<option value="Enrolled">Enrolled</option>
-											<option value="Dropped">Dropped</option>
 										</select>
 									</div>
 								</div>
@@ -154,18 +188,19 @@
 								<hr>
 								<p class="fs-2" style="font-weight:900;">Vaccine Status</p>
 								<div class="row mb-3 text-center">
+									<?php
+									(isset($vacStatus['firstdose'])) ? $state = 'required' : $state = 'disabled';
+									?>
 									<p class="fs-4 fw-bold">1st Dose</p>
 									<div class="col">
 										<span class="fs-5 fw-semibold">Date</span>
-										<input type="hidden" name="firstdose" class="form-control" value="">
-										<input type="date" name="firstdose" data-activate='input[type="text"][name="firstdoctor"], input[type="date"][name="seconddose"], select[name="vacbrand"]' data-required='input[type="text"][name="firstdoctor"], select[name="vacbrand"]' class="form-control" autocomplete="off">
+										<input type="date" name="firstdose" data-activate='input[type="text"][name="firstdoctor"], input[type="date"][name="seconddose"], select[name="vacbrand"]' data-required='input[type="text"][name="firstdoctor"], select[name="vacbrand"]' class="form-control" value="<?php echo $vacStatus['firstdose'] ?>" autocomplete="off">
 										<!--Invalid Feedback-->
 										<p class="fw-bolder text-center text-danger"></p>
 									</div>
 									<div class="col">
 										<span class="fs-5 fw-semibold">Doctor</span>
-										<input type="hidden" name="firstdoctor" class="form-control" value="">
-										<input type="text" name="firstdoctor" class="form-control" autocomplete="off">
+										<input type="text" name="firstdoctor" class="form-control" placeholder="Doctor" value="<?php echo $vacStatus['firstdoctor'] ?>" autocomplete="off" <?php echo $state ?>>
 										<!--invalid feedback-->
 										<p class="fw-bolder text-center text-danger"></p>
 									</div>
@@ -174,14 +209,12 @@
 									<p class="fs-4 fw-bold">2nd Dose</p>
 									<div class="col text-center">
 										<span class="fs-5 fw-semibold">Date</span>
-										<input type="hidden" name="seconddose" class="form-control" value="">
 										<input type="date" name="seconddose" data-activate='input[type="text"][name="seconddoctor"], input[type="date"][name="booster"]' data-required='input[type="text"][name="seconddoctor"]' class="form-control" autocomplete="off">
 										<!--Invalid Feedback-->
 										<p class="fw-bolder text-center text-danger"></p>
 									</div>
 									<div class="col">
 										<span class="fs-5 fw-semibold">Doctor</span>
-										<input type="hidden" name="seconddoctor" class="form-control" value="">
 										<input type="text" name="seconddoctor" class="form-control" autocomplete="off">
 										<!--invalid feedback-->
 										<p class="fw-bolder text-center text-danger"></p>
@@ -190,7 +223,6 @@
 								<div class="row mb-3 text-center">
 									<div class="col-4 text-center" style="margin-left:33%;">
 										<span class="fs-5 fw-semibold">Brand</span>
-										<input type="hidden" name="vacbrand" class="form-control" value="">
 										<select class="form-select" name="vacbrand" value="<?php echo $vacStatus['vacbrand'] ?>" autocomplete="off">
 											<option value="" hidden>Brand</option>
 											<?php
@@ -248,131 +280,131 @@
 										<p class="fw-bolder text-center text-danger"></p>
 									</div>
 								</div>
-								</div>
-								<div class="row mb-3">
-									<div class="col">
-										<span class="fs-5 fw-semibold">Email</span>
-										<input type="email" name="email" class="form-control" id="emailFormControl" value="<?php echo $info['email'] ?>" required>
-									</div>
-								</div>
-								<div class="row mb-3">
-									<div class="col">
-										<span class="fs-5 fw-semibold">Telephone No.</span>
-										<input type="text" name="tel" class="form-control" value="<?php echo $info['tel'] ?>" placeholder="09XXXXXXXXX" required>
-										<!--Invalid Feedback-->
-										<p class="fw-bolder text-center text-danger"></p>
-									</div>
-									<div class="col ">
-										<span class="fs-5 fw-semibold">Gender</span>
-										<select class="form-select" name="gender" required>
-											<option value="" hidden>Gender</option>
-											<option value="Male">Male</option>
-											<option value="Female">Female</option>
-										</select>
-									</div>
-								</div>
-								<div class="row mb-3">
-									<div class="col">
-										<span class="fs-5 fw-semibold">Date</span>
-										<input type="date" name="birthday" class="form-control" value="<?php echo $info['birthday'] ?>" required>
-										<!--Invalid Feedback-->
-										<p class="fw-bolder text-center text-danger"></p>
-									</div>
-									<div class="col">
-										<span class="fs-5 fw-semibold">Address</span>
-										<input type="text" name="address" class="form-control" value="<?php echo $info['address'] ?>" required>
-									</div>
-								</div>
-								<hr>
-								<p class="fs-2" style="font-weight:900;">Vaccine Status</p>
-								<div class="row mb-3 text-center">
-									<p class="fs-4 fw-bold">1st Dose</p>
-									<div class="col">
-										<span class="fs-5 fw-semibold">Date</span>
-										<input type="hidden" name="firstdose" class="form-control" value="">
-										<input type="date" name="firstdose" data-activate='input[type="text"][name="firstdoctor[2]"], input[type="date"][name="seconddose[2]"], select[name="vacbrand[2]"]' data-required='input[type="text"][name="firstdoctor[2]"], select[name="vacbrand[2]"]' class="form-control" autocomplete="off">
-										<!--Invalid Feedback-->
-										<p class="fw-bolder text-center text-danger"></p>
-									</div>
-									<div class="col">
-										<span class="fs-5 fw-semibold">Doctor</span>
-										<input type="hidden" name="firstdoctor" class="form-control" value="">
-										<input type="text" name="firstdoctor" class="form-control" placeholder="Doctor" autocomplete="off">
-										<!--invalid feedback-->
-										<p class="fw-bolder text-center text-danger"></p>
-									</div>
-								</div>
-								<div class="row mb-3 text-center">
-									<p class="fs-4 fw-bold">2nd Dose</p>
-									<div class="col text-center">
-										<span class="fs-5 fw-semibold">Date</span>
-										<input type="hidden" name="seconddose" class="form-control" value="">
-										<input type="date" name="seconddose" data-activate='input[type="text"][name="seconddoctor[2]"], input[type="date"][name="booster[2]"]' data-required='input[type="text"][name="seconddoctor[2]"]' class="form-control" autocomplete="off">
-										<!--Invalid Feedback-->
-										<p class="fw-bolder text-center text-danger"></p>
-									</div>
-									<div class="col">
-										<span class="fs-5 fw-semibold">Doctor</span>
-										<input type="hidden" name="seconddoctor" class="form-control" value="">
-										<input type="text" name="seconddoctor" class="form-control" placeholder="Doctor" autocomplete="off">
-										<!--invalid feedback-->
-										<p class="fw-bolder text-center text-danger"></p>
-									</div>
-								</div>
-								<div class="row mb-3 text-center">
-									<div class="col-4 text-center" style="margin-left:33%;">
-										<span class="fs-5 fw-semibold">Brand</span>
-										<input type="hidden" name="vacbrand" class="form-control" value="">
-										<select class="form-select" name="vacbrand" autocomplete="off">
-											<option hidden>Brand</option>
-										</select>
-									</div>
-								</div>
-								<div class="row mb-3 text-center">
-									<p class="fs-4 fw-bold">Booster</p>
-									<div class="col text-center">
-										<span class="fs-5 fw-semibold">Date</span>
-										<input type="hidden" name="booster" class="form-control" value="">
-										<input type="date" name="booster" data-activate='input[type="text"][name="boosterdoctor[2]"], select[name="boosterbrand[2]"]' data-required='input[type="text"][name="boosterdoctor[2]"], select[name="boosterbrand[2]"]' class="form-control" autocomplete="off">
-										<!--Invalid Feedback-->
-										<p class="fw-bolder text-center text-danger"></p>
-									</div>
-									<div class="col">
-										<span class="fs-5 fw-semibold">Doctor</span>
-										<input type="hidden" name="boosterdoctor" class="form-control" value="">
-										<input type="text" name="boosterdoctor" class="form-control" placeholder="Doctor" autocomplete="off">
-										<!--invalid feedback-->
-										<p class="fw-bolder text-center text-danger"></p>
-									</div>
-								</div>
-								<div class="row mb-3 text-center">
-									<div class="col-4 text-center" style="margin-left:33%;">
-										<span class="fs-5 fw-semibold">Booster Brand</span>
-										<input type="hidden" name="boosterbrand" class="form-control" value="">
-										<select class="form-select" name="boosterbrand" autocomplete="off">
-											<option hidden>Booster Brand</option>
-										</select>
-									</div>
+							</div>
+							<div class="row mb-3">
+								<div class="col">
+									<span class="fs-5 fw-semibold">Email</span>
+									<input type="email" name="email" class="form-control" id="emailFormControl" value="<?php echo $info['email'] ?>" required>
 								</div>
 							</div>
-						<?php
-						}
-						?>
-						<div>
-							<!--TODO: CSS server response-->
-							<form class="mb-5" id="upload" method="post" enctype="multipart/form-data">
-								<p class="fw-bolder text-center text-success"></p>
-								Select image to upload:
-								<input type="file" name="vaccinationCard">
-								<button type="submit" id="upload" class="btn btn-primary">Upload</button>
-							</form>
-						</div>
+							<div class="row mb-3">
+								<div class="col">
+									<span class="fs-5 fw-semibold">Telephone No.</span>
+									<input type="text" name="tel" class="form-control" value="<?php echo $info['tel'] ?>" placeholder="09XXXXXXXXX" required>
+									<!--Invalid Feedback-->
+									<p class="fw-bolder text-center text-danger"></p>
+								</div>
+								<div class="col ">
+									<span class="fs-5 fw-semibold">Gender</span>
+									<select class="form-select" name="gender" required>
+										<option value="" hidden>Gender</option>
+										<option value="Male">Male</option>
+										<option value="Female">Female</option>
+									</select>
+								</div>
+							</div>
+							<div class="row mb-3">
+								<div class="col">
+									<span class="fs-5 fw-semibold">Date</span>
+									<input type="date" name="birthday" class="form-control" value="<?php echo $info['birthday'] ?>" required>
+									<!--Invalid Feedback-->
+									<p class="fw-bolder text-center text-danger"></p>
+								</div>
+								<div class="col">
+									<span class="fs-5 fw-semibold">Address</span>
+									<input type="text" name="address" class="form-control" value="<?php echo $info['address'] ?>" required>
+								</div>
+							</div>
+							<hr>
+							<p class="fs-2" style="font-weight:900;">Vaccine Status</p>
+							<div class="row mb-3 text-center">
+								<p class="fs-4 fw-bold">1st Dose</p>
+								<div class="col">
+									<span class="fs-5 fw-semibold">Date</span>
+									<input type="hidden" name="firstdose" class="form-control" value="">
+									<input type="date" name="firstdose" data-activate='input[type="text"][name="firstdoctor[2]"], input[type="date"][name="seconddose[2]"], select[name="vacbrand[2]"]' data-required='input[type="text"][name="firstdoctor[2]"], select[name="vacbrand[2]"]' class="form-control" autocomplete="off">
+									<!--Invalid Feedback-->
+									<p class="fw-bolder text-center text-danger"></p>
+								</div>
+								<div class="col">
+									<span class="fs-5 fw-semibold">Doctor</span>
+									<input type="hidden" name="firstdoctor" class="form-control" value="">
+									<input type="text" name="firstdoctor" class="form-control" placeholder="Doctor" autocomplete="off">
+									<!--invalid feedback-->
+									<p class="fw-bolder text-center text-danger"></p>
+								</div>
+							</div>
+							<div class="row mb-3 text-center">
+								<p class="fs-4 fw-bold">2nd Dose</p>
+								<div class="col text-center">
+									<span class="fs-5 fw-semibold">Date</span>
+									<input type="hidden" name="seconddose" class="form-control" value="">
+									<input type="date" name="seconddose" data-activate='input[type="text"][name="seconddoctor[2]"], input[type="date"][name="booster[2]"]' data-required='input[type="text"][name="seconddoctor[2]"]' class="form-control" autocomplete="off">
+									<!--Invalid Feedback-->
+									<p class="fw-bolder text-center text-danger"></p>
+								</div>
+								<div class="col">
+									<span class="fs-5 fw-semibold">Doctor</span>
+									<input type="hidden" name="seconddoctor" class="form-control" value="">
+									<input type="text" name="seconddoctor" class="form-control" placeholder="Doctor" autocomplete="off">
+									<!--invalid feedback-->
+									<p class="fw-bolder text-center text-danger"></p>
+								</div>
+							</div>
+							<div class="row mb-3 text-center">
+								<div class="col-4 text-center" style="margin-left:33%;">
+									<span class="fs-5 fw-semibold">Brand</span>
+									<input type="hidden" name="vacbrand" class="form-control" value="">
+									<select class="form-select" name="vacbrand" autocomplete="off">
+										<option hidden>Brand</option>
+									</select>
+								</div>
+							</div>
+							<div class="row mb-3 text-center">
+								<p class="fs-4 fw-bold">Booster</p>
+								<div class="col text-center">
+									<span class="fs-5 fw-semibold">Date</span>
+									<input type="hidden" name="booster" class="form-control" value="">
+									<input type="date" name="booster" data-activate='input[type="text"][name="boosterdoctor[2]"], select[name="boosterbrand[2]"]' data-required='input[type="text"][name="boosterdoctor[2]"], select[name="boosterbrand[2]"]' class="form-control" autocomplete="off">
+									<!--Invalid Feedback-->
+									<p class="fw-bolder text-center text-danger"></p>
+								</div>
+								<div class="col">
+									<span class="fs-5 fw-semibold">Doctor</span>
+									<input type="hidden" name="boosterdoctor" class="form-control" value="">
+									<input type="text" name="boosterdoctor" class="form-control" placeholder="Doctor" autocomplete="off">
+									<!--invalid feedback-->
+									<p class="fw-bolder text-center text-danger"></p>
+								</div>
+							</div>
+							<div class="row mb-3 text-center">
+								<div class="col-4 text-center" style="margin-left:33%;">
+									<span class="fs-5 fw-semibold">Booster Brand</span>
+									<input type="hidden" name="boosterbrand" class="form-control" value="">
+									<select class="form-select" name="boosterbrand" autocomplete="off">
+										<option hidden>Booster Brand</option>
+									</select>
+								</div>
+							</div>
 					</div>
+				<?php
+						}
+				?>
+				<div>
+					<!--TODO: CSS server response-->
+					<form class="mb-5" id="upload" method="post" enctype="multipart/form-data">
+						<p class="fw-bolder text-center text-success"></p>
+						Select image to upload:
+						<input type="file" name="vaccinationCard">
+						<button type="submit" class="btn btn-primary">Upload</button>
+					</form>
 				</div>
-				<div class="col-8 position-fixed" id="#settings" style="display: inline-block;">
-					content here
 				</div>
 			</div>
+			<div class="col-8 position-fixed" id="#settings" style="display: inline-block;">
+				content here
+			</div>
+		</div>
 		</div>
 		</div>
 	</main>
