@@ -4,6 +4,9 @@
 //autoloader cause lazy
 require __DIR__ . '/vendor/autoload.php';
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
 use PhpOffice\PhpWord\Shared\Converter;
 
 class connection
@@ -13,10 +16,11 @@ class connection
 	private $password = 'password';
 	private $dbname = 'Vaccine';
 	private $conn;
+	private $mail;
 
 	function __construct()
 	{
-		$this->conn = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
+		$this->conn = new mysqli($this->servername, $this->username, $this->password, $this->dbname);		
 		if ($this->conn->connect_error) {
 			echo 'Connection Failed';
 		} else {
@@ -70,7 +74,36 @@ class connection
 					}
 			}
 		}
+		if($name == 'mailer')
+		{
+			$this->mail = new PHPMailer();
+			$this->mail->IsSMTP();
+			//Set the hostname of the mail server
+			$this->mail->Host = 'smtp.gmail.com';
+
+			//Set the SMTP port number:
+			// - 465 for SMTP with implicit TLS, a.k.a. RFC8314 SMTPS or
+			// - 587 for SMTP+STARTTLS
+			$this->mail->Port = 587;
+
+			//Whether to use SMTP authentication
+			$this->mail->SMTPAuth = true;
+
+			$this->mail->SMTPSecure = 'tls';
+			$this->mail->Username = 'oceansofknowledge.ph@gmail.com';
+			$this->mail->Password = 'jrue sfcu dcal wets';
+			$this->mail->setFrom('oceansofknowledge.ph@gmail.com', 'Oceans of Knowledge');
+			return $this->mail;
+		}
+		if($name == 'sendMail')
+		{
+			$this->mail->Subject = 'PHPMailer GMail SMTP test';
+			$this->mail->Body = 'test';
+			$this->mail->addAddress('randomizedgg9@gmail.com');
+			return $this->mail->send();
+		}
 	}
+	
 
 	public function getColumnName($table, $count = 0)
 	{
@@ -220,6 +253,8 @@ class connection
 }
 
 $conn = new connection();
+$conn->mailer();
+$conn->sendMail();
 //feedback for the login
 if (isset($_POST['type'])) {
 	$id = $_POST['id'];
