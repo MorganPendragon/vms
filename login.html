@@ -32,6 +32,13 @@
 			margin: 0;
 			position: relative;
 		}
+
+		body {
+			background-image: url("../img/bglogin.png");
+			background-repeat: no-repeat;
+			image-rendering: optimizeQuality;
+
+		}
 	</style>
 	<script>
 		$(function () {
@@ -172,7 +179,6 @@
 </head>
 
 <body>
-
 	<main>
 		<div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 			<div class="modal-dialog">
@@ -192,13 +198,12 @@
 			</div>
 		</div>
 		<!--background image-->
-		<div class="bg-image justify-content-center align-items-center"
-			style="background-image: url('img/bglogin.png'); height: 100vh;">
+		<div>
 			<!--for logo-->
 			<div class="container-fluid" id="loginPage">
 				<div class="row">
 					<div class="d-flex col-6 justify-content-center align-items-center " style="height:100vh;">
-						<img src="img/loginlogo.png" class="img-fluid" alt="">
+						<img src="img/loginlogo.png" class="img-fluid" alt="" style="image-rendering:optimizeQuality;">
 					</div>
 					<!--log in-->
 					<div class="col-6 ">
@@ -206,42 +211,40 @@
 							<div class="container">
 								<div class="d-inline container-fluid justify-content-center align-items-center "
 									style="background-color:rgb(255, 255, 255); height:100vh;">
-									<p class="fs-1 mb-5 mt-5 ms-4 pt-5" style="font-weight:900;">Welcome</p>
+									<p class=" mb-5 mt-3 ms-4 pt-3" style="font-weight:900; font-size:60px;">Welcome</p>
 									<div class="d-flex justify-content-center">
-										<div id="card" class="card w-75 h-50 shadow-lg p-3 mb-5 bg-body rounded-5">
+										<div id="card" class="card shadow-lg p-3 mb-5 bg-body rounded-5" style="width: 624px; height: 697px;">
 											<form method="POST" id="login">
 												<div class="card-body w-75 mx-auto">
 													<p class="fs-1 fw-bold mt-3">Login</p>
 													<div name="loginFeedback"></div>
-													<div class="mb-3 my-4">
-														<label class="fw-semibold" for="idNo">ID</label>
+													<div class="mb-3 my-3 py-3" style="width:450px;height:44px;">
+														<label class="fw-semibold" style="font-size:28px" for="idNo">ID</label>
 														<input type="text" class="form-control text-center" name="id[0]"
 															required>
 													</div>
-													<div class="mb-3">
-														<label class="fw-semibold" for="pwd">Password</label>
+													<div class="mb-3 my-5 py-5" style="width:450px;height:44px;">
+														<label class="fw-semibold" style="font-size:28px" for="pwd">Password</label>
 														<input type="password" name="password[0]"
 															class="form-control text-center" required>
 													</div>
 													<p class="text-end">
-														<a href="#" type="button" class="btn btn-link"
-															style="color:#ED7E00;">Forgot password?</a>
+														<a href="#" type="button" class="btn btn-link pt-3 mt-3" style="color:#ED7E00;">Forgot password?</a>
 													</p>
 													<div class=" gap-2 mx-auto text-center">
 														<button type="submit" class="btn"
-															style="width:50%; border-radius:30px; background-color:rgb(16, 45, 65);color:white;">Log
+															style="margin-top:5%; border-radius:30px; background-color:rgb(16, 45, 65);color:white; font-size:24px; width:60%; height: 52px">Log
 															In</button>
 													</div>
 												</div>
 											</form>
-											<div class="d-flex justify-content-center  p-1">
-												<label for="signUp">Don`t have an account?
+											<div class="d-flex justify-content-center  p-1" style="margin-top:15%;">
+												<label for="signUp" class="mt-2 opacity-50">Don`t have an account?</label>
 													<button type="button" id="signUp" class="btn btn-link"
 														data-bs-toggle="modal" data-bs-target="#signup"
 														style="color:black; font-weight:bold;">
 														Sign Up
 													</button>
-												</label>
 											</div>
 										</div>
 									</div>
@@ -264,13 +267,13 @@
 											<button class="btn rounded-pill w-50 mh-100	fs-4"
 												style="background-color:rgb(16, 45, 65); color:white"
 												data-bs-dismiss="modal" id="signUpStudent" data-show="#student"
-												data-hide="#loginPage">Student</button>
+												data-hide="#loginPage" data-hide="#faculty">Student</button>
 										</div>
 										<div class="d-flex justify-content-center my-2">
 											<button class="btn rounded-pill w-50 mh-100 fs-4"
 												style="background-color:rgb(237, 126, 0); color:white"
 												data-bs-dismiss="modal" id="signUpFaculty" data-show="#faculty"
-												data-hide="#loginPage">Faculty</button>
+												data-hide="#loginPage" data-hide="#student">Faculty</button>
 										</div>
 									</div>
 								</div>
@@ -282,8 +285,7 @@
 			<!--student signup-->
 			<div id="student" style="display: none;">
 				<!--background image-->
-				<div class="bg-image justify-content-center align-items-center"
-					style="background-image: url('img/bglogin.png'); height: 100vh;">
+				<div>
 					<!--for logo-->
 					<div class="container-fluid">
 						<div class="row">
@@ -311,7 +313,7 @@
 																	Name</label>
 																<input type="text" class="form-control" name="fname[]"
 																	required>
-																<p></p>
+																<p class="fw-bolder text-center text-danger"></p>
 															</div>
 															<div class="col-6">
 																<label class="fw-semibold">Email
@@ -327,15 +329,7 @@
 																	Initial</label>
 																<input type="text" class="form-control" name="mname[]"
 																	required>
-																<p></p>
-															</div>
-														</div>
-														<div class="row mb-3 my-4">
-															<div class="col-6">
-																<label class="fw-semibold">Surname</label>
-																<input type="text" class="form-control" name="lname[]"
-																	required>
-																<p></p>
+																<p class="fw-bolder text-center text-danger"></p>
 															</div>
 															<div class="col-6">
 																<label class="fw-semibold">Birthday</label>
@@ -345,6 +339,28 @@
 															</div>
 														</div>
 														<div class="row mb-3 my-4">
+															<div class="col-6">
+																<label class="fw-semibold">Surname</label>
+																<input type="text" class="form-control" name="lname[]"
+																	required>
+																<p class="fw-bolder text-center text-danger"></p>
+															</div>
+															<div class="col-6">
+																<span class="fs-5 fw-semibold">Address</span>
+																<input type="text" name="address" class="form-control"
+																	required>
+															</div>
+														</div>
+														<div class="row mb-3 my-4">
+															<div class="col-6">
+																<span class="fs-5 fw-semibold">Gender</span>
+																<select class="form-select text-center" name="gender"
+																	required>
+																	<option value="" hidden></option>
+																	<option value="Male">Male</option>
+																	<option value="Female">Female</option>
+																</select>
+															</div>
 															<div class="col-6">
 																<label class="fw-semibold">Year
 																	Level</label>
@@ -359,34 +375,20 @@
 																</select>
 																<div></div>
 															</div>
+														</div>
+														<div class="row mb-3 my-4">
 															<div class="col-6">
 																<label class="fw-semibold">Student ID
 																	Number</label>
 																<input type="text" class="form-control" name="id"
 																	required>
-																<p></p>
-															</div>
-														</div>
-														<div class="row mb-3 my-4">
-															<div class="col-6">
-																<span class="fs-5 fw-semibold">Gender</span>
-																<select class="form-select text-center" name="gender"
-																	required>
-																	<option value="" hidden>Gender</option>
-																	<option value="Male">Male</option>
-																	<option value="Female">Female</option>
-																</select>
-															</div>
-															<div class="col-6">
-																<span class="fs-5 fw-semibold">Address</span>
-																<input type="text" name="address" class="form-control"
-																	required>
+																<p class="fw-bolder text-center text-danger"></p>
 															</div>
 														</div>
 														<div class="gap-2 mx-auto text-center">
 															<div class=" gap-2 mx-auto text-center">
 																<button type="submit" class="btn"
-																	style="width:50%; border-radius:30px; background-color:rgb(237, 126, 0);color:white;">Sign-up</button>
+																	style="width:50%; border-radius:30px; background-color:rgb(237, 126, 0);color:white; font-size:24px; width:60%; height: 52px">Sign-up</button>
 															</div>
 														</div>
 													</form>
@@ -402,8 +404,7 @@
 			</div>
 			<!--Faculty sign up-->
 			<div id="faculty" style="display: none;">
-				<div class="bg-image justify-content-center align-items-center"
-					style="background-image: url('img/bglogin.png'); height: 100vh;">
+				<div>
 					<!--for logo-->
 					<div class="container-fluid">
 						<div class="row">
@@ -418,7 +419,7 @@
 											style="background-color:rgb(255, 255, 255); height:100vh;">
 											<button class="btn btn-link fs-4 fw-bold mb-2 mt-5 ms-2 pt-5"
 												style="color:black;" name="back[1]" data-show="#loginPage"
-												data-hide="#student"><i class="fa-solid fa-angle-left"></i>Back</button>
+												data-hide="#faculty"><i class="fa-solid fa-angle-left"></i>Back</button>
 											<div class="d-flex ms-5 ps-2">
 												<div class=" mb-5">
 													<form data-validation="faculty" data-action="submit">
@@ -431,7 +432,7 @@
 																	Name</label>
 																<input type="text" class="form-control" name="fname[]"
 																	required>
-																<p></p>
+																<p class="fw-bolder text-center text-danger"</p>
 															</div>
 															<div class="col-6">
 																<label class="fw-semibold">Email
@@ -447,7 +448,7 @@
 																	Initial</label>
 																<input type="text" class="form-control" name="mname[]"
 																	required>
-																<p></p>
+																<p class="fw-bolder text-center text-danger"></p>
 															</div>
 															<div class="col-6">
 																<span class="fs-5 fw-semibold">Address</span>
@@ -460,7 +461,7 @@
 																<label class="fw-semibold">Surname</label>
 																<input type="text" class="form-control" name="lname[]"
 																	required>
-																<p></p>
+																<p class="fw-bolder text-center text-danger"></p>
 															</div>
 															<div class="col-6">
 																<label class="fw-semibold">Birthday</label>
@@ -475,13 +476,13 @@
 																	Number</label>
 																<input type="text" class="form-control" name="id"
 																	required>
-																<p></p>
+																<p class="fw-bolder text-center text-danger"></p>
 															</div>
 															<div class="col-6">
 																<span class="fs-5 fw-semibold">Gender</span>
 																<select class="form-select text-center" name="gender"
 																	required>
-																	<option value="" hidden>Gender</option>
+																	<option value="" hidden></option>
 																	<option value="Male">Male</option>
 																	<option value="Female">Female</option>
 																</select>
@@ -490,7 +491,7 @@
 														<div class="gap-2 mx-auto text-center">
 															<div class=" gap-2 mx-auto text-center">
 																<button type="submit" class="btn"
-																	style="width:50%; border-radius:30px; background-color:rgb(237, 126, 0);color:white;">Sign-up</button>
+																	style="width:50%; border-radius:30px; background-color:rgb(237, 126, 0);color:white;font-size:24px; width:60%; height: 52px">Sign-up</button>
 															</div>
 														</div>
 													</form>
