@@ -21,34 +21,6 @@
 		$(function() {
 
 			$('input[type!="file"], select').attr('disabled', 'disabled');
-
-			$('#edit').on('click', function() {
-				$('input, select').each(function(index) {
-					$('#save, #cancel').show();
-					if (index < 10) {
-						$(this).removeAttr('disabled');
-					} else if ($(this).val()) {
-						$(this).removeAttr('disabled');
-					} else {
-						$(this).removeAttr('disabled');
-						return false;
-					}
-				});
-
-				if ($('input[name="firstdose"]').val()) {
-					$('select[name="vacbrand"]').removeAttr('disabled');
-				}
-				if ($('input[name="booster"]').val()) {
-					$('select[name="boosterbrand"]').removeAttr('disabled');
-				}
-			});
-
-			$('#cancel').on('click', function() {
-				$('#save, #cancel').hide();
-				$('input[type!="file"], select').each(function() {
-					$(this).attr('disabled', 'disabled');
-				});
-			});
 		});
 	</script>
 </head>
@@ -90,9 +62,9 @@
 					<div class="d-flex">
 						<span class="fs-1" style="font-weight:900;">Account Information</span>
 						<div class=" gap-2" style="margin-left:30%;">
-							<button class="btn button rounded-pill mt-2 fs-5" style="background-color:rgb(16, 45, 65); color:white" id="edit" type="button">Edit</button>
-							<button class="btn button rounded-pill mt-2 fs-5" style="background-color:rgb(237, 126, 0); color:white; display:none;" id="save" type="button">Save</button>
-							<button class="btn button rounded-pill mt-2 fs-5" style="background-color:rgb(237, 126, 0); color:white; display:none;" id="cancel" type="button">cancel</button>
+							<button class="btn button rounded-pill mt-2 fs-5" style="background-color:rgb(16, 45, 65); color:white" id="edit" data-hide="#edit" data-show="#save, #cancel" type="button">Edit</button>
+							<button class="btn button rounded-pill mt-2 fs-5" style="background-color:rgb(237, 126, 0); color:white; display:none;" id="save" data-hide="#save, #cancel" data-show="#edit" type="button">Save</button>
+							<button class="btn button rounded-pill mt-2 fs-5" style="background-color:rgb(237, 126, 0); color:white; display:none;" id="cancel" data-hide="#save, #cancel" data-show="#edit" type="button">cancel</button>
 						</div>
 					</div>
 					<div id="">

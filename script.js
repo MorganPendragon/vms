@@ -20,6 +20,36 @@ $(function () {
         $(this).parent().siblings('li').find('a').removeClass('active');
     });
 
+    $('#edit').on('click', function () {
+        $('input, select').each(function (index) {
+            $('#save, #cancel').show();
+            if (index < 10) {
+                $(this).removeAttr('disabled');
+            } else if ($(this).val()) {
+                $(this).removeAttr('disabled');
+            } else {
+                $(this).removeAttr('disabled');
+                return false;
+            }
+        });
+
+        if ($('input[name="firstdose"]').val()) {
+            $('select[name="vacbrand"]').removeAttr('disabled');
+        }
+        if ($('input[name="booster"]').val()) {
+            $('select[name="boosterbrand"]').removeAttr('disabled');
+        }
+        hideAndShow.call(this);
+    });
+
+    $('#cancel').on('click', function () {
+        $('#save, #cancel').hide();
+        $('input[type!="file"], select').each(function () {
+            $(this).attr('disabled', 'disabled');
+        });
+        hideAndShow.call(this);
+    });
+
     //brand populate select
     if ($('select[name*="brand"], select[id*="brand"]').length) {
         $.ajax({
