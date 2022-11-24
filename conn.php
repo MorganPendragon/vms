@@ -92,8 +92,6 @@ class connection
 	public function insertInfo($post, $table, $id = true, $formArr = NULL)
 	{
 		$keys = array_keys($post);
-		print_r($keys);
-		echo count($table);
 		for ($count = 0; $count < count($table); $count++) {
 			$colName = $this->getColumnName($table[$count]);
 			$colCount = $this->getColumnName($table[$count], 1);
@@ -138,7 +136,7 @@ class connection
 					$j++;
 				}
 			}
-			return $this->conn->query($sql);
+			$this->conn->query($sql);
 		}
 	}
 
