@@ -100,19 +100,26 @@
             var chartType = ['doughnut', 'pie'];
             var chart = [];
             var type;
+            CanvasJS.addColorSet('chart', [
+                '#87bfda',
+                '#1e96b3',
+                '#022e43',
+                '#dd9426',
+                '#ed7e00',
+                '#3a557a',
+                '#90b7cd',
+                '#d4eeee',
+                '#e2674a',
+                '#282f3e',
+            ]);
             //chart instantiate
             $.each(chartId, function(index, value) {
                 var dataPoints = [];
                 //randomizer
                 type = Math.floor((Math.random() * 2));
                 chart.push(new CanvasJS.Chart(value, {
+                    colorSet: 'chart',
                     animationEnabled: true,
-                    title: {
-                        text: chartTitle[index],
-                        fontFamily: 'Montserrat',
-                        verticalAlign: "center",
-                        fontSize: 15
-                    },
                     showInLegend: true,
                     exportFileName: chartTitle[index],
                     exportEnabled: true,

@@ -146,13 +146,19 @@ $(function () {
                     }
                     break;
             }
-            switch ($(this).data('type')) {
+
+            switch ($(this).data('action')) {
                 case 'submit':
                     formData.push({ name: 'action', value: 'submit' });
                     formData.push({ name: 'id', value: $id.val() });
-                    formData.push({ name: 'password', value: Math.random().toString(36).substring(2, 10) })
+                    formData.push({ name: 'password', value: Math.random().toString(36).substring(2, 10) });
+                    break;
+                case 'update':
+                    break;
+                case 'delete':
                     break;
             }
+
             formData.push({ name: 'table', value: $(this).data('validation') });
             //name check
             if ($fullName.length) {
@@ -176,7 +182,6 @@ $(function () {
                 //doctor name check
                 $($(this).parent().find('input[type="text"][name*="doctor"]')).map(function () {
                     if (/^$|[a-zA-Z ]$/.test($(this).val().toString())) {
-                        status;
                         return $(this).val();
                     }
                     else {
