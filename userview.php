@@ -233,9 +233,9 @@
 												<option value="" hidden>Booster Brand</option>
 												<?php
 												foreach ($brand as $data) {
-													(strcmp($data, $vacStatus['boosterbrand']) == 0) ? $state = 'selected' : $state = '';
+													(strcmp($data['brand'], $vacStatus['boosterbrand']) == 0) ? $state = 'selected' : $state = '';
 												?>
-													<option value="<?php echo $data ?>" <?php echo $state ?>><?php echo $data['brand'] ?></option>
+													<option value="<?php echo $data['brand'] ?>" <?php echo $state ?>><?php echo $data['brand'] ?></option>
 												<?php
 												}
 												?>
@@ -413,12 +413,10 @@
 						</form>
 					</div>
 				</div>
+				<div class="col-8 position-fixed" id="#settings" style="display: inline-block;">
+					content here
+				</div>
 			</div>
-			<div class="col-8 position-fixed" id="#settings" style="display: inline-block;">
-				content here
-			</div>
-		</div>
-		</div>
 		</div>
 	</main>
 </body>
