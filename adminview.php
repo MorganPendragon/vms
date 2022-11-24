@@ -257,7 +257,7 @@
                 <div class="tab-content" id="tableTabContent">
                     <!--Dashboard Tab-->
                     <div class="tab-pane fade position-absolute" id="dashboard">
-                        <p class="fs-2 py-2" style="margin-left:5%; font-weight:900;">Dashboard</p>
+                        <p class="fs-2 py-2" style="margin-left:6%; font-weight:900;">Dashboard</p>
                         <div class="container text-center">
                             <div class="d-flex" style="margin-left:49px;">
 
@@ -339,7 +339,7 @@
                                 <div class="d-flex mx-5">
                                     <input class="search" type="search" placeholder="Search" aria-label="Search" data-table="#studentContent">
                                     <span class="input-group-text border-0" id="search-addon">
-                                        <i class="bi bi-search"></i>
+                                        <i class="bi bi-search rounded-pill"></i>
                                     </span>
                                 </div>
                             </div>
@@ -388,7 +388,8 @@
                                                 <td>
                                                     <!--TODO:resize-->
                                                     <a cla type="button" data-bs-toggle="modal" href="adminview.php?editID=<?php echo $info['id'] ?>" data-bs-target="#editStudentModal<?php echo $i ?>">
-                                                        <i class="bi bi-pencil-fill"></i>
+                                                     <i class="fa-solid fa-pen-to-square" style="color:rgb(237, 126, 0);"></i>
+
                                                     </a>
                                                 </td>
                                                 <!--delete info-->
@@ -867,7 +868,7 @@
                                                 <td>
                                                     <!--TODO:resize-->
                                                     <a cla type="button" data-bs-toggle="modal" href="adminview.php?editID=<?php echo $info['id'] ?>" data-bs-target="#editFacultyModal<?php echo $i ?>">
-                                                        <i class="bi bi-pencil-fill"></i>
+                                                        <i class="fa-solid fa-pen-to-square" style="color:rgb(237, 126, 0);"></i>
                                                     </a>
                                                 </td>
                                                 <!--delete info-->
@@ -1302,7 +1303,7 @@
                                                             <td>
                                                                 <!--resize-->
                                                                 <a cla type="button" data-bs-toggle="modal" href="adminview.php?editID=<?php echo $info['brand'] ?>" data-bs-target="#upVacModal<?php echo $i ?>">
-                                                                    <i class="bi bi-pencil-fill"></i>
+                                                                    <i class="fa-solid fa-pen-to-square" style="color:rgb(237, 126, 0);"></i>
                                                                 </a>
                                                             </td>
 
