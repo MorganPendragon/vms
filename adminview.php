@@ -193,17 +193,6 @@
             $brand = $vac->display('vacbrand');
             $genders = array('Male', 'Female');
 
-
-            if (!isset($_GET['submit'])) {
-                $_GET['submit'] = 0;
-            }
-            if (!isset($_GET['edit'])) {
-                $_GET['edit'] = 0;
-            }
-            if (!isset($_GET['delete'])) {
-                $_GET['delete'] = 0;
-            }
-
             //delete
             switch ($_GET['delete']) {
                 case 1:
@@ -224,28 +213,6 @@
                 default:
                     break;
             }
-
-            //edit
-            switch ($_GET['edit']) {
-                case 1:
-                    $table = array('student', 'vaccinestatus', 'logcredentials');
-                    $vac->updateInfo($_POST, $table, 'id', $_GET['editStudent'], true, 1);
-                    header('location:adminview.php');
-                    break;
-                case 2:
-                    $table = array('faculty', 'vaccinestatus', 'logcredentials');
-                    $vac->updateInfo($_POST, $table, 'id', $_GET['editFaculty'], true, 3);
-                    header('location:adminview.php');
-                    break;
-                case 3:
-                    $table = array('vacbrand');
-                    $vac->updateInfo($_POST, $table, 'brand', $_GET['editVac'], true, 1);
-                    header('location:adminview.php');
-                    break;
-                default:
-                    break;
-            }
-
 
             if (isset($_GET['report'])) {
                 $vac->report();
@@ -387,7 +354,7 @@
                                                 <!--edit-->
                                                 <td>
                                                     <!--TODO:resize-->
-                                                    <a cla type="button" data-bs-toggle="modal" href="adminview.php?editID=<?php echo $info['id'] ?>" data-bs-target="#editStudentModal<?php echo $i ?>">
+                                                    <a cla type="button" data-bs-toggle="modal" href="adminview.php?id=<?php echo $info['id'] ?>" data-bs-target="#editStudentModal<?php echo $i ?>">
                                                      <i class="fa-solid fa-pen-to-square" style="color:rgb(237, 126, 0);"></i>
 
                                                     </a>
@@ -412,7 +379,7 @@
                                                         <?php
                                                         $name = explode(':', $info['name']);
                                                         ?>
-                                                        <form action="adminview.php?edit=1&editStudent=<?php echo $info['id'] ?>" method="POST" data-validation="1">
+                                                        <form action="adminview.php?edit=1&editStudent=<?php echo $info['id'] ?>" method="POST" data-validation="student" data-action="update">
                                                             <div class="modal-body">
                                                                 <div class="row mb-3">
                                                                     <div class="col">
@@ -513,14 +480,12 @@
                                                                     <p class="fs-4 fw-bold text-center">1st Dose</p>
                                                                     <div class="col">
                                                                         <span class="fs-5 fw-semibold">Date</span>
-                                                                        <input type="hidden" name="firstdose[1]" class="form-control" value="">
                                                                         <input type="date" name="firstdose[1]" data-activate='input[type="text"][name="firstdoctor[1]"], input[type="date"][name="seconddose[1]"], select[name="vacbrand[1]"]' data-required='input[type="text"][name="firstdoctor[1]"], select[name="vacbrand[1]"]' class="form-control" value="<?php echo $vacStatus['firstdose'] ?>" autocomplete="off">
                                                                         <!--Invalid Feedback-->
                                                                         <p class="fw-bolder text-center text-danger"></p>
                                                                     </div>
                                                                     <div class="col">
                                                                         <span class="fs-5 fw-semibold">Doctor</span>
-                                                                        <input type="hidden" name="firstdoctor[1]" class="form-control" value="">
                                                                         <input type="text" name="firstdoctor[1]" class="form-control" placeholder="Doctor" value="<?php echo $vacStatus['firstdoctor'] ?>" autocomplete="off" <?php echo $state ?>>
                                                                         <!--invalid feedback-->
                                                                         <p class="fw-bolder text-center text-danger"></p>
@@ -533,7 +498,6 @@
                                                                     <p class="fs-4 fw-bold text-center">2nd Dose</p>
                                                                     <div class="col ">
                                                                         <span class="fs-5 fw-semibold">Date</span>
-                                                                        <input type="hidden" name="seconddose[1]" class="form-control" value="">
                                                                         <input type="date" name="seconddose[1]" data-activate='input[type="text"][name="seconddoctor[1]"], input[type="date"][name="booster[1]"]' data-required='input[type="text"][name="seconddoctor[1]"]' class="form-control" value="<?php echo $vacStatus['seconddose'] ?>" autocomplete="off" <?php echo $state ?>>
                                                                         <!--Invalid Feedback-->
                                                                         <p class="fw-bolder text-center text-danger"></p>
@@ -543,7 +507,6 @@
                                                                     ?>
                                                                     <div class="col">
                                                                         <span class="fs-5 fw-semibold">Date</span>
-                                                                        <input type="hidden" name="seconddoctor[1]" class="form-control" value="">
                                                                         <input type="text" name="seconddoctor[1]" class="form-control" placeholder="Doctor" value="<?php echo $vacStatus['seconddoctor'] ?>" autocomplete="off" <?php echo $state ?>>
                                                                         <!--invalid feedback-->
                                                                         <p class="fw-bolder text-center text-danger"></p>
@@ -556,7 +519,6 @@
 
                                                                     <div class="col text-center">
                                                                         <span class="fs-5 fw-semibold me-4">Vaccine Brand</span>
-                                                                        <input type="hidden" name="vacbrand[1]" class="form-control" value="">
                                                                         <select class="form-select text-center" name="vacbrand[1]" value="<?php echo $vacStatus['vacbrand'] ?>" autocomplete="off" <?php echo $state ?>>
                                                                             <option value="" hidden>---</option>
                                                                             <?php
@@ -577,7 +539,6 @@
                                                                     <p class="fs-4 fw-bold text-center">Booster</p>
                                                                     <div class="col ">
                                                                         <span class="fs-5 fw-semibold">Date</span>
-                                                                        <input type="hidden" name="booster[1]" class="form-control" value="">
                                                                         <input type="date" name="booster[1]" data-activate='input[type="text"][name="boosterdoctor[1]"], select[name="boosterbrand[1]"]' data-required='input[type="text"][name="boosterdoctor[1]"], select[name="boosterbrand[1]"]' class="form-control" value="<?php echo $vacStatus['booster'] ?>" autocomplete="off" <?php echo $state ?>>
                                                                         <!--Invalid Feedback-->
                                                                         <p class="fw-bolder text-center text-danger"></p>
@@ -587,7 +548,6 @@
                                                                     ?>
                                                                     <div class="col">
                                                                         <span class="fs-5 fw-semibold">Doctor</span>
-                                                                        <input type="hidden" name="boosterdoctor[1]" class="form-control" value="">
                                                                         <input type="text" name="boosterdoctor[1]" class="form-control" placeholder="Doctor" value="<?php echo $vacStatus['boosterdoctor'] ?>" autocomplete="off" <?php echo $state ?>>
                                                                         <!--invalid feedback-->
                                                                         <p class="fw-bolder text-center text-danger"></p>
@@ -596,7 +556,7 @@
                                                                 <div class="row mb-3 ">
                                                                     <div class="col text-center">
                                                                         <span class="fs-5 fw-semibold me-4">Vaccine Brand</span>
-                                                                        <input type="hidden" name="boosterbrand[1]" class="form-control" value="">
+
                                                                         <select class="form-select text-center" name="boosterbrand[1]" value="<?php echo $vacStatus['boosterbrand'] ?>" autocomplete="off" <?php echo $state ?>>
                                                                             <option value="" hidden>---</option>
                                                                             <?php
@@ -867,7 +827,7 @@
                                                 <!--edit-->
                                                 <td>
                                                     <!--TODO:resize-->
-                                                    <a cla type="button" data-bs-toggle="modal" href="adminview.php?editID=<?php echo $info['id'] ?>" data-bs-target="#editFacultyModal<?php echo $i ?>">
+                                                    <a cla type="button" data-bs-toggle="modal" href="adminview.php?id=<?php echo $info['id'] ?>" data-bs-target="#editFacultyModal<?php echo $i ?>">
                                                         <i class="fa-solid fa-pen-to-square" style="color:rgb(237, 126, 0);"></i>
                                                     </a>
                                                 </td>
@@ -891,7 +851,7 @@
                                                         <?php
                                                         $name = explode(':', $info['name']);
                                                         ?>
-                                                        <form action="adminview.php?edit=2&editFaculty=<?php echo $info['id'] ?>" method="POST" data-validation="2">
+                                                        <form data-validation="faculty" data-action="update">
                                                             <div class="modal-body">
                                                                 <div class="row mb-3">
                                                                     <div class="col">
@@ -970,14 +930,12 @@
                                                                     <p class="fs-4 fw-bold text-center">1st Dose</p>
                                                                     <div class="col">
                                                                         <span class="fs-5 fw-semibold">Date</span>
-                                                                        <input type="hidden" name="firstdose[3]" class="form-control" value="">
                                                                         <input type="date" name="firstdose[3]" data-activate='input[type="text"][name="firstdoctor[3]"], input[type="date"][name="seconddose[3]"], select[name="vacbrand[3]"]' data-required='input[type="text"][name="firstdoctor[3]"], select[name="vacbrand[3]"]' class="form-control" value="<?php echo $vacStatus['firstdose'] ?>" autocomplete="off">
                                                                         <!--Invalid Feedback-->
                                                                         <p class="fw-bolder text-center text-danger"></p>
                                                                     </div>
                                                                     <div class="col">
                                                                         <span class="fs-5 fw-semibold">Doctor</span>
-                                                                        <input type="hidden" name="firstdoctor[3]" class="form-control" value="">
                                                                         <input type="text" name="firstdoctor[3]" class="form-control" placeholder="Doctor" value="<?php echo $vacStatus['firstdoctor'] ?>" autocomplete="off" <?php echo $state ?>>
                                                                         <!--invalid feedback-->
                                                                         <p class="fw-bolder text-center text-danger"></p>
@@ -990,7 +948,6 @@
                                                                     <p class="fs-4 fw-bold text-center">2nd Dose</p>
                                                                     <div class="col">
                                                                         <span class="fs-5 fw-semibold">Date</span>
-                                                                        <input type="hidden" name="seconddose[3]" class="form-control" value="">
                                                                         <input type="date" name="seconddose[3]" data-activate='input[type="text"][name="seconddoctor[3]"], input[type="date"][name="booster[3]"]' data-required='input[type="text"][name="seconddoctor[3]"]' class="form-control" value="<?php echo $vacStatus['seconddose'] ?>" autocomplete="off" <?php echo $state ?>>
                                                                         <!--Invalid Feedback-->
                                                                         <p class="fw-bolder text-center text-danger"></p>
@@ -1000,7 +957,6 @@
                                                                     ?>
                                                                     <div class="col">
                                                                         <span class="fs-5 fw-semibold">Doctor</span>
-                                                                        <input type="hidden" name="seconddoctor[3]" class="form-control" value="">
                                                                         <input type="text" name="seconddoctor[3]" class="form-control" placeholder="Doctor" value="<?php echo $vacStatus['seconddoctor'] ?>" autocomplete="off" <?php echo $state ?>>
                                                                         <!--invalid feedback-->
                                                                         <p class="fw-bolder text-center text-danger"></p>
@@ -1012,7 +968,6 @@
                                                                     ?>
                                                                     <span class="fs-5 fw-semibold me-4">Vaccine Brand</span>
                                                                     <div class="col text-center">
-                                                                        <input type="hidden" name="vacbrand[3]" class="form-control" value="">
                                                                         <select class="form-select text-center" name="vacbrand[3]" value="<?php echo $vacStatus['vacbrand'] ?>" autocomplete="off" <?php echo $state ?>>
                                                                             <option value="" hidden>---</option>
                                                                             <?php
@@ -1034,7 +989,6 @@
                                                                     <p class="fs-4 fw-bold text-center">Booster</p>
                                                                     <div class="col ">
                                                                         <span class="fs-5 fw-semibold me-4">Date</span>
-                                                                        <input type="hidden" name="booster[3]" class="form-control" value="">
                                                                         <input type="date" name="booster[3]" data-activate='input[type="text"][name="boosterdoctor[3]"], select[name="boosterbrand[3]"]' data-required='input[type="text"][name="boosterdoctor[3]"], select[name="boosterbrand[3]"]' class="form-control" value="<?php echo $vacStatus['booster'] ?>" autocomplete="off" <?php echo $state ?>>
                                                                         <!--Invalid Feedback-->
                                                                         <p class="fw-bolder text-center text-danger"></p>
@@ -1044,7 +998,6 @@
                                                                     ?>
                                                                     <div class="col">
                                                                         <span class="fs-5 fw-semibold me-4">Doctor</span>
-                                                                        <input type="hidden" name="boosterdoctor[3]" class="form-control" value="">
                                                                         <input type="text" name="boosterdoctor[3]" class="form-control" placeholder="Doctor" value="<?php echo $vacStatus['boosterdoctor'] ?>" autocomplete="off" <?php echo $state ?>>
                                                                         <!--invalid feedback-->
                                                                         <p class="fw-bolder text-center text-danger"></p>
@@ -1053,7 +1006,6 @@
                                                                 <div class="row mb-3 text-center">
                                                                     <span class="fs-5 fw-semibold me-4">Vaccine Brand</span>
                                                                     <div class="col text-center">
-                                                                        <input type="hidden" name="boosterbrand[3]" class="form-control" value="">
                                                                         <select class="form-select text-center" name="boosterbrand[3]" autocomplete="off" <?php echo $state ?>>
                                                                             <option value="" hidden>---</option>
                                                                             <?php
@@ -1114,7 +1066,7 @@
                                         <p class="modal-title fs-2" style="font-weight:900;" id="createStudentLabel">Faculty</p>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
-                                    <form action="adminview.php?submit=2" method="POST" data-validation="2">
+                                    <form data-validation="faculty" data-action="submit">
                                         <div class="modal-body">
                                             <div class="row mb-3">
                                                 <div class="col">
@@ -1408,7 +1360,7 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    content here
+                                    
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
