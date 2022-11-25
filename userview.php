@@ -5,7 +5,7 @@
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<title>Student View</title>
+	<title>Account</title>
 	<link href="https://fonts.cdnfonts.com/css/montserrat" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
@@ -42,6 +42,9 @@
 	input[type="file"] {
 		display: none;
 	}
+	.window-height{
+		position: fixed;
+	}
 </style>
 
 <body>
@@ -49,26 +52,44 @@
 	<main>
 		<div class="row">
 			<!--sidebar-->
-			<div class="col-2 position-fixed" style="background-color:#022e43;font-size:20px; height:100vh;" tabindex="1">
+			<div class="container-fluid window-height" aria-orientation="vertical">
+				<div class="d-flex">
+					<div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0" style="background-color:#022e43;font-size:18px;">
+						<img src="img\logo.png" class="img-fluid" alt="...">
+						<div class="d-flex flex-column align-items-center align-items-sm-center px-3 pt-1" style="height:100vh;">
+							<ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="sidebar">
+								<li class="nav-item active">
+									<a href="#account" class="nav-link active" data-bs-toggle="tab" style="color:rgb(232, 177, 62);" data-show="#account" data-hide="#settings"><i class="bi bi-person-fill"></i>&nbsp;&nbsp;Account Information</a>
+								</li>
+								<li class="nav-item">
+									<a href="#settings" class="nav-link" data-bs-toggle="tab" style="color:rgb(232, 177, 62);" data-show="#settings" data-hide="#account"><i class="bi bi-gear-fill"></i>&nbsp;&nbsp;Settings</a>
+								</li>
+							</ul>
+
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- 			<div class="col-2 position-fixed" style="background-color:#022e43;font-size:20px; height:100vh;" tabindex="1">
 				<img src="img\logo.png" class="img-fluid" alt="...">
 				<ul class="nav nav-pills mb-sm-auto mb-0 align-items-center align-items-sm-start" id="sidebar">
 					<li class="nav-item">
-						<a href="#account" class="nav-link active" style="color:rgb(232, 177, 62);" data-show="#account" data-hide="#settings"><i class="bi bi-person-fill"></i>&nbsp;&nbsp;Account Information</a>
+						<a href="#account" class="nav-link active" data-bs-toggle="tab" style="color:rgb(232, 177, 62);" data-show="#account" data-hide="#settings"><i class="bi bi-person-fill"></i>&nbsp;&nbsp;Account Information</a>
 					</li>
 					<li class="nav-item">
-						<a href="#settings" class="nav-link" style="color:rgb(232, 177, 62);" data-show="#settings" data-hide="#account"><i class="bi bi-gear-fill"></i>&nbsp;&nbsp;Settings</a>
+						<a href="#settings" class="nav-link" data-bs-toggle="tab" style="color:rgb(232, 177, 62);" data-show="#settings" data-hide="#account"><i class="bi bi-gear-fill"></i>&nbsp;&nbsp;Settings</a>
 					</li>
 				</ul>
-			</div>
+			</div> -->
 			<!--content-->
-			<div class="col-8 position-absolute" style="margin-left:25%;">
-				<div id="account">
+			<div class="container-fluid position-absolute col-8" style="margin-left:25%;">
+				<div  id="account">
 					<div class="d-flex">
 						<span class="fs-1" style="font-weight:900;">Account Information</span>
-						<div class=" gap-2" style="margin-left:30%;">
-							<button class="btn button rounded-pill mt-2 fs-5" style="background-color:rgb(16, 45, 65); color:white" id="edit" data-hide="#edit" data-show="#save, #cancel" type="button">Edit</button>
+						<div class=" gap-2" style="margin-left:20%;">
 							<button class="btn button rounded-pill mt-2 fs-5" style="background-color:rgb(237, 126, 0); color:white; display:none;" id="save" data-hide="#save, #cancel" data-show="#edit" type="button">Save</button>
 							<button class="btn button rounded-pill mt-2 fs-5" style="background-color:rgb(237, 126, 0); color:white; display:none;" id="cancel" data-hide="#save, #cancel" data-show="#edit" type="button">cancel</button>
+							<button class="btn button rounded-pill mt-2 fs-5" style="background-color:rgb(16, 45, 65); color:white;" id="edit" data-hide="#edit" data-show="#save, #cancel" type="button">Edit</button>
 						</div>
 					</div>
 					<div>
@@ -420,12 +441,12 @@
 									<button type="submit" class="btn btn-outline-success" style="margin-left:45px;">Upload</button>
 									<p class="fw-bolder text-center text-success mt-2" style="font-size:16px;"></p>
 								</label>
-							</div>	
+							</div>
 						</form>
 					</div>
 				</div>
 				<div class="col-8 position-fixed" id="#settings" style="display: inline-block;">
-					content here
+					<span style="font-size:72px;"> content dito</span>
 				</div>
 			</div>
 		</div>
