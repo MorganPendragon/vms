@@ -20,7 +20,7 @@ class connection
 
 	function __construct()
 	{
-		$this->conn = new mysqli($this->servername, $this->username, $this->password, $this->dbname);		
+		$this->conn = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
 		if ($this->conn->connect_error) {
 			echo 'Connection Failed';
 		} else {
@@ -58,11 +58,16 @@ class connection
 					$sql = "SELECT * FROM $arguments[0] WHERE $arguments[1] = '$arguments[2]'";
 					$result = $this->conn->query($sql);
 					if ($result->num_rows != 0) {
-						$row = $result->fetch_assoc();
-						return $row;
+						while($row = $result->fetch_assoc()){
+							$data[] = $row;
+						}
+						return $data;
+					}
+					else{
+						$data = array();
 					}
 				case 4:
-					$sql = "SELECT * FROM $arguments[0] WHERE $arguments[1] = '$arguments[2]'";
+					$sql = "SELECT $arguments[3] FROM $arguments[0] WHERE $arguments[1] = '$arguments[2]'";
 					$result = $this->conn->query($sql);
 					if ($result->num_rows != 0) {
 						while ($row = $result->fetch_assoc()) {
@@ -74,8 +79,7 @@ class connection
 					}
 			}
 		}
-		if($name == 'mailer')
-		{
+		if ($name == 'mailer') {
 			$this->mail = new PHPMailer();
 			$this->mail->IsSMTP();
 			//Set the hostname of the mail server
@@ -95,18 +99,59 @@ class connection
 			$this->mail->setFrom('oceansofknowledge.ph@gmail.com', 'Oceans of Knowledge');
 			return $this->mail;
 		}
-		if($name == 'sendMail')
-		{
-			$message = file_get_contents('logincredentials.html');
-			$message = str_replace('%idNo%', 'TESTID', $message);
-			$message = str_replace('%password%', 'TESTPASSWORD', $message); 
-			$this->mail->Subject = 'PHPMailer GMail SMTP test';
-			$this->mail->msgHTML($message);
-			$this->mail->addAddress('randomizedgg9@gmail.com');
-			return $this->mail->send();
+		//send email
+		if ($name == 'sendMail') {
+			switch ($arguments[0]) {
+				case 'sendCredentials':
+					$message = file_get_contents('logincredentials.html');
+					$message = str_replace('%idNo%', $arguments[1], $message);
+					$message = str_replace('%password%', $arguments[2], $message);
+					$this->mail->Subject = 'Log In Credentials';
+					$this->mail->AddEmbeddedImage('./img/logo.png', 'logo');
+					$this->mail->isHTML(true);
+					$this->mail->msgHTML($message);
+					$this->mail->addAddress($arguments[3]);
+					$this->mail->send();
+					break;
+				case '':
+					break;
+			}
+		}
+
+		if ($name == 'report') {
+			$phpWord = new \PhpOffice\PhpWord\PhpWord();
+
+			$section = $phpWord->addSection();
+			//TODO:chart here
+			$section->addPageBreak();
+			$header = ['size' => 16, 'bold' => true];
+
+			//Table here requested by bb gurl
+			//TODO:table data
+			$section = $phpWord->addSection(['orientation' => 'landscape']);
+			$section->addText('Basic table', $header);
+			$colName = ['ID', 'Name', 'Gender', 'Year Level', 'First Dose', 'Second Dose', 'Vaccine Manufacturer', 'Booster', 'Booster Manufacturer'];
+
+			$table = $section->addTable(['alignment' => \PhpOffice\PhpWord\SimpleType\JcTable::CENTER]);
+			$table->addRow();
+			//table header
+			for ($col = 0; $col < 9; $col++) {
+				$table->addCell(1850, ['bgColor' => '022e43'])->addText($colName[$col], ['bold' => true, 'size' => 12], ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+			}
+
+			for ($row = 0; $row < $row; $row++) {
+				$table->addRow();
+				for ($col = 1; $col <= 9; ++$col) {
+					$table->addCell(1200)->addText("Row {$row}, Cell {$col}");
+				}
+			}
+
+			// Saving the document as DOCX file...
+			$objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
+			$objWriter->save('Reports.docx');
 		}
 	}
-	
+
 
 	public function getColumnName($table, $count = 0)
 	{
@@ -244,16 +289,10 @@ class connection
 			return 0;
 		}
 	}
-
-	//TODO:Report filter and update this BS
-	//report generation using PHPOffice
-	public function report()
-	{
-		$phpWord = new \PhpOffice\PhpWord\PhpWord();
-	}
 }
 
 $conn = new connection();
+$conn->mailer();
 //feedback for the login
 if (isset($_POST['type'])) {
 	$id = $_POST['id'];
@@ -379,13 +418,12 @@ if (isset($_GET['chart'])) {
 	}
 }
 
-if(isset($_POST['action']))
-{
-	switch($_POST['action'])
-	{
+if (isset($_POST['action'])) {
+	switch ($_POST['action']) {
 		case 'submit':
 			$table = array($_POST['table'], 'vaccinestatus', 'logcredentials');
 			$conn->insertInfo($_POST, $table);
+			$conn->sendMail('sendCredentials', $_POST['id'], $_POST['password'], $_POST['email']);
 			break;
 		case 'update':
 			$table = array($_POST['table'], 'vaccinestatus', 'logcredentials');
