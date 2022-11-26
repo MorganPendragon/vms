@@ -471,10 +471,15 @@ if (isset($_POST['action'])) {
 			}
 			break;
 		case 'update':
-			$table = array($_POST['table'], 'vaccinestatus', 'logcredentials');
-			$conn->updateInfo($_POST, $table, 'id', $_POST['condition']);
-			if (strcmp($_POST['id'], $_POST['condition']) != 0) {
-				//$conn->sendMail('updatedID', $_POST['id']);
+			if (strcmp($_POST['table'], 'vacbrand') == 0) {
+				$table = array($_POST['table']);
+				$conn->insertInfo($_POST, $table);
+			} else {
+				$table = array($_POST['table'], 'vaccinestatus', 'logcredentials');
+				$conn->updateInfo($_POST, $table, 'id', $_POST['condition']);
+				if (strcmp($_POST['id'], $_POST['condition']) != 0) {
+					//$conn->sendMail('updatedID', $_POST['id']);
+				}
 			}
 			break;
 		case 'delete':
