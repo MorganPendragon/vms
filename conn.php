@@ -32,17 +32,6 @@ class connection
 	{
 		if ($name == 'display') {
 			switch (count($arguments)) {
-				case 1:
-					$sql = "SELECT * FROM $arguments[0]";
-					$result = $this->conn->query($sql);
-					if ($result->num_rows > 0) {
-						while ($row = $result->fetch_assoc()) {
-							$data[] = $row;
-						}
-						return $data;
-					} else {
-						return $data = array();
-					}
 				case 2:
 					$sql = "SELECT $arguments[0] FROM $arguments[1]";
 					$result = $this->conn->query($sql);
@@ -55,19 +44,7 @@ class connection
 						return $data = array();
 					}
 				case 3:
-					$sql = "SELECT * FROM $arguments[0] WHERE $arguments[1] = '$arguments[2]'";
-					$result = $this->conn->query($sql);
-					if ($result->num_rows != 0) {
-						while($row = $result->fetch_assoc()){
-							$data[] = $row;
-						}
-						return $data;
-					}
-					else{
-						$data = array();
-					}
-				case 4:
-					$sql = "SELECT $arguments[3] FROM $arguments[0] WHERE $arguments[1] = '$arguments[2]'";
+					$sql = "SELECT $arguments[0] FROM $arguments[1] WHERE $arguments[2]";
 					$result = $this->conn->query($sql);
 					if ($result->num_rows != 0) {
 						while ($row = $result->fetch_assoc()) {
@@ -130,25 +107,36 @@ class connection
 			//TODO:table data
 			$section = $phpWord->addSection(['orientation' => 'landscape']);
 			$section->addText('Basic table', $header);
-			$colName = ['ID', 'Name', 'Gender', 'Year Level', 'First Dose', 'Second Dose', 'Vaccine Manufacturer', 'Booster', 'Booster Manufacturer'];
-
+			$tableHeaderName = ['ID', 'Name', 'Gender', 'Year Level', 'First Dose', 'Second Dose', 'Vaccine Manufacturer', 'Booster', 'Booster Manufacturer'];
+			//keys for the data
+			$keys = ['id', 'name', 'gender', 'yearLevel', 'firstdose', 'seconddose', 'vacbrand', 'booster', 'boosterbrand'];
 			$table = $section->addTable(['alignment' => \PhpOffice\PhpWord\SimpleType\JcTable::CENTER]);
 			$table->addRow();
 			//table header
 			for ($col = 0; $col < 9; $col++) {
-				$table->addCell(1850, ['bgColor' => '022e43'])->addText($colName[$col], ['bold' => true, 'size' => 12], ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+				$table->addCell(1850, ['bgColor' => '022e43'])->addText($tableHeaderName[$col], ['bold' => true, 'size' => 12], ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
 			}
+			$data = $this->display('*', 'student INNER JOIN vaccinestatus ON student.id = vaccinestatus.id');
 
-			for ($row = 0; $row < $row; $row++) {
-				$table->addRow();
-				for ($col = 1; $col <= 9; ++$col) {
-					$table->addCell(1200)->addText("Row {$row}, Cell {$col}");
-				}
-			}
+			$this->tableDocx($table, $data, $keys);
 
 			// Saving the document as DOCX file...
 			$objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
 			$objWriter->save('Reports.docx');
+		}
+
+		if ($name == 'tableDocx') {
+			foreach ($arguments[1] as $info) {
+				$arguments[0]->addRow();
+				foreach ($arguments[2] as $key) {
+					if ($key == 'name') {
+						$name = str_replace(':', ' ', $info[$key]);
+						$arguments[0]->addCell(1200)->addText($name);
+					} else {
+						$arguments[0]->addCell(1200)->addText($info[$key]);
+					}
+				}
+			}
 		}
 	}
 
@@ -157,16 +145,16 @@ class connection
 	{
 		$sql = "DESCRIBE `$table`";
 		$result = $this->conn->query($sql);
-		$colName = array();
+		$tableHeaderName = array();
 		$colCount = 0;
 		while ($row = $result->fetch_assoc()) {
-			$colName[] = $row['Field'];
+			$tableHeaderName[] = $row['Field'];
 			$colCount++;
 		}
 		if ($count == 1) {
 			return $colCount;
 		}
-		return $colName;
+		return $tableHeaderName;
 	}
 
 	//insert
@@ -174,7 +162,7 @@ class connection
 	{
 		$keys = array_keys($post);
 		for ($count = 0; $count < count($table); $count++) {
-			$colName = $this->getColumnName($table[$count]);
+			$tableHeaderName = $this->getColumnName($table[$count]);
 			$colCount = $this->getColumnName($table[$count], 1);
 			$sql = "INSERT INTO $table[$count](";
 			$ctr = 0;
@@ -185,16 +173,16 @@ class connection
 			//gets the column name and concats into sql query
 			for (; $ctr < $colCount; $ctr++) {
 				if ($ctr < $colCount - 1) {
-					$sql .= "$colName[$ctr], ";
+					$sql .= "$tableHeaderName[$ctr], ";
 				} else {
-					$sql .= "$colName[$ctr])";
+					$sql .= "$tableHeaderName[$ctr])";
 				}
 			}
 			$sql .= " VALUES(";
 
 
 			for ($i = 0, $j = 0; $j < $colCount; $i++) {
-				if (strcmp($keys[$i], $colName[$j]) == 0) {
+				if (strcmp($keys[$i], $tableHeaderName[$j]) == 0) {
 					$value = $post[$keys[$i]];
 					if (isset($formArr)) {
 						$value = $post[$keys[$i]][$formArr];
@@ -226,7 +214,7 @@ class connection
 	{
 		$keys = array_keys($post);
 		for ($count = 0; $count < count($table); $count++) {
-			$colName = $this->getColumnName($table[$count]);
+			$tableHeaderName = $this->getColumnName($table[$count]);
 			$colCount = $this->getColumnName($table[$count], 1);
 			$sql = "UPDATE $table[$count] SET ";
 			$j = 0;
@@ -239,7 +227,7 @@ class connection
 				$j = 1;
 			}
 			for ($i = 0; $i < count($keys); $i++) {
-				if (strcmp($keys[$i], $colName[$j]) == 0) {
+				if (strcmp($keys[$i], $tableHeaderName[$j]) == 0) {
 					$value = $post[$keys[$i]];
 					if (isset($formArr)) {
 						$value = $post[$keys[$i]][$formArr];
@@ -247,19 +235,19 @@ class connection
 					if ($j < $colCount - 1) {
 						//for those empty value
 						if ($value == '') {
-							$sql .= "$colName[$j] = NULL, ";
+							$sql .= "$tableHeaderName[$j] = NULL, ";
 							$j++;
 						} else {
-							$sql .= "$colName[$j] = '$value', ";
+							$sql .= "$tableHeaderName[$j] = '$value', ";
 							$j++;
 						}
 					} else {
 						//for those empty value
 						if ($value == '') {
-							$sql .= "$colName[$j] = NULL ";
+							$sql .= "$tableHeaderName[$j] = NULL ";
 							$j++;
 						} else {
-							$sql .= "$colName[$j] = '$value' ";
+							$sql .= "$tableHeaderName[$j] = '$value' ";
 							$j++;
 						}
 					}
@@ -328,8 +316,6 @@ if (isset($_FILES['vaccinationCard']['name'])) {
 	if ($uploadOk != 0) {
 		move_uploaded_file($_FILES["vaccinationCard"]["tmp_name"], $targetFile);
 		echo 'Upload Succesful';
-	} else {
-		echo 'Upload unsuccessful';
 	}
 }
 
