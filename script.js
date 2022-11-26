@@ -36,8 +36,7 @@ $(function () {
     $('#edit').on('click', function () {
         var $_GET = $_GETValue();
         var activate = 8;
-        if (/^[0-9]{1,2}-[0-9]{6,6}$/.test($_GET['id']))
-        {
+        if (/^[0-9]{1,2}-[0-9]{6,6}$/.test($_GET['id'])) {
             activate = 10;
         }
         $('input, select').each(function (index) {
@@ -60,7 +59,7 @@ $(function () {
         hideAndShow.call(this);
     });
 
-    $('#save').on('click', function(){
+    $('#save').on('click', function () {
         $('#accountInfo').trigger('submit');
         $('input[type!="file"], select').each(function () {
             $(this).attr('disabled', 'disabled');
@@ -170,6 +169,7 @@ $(function () {
             }
         })
     }
+
     $('form[id!="login"][id!="upload"]').on('submit', function (e) {
         var validated = 1;
         var formData = [];
@@ -178,13 +178,11 @@ $(function () {
             //this could impact the response time but honestly idgaf
             var $_GET = $_GETValue();
             var id;
-            if($_GET['id'])
-            {
+            if ($_GET['id']) {
                 id = $_GET['id'];
             }
-            if($(this).parent().find('input[name^="id"]').length)
-            {
-               id = $(this).parent().find('input[name^="id"]').val();
+            if ($(this).parent().find('input[name^="id"]').length) {
+                id = $(this).parent().find('input[name^="id"]').val();
             }
             $yearLevel = $($(this).parent().find('select[name^="yearLevel"]'));
             $status = $($(this).parent().find('input[name^="status"]'));
@@ -220,7 +218,8 @@ $(function () {
                     break;
                 case 'update':
                     formData.push({ name: 'action', value: 'update' });
-                    formData.push({ name: 'id', value: id });
+                    formData.push({ name: 'condition', value: $_GET['id'] });
+                    formData.push({ name: 'id', value: $(this).parent().find('input[name^="id"]').val() });
                     break;
                 case 'delete':
                     break;
@@ -320,78 +319,7 @@ $(function () {
             e.preventDefault();
         }
     });
-
-    //form validation
-    /*     $('form[id!="login"][id!="upload"]').on('submit', function (e) {
-            if (typeof ($(this).data('validation')) != 'undefined') {
-                var validated = 1;
-                $password = $($(this).parent().find('input[type="hidden"][name^="password"]'));
-                $id = $($(this).parent().find('input[type="text"][name^="id"]'))
-                if($password.length)
-                {
-                    $password.val(Math.random().toString(36).substring(2, 10));
-                }
-                    student and faculty id should look like this:
-                    student:XX-XXXXXX
-                    faculty:FX-XXXXXX
-                switch($(this).data('validation'))
-                {
-                    case 1:
-                        if (!(/^[0-9]{1,2}-[0-9]{6,6}$/.test($id.val()))) {
-                            validated = 0;
-                            $id.siblings('p').text('Invalid').fadeOut(5000);
-                        }
-                        break;
-                    case 2:
-                        if (!(/^F[0-9]{1,1}-[0-9]{6,6}$/.test($id.val()))) {
-                            validated = 0;
-                            $id.siblings('p').text('Invalid').fadeOut(5000);
-                        }
-                        break;
-                }
     
-                //name check
-                var name = $($(this).parent().find('input[type="text"][name*="name"]')).map(function (index) {
-                    if (/[a-zA-Z ]$/.test($(this).val().toString())) {
-                        validated++;
-                        return $(this).val();
-                    }
-                    else {
-                        validated = 0;
-                        $(this).siblings('p').text('Invalid').fadeOut(5000);
-                    }
-                }).get().join(':');
-                $(this).parent().find('input[type="hidden"][name^="name"]').val(name);
-    
-                //doctor name check
-                $($(this).parent().find('input[type="text"][name*="doctor"]')).map(function () {
-                    if (/^$|[a-zA-Z ]$/.test($(this).val().toString())) {
-                        validated++;
-                        return $(this).val();
-                    }
-                    else {
-                        validated = 0;
-                        $(this).siblings('p').text('Invalid').fadeOut(5000);
-                    }
-                });
-                //telephone number validation
-                $tel = $($(this).parent().find('input[type="text"][name^="tel"]'));
-                if (!(/^09[0-9]{9,9}$/.test($tel.val()))) {
-                    validated = 0;
-                    $tel.siblings('p').text('invalid').fadeOut(5000);
-                }
-                validated++;
-    
-                console.log(validated);
-                console.log(name);
-    
-                //prevents form submission if one element is not validated
-                if (validated < 8) {
-                    e.preventDefault();
-                }
-            }
-        }); */
-
     //login ajax
     $('form[id="login"]').on('submit', function (e) {
 

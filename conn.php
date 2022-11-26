@@ -8,6 +8,8 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 use PhpOffice\PhpWord\Shared\Converter;
+use PhpOffice\PhpWord\IOFactory;
+use PhpOffice\PhpWord\Settings;
 
 class connection
 {
@@ -90,56 +92,107 @@ class connection
 					$this->mail->addAddress($arguments[3]);
 					$this->mail->send();
 					break;
-				case '':
+				case 'updatedID':
+
 					break;
 			}
 		}
 
 		if ($name == 'report') {
 			$phpWord = new \PhpOffice\PhpWord\PhpWord();
+			$headerFontStyle = ['size' => 16, 'bold' => true];
+			$title = 'Title';
+			$categories = [1, 2, 3, 4];
+			$series = [5, 1, 3, 5];
+			$chartStyle = [
+				'showLegend' => true,
+				'LegendPostion' => 'b', 'title' => $title,
+				'width' => Converter::inchToEmu(3),
+				'height' => Converter::inchToEmu(4),
+				'colors' => ['3A557A', '90B7CD', 'D4EEEE', 'F2AE08', 'E26749', 'ED7E00'],
+			];
 
-			$section = $phpWord->addSection();
-			//TODO:chart here
-			$section->addPageBreak();
-			$header = ['size' => 16, 'bold' => true];
+			$section = $phpWord->addSection(['breakType' => 'continous']);
+			$section->addText('First Dose Only', $headerFontStyle, ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+			$table = $section->addTable(['alignment' => \PhpOffice\PhpWord\SimpleType\JcTable::CENTER, 'borderColor' => 'FFFFFF']);
+			$table->addRow(5000);
+			$table->addCell(5000)->addChart('pie', $categories, $series, $chartStyle);
+			$table->addCell(5000)->addChart('pie', $categories, $series, $chartStyle);
+			$section->addTextBreak();
+			$section->addText('Completed', $headerFontStyle, ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+			$table = $section->addTable(['alignment' => \PhpOffice\PhpWord\SimpleType\JcTable::CENTER, 'borderColor' => 'FFFFFF']);
+			$table->addRow(5000);
+			$table->addCell(5000)->addChart('pie', $categories, $series, $chartStyle);
+			$table->addCell(5000)->addChart('pie', $categories, $series, $chartStyle);
+			$section->addTextBreak();
+			$section->addText('', $headerFontStyle, ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+			$table = $section->addTable(['alignment' => \PhpOffice\PhpWord\SimpleType\JcTable::CENTER, 'borderColor' => 'FFFFFF']);
+			$table->addRow(5000);
+			$table->addCell(5000)->addChart('pie', $categories, $series, $chartStyle);
+			$table->addCell(5000)->addChart('pie', $categories, $series, $chartStyle);
 
-			//Table here requested by bb gurl
+
+			$post = array('table' => '1', 'student' => '1');
 			//TODO:table data
-			$section = $phpWord->addSection(['orientation' => 'landscape']);
-			$section->addText('Basic table', $header);
-			$tableHeaderName = ['ID', 'Name', 'Gender', 'Year Level', 'First Dose', 'Second Dose', 'Vaccine Manufacturer', 'Booster', 'Booster Manufacturer'];
-			//keys for the data
-			$keys = ['id', 'name', 'gender', 'yearLevel', 'firstdose', 'seconddose', 'vacbrand', 'booster', 'boosterbrand'];
-			$table = $section->addTable(['alignment' => \PhpOffice\PhpWord\SimpleType\JcTable::CENTER]);
-			$table->addRow();
-			//table header
-			for ($col = 0; $col < 9; $col++) {
-				$table->addCell(1850, ['bgColor' => '022e43'])->addText($tableHeaderName[$col], ['bold' => true, 'size' => 12], ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
-			}
-			$data = $this->display('*', 'student INNER JOIN vaccinestatus ON student.id = vaccinestatus.id');
-
-			$this->tableDocx($table, $data, $keys);
-
-			// Saving the document as DOCX file...
-			$objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
-			$objWriter->save('Reports.docx');
-		}
-
-		if ($name == 'tableDocx') {
-			foreach ($arguments[1] as $info) {
-				$arguments[0]->addRow();
-				foreach ($arguments[2] as $key) {
-					if ($key == 'name') {
-						$name = str_replace(':', ' ', $info[$key]);
-						$arguments[0]->addCell(1200)->addText($name);
-					} else {
-						$arguments[0]->addCell(1200)->addText($info[$key]);
-					}
+			if (isset($post['table'])) {
+				$section = $phpWord->addSection(['orientation' => 'landscape']);
+				if (isset($post['student'])) {
+					$section->addText('Student', $headerFontStyle, ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+					//student
+					$tableHeaderName = ['ID', 'Name', 'Gender', 'Year Level', 'First Dose', 'Second Dose', 'Vaccine Manufacturer', 'Booster', 'Booster Manufacturer'];
+					//keys for the data
+					$keys = ['id', 'name', 'gender', 'yearLevel', 'firstdose', 'seconddose', 'vacbrand', 'booster', 'boosterbrand'];
+					//table header
+					$data = $this->display('*', 'student INNER JOIN vaccinestatus ON student.id = vaccinestatus.id');
+					$this->tableDocx($section, $tableHeaderName, $data, $keys);
 				}
+
+				if (isset($post['faculty'])) {
+					$section->addText('Faculty', $headerFontStyle, ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+					//faculty
+					$tableHeaderName = ['ID', 'Name', 'Gender', 'First Dose', 'Second Dose', 'Vaccine Manufacturer', 'Booster', 'Booster Manufacturer'];
+					//keys for the data
+					$keys = ['id', 'name', 'gender', 'firstdose', 'seconddose', 'vacbrand', 'booster', 'boosterbrand'];
+					//table header
+					$data = $this->display('*', 'faculty INNER JOIN vaccinestatus ON faculty.id = vaccinestatus.id');
+					$this->tableDocx($section, $tableHeaderName, $data, $keys);
+				}
+			}
+			$objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
+			if (file_exists('Reports.docx')) {
+				unlink(realpath('Reports.docx'));
+				$objWriter->save('Reports.docx');
+			} else {
+				$objWriter->save('Reports.docx');
 			}
 		}
 	}
 
+	//Table function requested by bb gurl
+	public function tableDocx($section, $tableHeaderName, $data, $keys)
+	{
+		//table element create
+		$table = $section->addTable(['alignment' => \PhpOffice\PhpWord\SimpleType\JcTable::CENTER]);
+
+		$table->addRow();
+		//table header
+		foreach ($tableHeaderName as $headerName) {
+			$table->addCell(1850, ['bgColor' => '022e43'])->addText($headerName, ['bold' => true, 'size' => 12, 'color' => 'FFFFFF'], ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+		}
+		//table cell
+		foreach ($data as $info) {
+			$table->addRow();
+			foreach ($keys as $key) {
+				if ($key == 'name') {
+					$name = str_replace(':', ' ', $info[$key]);
+					$table->addCell(1200)->addText($name);
+				} else {
+					$table->addCell(1200)->addText($info[$key]);
+				}
+			}
+		}
+		$section->addPageBreak();
+	}
 
 	public function getColumnName($table, $count = 0)
 	{
@@ -158,13 +211,13 @@ class connection
 	}
 
 	//insert
-	public function insertInfo($post, $table, $id = true, $formArr = NULL)
+	public function insertInfo($post, $tables, $id = true, $formArr = NULL)
 	{
 		$keys = array_keys($post);
-		for ($count = 0; $count < count($table); $count++) {
-			$tableHeaderName = $this->getColumnName($table[$count]);
-			$colCount = $this->getColumnName($table[$count], 1);
-			$sql = "INSERT INTO $table[$count](";
+		foreach ($tables as $table) {
+			$tableHeaderName = $this->getColumnName($table);
+			$colCount = $this->getColumnName($table, 1);
+			$sql = "INSERT INTO $table(";
 			$ctr = 0;
 			if (!$id) {
 				$ctr = 1;
@@ -404,16 +457,25 @@ if (isset($_GET['chart'])) {
 	}
 }
 
+//action respons
 if (isset($_POST['action'])) {
 	switch ($_POST['action']) {
 		case 'submit':
-			$table = array($_POST['table'], 'vaccinestatus', 'logcredentials');
-			$conn->insertInfo($_POST, $table);
-			$conn->sendMail('sendCredentials', $_POST['id'], $_POST['password'], $_POST['email']);
+			if (strcmp($_POST['table'], 'vacbrand') == 0) {
+				$table = array($_POST['table']);
+				$conn->insertInfo($_POST, $table);
+			} else {
+				$table = array($_POST['table'], 'vaccinestatus', 'logcredentials');
+				$conn->insertInfo($_POST, $table);
+				$conn->sendMail('sendCredentials', $_POST['id'], $_POST['password'], $_POST['email']);
+			}
 			break;
 		case 'update':
 			$table = array($_POST['table'], 'vaccinestatus', 'logcredentials');
-			$conn->updateInfo($_POST, $table, 'id', $_POST['id']);
+			$conn->updateInfo($_POST, $table, 'id', $_POST['condition']);
+			if (strcmp($_POST['id'], $_POST['condition']) != 0) {
+				//$conn->sendMail('updatedID', $_POST['id']);
+			}
 			break;
 		case 'delete':
 			break;
