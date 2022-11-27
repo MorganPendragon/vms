@@ -141,7 +141,7 @@
 
             $('a[name="editbrand"]').on('click', function() {
                 $('input[type="hidden"][name="condition"]').val($(this).data('editbrand'));
-                $('input[type="text"][name="brand"]').val($(this).data('editbrand'));
+                $('input[type="hidden"][name="condition"]').siblings('input[type="text"]').val($(this).data('editbrand'));
             });
         });
     </script>
@@ -217,10 +217,6 @@
                     break;
                 default:
                     break;
-            }
-
-            if (isset($_GET['report'])) {
-                $vac->report();
             }
 
             ?>
@@ -1298,7 +1294,7 @@
                                         <h5 class="modal-title" id="upVacLabel">Edit</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
-                                    <form>
+                                    <form data-action="update" data-table="vacbrand">
                                         <div class="modal-body">
                                             <div class="row mb-2">
                                                 <div class="col">
@@ -1316,7 +1312,7 @@
                             </div>
                         </div>
                         <!--Delete Modal-->
-                        <div class="modal fade" id="deleteVacModal<?php echo $i ?>" tabindex="-1" aria-labelledby="delVacLabel" aria-hidden="true">
+                        <div class="modal fade" id="deleteVacModal" tabindex="-1" aria-labelledby="delVacLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -1329,7 +1325,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                                        <a type="button" class="btn btn-primary" href="adminview.php?delete=3&delVacID=<?php echo $info['brand'] ?>">Yes</a>
+                                        <a type="button" class="btn btn-primary">Yes</a>
                                     </div>
                                 </div>
                             </div>
@@ -1342,11 +1338,11 @@
                                         <p class="modal-title fs-2" style="font-weight:900;" id="createStudentLabel">Create</p>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
-                                    <form action="adminview.php?submit=3" method="POST">
+                                    <form data-action="submit" data-table="vacbrand">
                                         <div class="modal-body">
                                             <div class="row mb-2">
                                                 <div class="col">
-                                                    <input type="text" name="brand[0]" class="form-control" placeholder="Brand Name" required>
+                                                    <input type="text" name="brand" class="form-control" placeholder="Brand Name" required>
                                                 </div>
                                             </div>
                                         </div>
