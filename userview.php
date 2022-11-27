@@ -102,7 +102,6 @@
 						$genders = array('Male', 'Female');
 						$id = $_GET['id'];
 						if (preg_match("/^[0-9]{1,2}-[0-9]{6,6}$/", $_GET['id']) == 1) {
-							$id = $_GET['id'];
 							$info = $conn->display('*', 'student INNER JOIN vaccinestatus ON student.id = vaccinestatus.id', "student.id='$id'");
 							$name = explode(':', $info[0]['name']);
 						?>
@@ -273,7 +272,7 @@
 						<?php
 						}
 						if (preg_match("/^F[0-9]{1,1}-[0-9]{6,6}$/", $_GET['id']) == 1) {
-							$info = $conn->display('*', 'faculty INNER JOIN vaccinestatus ON faculty.id = vaccinestatus.id', "id=$id");
+							$info = $conn->display('*', 'faculty INNER JOIN vaccinestatus ON faculty.id = vaccinestatus.id', "faculty.id='$id'");
 							$name = explode(':', $info[0]['name']);
 						?>
 							<!-- Faculty -->
