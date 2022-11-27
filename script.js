@@ -191,18 +191,15 @@ $(function () {
                     break;
             }
 
+            formData.push({ name: 'action', value: $(this).data('action') });
             switch ($(this).data('action')) {
                 case 'submit':
-                    formData.push({ name: 'action', value: 'submit' });
                     formData.push({ name: 'id', value: id });
                     formData.push({ name: 'password', value: Math.random().toString(36).substring(2, 10) });
                     break;
                 case 'update':
-                    formData.push({ name: 'action', value: 'update' });
                     formData.push({ name: 'condition', value: $(this).parent().find('input[type="hidden"][name="currentId"]').val() });
                     formData.push({ name: 'id', value: $(this).parent().find('input[name^="id"]').val() });
-                    break;
-                case 'delete':
                     break;
             }
 
@@ -301,24 +298,12 @@ $(function () {
         }
         else {
             formData = $(this).serializeArray();
-            switch ($(this).data('action')) {
-                case 'submit':
-                    formData.push({ name: 'action', value: 'submit' });
-                    formData.push({ name: 'table', value: $(this).data('table') });
-                    break;
-                case 'update':
-                    formData.push({ name: 'action', value: 'update' });
-                    formData.push({ name: 'table', value: $(this).data('table') });
-                    break;
-                case 'delete':
-                    break;
+            formData.push({ name: 'action', value: $(this).data('action') });
+            if (!($(this).parent().find('input[type="hidden"][name="table"]')).length) {
+                formData.push({ name: 'table', value: $(this).data('table') });
             }
             console.log(formData);
-            /* $.post('conn.php', formData).done(function () {  
-                
-            }).fail(function(response){
-
-            }); */
+            $.post('conn.php', formData);
             e.preventDefault();
         }
     });

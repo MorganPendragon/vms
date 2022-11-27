@@ -143,6 +143,9 @@
                 $('input[type="hidden"][name="condition"]').val($(this).data('editbrand'));
                 $('input[type="hidden"][name="condition"]').siblings('input[type="text"]').val($(this).data('editbrand'));
             });
+            $('a[name="delete"]').on('click', function() {
+                $('input[type="hidden"][name="delete"]').val($(this).data('delete'));
+            });
         });
     </script>
 </head>
@@ -568,13 +571,17 @@
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
                                                         <!--put content here-->
-                                                        <div class="modal-body">
-                                                            Are you sure about the deletion?
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                                                            <a type="button" class="btn btn-primary" href="adminview.php?delete=1&delStudentID=<?php echo $info['id'] ?>">Yes</a>
-                                                        </div>
+                                                        <form data-action="delete">
+                                                            <div class="modal-body">
+                                                                <input type="hidden" name="delete" value="<?php echo $info['id'] ?>">
+                                                                <input type="hidden" name="table" value="student">
+                                                                Are you sure about the deletion?
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                                                                <button type="submit" class="btn btn-primary">Yes</button>
+                                                            </div>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1016,13 +1023,17 @@
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
                                                         <!--put content here-->
-                                                        <div class="modal-body">
-                                                            Are you sure about the deletion?
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                                                            <a type="button" class="btn btn-primary" href="adminview.php?delete=2&delFacultyID=<?php echo $info['id'] ?>">Yes</a>
-                                                        </div>
+                                                        <form data-action="delete">
+                                                            <div class="modal-body">
+                                                                <input type="hidden" name="delete" value="<?php echo $info['id'] ?>">
+                                                                <input type="hidden" name="table" value="faculty">
+                                                                Are you sure about the deletion?
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                                                                <button type="submit" class="btn btn-primary">Yes</button>
+                                                            </div>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1243,7 +1254,7 @@
                                                                 <!--delete vac-->
                                                                 <td>
                                                                     <!--resize-->
-                                                                    <a type="button" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#deleteVacModal">
+                                                                    <a type="button" data-bs-toggle="modal" data-bs-dismiss="modal" data-delete="<?php echo $info['brand'] ?>" name="delete" data-bs-target="#deleteVacModal">
                                                                         <i class="bi bi-trash-fill"></i>
                                                                     </a>
                                                                 </td>
@@ -1291,6 +1302,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <!--Delete Modal-->
                         <div class="modal fade" id="deleteVacModal" tabindex="-1" aria-labelledby="delVacLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
@@ -1300,13 +1312,16 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <!--put content here-->
-                                    <div class="modal-body">
-                                        Are you sure about the deletion?
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                                        <a type="button" class="btn btn-primary">Yes</a>
-                                    </div>
+                                    <form data-action="delete" data-table="vacbrand">
+                                        <div class="modal-body">
+                                            <input type="hidden" name="delete">
+                                            Are you sure about the deletion?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                                            <button type="submit" class="btn btn-primary">Yes</button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>

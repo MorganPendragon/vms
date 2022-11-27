@@ -385,7 +385,7 @@ $totalFaculty = $conn->find('vaccinestatus', "id REGEXP '^F[0-9]{1,1}-[0-9]{6,6}
 if (isset($_GET['chart'])) {
 	switch ($_GET['chart']) {
 		case 'firstAndSecond':
-			$row = $conn->display('*','vacbrand');
+			$row = $conn->display('*', 'vacbrand');
 			for ($i = 0; $i < count($row); $i++) {
 				$brand[] = $row[$i]['brand'];
 			}
@@ -396,7 +396,7 @@ if (isset($_GET['chart'])) {
 			echo json_encode($result);
 			break;
 		case 'booster':
-			$row = $conn->display('*','vacbrand');
+			$row = $conn->display('*', 'vacbrand');
 			for ($i = 0; $i < count($row); $i++) {
 				$brand[] = $row[$i]['brand'];
 			}
@@ -483,6 +483,13 @@ if (isset($_POST['action'])) {
 			}
 			break;
 		case 'delete':
+			if (strcmp($_POST['table'], 'vacbrand') == 0) {
+				$table = array($_POST['table']);
+				$conn->deleteInfo($table, 'brand', $_POST['delete']);
+			} else {
+				$table = array($_POST['table'], 'vaccinestatus', 'logcredentials');
+				$conn->deleteInfo($table, 'id', $_POST['delete']);
+			}
 			break;
 	}
 }
