@@ -199,7 +199,7 @@ $(function () {
                     break;
                 case 'update':
                     formData.push({ name: 'action', value: 'update' });
-                    formData.push({ name: 'condition', value: $(this).parent().find('input[type="hidden"][name="currentId"]').val()});
+                    formData.push({ name: 'condition', value: $(this).parent().find('input[type="hidden"][name="currentId"]').val() });
                     formData.push({ name: 'id', value: $(this).parent().find('input[name^="id"]').val() });
                     break;
                 case 'delete':
@@ -299,8 +299,30 @@ $(function () {
             }
             e.preventDefault();
         }
+        else {
+            formData = $(this).serializeArray();
+            switch ($(this).data('action')) {
+                case 'submit':
+                    formData.push({ name: 'action', value: 'submit' });
+                    formData.push({ name: 'table', value: $(this).data('table') });
+                    break;
+                case 'update':
+                    formData.push({ name: 'action', value: 'update' });
+                    formData.push({ name: 'table', value: $(this).data('table') });
+                    break;
+                case 'delete':
+                    break;
+            }
+            console.log(formData);
+            /* $.post('conn.php', formData).done(function () {  
+                
+            }).fail(function(response){
+
+            }); */
+            e.preventDefault();
+        }
     });
-    
+
     //login ajax
     $('form[id="login"]').on('submit', function (e) {
 
