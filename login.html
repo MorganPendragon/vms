@@ -55,6 +55,26 @@
 				transform: rotate(360deg);
 			}
 		}
+		.heli{
+			animation-duration:5s;
+			animation-name: heli;
+			animation-iteration-count: infinite;
+		}
+
+		@keyframes heli {
+			0%{
+				top: 0%;
+				left: 0%;
+			}
+			50%{
+				bottom:1000px;
+				right: 1000px;
+			}
+			100%{
+				top:500px;
+				left: 1450px;
+			}
+		}
 	</style>
 </head>
 
@@ -88,6 +108,7 @@
 			<!--for logo-->
 			<div class="container-fluid" id="loginPage">
 				<div class="row">
+					<img src="./img/heli.png" class="position-absolute heli" style="height:500px;width:500px;z-index:+1;" alt="">
 					<div class="d-flex col-6 justify-content-center align-items-center s2pid" style="height:100vh;">
 						<object data="img/logologin.svg" width="650" height="650" style="image-resolution: 300dpi;">
 						</object>
