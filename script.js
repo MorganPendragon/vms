@@ -75,27 +75,6 @@ $(function () {
         hideAndShow.call(this);
     });
 
-    //brand populate select
-    if ($('select[name*="brand"], select[id*="brand"]').length) {
-        $.ajax({
-            url: 'conn.php',
-            type: "POST",
-            dataType: 'json',
-            data: ({
-                tableName: 'vacbrand',
-                column: 'brand'
-            }),
-            success: function (data) {
-                var option = '';
-                console.log(data);
-                $.each(data, function (index, value) {
-                    option += '<option value="' + value.brand + '">' + value.brand + '</option>';
-                });
-                $('select[name*="brand"]').append(option);
-            }
-        });
-    }
-
     function hideAndShow() {
         //hides and shows div what do you expect?
         $($(this).data('hide')).hide();
@@ -178,6 +157,8 @@ $(function () {
             //this could impact the response time but honestly idgaf
             var $_GET = $_GETValue();
             var id;
+            var condition;
+
             if ($_GET['id']) {
                 id = $_GET['id'];
             }
@@ -218,7 +199,7 @@ $(function () {
                     break;
                 case 'update':
                     formData.push({ name: 'action', value: 'update' });
-                    formData.push({ name: 'condition', value: $_GET['id'] });
+                    formData.push({ name: 'condition', value: $(this).parent().find('input[type="hidden"][name="currentId"]').val()});
                     formData.push({ name: 'id', value: $(this).parent().find('input[name^="id"]').val() });
                     break;
                 case 'delete':
