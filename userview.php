@@ -100,9 +100,10 @@
 						$conn = new connection();
 						$brand = $conn->display('vacbrand');
 						$genders = array('Male', 'Female');
+						$id = $_GET['id'];
 						if (preg_match("/^[0-9]{1,2}-[0-9]{6,6}$/", $_GET['id']) == 1) {
-							$info = $conn->display('student', 'id', $_GET['id']);
-							$vacStatus = $conn->display('vaccinestatus', 'id', $_GET['id']);
+							$id = $_GET['id'];
+							$info = $conn->display('*', 'student INNER JOIN vaccinestatus ON student.id = vaccinestatus.id', "id=$id");
 							$name = explode(':', $info['name']);
 						?>
 							<!--student-->
@@ -191,13 +192,13 @@
 										<p class="fs-4 fw-bold">1st Dose</p>
 										<div class="col">
 											<span class="fs-5 fw-semibold">Date</span>
-											<input type="date" name="firstdose" data-activate='input[type="text"][name="firstdoctor"], input[type="date"][name="seconddose"], select[name="vacbrand"]' data-required='input[type="text"][name="firstdoctor"], select[name="vacbrand"]' class="form-control" value="<?php echo $vacStatus['firstdose'] ?>" autocomplete="off">
+											<input type="date" name="firstdose" data-activate='input[type="text"][name="firstdoctor"], input[type="date"][name="seconddose"], select[name="vacbrand"]' data-required='input[type="text"][name="firstdoctor"], select[name="vacbrand"]' class="form-control" value="<?php echo $info['firstdose'] ?>" autocomplete="off">
 											<!--Invalid Feedback-->
 											<p class="fw-bolder text-center text-danger"></p>
 										</div>
 										<div class="col">
 											<span class="fs-5 fw-semibold">Doctor</span>
-											<input type="text" name="firstdoctor" class="form-control" placeholder="Doctor" value="<?php echo $vacStatus['firstdoctor'] ?>" autocomplete="off">
+											<input type="text" name="firstdoctor" class="form-control" placeholder="Doctor" value="<?php echo $info['firstdoctor'] ?>" autocomplete="off">
 											<!--invalid feedback-->
 											<p class="fw-bolder text-center text-danger"></p>
 										</div>
@@ -224,7 +225,7 @@
 												<option value="" hidden>Brand</option>
 												<?php
 												foreach ($brand as $data) {
-													(strcmp($data['brand'], $vacStatus['vacbrand']) == 0) ? $state = 'selected' : $state = '';
+													(strcmp($data['brand'], $info['vacbrand']) == 0) ? $state = 'selected' : $state = '';
 												?>
 													<option value="<?php echo $data['brand'] ?>" <?php echo $state ?>><?php echo $data['brand'] ?></option>
 												<?php
@@ -258,7 +259,7 @@
 												<option value="" hidden>Booster Brand</option>
 												<?php
 												foreach ($brand as $data) {
-													(strcmp($data['brand'], $vacStatus['boosterbrand']) == 0) ? $state = 'selected' : $state = '';
+													(strcmp($data['brand'], $info['boosterbrand']) == 0) ? $state = 'selected' : $state = '';
 												?>
 													<option value="<?php echo $data['brand'] ?>" <?php echo $state ?>><?php echo $data['brand'] ?></option>
 												<?php
@@ -272,8 +273,7 @@
 						<?php
 						}
 						if (preg_match("/^F[0-9]{1,1}-[0-9]{6,6}$/", $_GET['id']) == 1) {
-							$info = $conn->display('faculty', 'id', $_GET['id']);
-							$vacStatus = $conn->display('vaccinestatus', 'id', $_GET['id']);
+							$info = $conn->display('*', 'faculty INNER JOIN vaccinestatus ON faculty.id = vaccinestatus.id', "id=$id");
 							$name = explode(':', $info['name']);
 						?>
 							<!-- Faculty -->
@@ -345,13 +345,13 @@
 										<p class="fs-4 fw-bold">1st Dose</p>
 										<div class="col">
 											<span class="fs-5 fw-semibold">Date</span>
-											<input type="date" name="firstdose" data-activate='input[type="text"][name="firstdoctor"], input[type="date"][name="seconddose"], select[name="vacbrand"]' data-required='input[type="text"][name="firstdoctor"], select[name="vacbrand"]' class="form-control" value="<?php echo $vacStatus['firstdose'] ?>" autocomplete="off">
+											<input type="date" name="firstdose" data-activate='input[type="text"][name="firstdoctor"], input[type="date"][name="seconddose"], select[name="vacbrand"]' data-required='input[type="text"][name="firstdoctor"], select[name="vacbrand"]' class="form-control" value="<?php echo $info['firstdose'] ?>" autocomplete="off">
 											<!--Invalid Feedback-->
 											<p class="fw-bolder text-center text-danger"></p>
 										</div>
 										<div class="col">
 											<span class="fs-5 fw-semibold">Doctor</span>
-											<input type="text" name="firstdoctor" class="form-control" placeholder="Doctor" value="<?php echo $vacStatus['firstdoctor'] ?>" autocomplete="off">
+											<input type="text" name="firstdoctor" class="form-control" placeholder="Doctor" value="<?php echo $info['firstdoctor'] ?>" autocomplete="off">
 											<!--invalid feedback-->
 											<p class="fw-bolder text-center text-danger"></p>
 										</div>
@@ -378,7 +378,7 @@
 												<option value="" hidden>Brand</option>
 												<?php
 												foreach ($brand as $data) {
-													(strcmp($data['brand'], $vacStatus['vacbrand']) == 0) ? $state = 'selected' : $state = '';
+													(strcmp($data['brand'], $info['vacbrand']) == 0) ? $state = 'selected' : $state = '';
 												?>
 													<option value="<?php echo $data['brand'] ?>" <?php echo $state ?>><?php echo $data['brand'] ?></option>
 												<?php
@@ -411,7 +411,7 @@
 												<option value="" hidden>Booster Brand</option>
 												<?php
 												foreach ($brand as $data) {
-													(strcmp($data['brand'], $vacStatus['boosterbrand']) == 0) ? $state = 'selected' : $state = '';
+													(strcmp($data['brand'], $info['boosterbrand']) == 0) ? $state = 'selected' : $state = '';
 												?>
 													<option value="<?php echo $data['brand'] ?>" <?php echo $state ?>><?php echo $data['brand'] ?></option>
 												<?php
