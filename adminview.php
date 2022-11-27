@@ -1364,7 +1364,32 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
+                                    <div class="input-group">
+                                        <select class="form-select" autocomplete="off">
+                                            <option value="0" hidden>Year Level</option>b
+                                            <option value="0">---</option>
+                                            <option value="Grade 7">Grade 7</option>
+                                            <option value="Grade 8">Grade 8</option>
+                                            <option value="Grade 9">Grade 9</option>
+                                            <option value="Grade 10">Grade 10</option>
+                                            <option value="Grade 11">Grade 11</option>
+                                            <option value="Grade 12">Grade 12</option>
+                                        </select>
+                                    </div>
 
+                                    <div>
+                                        <!--navbar gen rep place-->
+                                        <nav class="navbar justify-content-end px-5" style="background-color:#022e43;">
+                                            <ul class="nav">
+                                                <li><a class="btn" type="button" href="adminview.php?report=1">
+                                                        <span class="badge text-bg-light">GENERATE REPORTS</span>
+                                                        </i>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </nav>
+
+                                    </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
