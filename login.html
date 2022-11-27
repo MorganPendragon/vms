@@ -26,7 +26,6 @@
 	<title>Log In</title>
 	<style>
 		* {
-			box-sizing: border-box;
 			font-family: 'Montserrat';
 			padding: 0;
 			margin: 0;
@@ -55,24 +54,102 @@
 				transform: rotate(360deg);
 			}
 		}
-		.heli{
-			animation-duration:8s;
+
+		.heli {
+			animation-duration: 8s;
 			animation-name: heli;
 			animation-iteration-count: infinite;
 		}
 
 		@keyframes heli {
-			0%{
+			0% {
 				top: 0%;
 				left: 0%;
 			}
-			50%{
-				bottom:1000px;
+
+			50% {
+				bottom: 1000px;
 				right: 1000px;
 			}
-			100%{
-				top:500px;
+
+			100% {
+				top: 500px;
 				left: 1450px;
+			}
+		}
+
+		.sold {
+			animation: 8s;
+			animation-name: soldier;
+			animation-iteration-count: infinite;
+		}
+
+		@keyframes soldier {
+			0% {
+				left: 0%;
+			}
+
+			25% {
+				left: 400px
+			}
+
+			50% {
+				left: 800px
+			}
+
+			75% {
+				left: 1200px
+			}
+
+			100% {
+				left: 1600px
+			}
+
+		}
+
+		.barney {
+			animation-duration: 1s;
+			animation-name: barney;
+			animation-iteration-count: infinite;
+		}
+
+		@keyframes barney {
+			0% {
+				left: 0;
+				transform: rotate(0);
+			}
+
+			50% {
+				left: 50px;
+				transform: rotate(20deg);
+			}
+
+			100% {
+				left: 100px;
+				transform: rotate(10deg);
+			}
+		}
+
+		.kong {
+			animation-duration: 1s;
+			animation-name: kong;
+			animation-iteration-count: infinite;
+		}
+
+		@keyframes kong {
+			0% {
+				right: 0;
+				transform: rotate(0);
+			}
+
+			50% {
+				right: 50px;
+				transform: rotate(20deg);
+			}
+
+			100% {
+				right: 100px;
+				transform: rotate(10deg);
 			}
 		}
 	</style>
@@ -107,13 +184,20 @@
 		<div>
 			<!--for logo-->
 			<div class="container-fluid" id="loginPage">
+				<img src="./img/barney.png" class="position-absolute barney"
+					style="z-index:-1;height:1100px;margin-right:500px;" alt="">
 				<div class="row">
-					<img src="./img/heli.png" class="position-absolute heli" style="height:500px;width:500px;z-index:+1;" alt="">
+					<img src="./img/heli.png" class="position-absolute heli"
+						style="height:500px;width:500px;z-index:+2;" alt="">
+					<img src="./img/soldier.png" class="position-absolute sold"
+						style="height:200px;width:200px;margin-top:40%; ;z-index:+3;" alt="">
 					<div class="d-flex col-6 justify-content-center align-items-center s2pid" style="height:100vh;">
 						<object data="img/logologin.svg" width="650" height="650" style="image-resolution: 300dpi;">
 						</object>
 					</div>
 					<!--log in-->
+					<img src="./img/kong.png" class="position-absolute kong"
+						style="z-index:+1;height:900px;width:1000px;margin-left:40%;" alt="">
 					<div class="col-6 s2pid">
 						<div>
 							<div class="container">
