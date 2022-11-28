@@ -11,6 +11,8 @@ use PhpOffice\PhpWord\Shared\Converter;
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\Settings;
 
+use function PHPSTORM_META\argumentsSet;
+
 class connection
 {
 	private $servername = 'localhost';
@@ -82,7 +84,7 @@ class connection
 		if ($name == 'sendMail') {
 			switch ($arguments[0]) {
 				case 'sendCredentials':
-					$message = file_get_contents('logincredentials.html');
+					$message = file_get_contents('./email/logincredentials.html');
 					$message = str_replace('%idNo%', $arguments[1], $message);
 					$message = str_replace('%password%', $arguments[2], $message);
 					$this->mail->Subject = 'Log In Credentials';
@@ -93,8 +95,26 @@ class connection
 					$this->mail->send();
 					break;
 				case 'updatedID':
-
+					$message = file_get_contents('./email/idcredentials.html');
+					$message = str_replace('%idNo%', $arguments[1], $message);
+					$this->mail->Subject = 'Your ID has been Updated by the Administrator';
+					$this->mail->addEmbeddedImage('./img/logo.png', 'logo');
+					$this->mail->isHTML(true);
+					$this->mail->msgHTML($message);
+					$this->mail->addAddress($arguments[2]);
+					$this->send();
 					break;
+				case 'test':
+					$message = file_get_contents('./email/idcredentials.html');
+					$message = str_replace('%idNo%', $arguments[1], $message);
+					$this->mail->Subject = 'Your ID has been Updated by the Administrator';
+					$this->mail->addEmbeddedImage('./img/logo.png', 'logo');
+					$this->mail->isHTML(true);
+					$this->mail->msgHTML($message);
+					$this->mail->addAddress($arguments[2]);
+					$this->send();
+					break;
+
 			}
 		}
 
@@ -373,7 +393,7 @@ if (isset($_FILES['vaccinationCard']['name'])) {
 }
 
 if (isset($_POST['tableName'])) {
-	$row = $conn->display($_POST['tableName']);
+	$row = $conn->display('*',$_POST['tableName']);
 	echo json_encode($row);
 }
 
