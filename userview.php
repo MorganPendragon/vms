@@ -42,8 +42,15 @@
 	input[type="file"] {
 		display: none;
 	}
-	.window-height{
+
+	.window-height {
 		position: fixed;
+	}
+
+	.logout {
+		margin-top: 450px;
+		margin-left: 110px;
+		font-size: 24px;
 	}
 </style>
 
@@ -64,26 +71,19 @@
 								<li class="nav-item">
 									<a href="#settings" class="nav-link" data-bs-toggle="tab" style="color:rgb(232, 177, 62);" data-show="#settings" data-hide="#account"><i class="bi bi-gear-fill"></i>&nbsp;&nbsp;Settings</a>
 								</li>
+								<li class="nav-item ">
+									<a href="#logout" class="logout nav-link" data-bs-toggle="modal" style="color:rgb(232, 177, 62);"><i class="bi bi-box-arrow-left"></i>&nbsp;&nbsp;Logout</a>
+								</li>
 							</ul>
 
 						</div>
 					</div>
 				</div>
 			</div>
-			<!-- 			<div class="col-2 position-fixed" style="background-color:#022e43;font-size:20px; height:100vh;" tabindex="1">
-				<img src="img\logo.png" class="img-fluid" alt="...">
-				<ul class="nav nav-pills mb-sm-auto mb-0 align-items-center align-items-sm-start" id="sidebar">
-					<li class="nav-item">
-						<a href="#account" class="nav-link active" data-bs-toggle="tab" style="color:rgb(232, 177, 62);" data-show="#account" data-hide="#settings"><i class="bi bi-person-fill"></i>&nbsp;&nbsp;Account Information</a>
-					</li>
-					<li class="nav-item">
-						<a href="#settings" class="nav-link" data-bs-toggle="tab" style="color:rgb(232, 177, 62);" data-show="#settings" data-hide="#account"><i class="bi bi-gear-fill"></i>&nbsp;&nbsp;Settings</a>
-					</li>
-				</ul>
-			</div> -->
+
 			<!--content-->
 			<div class="container-fluid position-absolute col-8" style="margin-left:25%;">
-				<div  id="account">
+				<div id="account">
 					<div class="d-flex">
 						<span class="fs-1" style="font-weight:900;">Account Information</span>
 						<div class=" gap-2" style="margin-left:20%;">
@@ -426,6 +426,24 @@
 						}
 						?>
 					</div>
+					<div class="modal" id="logout" tabindex="-1">
+						<div class="modal-dialog modal-dialog-centered">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title">Log out</h5>
+									<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+								</div>
+								<div class="modal-body">
+									<p>Are you sure?</p>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="background-color:rgb(16, 45, 65);color:white;">Cancel</button>
+									<a href="login.html"><button type="button" class="btn" style="background-color:rgb(232, 177, 62);color:white;">Logout</button></a>
+								</div>
+							</div>
+						</div>
+					</div>
+
 
 					<div>
 						<!--TODO: CSS server response-->
@@ -451,5 +469,4 @@
 		</div>
 	</main>
 </body>
-
 </html>
