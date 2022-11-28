@@ -195,9 +195,8 @@
             <?php
             include('conn.php');
             $vac = new connection();
-            $brand = $vac->display('*', 'vacbrand');
             $genders = array('Male', 'Female');
-
+            $brand = $vac->display('*', 'vacbrand');
 
             ?>
             <!--content div-->
@@ -270,7 +269,14 @@
                             <div class="input-group mx-5">
                                 <select class="form-select" id="brandFilter" autocomplete="off">
                                     <option value="0" hidden>Brand Name</option>
-                                    <option value="0">---</option>
+                                    <?php
+                                    foreach ($brand as $data) {
+                                    ?>
+                                        <option value="<?php echo $data['brand'] ?>"><?php echo $data['brand'] ?></option>
+                                    <?php
+                                    }
+                                    ?>
+
                                 </select>
                             </div>
                             <!--status filter-->
@@ -315,6 +321,8 @@
                                     <?php
                                     $data = $vac->display('*', 'student INNER JOIN vaccinestatus ON student.id = vaccinestatus.id');
                                     $i = 0;
+                                    $brand = $vac->display('*', 'vacbrand');
+
                                     if (count($data) != 0) {
                                         foreach ($data as $info) {
                                             $id = $info['id'];
@@ -499,7 +507,7 @@
 
                                                                     <div class="col text-center">
                                                                         <span class="fs-5 fw-semibold me-4">Vaccine Brand</span>
-                                                                        <select class="form-select text-center" name="vacbrand[1]" value="<?php echo $info['vacbrand'] ?>" autocomplete="off" <?php echo $state ?>>
+                                                                        <select class="form-select text-center" name="vacbrand[1]" autocomplete="off" <?php echo $state ?>>
                                                                             <option value="" hidden>---</option>
                                                                             <?php
                                                                             foreach ($brand as $data) {
@@ -537,7 +545,7 @@
                                                                     <div class="col text-center">
                                                                         <span class="fs-5 fw-semibold me-4">Vaccine Brand</span>
 
-                                                                        <select class="form-select text-center" name="boosterbrand[1]" value="<?php echo $info['boosterbrand'] ?>" autocomplete="off" <?php echo $state ?>>
+                                                                        <select class="form-select text-center" name="boosterbrand[1]" autocomplete="off" <?php echo $state ?>>
                                                                             <option value="" hidden>---</option>
                                                                             <?php
                                                                             foreach ($brand as $data) {
@@ -726,6 +734,13 @@
                                                     <span class="fs-5 fw-semibold">Vaccine Brand</span>
                                                     <select class="form-select text-center " name="vacbrand[0]" autocomplete="off" disabled>
                                                         <option value="" hidden>Brand</option>
+                                                        <?php
+                                                        foreach ($brand as $data) {
+                                                        ?>
+                                                            <option value="<?php echo $data['brand'] ?>"><?php echo $data['brand'] ?></option>
+                                                        <?php
+                                                        }
+                                                        ?>
                                                     </select>
                                                 </div>
                                             </div>
@@ -749,6 +764,13 @@
                                                     <span class="fs-5 fw-semibold me-4">Vaccine Brand</span>
                                                     <select class="form-select text-center" name="boosterbrand[0]" autocomplete="off" disabled>
                                                         <option value="" hidden>Booster Brand</option>
+                                                        <?php
+                                                        foreach ($brand as $data) {
+                                                        ?>
+                                                            <option value="<?php echo $data['brand'] ?>"><?php echo $data['brand'] ?></option>
+                                                        <?php
+                                                        }
+                                                        ?>
                                                     </select>
                                                 </div>
                                             </div>
@@ -765,6 +787,19 @@
                     <!--Faculty-->
                     <div class=" tab-pane fade position-absolute" style="margin-left:15%;" id="faculty">
                         <!--search and filter-->
+                        <div class="input-group mx-5">
+                            <select class="form-select" id="brandFilter" autocomplete="off">
+                                <option value="0" hidden>Brand Name</option>
+                                <?php
+                                foreach ($brand as $data) {
+                                ?>
+                                    <option value="<?php echo $data['brand'] ?>"><?php echo $data['brand'] ?></option>
+                                <?php
+                                }
+                                ?>
+
+                            </select>
+                        </div>
                         <div class="d-flex justify-content-end " style="padding-top:2%; padding-bottom:5%; margin-right:8%;">
                             <div class="">
                                 <div class="d-flex">
@@ -793,6 +828,7 @@
                                 <tbody id="facultyContent">
                                     <?php
                                     $data = $vac->display('*', 'faculty INNER JOIN vaccinestatus ON faculty.id = vaccinestatus.id');
+                                    $brand = $vac->display('*', 'vacbrand');
                                     $i = 0;
                                     if (count($data) != 0) {
                                         foreach ($data as $info) {
@@ -951,10 +987,9 @@
                                                                     ?>
                                                                     <span class="fs-5 fw-semibold me-4">Vaccine Brand</span>
                                                                     <div class="col text-center">
-                                                                        <select class="form-select text-center" name="vacbrand[3]" value="<?php echo $info['vacbrand'] ?>" autocomplete="off" <?php echo $state ?>>
+                                                                        <select class="form-select text-center" name="vacbrand[3]" autocomplete="off" <?php echo $state ?>>
                                                                             <option value="" hidden>---</option>
                                                                             <?php
-                                                                            $brand = $vac->getData('vacbrand', 'brand');
                                                                             foreach ($brand as $data) {
                                                                                 (strcmp($data['brand'], $info['vacbrand']) == 0) ? $state = 'selected' : $state = '';
                                                                             ?>
@@ -1125,14 +1160,12 @@
                                                 <p class="fs-4 fw-bold text-center">1st Dose</p>
                                                 <div class="col">
                                                     <span class="fs-5 fw-semibold">Date</span>
-                                                    <input type="hidden" name="firstdose[2]" class="form-control" value="">
                                                     <input type="date" name="firstdose[2]" data-activate='input[type="text"][name="firstdoctor[2]"], input[type="date"][name="seconddose[2]"], select[name="vacbrand[2]"]' data-required='input[type="text"][name="firstdoctor[2]"], select[name="vacbrand[2]"]' class="form-control" autocomplete="off">
                                                     <!--Invalid Feedback-->
                                                     <p class="fw-bolder text-center text-danger"></p>
                                                 </div>
                                                 <div class="col">
                                                     <span class="fs-5 fw-semibold">Doctor</span>
-                                                    <input type="hidden" name="firstdoctor[2]" class="form-control" value="">
                                                     <input type="text" name="firstdoctor[2]" class="form-control" placeholder="Doctor" autocomplete="off" disabled>
                                                     <!--invalid feedback-->
                                                     <p class="fw-bolder text-center text-danger"></p>
@@ -1142,14 +1175,12 @@
                                                 <p class="fs-4 fw-bold text-center">2nd Dose</p>
                                                 <div class="col">
                                                     <span class="fs-5 fw-semibold">Date</span>
-                                                    <input type="hidden" name="seconddose[2]" class="form-control" value="">
                                                     <input type="date" name="seconddose[2]" data-activate='input[type="text"][name="seconddoctor[2]"], input[type="date"][name="booster[2]"]' data-required='input[type="text"][name="seconddoctor[2]"]' class="form-control" autocomplete="off" disabled>
                                                     <!--Invalid Feedback-->
                                                     <p class="fw-bolder text-center text-danger"></p>
                                                 </div>
                                                 <div class="col">
                                                     <span class="fs-5 fw-semibold">Doctor</span>
-                                                    <input type="hidden" name="seconddoctor[2]" class="form-control" value="">
                                                     <input type="text" name="seconddoctor[2]" class="form-control" placeholder="Doctor" autocomplete="off" disabled>
                                                     <!--invalid feedback-->
                                                     <p class="fw-bolder text-center text-danger"></p>
@@ -1158,9 +1189,15 @@
                                             <div class="row mb-3">
                                                 <div class="col text-center">
                                                     <span class="fs-5 fw-semibold me-4">Vaccine Brand</span>
-                                                    <input type="hidden" name="vacbrand[2]" class="form-control" value="">
                                                     <select class="form-select text-center" name="vacbrand[2]" autocomplete="off" disabled>
-                                                        <option hidden>Brand</option>
+                                                        <option value="" hidden>Booster Brand</option>
+                                                        <?php
+                                                        foreach ($brand as $data) {
+                                                        ?>
+                                                            <option value="<?php echo $data['brand'] ?>"><?php echo $data['brand'] ?></option>
+                                                        <?php
+                                                        }
+                                                        ?>
                                                     </select>
                                                 </div>
                                             </div>
@@ -1168,14 +1205,12 @@
                                                 <p class="fs-4 fw-bold text-center">Booster</p>
                                                 <div class="col">
                                                     <span class="fs-5 fw-semibold">Date</span>
-                                                    <input type="hidden" name="booster[2]" class="form-control" value="">
                                                     <input type="date" name="booster[2]" data-activate='input[type="text"][name="boosterdoctor[2]"], select[name="boosterbrand[2]"]' data-required='input[type="text"][name="boosterdoctor[2]"], select[name="boosterbrand[2]"]' class="form-control" autocomplete="off" disabled>
                                                     <!--Invalid Feedback-->
                                                     <p class="fw-bolder text-center text-danger"></p>
                                                 </div>
                                                 <div class="col">
                                                     <span class="fs-5 fw-semibold">Doctor</span>
-                                                    <input type="hidden" name="boosterdoctor[2]" class="form-control" value="">
                                                     <input type="text" name="boosterdoctor[2]" class="form-control" placeholder="Doctor" autocomplete="off" disabled>
                                                     <!--invalid feedback-->
                                                     <p class="fw-bolder text-center text-danger"></p>
@@ -1184,9 +1219,15 @@
                                             <div class="row mb-3 text-center">
                                                 <div class="col text-center">
                                                     <span class="fs-5 fw-semibold me-4">Vaccine Brand</span>
-                                                    <input type="hidden" name="boosterbrand[2]" class="form-control" value="">
                                                     <select class="form-select text-center" name="boosterbrand[2]" autocomplete="off" disabled>
-                                                        <option hidden>Booster Brand</option>
+                                                        <option value="" hidden>Booster Brand</option>
+                                                        <?php
+                                                        foreach ($brand as $data) {
+                                                        ?>
+                                                            <option value="<?php echo $data['brand'] ?>"><?php echo $data['brand'] ?></option>
+                                                        <?php
+                                                        }
+                                                        ?>
                                                     </select>
                                                 </div>
                                             </div>
@@ -1232,9 +1273,8 @@
                                                 <tbody id="vacContent">
                                                     <?php
                                                     $i = 0;
-                                                    $data = $vac->display('*', 'vacbrand');
-                                                    if (count($data) != 0) {
-                                                        foreach ($data as $info) {
+                                                    if (count($brand) != 0) {
+                                                        foreach ($brand as $info) {
                                                             $i++;
                                                     ?>
                                                             <tr>
@@ -1360,20 +1400,21 @@
                                         <select class="form-select ms-2" autocomplete="off">
                                             <option value="0" hidden>Booster Brand</option>b
                                             <option value="0">---</option>
-                                            <option value="astra">astra</option>
-                                            <option value="j&j ">j&j</option>
-                                            <option value="moderna ">moderna</option>
-                                            <option value="pfizer">pfizer</option>
-                                            <option value="sino">sino</option>
+                                            <option value="Grade 7">Grade 7</option>
+                                            <option value="Grade 8">Grade 8</option>
+                                            <option value="Grade 9">Grade 9</option>
+                                            <option value="Grade 10">Grade 10</option>
+                                            <option value="Grade 11">Grade 11</option>
+                                            <option value="Grade 12">Grade 12</option>
                                         </select>
-                                        <select class="form-select ms-2" autocomplete="off">
-                                            <option value="0" hidden>Vaccine Brand</option>b
-                                            <option value="0">---</option>
-                                            <option value="astra">astra</option>
-                                            <option value="j&j ">j&j</option>
-                                            <option value="moderna ">moderna</option>
-                                            <option value="pfizer">pfizer</option>
-                                            <option value="sino">sino</option>
+                                        <select class="form-select me-2" name="brand" autocomplete="off">
+                                            <?php
+                                            foreach ($brand as $data) {
+                                            ?>
+                                                <option value="<?php echo $data['brand'] ?>"><?php echo $data['brand'] ?></option>
+                                            <?php
+                                            }
+                                            ?>
                                         </select>
 
                                     </div>
@@ -1383,7 +1424,7 @@
                                         <nav class="navbar justify-content-center">
                                             <ul class="nav">
                                                 <li>
-                                                    <a href="#" class="btn btn-success" style="color:white; width:200px;">Download Report <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-cloud-arrow-down" viewBox="0 0 16 16">
+                                                     <a href="#" class="btn btn-success" style="color:white; width:200px;">Download Report <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-cloud-arrow-down" viewBox="0 0 16 16">
                                                             <path fill-rule="evenodd" d="M7.646 10.854a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0-.708-.708L8.5 9.293V5.5a.5.5 0 0 0-1 0v3.793L6.354 8.146a.5.5 0 1 0-.708.708l2 2z" />
                                                             <path d="M4.406 3.342A5.53 5.53 0 0 1 8 2c2.69 0 4.923 2 5.166 4.579C14.758 6.804 16 8.137 16 9.773 16 11.569 14.502 13 12.687 13H3.781C1.708 13 0 11.366 0 9.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383zm.653.757c-.757.653-1.153 1.44-1.153 2.056v.448l-.445.049C2.064 6.805 1 7.952 1 9.318 1 10.785 2.23 12 3.781 12h8.906C13.98 12 15 10.988 15 9.773c0-1.216-1.02-2.228-2.313-2.228h-.5v-.5C12.188 4.825 10.328 3 8 3a4.53 4.53 0 0 0-2.941 1.1z" />
                                                         </svg></a>
