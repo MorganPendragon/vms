@@ -19,8 +19,11 @@
 	<script src="script.js"></script>
 	<script>
 		$(function() {
-
 			$('input[type!="file"], select').attr('disabled', 'disabled');
+			$('input[type="file"]').on('change', function() {
+				var filename = $(this).val().split('\\').pop().split('/').pop();
+				$('#filename').text(filename);
+			});
 		});
 	</script>
 </head>
@@ -456,7 +459,7 @@
 										<path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" />
 									</svg>
 									<button type="submit" class="btn btn-outline-success" style="margin-left:45px;">Upload</button>
-									<p class="fw-bolder text-center text-success mt-2" style="font-size:16px;"></p>
+									<p class="fw-bolder text-center text-success mt-2" style="font-size:16px;" id="filename"></p>
 								</label>
 							</div>
 						</form>
@@ -469,4 +472,5 @@
 		</div>
 	</main>
 </body>
+
 </html>
