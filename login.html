@@ -26,6 +26,7 @@
 	<title>Log In</title>
 	<style>
 		* {
+			box-sizing: border-box;
 			font-family: 'Montserrat';
 			padding: 0;
 			margin: 0;
@@ -37,249 +38,10 @@
 			background-repeat: no-repeat;
 
 		}
-
-		.s2pid {
-			animation-duration: 0.1s;
-			animation-name: signin;
-			animation-iteration-count: infinite;
-
-		}
-
-		@keyframes signin {
-			0% {
-				transform: rotate(0);
-			}
-
-			100% {
-				transform: rotate(360deg);
-			}
-		}
-
-		.heli {
-			animation-duration: 8s;
-			animation-name: heli;
-			animation-iteration-count: infinite;
-		}
-
-		@keyframes heli {
-			0% {
-				top: 0%;
-				left: 0%;
-			}
-
-			50% {
-				bottom: 1000px;
-				right: 1000px;
-			}
-
-			100% {
-				top: 500px;
-				left: 1450px;
-			}
-		}
-
-		.sold {
-			animation: 8s;
-			animation-name: soldier;
-			animation-iteration-count: infinite;
-		}
-
-		@keyframes soldier {
-			0% {
-				left: 0%;
-			}
-
-			25% {
-				left: 400px
-			}
-
-			50% {
-				left: 800px
-			}
-
-			75% {
-				left: 1200px
-			}
-
-			100% {
-				left: 1600px
-			}
-
-		}
-
-		.sold2 {
-			animation: 8s;
-			animation-name: soldier2;
-			animation-iteration-count: infinite;
-		}
-
-		@keyframes soldier2 {
-			0% {
-				left: 0%;
-			}
-
-			25% {
-				left: 400px
-			}
-
-			50% {
-				left: 800px
-			}
-
-			75% {
-				left: 1200px
-			}
-
-			100% {
-				left: 1200px
-			}
-
-		}
-
-		.sold3 {
-			animation: 8s;
-			animation-name: soldier3;
-			animation-iteration-count: infinite;
-		}
-
-		@keyframes soldier3 {
-			0% {
-				left: 0%;
-			}
-
-			25% {
-				left: 400px
-			}
-
-			50% {
-				left: 800px
-			}
-
-			75% {
-				left: 1200px
-			}
-
-			100% {
-				left: 1400px
-			}
-
-		}
-
-		.sold4 {
-			animation: 8s;
-			animation-name: soldier4;
-			animation-iteration-count: infinite;
-		}
-
-		@keyframes soldier4 {
-			0% {
-				left: 0%;
-			}
-
-			25% {
-				left: 400px
-			}
-
-			50% {
-				left: 800px
-			}
-
-			75% {
-				left: 1200px
-			}
-
-			100% {
-				left: 1400px
-			}
-
-		}
-
-		.sold5 {
-			animation: 8s;
-			animation-name: soldier5;
-			animation-iteration-count: infinite;
-		}
-
-		@keyframes soldier5 {
-			0% {
-				left: 0%;
-			}
-
-			25% {
-				left: 500px
-			}
-
-			50% {
-				left: 600px
-			}
-
-			75% {
-				left: 1100px
-			}
-
-			100% {
-				left: 1300px
-			}
-
-		}
-
-
-
-		.barney {
-			animation-duration: 1s;
-			animation-name: barney;
-			animation-iteration-count: infinite;
-		}
-
-		@keyframes barney {
-			0% {
-				left: 0;
-				transform: rotate(0);
-			}
-
-			50% {
-				left: 50px;
-				transform: rotate(20deg);
-			}
-
-			100% {
-				left: 100px;
-				transform: rotate(10deg);
-			}
-		}
-
-		.kong {
-			animation-duration: 1s;
-			animation-name: kong;
-			animation-iteration-count: infinite;
-		}
-
-		@keyframes kong {
-			0% {
-				right: 0;
-				transform: rotate(0);
-			}
-
-			50% {
-				right: 50px;
-				transform: rotate(20deg);
-			}
-
-			100% {
-				right: 100px;
-				transform: rotate(10deg);
-			}
-		}
 	</style>
 </head>
 
 <body>
-	<div style="display:none;">
-		<audio controls autoplay loop>
-			<source src="./img/helicopter.webm" type="audio/ogg;">
-			Your browser does not support the audio element.
-		</audio>
-	</div>
 	<main>
 		<div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 			<div class="modal-dialog">
@@ -302,74 +64,50 @@
 		<div>
 			<!--for logo-->
 			<div class="container-fluid" id="loginPage">
-				<img src="./img/barney.png" class="position-absolute barney"
-					style="z-index:-1;height:1100px;margin-right:500px;" alt="">
 				<div class="row">
-					<img src="./img/heli.png" class="position-absolute heli"
-						style="height:500px;width:500px;z-index:+2;" alt="">
-					<img src="./img/soldier.png" class="position-absolute sold"
-						style="height:200px;width:200px;margin-top:40%; ;z-index:+3;" alt="">
-					<img src="./img/soldier.png" class="position-absolute sold2"
-						style="height:200px;width:200px;margin-top:40%;margin-left:20%; ;z-index:+3;" alt="">
-					<img src="./img/soldier.png" class="position-absolute sold3"
-						style="height:200px;width:200px;margin-top:40%; ;z-index:+3; margin-left:10%;" alt="">
-					<img src="./img/soldier.png" class="position-absolute sold4"
-						style="height:200px;width:200px;margin-top:40%; ;z-index:+3; margin-left:15%;" alt="">
-					<img src="./img/soldier.png" class="position-absolute sold5"
-						style="height:200px;width:200px;margin-top:40%; ;z-index:+3; margin-left:20%;" alt="">
-					<div class="d-flex col-6 justify-content-center align-items-center s2pid" style="height:100vh;">
-						<object data="img/logologin.svg" width="650" height="650" style="image-resolution: 300dpi;">
-						</object>
+					<div class="d-flex col-6 justify-content-center align-items-center " style="height:100vh;">
+						<object data="img/logologin.svg" width="650" height="650" style="image-resolution: 300dpi;"> </object>
 					</div>
 					<!--log in-->
-					<img src="./img/kong.png" class="position-absolute kong"
-						style="z-index:+1;height:900px;width:1000px;margin-left:40%;" alt="">
-					<div class="col-6 s2pid">
+					<div class="col-6 ">
 						<div>
 							<div class="container">
 								<div class="d-inline container-fluid justify-content-center align-items-center "
 									style="background-color:rgb(255, 255, 255); height:100vh;">
 									<p class=" mb-5 mt-1 ms-4" style="font-weight:900; font-size:55px;">Welcome</p>
 									<div class="d-flex justify-content-center">
-										<div id="card" class="card shadow-lg p-3 mb-5 bg-body rounded-5"
-											style="width: 624px; height: 697px;">
+										<div id="card" class="card shadow-lg p-3 mb-5 bg-body rounded-5" style="width: 624px; height: 697px;">
 											<form method="POST" id="login">
 												<div class="card-body mx-auto">
 													<p class="fs-1 fw-bold mt-3">Login</p>
 													<div name="loginFeedback"></div>
-													<div class="mb-3 my-3 py-3"
-														style="width:450px;height:44px; margin-left:10%;">
-														<label class="fw-semibold" style="font-size:28px"
-															for="idNo">ID</label>
+													<div class="mb-3 my-3 py-3" style="width:450px;height:44px; margin-left:10%;">
+														<label class="fw-semibold" style="font-size:28px" for="idNo">ID</label>
 														<input type="text" class="form-control text-center" name="id[0]"
 															required>
 													</div>
-													<div class="mb-3 my-5 py-5"
-														style="width:450px;height:44px;margin-left:10%;">
-														<label class="fw-semibold" style="font-size:28px"
-															for="pwd">Password</label>
+													<div class="mb-3 my-5 py-5" style="width:450px;height:44px;margin-left:10%;">
+														<label class="fw-semibold" style="font-size:28px" for="pwd">Password</label>
 														<input type="password" name="password[0]"
 															class="form-control text-center" required>
 													</div>
 													<p class="text-end">
-														<a href="#" type="button" class="btn btn-link pt-3 mt-3"
-															style="color:#ED7E00; margin-right:7%;">Forgot password?</a>
+														<a href="#" type="button" class="btn btn-link pt-3 mt-3" style="color:#ED7E00; margin-right:7%;">Forgot password?</a>
 													</p>
 													<div class=" gap-2 mx-auto text-center">
-														<button type="submit" class="btn log-in"
+														<button type="submit" class="btn"
 															style="margin-top:5%; margin-left:3%; border-radius:30px; background-color:rgb(16, 45, 65);color:white; font-size:24px; width:60%; height: 52px">Log
 															In</button>
 													</div>
 												</div>
 											</form>
 											<div class="d-flex justify-content-center  p-1" style="margin-top:15%;">
-												<label for="signUp" class="mt-2 opacity-50">Don`t have an
-													account?</label>
-												<button type="button" id="signUp" class="btn btn-link"
-													data-bs-toggle="modal" data-bs-target="#signup"
-													style="color:black; font-weight:bold;">
-													Sign Up
-												</button>
+												<label for="signUp" class="mt-2 opacity-50">Don`t have an account?</label>
+													<button type="button" id="signUp" class="btn btn-link"
+														data-bs-toggle="modal" data-bs-target="#signup"
+														style="color:black; font-weight:bold;">
+														Sign Up
+													</button>
 											</div>
 										</div>
 									</div>
@@ -415,8 +153,7 @@
 					<div class="container-fluid">
 						<div class="row">
 							<div class="d-flex col-6 justify-content-center align-items-center " style="height:100vh;">
-								<object data="img/logologin.svg" width="650" height="650"
-									style="image-resolution: 300dpi;"> </object>
+								<object data="img/logologin.svg" width="650" height="650" style="image-resolution: 300dpi;"> </object>
 							</div>
 							<!--student sign up-->
 							<div class="col-6 ">
@@ -535,8 +272,7 @@
 					<div class="container-fluid">
 						<div class="row">
 							<div class="d-flex col-6 justify-content-center align-items-center " style="height:100vh;">
-								<object class="logo" data="img/logologin.svg" width="650" height="650"
-									style="image-resolution: 300dpi;"> </object>
+								<object data="img/logologin.svg" width="650" height="650" style="image-resolution: 300dpi;"> </object>
 							</div>
 							<!--Faculty sign up-->
 							<div class="col-6 ">
