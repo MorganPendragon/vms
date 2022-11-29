@@ -32,6 +32,28 @@ class connection
 		}
 	}
 
+	public function mailer()
+	{
+		$this->mail = new PHPMailer();
+		$this->mail->IsSMTP();
+		//Set the hostname of the mail server
+		$this->mail->Host = 'smtp.gmail.com';
+
+		//Set the SMTP port number:
+		// - 465 for SMTP with implicit TLS, a.k.a. RFC8314 SMTPS or
+		// - 587 for SMTP+STARTTLS
+		$this->mail->Port = 587;
+
+		//Whether to use SMTP authentication
+		$this->mail->SMTPAuth = true;
+
+		$this->mail->SMTPSecure = 'tls';
+		$this->mail->Username = 'oceansofknowledge.ph@gmail.com';
+		$this->mail->Password = 'jrue sfcu dcal wets';
+		$this->mail->setFrom('oceansofknowledge.ph@gmail.com', 'Oceans of Knowledge');
+		return $this->mail;
+	}
+
 	public function __call($name, $arguments)
 	{
 		if ($name == 'display') {
@@ -60,26 +82,6 @@ class connection
 					}
 			}
 		}
-		if ($name == 'mailer') {
-			$this->mail = new PHPMailer();
-			$this->mail->IsSMTP();
-			//Set the hostname of the mail server
-			$this->mail->Host = 'smtp.gmail.com';
-
-			//Set the SMTP port number:
-			// - 465 for SMTP with implicit TLS, a.k.a. RFC8314 SMTPS or
-			// - 587 for SMTP+STARTTLS
-			$this->mail->Port = 587;
-
-			//Whether to use SMTP authentication
-			$this->mail->SMTPAuth = true;
-
-			$this->mail->SMTPSecure = 'tls';
-			$this->mail->Username = 'oceansofknowledge.ph@gmail.com';
-			$this->mail->Password = 'jrue sfcu dcal wets';
-			$this->mail->setFrom('oceansofknowledge.ph@gmail.com', 'Oceans of Knowledge');
-			return $this->mail;
-		}
 		//send email
 		if ($name == 'sendMail') {
 			switch ($arguments[0]) {
@@ -104,7 +106,7 @@ class connection
 					$this->mail->addAddress($arguments[2]);
 					$this->send();
 					break;
-				case 'test':
+				case 'twoFactor':
 					$message = file_get_contents('./email/idcredentials.html');
 					$message = str_replace('%idNo%', $arguments[1], $message);
 					$this->mail->Subject = 'Your ID has been Updated by the Administrator';
@@ -114,67 +116,131 @@ class connection
 					$this->mail->addAddress($arguments[2]);
 					$this->send();
 					break;
-
+				default:
+					echo 'failed';
 			}
 		}
 
 		if ($name == 'report') {
+			$post = $arguments[0];
 			$phpWord = new \PhpOffice\PhpWord\PhpWord();
+			$section = $phpWord->addSection(['breakType' => 'continous']);
+
 			$headerFontStyle = ['size' => 16, 'bold' => true];
-			$title = 'Title';
-			$categories = [1, 2, 3, 4];
-			$series = [5, 1, 3, 5];
-			$chartStyle = [
-				'showLegend' => true,
-				'LegendPostion' => 'b', 'title' => $title,
-				'width' => Converter::inchToEmu(3),
-				'height' => Converter::inchToEmu(4),
-				'colors' => ['3A557A', '90B7CD', 'D4EEEE', 'F2AE08', 'E26749', 'ED7E00'],
+			//chart for vaccine manufacturer on first, second and booster
+			$title = ['Vaccine Manufacturer for First and Second', 'Vaccine Manufacturer for Booster'];
+			$conditions = ['vacbrand', 'boosterbrand'];
+			$brands = $this->display('*', 'vacbrand');
+			$i = 0;
+			$table = $section->addTable(['alignment' => \PhpOffice\PhpWord\SimpleType\JcTable::CENTER, 'borderColor' => 'FFFFFF']);
+			$table->addRow(5000);
+			foreach ($conditions as $condition) {
+				$series = array();
+				$categories = array();
+
+				$chartStyle = [
+					'LegendPostion' => 'b',
+					'title' => $title[$i],
+					'width' => Converter::inchToEmu(3),
+					'height' => Converter::inchToEmu(4),
+					'colors' => ['3A557A', '90B7CD', 'D4EEEE', 'F2AE08', 'E26749', 'ED7E00'],
+				];
+
+				foreach ($brands as $key) {
+					$temp = $key['brand'];
+					array_push($categories, $temp);
+					array_push($series, $this->find('vaccinestatus', "$condition = '$temp'"));
+				}
+				$table->addCell(5000)->addChart('pie', $categories, $series, $chartStyle);
+				$i++;
+			}
+			//chart for vaccine status
+			$title = ['Not Vaccinated', 'First Dose Only', 'Completed', 'Booster'];
+			$total = [
+				$this->find('vaccinestatus', "id REGEXP '^[0-9]{1,2}-[0-9]{6,6}$'"),
+				$this->find('vaccinestatus', "id REGEXP '^F[0-9]{1,1}-[0-9]{6,6}$'")
 			];
 
-			$section = $phpWord->addSection(['breakType' => 'continous']);
-			$section->addText('First Dose Only', $headerFontStyle, ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
-			$table = $section->addTable(['alignment' => \PhpOffice\PhpWord\SimpleType\JcTable::CENTER, 'borderColor' => 'FFFFFF']);
-			$table->addRow(5000);
-			$table->addCell(5000)->addChart('pie', $categories, $series, $chartStyle);
-			$table->addCell(5000)->addChart('pie', $categories, $series, $chartStyle);
-			$section->addTextBreak();
-			$section->addText('Completed', $headerFontStyle, ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
-			$table = $section->addTable(['alignment' => \PhpOffice\PhpWord\SimpleType\JcTable::CENTER, 'borderColor' => 'FFFFFF']);
-			$table->addRow(5000);
-			$table->addCell(5000)->addChart('pie', $categories, $series, $chartStyle);
-			$table->addCell(5000)->addChart('pie', $categories, $series, $chartStyle);
-			$section->addTextBreak();
-			$section->addText('', $headerFontStyle, ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
-			$table = $section->addTable(['alignment' => \PhpOffice\PhpWord\SimpleType\JcTable::CENTER, 'borderColor' => 'FFFFFF']);
-			$table->addRow(5000);
-			$table->addCell(5000)->addChart('pie', $categories, $series, $chartStyle);
-			$table->addCell(5000)->addChart('pie', $categories, $series, $chartStyle);
-
-
-			$post = array('table' => '1', 'student' => '1');
+			$chartTitle = ['Student', 'Faculty'];
+			$regex = ['^[0-9]{1,2}-[0-9]{6,6}$', '^F[0-9]{1,1}-[0-9]{6,6}$'];
+			$conditions = [
+				'firstdose IS NULL and seconddose IS NULL', 'firstdose IS NOT NULL',
+				'seconddose IS NOT NULL', 'booster IS NOT NULL'
+			];
+			$i = 0;
+			foreach ($conditions as $condition) {
+				$section->addText($title[$i], $headerFontStyle, ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
+				$table = $section->addTable(['alignment' => \PhpOffice\PhpWord\SimpleType\JcTable::CENTER, 'borderColor' => 'FFFFFF']);
+				$table->addRow(5000);
+				$j = 0;
+				foreach ($chartTitle as $charttitle) {
+					$count = $this->find('vaccinestatus', "id REGEXP'$regex[$j]' and $condition");
+					$series = [$count, $total[$j] - $count];
+					$chartStyle = [
+						'LegendPostion' => 'b',
+						'title' => $charttitle,
+						'width' => Converter::inchToEmu(3),
+						'height' => Converter::inchToEmu(4),
+						'colors' => ['3A557A', '90B7CD', 'D4EEEE', 'F2AE08', 'E26749', 'ED7E00'],
+					];
+					$categories = ['No. of ' . $charttitle . ' with ' . $title[$i], 'Total No. of ' . $charttitle];
+					$table->addCell(5000)->addChart('pie', $categories, $series, $chartStyle);
+					$j++;
+				}
+				$i++;
+			}
 			//TODO:table data
-			if (isset($post['table'])) {
+			if ($post['table'] != '') {
 				$section = $phpWord->addSection(['orientation' => 'landscape']);
-				if (isset($post['student'])) {
+				if ($post['student'] != '') {
+					$condition = '';
+					//filter
+					if ($post['yearLevel'] != '') {
+						$temp = $post['yearLevel'];
+						$condition .= "yearLevel = '$temp'";
+					}
+					if ($post['vacbrand'][0] != '') {
+						$temp = $post['vacbrand'][0];
+						$condition .= " and vacbrand = '$temp'";
+					}
+					if ($post['boosterbrand'][0] != '') {
+						$temp = $post['boosterbrand'][0];
+						$condition .= " and boosterbrand = '$temp'";
+					}
+
 					$section->addText('Student', $headerFontStyle, ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
 					//student
 					$tableHeaderName = ['ID', 'Name', 'Gender', 'Year Level', 'First Dose', 'Second Dose', 'Vaccine Manufacturer', 'Booster', 'Booster Manufacturer'];
 					//keys for the data
 					$keys = ['id', 'name', 'gender', 'yearLevel', 'firstdose', 'seconddose', 'vacbrand', 'booster', 'boosterbrand'];
 					//table header
-					$data = $this->display('*', 'student INNER JOIN vaccinestatus ON student.id = vaccinestatus.id');
+					if ($condition != '') {
+						$data = $this->display('*', 'student INNER JOIN vaccinestatus ON student.id = vaccinestatus.id', $condition);
+					}
 					$this->tableDocx($section, $tableHeaderName, $data, $keys);
 				}
 
-				if (isset($post['faculty'])) {
+				if ($post['faculty'] != '') {
+					//filter
+					$condition = '';
+					if ($post['vacbrand'][1] != '' && isset($post['vacbrand'][1])) {
+						$temp = $post['vacbrand'][1];
+						$condition .= "vacbrand = '$temp'";
+					}
+					if ($post['boosterbrand'][1] != '') {
+						$temp = $post['booster'][1];
+						$condition .= "and boosterbrand = '$temp'";
+					}
+
 					$section->addText('Faculty', $headerFontStyle, ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]);
 					//faculty
 					$tableHeaderName = ['ID', 'Name', 'Gender', 'First Dose', 'Second Dose', 'Vaccine Manufacturer', 'Booster', 'Booster Manufacturer'];
 					//keys for the data
 					$keys = ['id', 'name', 'gender', 'firstdose', 'seconddose', 'vacbrand', 'booster', 'boosterbrand'];
 					//table header
-					$data = $this->display('*', 'faculty INNER JOIN vaccinestatus ON faculty.id = vaccinestatus.id');
+					if ($condition != '') {
+						$data = $this->display('*', 'faculty INNER JOIN vaccinestatus ON faculty.id = vaccinestatus.id', $condition);
+					}
 					$this->tableDocx($section, $tableHeaderName, $data, $keys);
 				}
 			}
@@ -393,7 +459,7 @@ if (isset($_FILES['vaccinationCard']['name'])) {
 }
 
 if (isset($_POST['tableName'])) {
-	$row = $conn->display('*',$_POST['tableName']);
+	$row = $conn->display('*', $_POST['tableName']);
 	echo json_encode($row);
 }
 
@@ -427,50 +493,56 @@ if (isset($_GET['chart'])) {
 			echo json_encode($result);
 			break;
 		case 'firstDoseStudent':
+			$count = $conn->find('vaccinestatus', "id REGEXP '^[0-9]{1,2}-[0-9]{6,6}$' and firstdose IS NOT NULL");
 			$key = ['First Dose Only', 'Total Student'];
 			$value = array();
-			array_push($value, $conn->find('vaccinestatus', "id REGEXP '^[0-9]{1,2}-[0-9]{6,6}$' and firstdose IS NOT NULL"));
-			array_push($value, $totalStudent);
+			array_push($value, $count);
+			array_push($value, $totalStudent - $count);
 			$result = array_combine($key, $value);
 			echo json_encode($result);
 			break;
 		case 'firstDoseFaculty':
+			$count = $conn->find('vaccinestatus', "id REGEXP '^F[0-9]{1,1}-[0-9]{6,6}$' and firstdose IS NOT NULL");
 			$key = ['First Dose Only', 'Total Faculty'];
 			$value = array();
-			array_push($value, $conn->find('vaccinestatus', "id REGEXP '^F[0-9]{1,1}-[0-9]{6,6}$' and firstdose IS NOT NULL"));
-			array_push($value, $totalFaculty);
+			array_push($value, $count);
+			array_push($value, $totalFaculty - $count);
 			$result = array_combine($key, $value);
 			echo json_encode($result);
 			break;
 		case 'completeDoseStudent':
+			$count = $conn->find('vaccinestatus', "id REGEXP '^[0-9]{1,2}-[0-9]{6,6}$' and seconddose IS NOT NULL");
 			$key = ['Complete Dose', 'Total Student'];
 			$value = array();
-			array_push($value, $conn->find('vaccinestatus', "id REGEXP '^[0-9]{1,2}-[0-9]{6,6}$' and seconddose IS NOT NULL"));
-			array_push($value, $totalStudent);
+			array_push($value, $count);
+			array_push($value, $totalStudent - $count);
 			$result = array_combine($key, $value);
 			echo json_encode($result);
 			break;
 		case 'completeDoseFaculty':
+			$count = $conn->find('vaccinestatus', "id REGEXP '^F[0-9]{1,1}-[0-9]{6,6}$' and seconddose IS NOT NULL");
 			$key = ['Complete Dose', 'Total Faculty'];
 			$value = array();
-			array_push($value, $conn->find('vaccinestatus', "id REGEXP '^F[0-9]{1,1}-[0-9]{6,6}$' and seconddose IS NOT NULL"));
-			array_push($value, $totalFaculty);
+			array_push($value, $count);
+			array_push($value, $totalFaculty - $count);
 			$result = array_combine($key, $value);
 			echo json_encode($result);
 			break;
 		case 'boosterStudent':
+			$count = $conn->find('vaccinestatus', "id REGEXP '^[0-9]{1,2}-[0-9]{6,6}$' and booster IS NOT NULL");
 			$key = ['Booster', 'Total Student'];
 			$value = array();
-			array_push($value, $conn->find('vaccinestatus', "id REGEXP '^[0-9]{1,2}-[0-9]{6,6}$' and booster IS NOT NULL"));
-			array_push($value, $totalStudent);
+			array_push($value, $count);
+			array_push($value, $totalStudent - $count);
 			$result = array_combine($key, $value);
 			echo json_encode($result);
 			break;
 		case 'boosterFaculty':
+			$conn->find('vaccinestatus', "id REGEXP '^F[0-9]{1,1}-[0-9]{6,6}$' and booster IS NOT NULL");
 			$key = ['Booster', 'Total Faculty'];
 			$value = array();
-			array_push($value, $conn->find('vaccinestatus', "id REGEXP '^F[0-9]{1,1}-[0-9]{6,6}$' and booster IS NOT NULL"));
-			array_push($value, $totalFaculty);
+			array_push($value, $count);
+			array_push($value, $totalFaculty - $count);
 			$result = array_combine($key, $value);
 			echo json_encode($result);
 			break;
@@ -493,12 +565,12 @@ if (isset($_POST['action'])) {
 		case 'update':
 			if (strcmp($_POST['table'], 'vacbrand') == 0) {
 				$table = array($_POST['table']);
-				$conn->insertInfo($_POST, $table);
+				$conn->updateInfo($_POST, $table, 'brand', $_POST['condition']);
 			} else {
 				$table = array($_POST['table'], 'vaccinestatus', 'logcredentials');
 				$conn->updateInfo($_POST, $table, 'id', $_POST['condition']);
 				if (strcmp($_POST['id'], $_POST['condition']) != 0) {
-					//$conn->sendMail('updatedID', $_POST['id']);
+					$conn->sendMail('updatedID', $_POST['id'], $_POST['email']);
 				}
 			}
 			break;
@@ -510,6 +582,9 @@ if (isset($_POST['action'])) {
 				$table = array($_POST['table'], 'vaccinestatus', 'logcredentials');
 				$conn->deleteInfo($table, 'id', $_POST['delete']);
 			}
+			break;
+		case 'report':
+			$conn->report($_POST);
 			break;
 	}
 }
