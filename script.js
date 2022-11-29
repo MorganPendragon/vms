@@ -157,7 +157,6 @@ $(function () {
             //this could impact the response time but honestly idgaf
             var $_GET = $_GETValue();
             var id;
-            var condition;
 
             if ($_GET['id']) {
                 id = $_GET['id'];
@@ -198,7 +197,7 @@ $(function () {
                     formData.push({ name: 'password', value: Math.random().toString(36).substring(2, 10) });
                     break;
                 case 'update':
-                    formData.push({ name: 'condition', value: $(this).parent().find('input[type="hidden"][name="currentId"]').val() });
+                    formData.push({ name: 'condition', value: $(this).data('condition') });
                     formData.push({ name: 'id', value: $(this).parent().find('input[name^="id"]').val() });
                     break;
             }
@@ -299,7 +298,36 @@ $(function () {
         else {
             formData = $(this).serializeArray();
             formData.push({ name: 'action', value: $(this).data('action') });
-            if (!($(this).parent().find('input[type="hidden"][name="table"]')).length) {
+            if ($(this).data('action') == 'report') {
+                var table = 5;
+                $(this).parent().find('select').each(function () {
+                    if ($(this).val() == '') {
+                        table--;
+                    }
+                });
+                formData.push({name:'table', value:''});
+                console.log('table:' + table);
+                if(table != 0)
+                {
+                    formData.pop();
+                    formData.push({name: 'table', value:'needed'});
+                }
+
+                formData.push({ name: 'student', value: '' });
+                if ($(this).parent().find('select[name="yearLevel"]').val() != '' ||
+                    $(this).parent().find('select[name="vacbrand[0]"]').val() != '' ||
+                    $(this).parent().find('select[name="boosterbrand[0]"]').val() != '') {
+                    formData.pop();
+                    formData.push({ name: 'student', value: 'table' });
+                }
+                formData.push({ name: 'faculty', value: '' });
+                if ($(this).parent().find('select[name="vacbrand[1]"]').val() != '' ||
+                    $(this).parent().find('select[name="boosterbrand[1]"]').val() != '') {
+                    formData.pop();
+                    formData.push({ name: 'faculty', value: 'table' });
+                }
+            }
+            if (!($(this).parent().find('input[type="hidden"][name="table"]')).length && $(this).data('action') != 'report') {
                 formData.push({ name: 'table', value: $(this).data('table') });
             }
             console.log(formData);
