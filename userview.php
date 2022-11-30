@@ -96,7 +96,7 @@
 						<span class="fs-1" style="font-weight:900;">Account Information</span>
 						<div class=" gap-2" style="margin-left:20%;">
 							<button class="btn button rounded-pill mt-2 fs-5" style="background-color:rgb(237, 126, 0); color:white; display:none;" id="save" data-hide="#save, #cancel" data-show="#edit" type="button">Save</button>
-							<button class="btn button rounded-pill mt-2 fs-5" style="background-color:rgb(237, 126, 0); color:white; display:none;" id="cancel" data-hide="#save, #cancel" data-show="#edit" type="button">cancel</button>
+							<button class="btn button rounded-pill mt-2 fs-5" style="background-color:rgb(237, 126, 0); color:white; display:none;" id="cancel" data-hide="#save, #cancel" data-show="#edit" type="button">Cancel</button>
 							<button class="btn button rounded-pill mt-2 fs-5" style="background-color:rgb(16, 45, 65); color:white;" id="edit" data-hide="#edit" data-show="#save, #cancel" type="button">Edit</button>
 						</div>
 					</div>
@@ -469,11 +469,15 @@
 					</div>
 				</div>
 				<div class="col-8 position-fixed" id="#settings" style="display: inline-block;">
-					<span style="font-size:72px;"> content dito</span>
-					<input type="email" class="form-control" name="email">
-					<input type="password" class="form-control" name="password">
-					<input type="password" class="form-control" name="confirmpass">
-					<button id="change">Change Password</button>
+					<span style="font-weight:900; font-size:48px; margin-top:50px;">Settings</span>
+					<div style="margin-top:60px;">
+						<input style="margin:10px;" type="email" class="form-control" name="email">
+						<input style="margin:10px;" type="password" class="form-control" name="password">
+						<input style="margin:10px;" type="password" class="form-control" name="confirmpass">
+						<!-- dito mo sa edit lagay yung para ma unlock yung form -->
+						<button class="btn button" style="background-color:rgb(16, 45, 65); color:white; margin:10px; height:50px; width:300px; font-size:18px;" type="button">Edit</button>
+						<button style="margin:10px; height:50px; width:300px; font-size:18px; background-color:rgb(237, 126, 0);color:white;" class="btn" id="change">Change Password</button>
+					</div>
 				</div>
 			</div>
 		</div>
