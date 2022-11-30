@@ -446,7 +446,7 @@ if (isset($_POST['type'])) {
 	{
 		$salt = $conn->display('*', "cipher INNER JOIN logcredentials on cipher.id = logcredentials.id", "logcredentials.id='$id'");
 		$decryptedPass = openssl_decrypt($info[0]['password'], $GLOBALS['cipher'], $GLOBALS['key'], $options = 0, $info[0]['iv'], $info[0]['tag']);
-		if(strcmp($password, $decryptedPass))
+		if(strcmp($password, $decryptedPass)== 0)
 		{
 			$result++;
 		}
