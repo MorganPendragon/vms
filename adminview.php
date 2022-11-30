@@ -421,7 +421,7 @@
                                                                 <div class="row mb-3">
                                                                     <div class="col">
                                                                         <span class="fs-5 fw-semibold">Email</span>
-                                                                        <input type="email" name="email[1]" class="form-control" id="emailFormControl" value="<?php echo $info['email'] ?>" required>
+                                                                        <input type="email" name="email[1]" class="form-control" value="<?php echo $info['email'] ?>" required>
                                                                     </div>
                                                                 </div>
                                                                 <div class="row mb-3">
@@ -665,7 +665,7 @@
                                             <div class="row mb-3">
                                                 <div class="col">
                                                     <span class="fs-5 fw-semibold">Email</span>
-                                                    <input type="email" name="email[0]" class="form-control" id="emailFormControl" required>
+                                                    <input type="email" name="email[0]" class="form-control" required>
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
@@ -845,7 +845,7 @@
                                                 <!--edit-->
                                                 <td>
                                                     <!--TODO:resize-->
-                                                    <a cla type="button" data-bs-toggle="modal" href="adminview.php?id=<?php echo $info['id'] ?>" data-bs-target="#editFacultyModal<?php echo $i ?>">
+                                                    <a cla type="button" data-bs-toggle="modal" data-bs-target="#editFacultyModal<?php echo $i ?>">
                                                         <i class="fa-solid fa-pen-to-square" style="color:rgb(237, 126, 0);"></i>
                                                     </a>
                                                 </td>
@@ -902,7 +902,7 @@
                                                                 <div class="row mb-3">
                                                                     <div class="col">
                                                                         <span class="fs-5 fw-semibold">Email</span>
-                                                                        <input type="email" name="email[3]" class="form-control" id="emailFormControl" value="<?php echo $info['email'] ?>" required>
+                                                                        <input type="email" name="email[3]" class="form-control" value="<?php echo $info['email'] ?>" required>
                                                                     </div>
                                                                 </div>
                                                                 <div class="row mb-3">
@@ -1121,7 +1121,7 @@
                                             <div class="row mb-3">
                                                 <div class="col">
                                                     <span class="fs-5 fw-semibold">Email</span>
-                                                    <input type="email" name="email[2]" class="form-control" id="emailFormControl" required>
+                                                    <input type="email" name="email[2]" class="form-control" required>
                                                 </div>
                                             </div>
                                             <div class="row mb-3">

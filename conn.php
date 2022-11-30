@@ -54,6 +54,44 @@ class connection
 		return $this->mail;
 	}
 
+	public function sendMail($action, $contents)
+	{
+		switch($action)
+		{
+			case 'sendCredentials':
+				$message = file_get_contents('./email/logincredentials.html');
+				$message = str_replace('%idNo%', $contents[0], $message);
+				$message = str_replace('%password%', $contents[1], $message);
+				$this->mail->Subject = 'Log In Credentials';
+				$this->mail->AddEmbeddedImage('./img/logo.png', 'logo');
+				$this->mail->isHTML(true);
+				$this->mail->msgHTML($message);
+				$this->mail->addAddress($contents[2]);
+				$this->mail->send();				
+				break;
+			case 'updatedId':
+				$message = file_get_contents('./email/updatedId.html');
+				$message = str_replace('%idNo%', $contents[0], $message);
+				$this->mail->Subject = 'Your ID has been Updated by the Administrator';
+				$this->mail->addEmbeddedImage('./img/logo.png', 'logo');
+				$this->mail->isHTML(true);
+				$this->mail->msgHTML($message);
+				$this->mail->addAddress($contents[1]);
+				$this->mail->send();				
+				break;
+			case 'twoFactor':
+				$message = file_get_contents('./email/idcredentials.html');
+				$message = str_replace('%idNo%', $contents[0], $message);
+				$this->mail->Subject = 'Your ID has been Updated by the Administrator';
+				$this->mail->addEmbeddedImage('./img/logo.png', 'logo');
+				$this->mail->isHTML(true);
+				$this->mail->msgHTML($message);
+				$this->mail->addAddress($contents[1]);
+				$this->mail->send();
+				break;
+		}
+	}
+
 	public function __call($name, $arguments)
 	{
 		if ($name == 'display') {
@@ -82,45 +120,6 @@ class connection
 					}
 			}
 		}
-		//send email
-		if ($name == 'sendMail') {
-			switch ($arguments[0]) {
-				case 'sendCredentials':
-					$message = file_get_contents('./email/logincredentials.html');
-					$message = str_replace('%idNo%', $arguments[1], $message);
-					$message = str_replace('%password%', $arguments[2], $message);
-					$this->mail->Subject = 'Log In Credentials';
-					$this->mail->AddEmbeddedImage('./img/logo.png', 'logo');
-					$this->mail->isHTML(true);
-					$this->mail->msgHTML($message);
-					$this->mail->addAddress($arguments[3]);
-					$this->mail->send();
-					break;
-				case 'updatedID':
-					$message = file_get_contents('./email/idcredentials.html');
-					$message = str_replace('%idNo%', $arguments[1], $message);
-					$this->mail->Subject = 'Your ID has been Updated by the Administrator';
-					$this->mail->addEmbeddedImage('./img/logo.png', 'logo');
-					$this->mail->isHTML(true);
-					$this->mail->msgHTML($message);
-					$this->mail->addAddress($arguments[2]);
-					$this->send();
-					break;
-				case 'twoFactor':
-					$message = file_get_contents('./email/idcredentials.html');
-					$message = str_replace('%idNo%', $arguments[1], $message);
-					$this->mail->Subject = 'Your ID has been Updated by the Administrator';
-					$this->mail->addEmbeddedImage('./img/logo.png', 'logo');
-					$this->mail->isHTML(true);
-					$this->mail->msgHTML($message);
-					$this->mail->addAddress($arguments[2]);
-					$this->send();
-					break;
-				default:
-					echo 'failed';
-			}
-		}
-
 		if ($name == 'report') {
 			$post = $arguments[0];
 			$phpWord = new \PhpOffice\PhpWord\PhpWord();
@@ -559,7 +558,7 @@ if (isset($_POST['action'])) {
 			} else {
 				$table = array($_POST['table'], 'vaccinestatus', 'logcredentials');
 				$conn->insertInfo($_POST, $table);
-				$conn->sendMail('sendCredentials', $_POST['id'], $_POST['password'], $_POST['email']);
+				$conn->sendMail('sendCredentials', [$_POST['id'], $_POST['password'], $_POST['email']]);
 			}
 			break;
 		case 'update':
@@ -570,7 +569,7 @@ if (isset($_POST['action'])) {
 				$table = array($_POST['table'], 'vaccinestatus', 'logcredentials');
 				$conn->updateInfo($_POST, $table, 'id', $_POST['condition']);
 				if (strcmp($_POST['id'], $_POST['condition']) != 0) {
-					$conn->sendMail('updatedID', $_POST['id'], $_POST['email']);
+					$conn->sendMail('updatedID', [$_POST['id'], $_POST['email']]);
 				}
 			}
 			break;
