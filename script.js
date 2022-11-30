@@ -280,12 +280,8 @@ $(function () {
             if (validated == 1) {
                 $.post('conn.php', formData).done(function (response) {
                     console.log(response);
-                    $('#feedbackMessage').text('Inserted Successfully');
-                    $('#feedbackModal').modal('show');
                 }).fail(function (response) {
                     console.log(response);
-                    $('#feedbackMessage').text('Unsuccessfully Insert in the Database');
-                    $('#feedbackModal').modal('show');
 
                 });
             }
