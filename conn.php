@@ -3,6 +3,9 @@
 
 //autoloader cause lazy
 require __DIR__ . '/vendor/autoload.php';
+//key passphrase for the encryption
+$key = 'oceansofknowledge';
+$cipher = 'aes-128-gcm';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
@@ -56,8 +59,7 @@ class connection
 
 	public function sendMail($action, $contents)
 	{
-		switch($action)
-		{
+		switch ($action) {
 			case 'sendCredentials':
 				$message = file_get_contents('./email/logincredentials.html');
 				$message = str_replace('%idNo%', $contents[0], $message);
@@ -67,7 +69,7 @@ class connection
 				$this->mail->isHTML(true);
 				$this->mail->msgHTML($message);
 				$this->mail->addAddress($contents[2]);
-				$this->mail->send();				
+				$this->mail->send();
 				break;
 			case 'updatedId':
 				$message = file_get_contents('./email/updatedId.html');
@@ -77,7 +79,7 @@ class connection
 				$this->mail->isHTML(true);
 				$this->mail->msgHTML($message);
 				$this->mail->addAddress($contents[1]);
-				$this->mail->send();				
+				$this->mail->send();
 				break;
 			case 'twoFactor':
 				$message = file_get_contents('./email/idcredentials.html');
@@ -299,6 +301,20 @@ class connection
 	public function insertInfo($post, $tables, $id = true, $formArr = NULL)
 	{
 		$keys = array_keys($post);
+		//password encryption
+		if (isset($post['password'])) {
+			//encryption type which is aes-128 galois/counter mode
+			$id = $post['id'];
+			//generate iv
+			$iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length($GLOBALS['cipher']));
+			$iv = bin2hex($iv);
+			if (in_array($GLOBALS['cipher'], openssl_get_cipher_methods())) {
+				$post['password'] = openssl_encrypt($post['password'], $GLOBALS['cipher'], $GLOBALS['key'], $options = 0, $iv, $tag);
+				$sql = "INSERT INTO cipher VALUES('$id', '$iv', '$tag')";
+				$this->conn->query($sql);
+			}
+		}
+
 		foreach ($tables as $table) {
 			$tableHeaderName = $this->getColumnName($table);
 			$colCount = $this->getColumnName($table, 1);
@@ -357,8 +373,8 @@ class connection
 			$sql = "UPDATE $table[$count] SET ";
 			$j = 0;
 
-			if ($count == 2) {
-				$colCount -= 1;
+			if ($count >= 2) {
+				$colCount = 1;
 			}
 
 			if (!($id)) {
@@ -419,12 +435,22 @@ class connection
 
 $conn = new connection();
 $conn->mailer();
+echo $original_plaintext . "\n";
+
 //feedback for the login
 if (isset($_POST['type'])) {
 	$id = $_POST['id'];
 	$password = $_POST['password'];
 	$result = $conn->find('logcredentials', "id = '$id'");
-	$result += $conn->find('logcredentials', "id = '$id' and password ='$password'");
+	if($result == 1)
+	{
+		$salt = $conn->display('*', "cipher INNER JOIN logcredentials on cipher.id = logcredentials.id", "logcredentials.id='$id'");
+		$decryptedPass = openssl_decrypt($info[0]['password'], $GLOBALS['cipher'], $GLOBALS['key'], $options = 0, $info[0]['iv'], $info[0]['tag']);
+		if(strcmp($password, $decryptedPass))
+		{
+			$result++;
+		}
+	}
 	switch ($result) {
 		case 1:
 			echo 'Wrong Password';
@@ -566,7 +592,7 @@ if (isset($_POST['action'])) {
 				$table = array($_POST['table']);
 				$conn->updateInfo($_POST, $table, 'brand', $_POST['condition']);
 			} else {
-				$table = array($_POST['table'], 'vaccinestatus', 'logcredentials');
+				$table = array($_POST['table'], 'vaccinestatus', 'logcredentials', 'cipher');
 				$conn->updateInfo($_POST, $table, 'id', $_POST['condition']);
 				if (strcmp($_POST['id'], $_POST['condition']) != 0) {
 					$conn->sendMail('updatedID', [$_POST['id'], $_POST['email']]);
@@ -578,7 +604,7 @@ if (isset($_POST['action'])) {
 				$table = array($_POST['table']);
 				$conn->deleteInfo($table, 'brand', $_POST['delete']);
 			} else {
-				$table = array($_POST['table'], 'vaccinestatus', 'logcredentials');
+				$table = array($_POST['table'], 'vaccinestatus', 'logcredentials', 'cipher');
 				$conn->deleteInfo($table, 'id', $_POST['delete']);
 			}
 			break;
