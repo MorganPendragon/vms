@@ -20,12 +20,14 @@
 	<script>
 		$(function() {
 			$('input[type!="file"], select').attr('disabled', 'disabled');
-			
+
 			$('input[type="file"]').on('change', function() {
 				//get filename universal
 				$('#filename').text($(this).val().split('\\').pop().split('/').pop());
 			});
-
+			$('#change').on('click', function() {
+				$('input[type="email"]:last, input[type="password"]').removeAttr('disabled')
+			});
 			$('input[type="email"]:last').val($('input[type="email"]:first').val());
 		});
 	</script>
@@ -104,7 +106,7 @@
 						<?php
 						include('conn.php');
 						$conn = new connection();
-						$brand = $conn->display('vacbrand');
+						$brand = $conn->display('*', 'vacbrand');
 						$genders = array('Male', 'Female');
 						$id = $_GET['id'];
 						if (preg_match("/^[0-9]{1,2}-[0-9]{6,6}$/", $_GET['id']) == 1) {
@@ -212,13 +214,13 @@
 										<p class="fs-4 fw-bold">2nd Dose</p>
 										<div class="col text-center">
 											<span class="fs-5 fw-semibold">Date</span>
-											<input type="date" name="seconddose" data-activate='input[type="text"][name="seconddoctor"], input[type="date"][name="booster"]' data-required='input[type="text"][name="seconddoctor"]' class="form-control" autocomplete="off">
+											<input type="date" name="seconddose" data-activate='input[type="text"][name="seconddoctor"], input[type="date"][name="booster"]' data-required='input[type="text"][name="seconddoctor"]' class="form-control" value="<?php echo $info[0]['seconddose'] ?>" autocomplete="off">
 											<!--Invalid Feedback-->
 											<p class="fw-bolder text-center text-danger"></p>
 										</div>
 										<div class="col">
 											<span class="fs-5 fw-semibold">Doctor</span>
-											<input type="text" name="seconddoctor" class="form-control" autocomplete="off">
+											<input type="text" name="seconddoctor" class="form-control" value="<?php echo $info[0]['seconddoctor'] ?>" autocomplete="off">
 											<!--invalid feedback-->
 											<p class="fw-bolder text-center text-danger"></p>
 										</div>
@@ -243,15 +245,13 @@
 										<p class="fs-4 fw-bold">Booster</p>
 										<div class="col text-center">
 											<span class="fs-5 fw-semibold">Date</span>
-											<input type="hidden" name="booster" class="form-control" value="">
-											<input type="date" name="booster" data-activate='input[type="text"][name="boosterdoctor"], select[name="boosterbrand"]' data-required='input[type="text"][name="boosterdoctor"], select[name="boosterbrand"]' class="form-control" autocomplete="off">
+											<input type="date" name="booster" data-activate='input[type="text"][name="boosterdoctor"], select[name="boosterbrand"]' data-required='input[type="text"][name="boosterdoctor"], select[name="boosterbrand"]' class="form-control" value="<?php echo $info[0]['booster'] ?>" autocomplete="off">
 											<!--Invalid Feedback-->
 											<p class="fw-bolder text-center text-danger"></p>
 										</div>
 										<div class="col">
 											<span class="fs-5 fw-semibold">Doctor</span>
-											<input type="hidden" name="boosterdoctor" class="form-control" value="">
-											<input type="text" name="boosterdoctor" class="form-control" autocomplete="off">
+											<input type="text" name="boosterdoctor" class="form-control" value="<?php echo $info[0]['boosterdoctor'] ?>" autocomplete="off">
 											<!--invalid feedback-->
 											<p class="fw-bolder text-center text-danger"></p>
 										</div>
@@ -365,13 +365,13 @@
 										<p class="fs-4 fw-bold">2nd Dose</p>
 										<div class="col text-center">
 											<span class="fs-5 fw-semibold">Date</span>
-											<input type="date" name="seconddose" data-activate='input[type="text"][name="seconddoctor"], input[type="date"][name="booster"]' data-required='input[type="text"][name="seconddoctor"]' class="form-control" autocomplete="off">
+											<input type="date" name="seconddose" data-activate='input[type="text"][name="seconddoctor"], input[type="date"][name="booster"]' data-required='input[type="text"][name="seconddoctor"]' class="form-control" value="<?php echo $info[0]['seconddose'] ?>" autocomplete="off">
 											<!--Invalid Feedback-->
 											<p class="fw-bolder text-center text-danger"></p>
 										</div>
 										<div class="col">
 											<span class="fs-5 fw-semibold">Doctor</span>
-											<input type="text" name="seconddoctor" class="form-control" autocomplete="off">
+											<input type="text" name="seconddoctor" class="form-control" value="<?php echo $info[0]['seconddoctor'] ?>" autocomplete="off">
 											<!--invalid feedback-->
 											<p class="fw-bolder text-center text-danger"></p>
 										</div>
@@ -397,14 +397,14 @@
 										<div class="col text-center">
 											<span class="fs-5 fw-semibold">Date</span>
 											<input type="hidden" name="booster" class="form-control" value="">
-											<input type="date" name="booster" data-activate='input[type="text"][name="boosterdoctor"], select[name="boosterbrand"]' data-required='input[type="text"][name="boosterdoctor"], select[name="boosterbrand"]' class="form-control" autocomplete="off">
+											<input type="date" name="booster" data-activate='input[type="text"][name="boosterdoctor"], select[name="boosterbrand"]' data-required='input[type="text"][name="boosterdoctor"], select[name="boosterbrand"]' class="form-control" value="<?php echo $info[0]['booster'] ?>" autocomplete="off">
 											<!--Invalid Feedback-->
 											<p class="fw-bolder text-center text-danger"></p>
 										</div>
 										<div class="col">
 											<span class="fs-5 fw-semibold">Doctor</span>
 											<input type="hidden" name="boosterdoctor" class="form-control" value="">
-											<input type="text" name="boosterdoctor" class="form-control" autocomplete="off">
+											<input type="text" name="boosterdoctor" class="form-control" value="<?php echo $info[0]['boosterdoctor'] ?>" autocomplete="off">
 											<!--invalid feedback-->
 											<p class="fw-bolder text-center text-danger"></p>
 										</div>
@@ -470,10 +470,10 @@
 				</div>
 				<div class="col-8 position-fixed" id="#settings" style="display: inline-block;">
 					<span style="font-size:72px;"> content dito</span>
-					<input type="email" name="email">
-					<input type="password" name="password">
-					<input type="password" name="confirmpass">
-					<button id="change" data-activate='input[type="email"]:last, input[name="password"][name="confirmpass"]'>Change Password</button>
+					<input type="email" class="form-control" name="email">
+					<input type="password" class="form-control" name="password">
+					<input type="password" class="form-control" name="confirmpass">
+					<button id="change">Change Password</button>
 				</div>
 			</div>
 		</div>

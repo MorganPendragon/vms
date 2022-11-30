@@ -61,17 +61,13 @@ $(function () {
 
     $('#save').on('click', function () {
         $('#accountInfo').trigger('submit');
-        $('input[type!="file"], select').each(function () {
-            $(this).attr('disabled', 'disabled');
-        });
+        $('input[type!="file"], select').prop('disabled', true);
         hideAndShow.call(this);
     });
 
     //cancel
     $('#cancel').on('click', function () {
-        $('input[type!="file"], select').each(function () {
-            $(this).attr('disabled', 'disabled');
-        });
+        $('input[type!="file"], input[type!="password"], input[type="email"]:last, select').prop('disabled', true);
         hideAndShow.call(this);
     });
 
