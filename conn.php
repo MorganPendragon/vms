@@ -445,9 +445,11 @@ if (isset($_POST['type'])) {
 	if($result == 1)
 	{
 		$salt = $conn->display('*', "cipher INNER JOIN logcredentials on cipher.id = logcredentials.id", "logcredentials.id='$id'");
-		$decryptedPass = openssl_decrypt($info[0]['password'], $GLOBALS['cipher'], $GLOBALS['key'], $options = 0, $info[0]['iv'], $info[0]['tag']);
-		if(strcmp($password, $decryptedPass)== 0)
+		$decryptedPass = openssl_decrypt($salt[0]['password'], $GLOBALS['cipher'], $GLOBALS['key'], $options = 0, $salt[0]['iv'], $salt[0]['tag']);
+		echo $decryptedPass;
+		if(strcmp($password, $decryptedPass) == 0)
 		{
+			echo $result;
 			$result++;
 		}
 	}
@@ -607,6 +609,11 @@ if (isset($_POST['action'])) {
 				$table = array($_POST['table'], 'vaccinestatus', 'logcredentials', 'cipher');
 				$conn->deleteInfo($table, 'id', $_POST['delete']);
 			}
+			break;
+		case 'changepass':
+			$id = $_POST['id'];
+			$password = openssl_encrypt($post['password'], $GLOBALS['cipher'], $GLOBALS['key'], $options = 0, $iv, $tag);
+			$conn->query("UPDATE logcredentials SET password = '$password' WHERE id = '$id'");
 			break;
 		case 'report':
 			$conn->report($_POST);
