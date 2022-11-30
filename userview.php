@@ -20,10 +20,13 @@
 	<script>
 		$(function() {
 			$('input[type!="file"], select').attr('disabled', 'disabled');
+			
 			$('input[type="file"]').on('change', function() {
-				var filename = $(this).val().split('\\').pop().split('/').pop();
-				$('#filename').text(filename);
+				//get filename universal
+				$('#filename').text($(this).val().split('\\').pop().split('/').pop());
 			});
+
+			$('input[type="email"]:last').val($('input[type="email"]:first').val());
 		});
 	</script>
 </head>
@@ -304,7 +307,7 @@
 									<div class="row mb-3">
 										<div class="col">
 											<span class="fs-5 fw-semibold">Email</span>
-											<input type="email" name="email" class="form-control" id="emailFormControl" value="<?php echo $info[0]['email'] ?>" required>
+											<input type="email" name="email" class="form-control" value="<?php echo $info[0]['email'] ?>" required>
 										</div>
 									</div>
 									<div class="row mb-3">
@@ -467,6 +470,10 @@
 				</div>
 				<div class="col-8 position-fixed" id="#settings" style="display: inline-block;">
 					<span style="font-size:72px;"> content dito</span>
+					<input type="email" name="email">
+					<input type="password" name="password">
+					<input type="password" name="confirmpass">
+					<button id="change" data-activate='input[type="email"]:last, input[name="password"][name="confirmpass"]'>Change Password</button>
 				</div>
 			</div>
 		</div>
