@@ -5,6 +5,7 @@
 require __DIR__ . '/vendor/autoload.php';
 //key passphrase for the encryption
 $key = 'oceansofknowledge';
+//encryption algorithm used
 $cipher = 'aes-128-gcm';
 
 use PHPMailer\PHPMailer\PHPMailer;
@@ -360,6 +361,7 @@ class connection
 				}
 			}
 			$this->conn->query($sql);
+			echo $sql;
 		}
 	}
 
@@ -408,6 +410,7 @@ class connection
 				}
 			}
 			$sql .= "WHERE $condition = '$primaryKey'";
+			echo $sql;
 			$this->conn->query($sql);
 		}
 	}
@@ -435,7 +438,6 @@ class connection
 
 $conn = new connection();
 $conn->mailer();
-echo $original_plaintext . "\n";
 
 //feedback for the login
 if (isset($_POST['type'])) {
@@ -446,15 +448,15 @@ if (isset($_POST['type'])) {
 	{
 		$salt = $conn->display('*', "cipher INNER JOIN logcredentials on cipher.id = logcredentials.id", "logcredentials.id='$id'");
 		$decryptedPass = openssl_decrypt($salt[0]['password'], $GLOBALS['cipher'], $GLOBALS['key'], $options = 0, $salt[0]['iv'], $salt[0]['tag']);
-		echo $decryptedPass;
+		
 		if(strcmp($password, $decryptedPass) == 0)
 		{
-			echo $result;
 			$result++;
 		}
 	}
 	switch ($result) {
 		case 1:
+			echo $decryptedPass;
 			echo 'Wrong Password';
 			break;
 		case 2:
@@ -485,9 +487,18 @@ if (isset($_FILES['vaccinationCard']['name'])) {
 	}
 }
 
-if (isset($_POST['tableName'])) {
-	$row = $conn->display('*', $_POST['tableName']);
-	echo json_encode($row);
+if(isset($_POST['check'])){
+	switch($_POST['check'])
+	{
+		case 'id':
+			$id = $_POST['id'];
+			$result = $conn->find('logcredentials', "id = $id");
+			if($result != 0)
+			{
+				echo 'User Does not Exist';
+			}
+			break;
+	}
 }
 
 $totalStudent = $conn->find('vaccinestatus', "id REGEXP '^[0-9]{1,2}-[0-9]{6,6}$'");
@@ -610,10 +621,9 @@ if (isset($_POST['action'])) {
 				$conn->deleteInfo($table, 'id', $_POST['delete']);
 			}
 			break;
-		case 'changepass':
-			$id = $_POST['id'];
-			$password = openssl_encrypt($post['password'], $GLOBALS['cipher'], $GLOBALS['key'], $options = 0, $iv, $tag);
-			$conn->query("UPDATE logcredentials SET password = '$password' WHERE id = '$id'");
+		case 'changePass':
+			$conn->deleteInfo(['logcredentials', 'cipher'], 'id', $_POST['id']);
+			$conn->insertInfo($_POST, ['logcredentials']);
 			break;
 		case 'report':
 			$conn->report($_POST);

@@ -287,6 +287,38 @@ $(function () {
             }
             e.preventDefault();
         }
+        else if ($(this).data('action') == 'changePass') {
+            formData.push({ name: 'action', value: $(this).data('action') });
+            $id = $(this).parent().find('input[name="id"]');
+            $pass = $(this).parent().find('input[name="password"]');
+            $confirmPass = $(this).parent().find('input[name="confirmPassword"]');
+            formData.push({ name: 'id', value: $id.val() });
+            formData.push({ name: 'password', value: $confirmPass.val() });
+            if (!(/^[0-9]{1,2}-[0-9]{6,6}$|^F[0-9]{1,1}-[0-9]{6,6}$/.test($id.val()))) {
+                console.log($id.val())
+                $id.siblings('p:first').text('Invalid ID');
+                validated = 0;
+            }
+            else {
+                $.post('conn.php', { id: $id.val(), check: 'id' }).done(function (response) {
+                    $id.siblings('p:first').text(response);
+                });
+            }
+
+            console.log($pass.val());
+            console.log($confirmPass.val());
+            if ($pass.val() != $confirmPass.val()) {
+                validated = 0;
+                $confirmPass.siblings('p:last').text('Password does not match');
+            }
+
+            if (validated != 0) {
+                $.post('conn.php', formData).done(function(response){
+                    console.log(response);
+                });
+            }
+            e.preventDefault();
+        }
         else {
             formData = $(this).serializeArray();
             formData.push({ name: 'action', value: $(this).data('action') });
@@ -297,12 +329,11 @@ $(function () {
                         table--;
                     }
                 });
-                formData.push({name:'table', value:''});
+                formData.push({ name: 'table', value: '' });
                 console.log('table:' + table);
-                if(table != 0)
-                {
+                if (table != 0) {
                     formData.pop();
-                    formData.push({name: 'table', value:'needed'});
+                    formData.push({ name: 'table', value: 'needed' });
                 }
 
                 formData.push({ name: 'student', value: '' });
@@ -332,8 +363,8 @@ $(function () {
     $('form[id="login"]').on('submit', function (e) {
 
         $feedback = $($(this).parent().find('div[name="loginFeedback"]'));
-        var id = $('input[name="id[0]"]').val().toString();
-        var password = $('input[name="password[0]"]').val().toString();
+        var id = $('input[name="id[0]"]').val();
+        var password = $('input[name="password[0]"]').val();
         if (/^[0-9]{1,2}-[0-9]{6,6}$|^F[0-9]{1,1}-[0-9]{6,6}$/.test(id)) {
             //handles the redirecting and feedback
             $feedback.load('conn.php', {
@@ -344,14 +375,14 @@ $(function () {
         }
         else if (/admin/.test(id)) {
             //redirect to admin
-            if ($('input[name^="password"]').val().toString() == 'admin') {
+            if ($('input[name^="password"]').val() == 'admin') {
                 location.href = 'adminview.php';
             }
         }
         else {
             $feedback.text('Please enter a valid ID');
         }
-        return false;
+        e.preventDefault();
     });
 
     //image upload AJAX

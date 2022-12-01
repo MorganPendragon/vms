@@ -38,11 +38,10 @@
             position: fixed;
         }
 
-
         * {
             margin: 0;
             padding: 0;
-            font-family: 'Montserrat';
+            font-family: Montserrat;
         }
 
         table {
@@ -796,7 +795,6 @@
                                 <?php
                                 }
                                 ?>
-
                             </select>
                         </div>
                         <div class="d-flex justify-content-end " style="padding-top:2%; padding-bottom:5%; margin-right:8%;">
@@ -1501,5 +1499,4 @@
         $('table').tablesorter();
     </script>
 </body>
-
 </html>
