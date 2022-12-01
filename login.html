@@ -49,7 +49,8 @@
 			<div class="container-fluid" id="loginPage">
 				<div class="row">
 					<div class="d-flex col-6 justify-content-center align-items-center " style="height:100vh;">
-						<object data="img/logologin.svg" width="650" height="650" style="image-resolution: 300dpi;"> </object>
+						<object data="img/logologin.svg" width="650" height="650" style="image-resolution: 300dpi;">
+						</object>
 					</div>
 					<!--log in-->
 					<div class="col-6 ">
@@ -59,23 +60,31 @@
 									style="background-color:rgb(255, 255, 255); height:100vh;">
 									<p class=" mb-5 mt-1 ms-4" style="font-weight:900; font-size:55px;">Welcome</p>
 									<div class="d-flex justify-content-center">
-										<div id="card" class="card shadow-lg p-3 mb-5 bg-body rounded-5" style="width: 624px; height: 697px;">
+										<div id="card" class="card shadow-lg p-3 mb-5 bg-body rounded-5"
+											style="width: 624px; height: 697px;">
 											<form method="POST" id="login">
 												<div class="card-body mx-auto">
 													<p class="fs-1 fw-bold mt-3">Login</p>
 													<div name="loginFeedback"></div>
-													<div class="mb-3 my-3 py-3" style="width:450px;height:44px; margin-left:10%;">
-														<label class="fw-semibold" style="font-size:28px" for="idNo">ID</label>
+													<div class="mb-3 my-3 py-3"
+														style="width:450px;height:44px; margin-left:10%;">
+														<label class="fw-semibold" style="font-size:28px"
+															for="idNo">ID</label>
 														<input type="text" class="form-control text-center" name="id[0]"
 															required>
 													</div>
-													<div class="mb-3 my-5 py-5" style="width:450px;height:44px;margin-left:10%;">
-														<label class="fw-semibold" style="font-size:28px" for="pwd">Password</label>
+													<div class="mb-3 my-5 py-5"
+														style="width:450px;height:44px;margin-left:10%;">
+														<label class="fw-semibold" style="font-size:28px"
+															for="pwd">Password</label>
 														<input type="password" name="password[0]"
 															class="form-control text-center" required>
 													</div>
 													<p class="text-end">
-														<button class="btn btn-link pt-3 mt-3" style="color:#ED7E00; margin-right:7%;">Forgot password?</button>
+														<button class="btn btn-link pt-3 mt-3"
+															style="color:#ED7E00; margin-right:7%;"
+															data-bs-toggle="modal" data-bs-target="#forgotPass">Forgot
+															password?</button>
 													</p>
 													<div class=" gap-2 mx-auto text-center">
 														<button type="submit" class="btn"
@@ -85,12 +94,13 @@
 												</div>
 											</form>
 											<div class="d-flex justify-content-center  p-1" style="margin-top:15%;">
-												<label for="signUp" class="mt-2 opacity-50">Don`t have an account?</label>
-													<button type="button" id="signUp" class="btn btn-link"
-														data-bs-toggle="modal" data-bs-target="#signup"
-														style="color:black; font-weight:bold;">
-														Sign Up
-													</button>
+												<label for="signUp" class="mt-2 opacity-50">Don`t have an
+													account?</label>
+												<button type="button" id="signUp" class="btn btn-link"
+													data-bs-toggle="modal" data-bs-target="#signup"
+													style="color:black; font-weight:bold;">
+													Sign Up
+												</button>
 											</div>
 										</div>
 									</div>
@@ -98,10 +108,27 @@
 							</div>
 						</div>
 					</div>
-					<div class="modal fade" id="forgotPass" tabindex="-1" aria-labelledby="forgotPass" aria-hidden="true">
-						<div class="moda-dialog modal-dialog-centered">
+					<div class="modal fade" id="forgotPass" tabindex="-1" aria-labelledby="forgotPass"
+						aria-hidden="true">
+						<div class="modal-dialog modal-dialog-centered">
 							<div class="modal-content">
-								
+								<button type="button" class="btn-close ms-5 mt-2 me-2" data-bs-dismiss="modal"
+									aria-label="Close"></button>	
+								<form data-action="changePass">
+									<div class="modal-body">
+										<div>ID No.</div>
+										<input class="form-control" type="text" name="id">
+										<p></p>
+										<div>New Password</div>
+										<input class="form-control" type="password" name="password">
+										<div>Confirm Password</div>
+										<input class="form-control" type="password" name="confirmPassword">
+										<p></p>
+									</div>
+									<div class="modal-footer">
+										<button type="submit">Save</button>
+									</div>
+								</form>
 							</div>
 						</div>
 					</div>
@@ -143,7 +170,8 @@
 					<div class="container-fluid">
 						<div class="row">
 							<div class="d-flex col-6 justify-content-center align-items-center " style="height:100vh;">
-								<object data="img/logologin.svg" width="650" height="650" style="image-resolution: 300dpi;"> </object>
+								<object data="img/logologin.svg" width="650" height="650"
+									style="image-resolution: 300dpi;"> </object>
 							</div>
 							<!--student sign up-->
 							<div class="col-6 ">
@@ -262,7 +290,8 @@
 					<div class="container-fluid">
 						<div class="row">
 							<div class="d-flex col-6 justify-content-center align-items-center " style="height:100vh;">
-								<object data="img/logologin.svg" width="650" height="650" style="image-resolution: 300dpi;"> </object>
+								<object data="img/logologin.svg" width="650" height="650"
+									style="image-resolution: 300dpi;"> </object>
 							</div>
 							<!--Faculty sign up-->
 							<div class="col-6 ">
