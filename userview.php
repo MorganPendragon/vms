@@ -38,9 +38,8 @@
 				console.log(code);
 			});
 
-			$('#confirm').click(function(){
-				if(code == $('input[name="2fa"]').val())
-				{
+			$('#confirm').click(function() {
+				if (code == $('input[name="2fa"]').val()) {
 					$('#main').show();
 					$('#2fa').hide();
 				}
@@ -84,17 +83,20 @@
 		<?php
 		include('conn.php');
 		?>
-		<div id="2fa">
-			<input type="hidden" name="2fa" value="<?php echo $_SESSION['code']?>">
-			<input type="text" class="form-control" name="code[]" maxlength="1" required>
-			<input type="text" class="form-control" name="code[]" maxlength="1" required>
-			<input type="text" class="form-control" name="code[]" maxlength="1" required>
-			<input type="text" class="form-control" name="code[]" maxlength="1" required>
-			<input type="text" class="form-control" name="code[]" maxlength="1" required>
-			<input type="text" class="form-control" name="code[]" maxlength="1" required>
-			<button class="btn btn-primary" id="confirm" >Button</button>
+		<div class="row" id="2fa">
+			<div class="d-flex p-5" style="margin-top:15%; max-width:25%;margin-left:37%;">
+				<input type="hidden" name="2fa" value="<?php echo $_SESSION['code'] ?>">
+				<input type="text" class="form-control m-2" name="code[]" maxlength="1" required>
+				<input type="text" class="form-control m-2" name="code[]" maxlength="1" required>
+				<input type="text" class="form-control m-2" name="code[]" maxlength="1" required>
+				<input type="text" class="form-control m-2" name="code[]" maxlength="1" required>
+				<input type="text" class="form-control m-2" name="code[]" maxlength="1" required>
+				<input type="text" class="form-control m-2" name="code[]" maxlength="1" required>
+			</div>
+			<div class="d-grid gap-2 d-md-block" style="margin-left:831px;">
+				<button class="btn ;" style="width:240px; background-color:rgb(232, 177, 62); color:white;" id="confirm">Proceed</button>
+			</div>
 		</div>
-
 		<div class="row" style="display: none;" id="main">
 			<!--sidebar-->
 			<div class="container-fluid window-height" aria-orientation="vertical">

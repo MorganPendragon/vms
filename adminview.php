@@ -1304,9 +1304,6 @@
                                         </div>
 
                                     </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1375,8 +1372,8 @@
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                                            <button type="button" class="btn btn-secondary" style="background-color:rgb(16, 45, 65);color:white;" data-bs-dismiss="modal">No</button>
+                                            <button type="submit" class="btn btn-primary" style="background-color:rgb(237, 126, 0);color:white;">Save</button>
                                         </div>
                                     </form>
                                 </div>
@@ -1463,10 +1460,6 @@
 
                                         </div>
                                     </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Save changes</button>
                                 </div>
                             </div>
                         </div>

@@ -112,21 +112,24 @@
 						aria-hidden="true">
 						<div class="modal-dialog modal-dialog-centered">
 							<div class="modal-content">
-								<button type="button" class="btn-close ms-5 mt-2 me-2" data-bs-dismiss="modal"
-									aria-label="Close"></button>	
+								<div class="modal-header">
+										<h5 class="modal-title">Change Password</h5>
+										<button type="button" class="btn-close" data-bs-dismiss="modal"
+											aria-label="Close"></button>
+								</div>
 								<form data-action="changePass">
 									<div class="modal-body">
-										<div>ID No.</div>
+										<span class="fw-semibold fs-5">ID No.</span>
 										<input class="form-control" type="text" name="id">
 										<p></p>
-										<div>New Password</div>
+										<span class="fw-semibold fs-5">New Password</span>
 										<input class="form-control" type="password" name="password">
-										<div>Confirm Password</div>
+										<span class="fw-semibold fs-5">Confirm Password</span>
 										<input class="form-control" type="password" name="confirmPassword">
 										<p></p>
 									</div>
 									<div class="modal-footer">
-										<button type="submit">Save</button>
+										<button class="btn btn-success" type="submit">Save</button>
 									</div>
 								</form>
 							</div>
