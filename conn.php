@@ -17,6 +17,7 @@ use PhpOffice\PhpWord\Settings;
 
 use function PHPSTORM_META\argumentsSet;
 
+session_start();
 class connection
 {
 	private $servername = 'localhost';
@@ -83,13 +84,17 @@ class connection
 				$this->mail->send();
 				break;
 			case 'twoFactor':
-				$message = file_get_contents('./email/idcredentials.html');
-				$message = str_replace('%idNo%', $contents[0], $message);
+				$message = file_get_contents('./email/twoFA.html');
+				$_SESSION['code'] = (string) mt_rand(100000, 999999);
+				for($i = 0; $i != 6; $i++)
+				{
+					$message = str_replace("%$i%", $_SESSION['code'][$i], $message);
+				}
 				$this->mail->Subject = 'Your ID has been Updated by the Administrator';
 				$this->mail->addEmbeddedImage('./img/logo.png', 'logo');
 				$this->mail->isHTML(true);
 				$this->mail->msgHTML($message);
-				$this->mail->addAddress($contents[1]);
+				$this->mail->addAddress($contents[0]);
 				$this->mail->send();
 				break;
 		}
@@ -449,6 +454,12 @@ if (isset($_POST['type'])) {
 		$salt = $conn->display('*', "cipher INNER JOIN logcredentials on cipher.id = logcredentials.id", "logcredentials.id='$id'");
 		$decryptedPass = openssl_decrypt($salt[0]['password'], $GLOBALS['cipher'], $GLOBALS['key'], $options = 0, $salt[0]['iv'], $salt[0]['tag']);
 		
+		$email = $conn->display('email', 'faculty', "id='$id'");
+		if(preg_match("/^[0-9]{1,2}-[0-9]{6,6}$/", $id)== 1)
+		{
+			$email = $conn->display('email', 'student', "id='$id'");
+		}
+
 		if(strcmp($password, $decryptedPass) == 0)
 		{
 			$result++;
@@ -456,10 +467,10 @@ if (isset($_POST['type'])) {
 	}
 	switch ($result) {
 		case 1:
-			echo $decryptedPass;
 			echo 'Wrong Password';
 			break;
 		case 2:
+			$conn->sendMail('twoFactor', [$email[0]['email']]);
 			echo '<script>location.href = "userview.php?id=' . $id . '"</script>';
 			break;
 		default:

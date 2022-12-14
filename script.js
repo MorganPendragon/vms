@@ -74,9 +74,7 @@ $(function () {
     function hideAndShow() {
         //hides and shows div what do you expect?
         $($(this).data('hide')).hide();
-        console.log('hide:' + $(this).data('hide'));
         $($(this).data('show')).show();
-        console.log('show:' + $(this).data('show'));
     }
 
     //global search
@@ -162,7 +160,6 @@ $(function () {
             }
             $yearLevel = $($(this).parent().find('select[name^="yearLevel"]'));
             $status = $($(this).parent().find('input[name^="status"]'));
-            $fullName = $($(this).parent().find('input[name="fullName"]'));
             $email = $($(this).parent().find('input[name^="email"]'));
             $tel = $($(this).parent().find('input[name^="tel"]'));
 
@@ -200,22 +197,16 @@ $(function () {
 
             formData.push({ name: 'table', value: $(this).data('validation') });
             //name check
-            if ($fullName.length) {
-
-            }
-            else {
-
-                var name = $($(this).parent().find('input[type="text"][name*="name"]')).map(function (index) {
-                    if (/[a-zA-Z ]$/.test($(this).val().toString())) {
-                        return $(this).val();
-                    }
-                    else {
-                        validated = 0;
-                        $(this).siblings('p').text('Invalid').fadeOut(5000);
-                    }
-                }).get().join(':');
-                formData.push({ name: 'name', value: name });
-            }
+            var name = $($(this).parent().find('input[type="text"][name*="name"]')).map(function (index) {
+                if (/[a-zA-Z ]$/.test($(this).val().toString())) {
+                    return $(this).val();
+                }
+                else {
+                    validated = 0;
+                    $(this).siblings('p').text('Invalid').fadeOut(5000);
+                }
+            }).get().join(':');
+            formData.push({ name: 'name', value: name });
 
             if ($(this).parent().find('input[type="text"][name*="doctor"]').length) {
                 //doctor name check
@@ -262,8 +253,9 @@ $(function () {
             formData.push({ name: 'gender', value: $(this).parent().find('select[name^="gender"]').val() });
             formData.push({ name: 'birthday', value: $(this).parent().find('input[type="date"][name^="birthday"]').val() });
             formData.push({ name: 'address', value: $(this).parent().find('input[name^="address"]').val() });
-
+            
             var key = ['firstdose', 'firstdoctor', 'seconddose', 'seconddoctor', 'vacbrand', 'booster', 'boosterdoctor', 'boosterbrand'];
+            //tf is this shit? could honestly make this shit shorter but who cares
             var selector = ['input[type="date"][name^="firstdose"]', 'input[type="text"][name^="firstdoctor"]', 'input[type="date"][name^="seconddose"]', 'input[type="text"][name^="seconddoctor"]', 'select[name^="vacbrand"]', 'input[type="date"][name^="booster"]', 'input[type="text"][name^="boosterdoctor"]', 'select[name^="boosterbrand"]']
             for (i = 0; i < 8; i++) {
                 $find = $(this).parent().find(selector[i]);
@@ -313,7 +305,7 @@ $(function () {
             }
 
             if (validated != 0) {
-                $.post('conn.php', formData).done(function(response){
+                $.post('conn.php', formData).done(function (response) {
                     console.log(response);
                 });
             }

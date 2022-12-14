@@ -19,7 +19,8 @@
 	<script src="script.js"></script>
 	<script>
 		$(function() {
-			$('input[type!="file"], select').attr('disabled', 'disabled');
+			var code;
+			$('input, select').not('input[name^="code"], input[type="file"]').prop('disabled', true);
 
 			$('input[type="file"]').on('change', function() {
 				//get filename universal
@@ -29,6 +30,21 @@
 				$('input[type="email"]:last, input[type="password"]').removeAttr('disabled')
 			});
 			$('input[type="email"]:last').val($('input[type="email"]:first').val());
+
+			$('input[name^="code"]').keyup(function() {
+				code = $('input[name ^= "code"]').map(function() {
+					return $(this).val();
+				}).get().join('');
+				console.log(code);
+			});
+
+			$('#confirm').click(function(){
+				if(code == $('input[name="2fa"]').val())
+				{
+					$('#main').show();
+					$('#2fa').hide();
+				}
+			});
 		});
 	</script>
 </head>
@@ -65,7 +81,21 @@
 <body>
 
 	<main>
-		<div class="row">
+		<?php
+		include('conn.php');
+		?>
+		<div id="2fa">
+			<input type="hidden" name="2fa" value="<?php echo $_SESSION['code']?>">
+			<input type="text" class="form-control" name="code[]" maxlength="1" required>
+			<input type="text" class="form-control" name="code[]" maxlength="1" required>
+			<input type="text" class="form-control" name="code[]" maxlength="1" required>
+			<input type="text" class="form-control" name="code[]" maxlength="1" required>
+			<input type="text" class="form-control" name="code[]" maxlength="1" required>
+			<input type="text" class="form-control" name="code[]" maxlength="1" required>
+			<button class="btn btn-primary" id="confirm" >Button</button>
+		</div>
+
+		<div class="row" style="display: none;" id="main">
 			<!--sidebar-->
 			<div class="container-fluid window-height" aria-orientation="vertical">
 				<div class="d-flex">
@@ -104,7 +134,6 @@
 						<div class="row mb-3">
 						</div>
 						<?php
-						include('conn.php');
 						$conn = new connection();
 						$brand = $conn->display('*', 'vacbrand');
 						$genders = array('Male', 'Female');
