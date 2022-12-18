@@ -112,7 +112,7 @@
 									<a href="#settings" class="nav-link" data-bs-toggle="tab" style="color:rgb(232, 177, 62);" data-show="#settings" data-hide="#account"><i class="bi bi-gear-fill"></i>&nbsp;&nbsp;Settings</a>
 								</li>
 								<li class="nav-item ">
-									<a href="#logout" class="logout nav-link" data-bs-toggle="modal" style="color:rgb(232, 177, 62);"><i class="bi bi-box-arrow-left"></i>&nbsp;&nbsp;Logout</a>
+									<a href="login.html" class="logout nav-link" data-bs-toggle="modal" style="color:rgb(232, 177, 62);"><i class="bi bi-box-arrow-left"></i>&nbsp;&nbsp;Logout</a>
 								</li>
 							</ul>
 
