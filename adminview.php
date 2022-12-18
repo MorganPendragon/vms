@@ -191,7 +191,7 @@
                 </div>
             </div>
             <?php
-            include('conn.php');
+            @include('conn.php');
             $vac = new connection();
             $genders = array('Male', 'Female');
             $brand = $vac->display('*', 'vacbrand');
